@@ -12,7 +12,6 @@ for g in game_list:
 	try:
 		print("Scraping", g)
 		scrape_game(g[0], g[1])
-	except as e:
+	except:
 		print("Failed")
-		print(e)
 

@@ -8,6 +8,7 @@ Assumptions
     - At least three innings in match    
     - No more than 10 extras on any one legal delivery
     - No stumpings off wides
+    - No runouts
 
 
 Each of these need to be addressed
@@ -20,10 +21,12 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from os import path
 from requests import get
-
+from selenium import webdriver
+from time import sleep
 
 # Global variables
 DIR = path.dirname(path.realpath(__file__))
+
 NAMES = {'Afghanistan': 'AFG', \
          'Australia': 'AUS', \
          'Bangladesh': 'BAN', \
@@ -36,6 +39,7 @@ NAMES = {'Afghanistan': 'AFG', \
          'Sri Lanka': 'SRL', \
          'West Indies': 'WIN', \
          'Zimbabwe': 'ZIM'}
+
 NUM_MONTHS = {'Jan': '01', \
               'Feb': '02', \
               'Mar': '03', \
@@ -48,19 +52,40 @@ NUM_MONTHS = {'Jan': '01', \
               'Oct': '10', \
               'Nov': '11', \
               'Dec': '12'}
+
 DATA_COLS = ['outcome', 'innings', 'team_wkts', 'team_score', 
-                                   'team_lead', 'bat_score', 'bat_balls', 'bat_avg', 
-                                   'bowl_balls', 'bowl_runs', 'bowl_wkts', 'bowl_avg']
+                                   'team_lead', 'bat_score', 'bat_balls', 'bat_avg', 'bat_arm',
+                                   'bowl_balls', 'bowl_runs', 'bowl_wkts', 'bowl_avg', 'bowl_type']
+
+BOWL_KEYS = {'Right-arm medium': 0,
+             'Right-arm medium-fast': 1,
+             'Right-arm fast-medium': 2,
+             'Right-arm fast': 3,
+             'Right-arm offbreak': 4,
+             'Right-arm offbreak, Legbreak': 4,
+             'Legbreak googly': 5,
+             'Legbreak': 5,
+             'Left-arm medium': 6,
+             'Left-arm medium-fast': 7,
+             'Left-arm fast-medium': 8,
+             'Left-arm fast': 9,
+             'Slow left-arm orthodox': 10, 
+             'Slow left-arm chinaman': 11}
+
+    
+
 
 
 def get_players(inns):
     batters = inns.find_all('div', class_ = 'cell batsmen')
     ids = []
+    urls = []
     names = []
     
     for b in batters:
         for r in b.find_all(href=True):
             url = r['href']
+            urls.append(url)
             
             # Get ID from url
             ids.append(url.split('/')[-1][:-5])
@@ -70,12 +95,13 @@ def get_players(inns):
     dnb = inns.find_all('div', class_ = 'wrap dnb')[0]
     for r in dnb.find_all('a', href=True):
         url = r['href']
+        urls.append(url)
         
         # Get ID from url
         ids.append(url.split('/')[-1][:-5])
         
     
-    return(ids, names)
+    return(ids, urls)
     
 
 # Extracts bowler name and batter name from delivery description. Pass delivery
@@ -93,7 +119,7 @@ def desc_to_name(desc_txt):
     return bowl, bat
 
 
-def data_row(outcome, desc, pregame_avgs, innings):
+def data_row(outcome, desc, pregame_data, innings):
     # Globals
     global bats
     global bowls
@@ -127,13 +153,14 @@ def data_row(outcome, desc, pregame_avgs, innings):
     
     n_row['bat_score'] = bats[bat][0]
     n_row['bat_balls'] = bats[bat][1]
-    n_row['bat_avg'] = pregame_avgs[bat][0]
+    n_row['bat_avg'] = pregame_data[bat][0]
+    n_row['bat_arm'] = pregame_data[bat][2]
     
     n_row['bowl_balls'] = bowls[bowl][0]
     n_row['bowl_runs'] = bowls[bowl][1]
     n_row['bowl_wkts'] = bowls[bowl][2]     
-    n_row['bowl_avg'] = pregame_avgs[bowl][1]
-    
+    n_row['bowl_avg'] = pregame_data[bowl][1]
+    n_row['bowl_type'] = pregame_data[bowl][3]
     
     
     # Update game situation and player states
@@ -152,7 +179,7 @@ def data_row(outcome, desc, pregame_avgs, innings):
 
         # If not byes, update bowler figures                
 
-        if outcome[-2:] == 'nb' or not outcome[-1] == 'b':
+        if outcome[-2:] == 'nb' or outcome[-1] != 'b':
             bowls[bowl][1] += score
         
         # Check if delivery is legal
@@ -173,10 +200,36 @@ def data_row(outcome, desc, pregame_avgs, innings):
     return n_row
 
 
+def scroll_down(driver):
+    """A method for scrolling to bottom of a dynamically loading page.
 
-# storage of csv
+    From https://stackoverflow.com/questions/48850974/selenium-scroll-to-end-of-page-in-dynamically-loading-webpage/48851166#48851166 
+    """
 
-def scrape_game(url, html):
+    # Get scroll height.
+    last_height = driver.execute_script("return document.body.scrollHeight")
+
+    while True:
+
+        # Scroll down to the bottom.
+        driver.execute_script("window.scrollTo(0, 0);")
+        sleep(0.25)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        sleep(1)
+
+        # Calculate new scroll height and compare with last scroll height.
+        new_height = driver.execute_script("return document.body.scrollHeight")
+
+        if new_height == last_height:
+              break
+
+
+        last_height = new_height
+
+
+
+
+def scrape_game(series_id, game_id):
     # Globals
     global bats
     global bowls
@@ -185,6 +238,7 @@ def scrape_game(url, html):
     global team_lead
     
     # Scorecard
+    url = "https://www.espncricinfo.com/series/" + str(series_id) + "/scorecard/" + str(game_id)
     page = get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     
@@ -217,19 +271,23 @@ def scrape_game(url, html):
             inn_order[3] = 0
         else:
             inn_order[3] = 1
-        
+       
+    if inn_order[3] == None:
+    	inn_len = 3
+    else:
+    	inn_len = 4
         
     del team1, team2, follow_on
     
-    pregame_avgs = {}
+    pregame_data = {}
     
     
 
 
-    players1, names1 = get_players(all_scorecards[0])
-    players2, names2 = get_players(all_scorecards[1])
+    players1, play_urls1 = get_players(all_scorecards[0])
+    players2, play_urls2 = get_players(all_scorecards[1])
     
-    for id in players1 + players2:
+    for (id, p_url) in zip(players1 + players2, play_urls1 + play_urls2):
         # Access URL
         sg_url = "http://stats.espncricinfo.com/ci/engine/player/" + str(id) + ".html?class=1;spanmax1=" + date + ";spanval1=span;template=results;type=allround"
         page = get(sg_url)
@@ -260,13 +318,30 @@ def scrape_game(url, html):
             bowl = float(bowl)
         except ValueError:
             pass
+
+
+        # Get player batting hand and bowl type
+        page = get(p_url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+
+        bat_arm = None
+        bowl_arm_txt = None
+        for c in soup.find_all('p', class_ = 'ciPlayerinformationtxt'):
+            if c.text[:13] == "Batting style":
+                bat_arm = c.text[14:]
+            elif c.text[:13] == "Bowling style":
+                bowl_arm_txt = c.text[14:]
+                break
+
+        try:
+            bowl_arm = BOWL_KEYS[bowl_arm_txt]
+        except KeyError:
+            bowl_arm = "-"
         
-        pregame_avgs.update({name: [bat, bowl]})
-    
+        pregame_data.update({name: [bat, bowl, int(bat_arm == "Left-hand bat"), bowl_arm]})
 
 
-
-    for inns in range(4):
+    for inns in range(inn_len):
         bats = {}
         bowls = {}
         team_wkts = 0
@@ -280,11 +355,20 @@ def scrape_game(url, html):
         team_score = 0
         
     
-        i_html = html + str(inns + 1) + ".html" 
-        # Ball by ball
-        soup = BeautifulSoup(open(i_html).read(), 'html.parser')
-    
+        ballbyball ="https://www.espncricinfo.com/series/" + str(series_id) + "/commentary/" + str(game_id) + "?innings=" + str(inns + 1)
+           # Open webdriver and load ball by ball
+        driver = webdriver.Firefox(executable_path = 'geckodriver.exe')
+        driver.get(ballbyball)
         
+        # scroll to bottom of page
+        sleep(3)
+        scroll_down(driver)
+        sleep(2)
+        
+        # Ball by ball
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+
+        driver.close()
         
         data = pd.DataFrame(columns = DATA_COLS)
         
@@ -299,7 +383,7 @@ def scrape_game(url, html):
         pd_overs = pd.DataFrame(columns = [1, 2, 3, 4, 5, 6])
         pd_temp = None
         
-        for comm in comm_elems:
+        for comm in comm_elems.find_all('div', class_ = 'item-wrapper'):
             
             # check for end of over
             if ball < 1:
@@ -313,24 +397,24 @@ def scrape_game(url, html):
                 extras = 0
                 pd_temp = pd.DataFrame(index = [ind], columns = [1, 2, 3, 4, 5, 6])
             
-            
-            if (comm.get('class') == ['commentary-item', '']) or (comm.get('class') == ['commentary-item', 'pre', '']) or (comm.get('class') == ['commentary-item', 'pre']):
-                # check if delivery is an extra
-                txt = comm.find('span', class_ = "over-score").text
-                if txt[-1] == 'w' or txt[-2:] == 'nb':
-                    # add extra delivery
-                    pd_temp[10*ball + extras] = [comm]
-                    
-                    # add the column to pd_overs
-                    if not 10*ball + extras in pd_overs.columns:
-                        pd_overs[10*ball + extras] = [None] * len(pd_overs.index)
-                    
-                    extras += 1
-                    
-                else:
-                    pd_temp.at[ind, ball] = comm
-                    extras = 0
-                    ball -= 1
+            txt = comm.find('span', class_ = "over-score").text
+            if txt[-1] == 'w' or txt[-2:] == 'nb':
+                # add extra delivery
+                pd_temp[10*ball + extras] = [comm]
+                
+                # add the column to pd_overs
+                if not 10*ball + extras in pd_overs.columns:
+                    pd_overs[10*ball + extras] = [None] * len(pd_overs.index)
+                
+                extras += 1
+                
+            else:
+                pd_temp.at[ind, ball] = comm
+                extras = 0
+                
+                ball -= 1
+
+        pd_overs = pd_overs.append(pd_temp)
             
         
         
@@ -344,7 +428,7 @@ def scrape_game(url, html):
             # For each ball
             for b in range(1,7):
  
-                if over[b] == None:
+                if over[b] == None or type(over[b]) == float:
                     break
                 
                 # Check for corresponding extra deliveries
@@ -359,7 +443,7 @@ def scrape_game(url, html):
                             desc = over[key].find('div', class_ = "description").text
                 
                             # Add to main dataframe
-                            data = data.append(data_row(outcome, desc, pregame_avgs, inns + 1), ignore_index = True)
+                            data = data.append(data_row(outcome, desc, pregame_data, inns + 1), ignore_index = True)
         
                             ind += 1
                             
@@ -377,9 +461,11 @@ def scrape_game(url, html):
                 
                 
                 # Add to main dataframe
-                data = data.append(data_row(outcome, desc, pregame_avgs, inns + 1), ignore_index = True)
+                data = data.append(data_row(outcome, desc, pregame_data, inns + 1), ignore_index = True)
         
         
+        driver.quit()
+
         # Export to CSV file
         if int(day) < 10:
             p_day = "0" + day
@@ -391,12 +477,3 @@ def scrape_game(url, html):
         
         save_path = path.join(DIR, fname)
         data.to_csv(save_path, index = False)
-            
-
-    
-    
-
-
-
-
-scrape_game('https://www.espncricinfo.com/series/18659/scorecard/1152849/england-vs-australia-4th-test-icc-world-test-championship-2019-2021', r'C:\Users\liaml\Dropbox\Projects\TestMatch\Data Analysis\data\HTML Files\aus-eng-4th-test-2019-innings')

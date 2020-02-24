@@ -23,57 +23,15 @@ from os import path
 from requests import get
 from selenium import webdriver
 from time import sleep
+from numpy import floor
+from scrape_dicts import NAMES, NUM_MONTHS, BOWL_KEYS
 
 # Global variables
 DIR = path.dirname(path.realpath(__file__))
 
-NAMES = {'Afghanistan': 'AFG', \
-         'Australia': 'AUS', \
-         'Bangladesh': 'BAN', \
-         'England': 'ENG', \
-         'India': 'IND', \
-         'Ireland': 'IRE', \
-         'New Zealand': 'NZL', \
-         'Pakistan': 'PAK', \
-         'South Africa': 'RSA', \
-         'Sri Lanka': 'SRL', \
-         'West Indies': 'WIN', \
-         'Zimbabwe': 'ZIM'}
-
-NUM_MONTHS = {'Jan': '01', \
-              'Feb': '02', \
-              'Mar': '03', \
-              'Apr': '04', \
-              'May': '05', \
-              'Jun': '06', \
-              'Jul': '07', \
-              'Aug': '08', \
-              'Sep': '09', \
-              'Oct': '10', \
-              'Nov': '11', \
-              'Dec': '12'}
-
 DATA_COLS = ['outcome', 'innings', 'team_wkts', 'team_score', 
                                    'team_lead', 'bat_score', 'bat_balls', 'bat_avg', 'bat_arm',
                                    'bowl_balls', 'bowl_runs', 'bowl_wkts', 'bowl_avg', 'bowl_type']
-
-BOWL_KEYS = {'Right-arm medium': 0,
-             'Right-arm medium-fast': 1,
-             'Right-arm fast-medium': 2,
-             'Right-arm fast': 3,
-             'Right-arm offbreak': 4,
-             'Right-arm offbreak, Legbreak': 4,
-             'Legbreak googly': 5,
-             'Legbreak': 5,
-             'Left-arm medium': 6,
-             'Left-arm medium-fast': 7,
-             'Left-arm fast-medium': 8,
-             'Left-arm fast': 9,
-             'Slow left-arm orthodox': 10, 
-             'Slow left-arm chinaman': 11}
-
-    
-
 
 
 def get_players(inns):
@@ -119,7 +77,7 @@ def desc_to_name(desc_txt):
     return bowl, bat
 
 
-def data_row(outcome, desc, pregame_data, innings):
+def data_row(comm_item, pregame_data, innings):
     # Globals
     global bats
     global bowls
@@ -130,6 +88,11 @@ def data_row(outcome, desc, pregame_data, innings):
     # Entry for data
     n_row = pd.DataFrame(index = [0], columns = DATA_COLS)
     
+
+    outcome = comm_item.find('span', class_ = "over-score").text
+    desc = comm_item.find('div', class_ = "description").text
+
+
     # get bowler and batter
     bowl, bat = desc_to_name(desc)
     
@@ -165,8 +128,17 @@ def data_row(outcome, desc, pregame_data, innings):
     
     # Update game situation and player states
     bowls[bowl][0] += 1
-    
+
     if outcome[-1] == 'W':
+
+    	# # Check if run out
+     #    dism = comm_item.find('p', class_ = 'dismissal').text
+     #    if dism.split(' ')[2:4] == "run out":
+    	# 	# Compare out score, 
+     #        diff = bats[dism.split(' ')[1]][0] - int(dism.split(' ')[-7])
+     #        team_score += diff
+     #        team_lead += diff
+
         team_wkts += 1
         bowls[bowl][2] += 1
         bats[bat][1] += 1
@@ -255,7 +227,7 @@ def scrape_game(series_id, game_id):
 
     team1 = all_scorecards[0].find_all('a', class_ = '', role = "button")[0].text
     team2 = all_scorecards[1].find_all('a', class_ = '', role = "button")[0].text
-    teams = [team1.split(' ')[0], team2.split(' ')[0]]
+    teams = [team1[:-12], team2[:-12]]
     inn_order = [0,1,None,None]
     
     # determine if follow on is enforced
@@ -273,9 +245,9 @@ def scrape_game(series_id, game_id):
             inn_order[3] = 1
        
     if inn_order[3] == None:
-    	inn_len = 3
+        inn_len = 3
     else:
-    	inn_len = 4
+        inn_len = 4
         
     del team1, team2, follow_on
     
@@ -386,7 +358,7 @@ def scrape_game(series_id, game_id):
         for comm in comm_elems.find_all('div', class_ = 'item-wrapper'):
             
             # check for end of over
-            if ball < 1:
+            if ball <= 1:
                 # append over to full dataframe
                 if ind > -1:
                     pd_overs = pd_overs.append(pd_temp)
@@ -398,28 +370,27 @@ def scrape_game(series_id, game_id):
                 pd_temp = pd.DataFrame(index = [ind], columns = [1, 2, 3, 4, 5, 6])
             
             txt = comm.find('span', class_ = "over-score").text
+            time = float(comm.find('div', class_ = "time-stamp").text)
+            ball = round(time - floor(time), 1)*10
+
             if txt[-1] == 'w' or txt[-2:] == 'nb':
                 # add extra delivery
-                pd_temp[10*ball + extras] = [comm]
+                pd_temp[10*(ball) + extras] = [comm]
                 
                 # add the column to pd_overs
                 if not 10*ball + extras in pd_overs.columns:
-                    pd_overs[10*ball + extras] = [None] * len(pd_overs.index)
+                    pd_overs[10*(ball) + extras] = [None] * len(pd_overs.index)
                 
                 extras += 1
-                
+ 
             else:
                 pd_temp.at[ind, ball] = comm
                 extras = 0
-                
-                ball -= 1
 
         pd_overs = pd_overs.append(pd_temp)
-            
-        
-        
-        # Run through each delivery and reconstruct innings
 
+
+        # Run through each delivery and reconstruct innings
         for k in reversed(pd_overs.index):  
             
             # get over
@@ -428,8 +399,8 @@ def scrape_game(series_id, game_id):
             # For each ball
             for b in range(1,7):
  
-                if over[b] == None or type(over[b]) == float:
-                    break
+                if type(over[b]) == float:
+                    continue
                 
                 # Check for corresponding extra deliveries
                 searching = True
@@ -439,11 +410,7 @@ def scrape_game(series_id, game_id):
                     if key in pd_overs.columns:
                         try:
                             # Parse illegal delivery
-                            outcome = over[key].find('span', class_ = "over-score").text
-                            desc = over[key].find('div', class_ = "description").text
-                
-                            # Add to main dataframe
-                            data = data.append(data_row(outcome, desc, pregame_data, inns + 1), ignore_index = True)
+                            data = data.append(data_row(over[b], pregame_data, inns + 1), ignore_index = True)
         
                             ind += 1
                             
@@ -455,13 +422,7 @@ def scrape_game(series_id, game_id):
                 
                 
                 # Parse legal delivery
-                outcome = over[b].find('span', class_ = "over-score").text
-                desc = over[b].find('div', class_ = "description").text
-                
-                
-                
-                # Add to main dataframe
-                data = data.append(data_row(outcome, desc, pregame_data, inns + 1), ignore_index = True)
+                data = data.append(data_row(over[b], pregame_data, inns + 1), ignore_index = True)
         
         
         driver.quit()
@@ -477,3 +438,6 @@ def scrape_game(series_id, game_id):
         
         save_path = path.join(DIR, fname)
         data.to_csv(save_path, index = False)
+
+
+scrape_game('19297', '1187672/new-zealand-vs-england-2nd-test-england-in-new-zealand-2019-20')

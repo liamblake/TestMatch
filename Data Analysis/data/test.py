@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import pandas as pd
+from numpy import floor
 
 soup = BeautifulSoup(open("page_source.html"), 'html.parser')
 
@@ -16,18 +17,22 @@ loop = 0
 for comm in comm_elems.find_all('div', class_ = 'item-wrapper'):
     
     # check for end of over
-    if ball < 1:
+    if ball <= 1:
         # append over to full dataframe
         if ind > -1:
             pd_overs = pd_overs.append(pd_temp)
         
         # reset
         ind += 1
-        ball = 6
         extras = 0
         pd_temp = pd.DataFrame(index = [ind], columns = [1, 2, 3, 4, 5, 6])
     
     txt = comm.find('span', class_ = "over-score").text
+    
+
+    time = float(comm.find('div', class_ = "time-stamp").text)
+    ball = round(time - floor(time), 1)*10
+
     if txt[-1] == 'w' or txt[-2:] == 'nb':
         # add extra delivery
         pd_temp[10*ball + extras] = [comm]
@@ -41,8 +46,5 @@ for comm in comm_elems.find_all('div', class_ = 'item-wrapper'):
     else:
         pd_temp.at[ind, ball] = comm
         extras = 0
-        
-        ball -= 1
 
-pd_overs = pd_overs.append(pd_temp)
-print([x.text for x in pd_overs[6]])
+print(pd_overs)

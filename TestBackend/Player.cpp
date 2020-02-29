@@ -34,3 +34,16 @@ string Player::get_full_name()
 	// TODO: Add your implementation code here.
 	return std::string();
 }
+
+
+Stats Player::get_stats() {
+
+	return player_stats;
+}
+
+
+BowlStats Player::get_stats_bowl()
+{
+	// TODO: Add your implementation code here.
+	return BowlStats();
+}

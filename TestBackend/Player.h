@@ -11,18 +11,19 @@ struct Stats {
 	double bowl_avg;
 	double bowl_sr;
 	double bowl_econ;
-
 };
+
+
 
 class Player
 {
   private:
 	std::string first_name;
 	std::string last_name;
+
 	Stats player_stats;
 
-	std::string team;
-	bool bat_hand;
+	int bat_hand;
 	int bowl_type;
 
 
@@ -35,5 +36,8 @@ class Player
 
 	// Return full first and last name
 	std::string get_full_name();
+
+	Stats get_stats();
+	int get_bat_hand();
 };
 

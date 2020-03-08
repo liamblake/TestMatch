@@ -14,36 +14,40 @@ Player::~Player()
 }
 
 // Return initials of first and middle name, e.g. JH
-string Player::get_initials()
-{
-	// TODO: Add your implementation code here.
-	return 0;
+string Player::get_initials() {
+	first_name.at(0) + middle_name.at(0);
+	return "";
 }
 
+
 // Return initials and last name, e.g. JH Smith
-string Player::get_full_initials()
-{
-	// TODO: Add your implementation code here.
-	return std::string();
+string Player::get_full_initials() {
+	return get_initials() + " " + last_name;
+}
+
+
+string Player::get_last_name() {
+	return last_name;
 }
 
 
 // Return full first and last name, e.g. John Henry Smith
-string Player::get_full_name()
-{
-	// TODO: Add your implementation code here.
-	return std::string();
+string Player::get_full_name(bool middle = false) {
+	if (middle) {
+		return first_name + " " + middle_name + " " + last_name;
+	}
+	else {
+		return first_name + " " + last_name;
+	}
 }
 
 
-Stats Player::get_stats() {
 
+Stats Player::get_stats() {
 	return player_stats;
 }
 
 
-BowlStats Player::get_stats_bowl()
-{
-	// TODO: Add your implementation code here.
-	return BowlStats();
+int Player::get_bat_hand() {
+	return bat_hand;
 }

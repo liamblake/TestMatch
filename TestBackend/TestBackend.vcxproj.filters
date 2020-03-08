@@ -24,27 +24,15 @@
     <ClInclude Include="Cards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThorSerialize\JsonThor.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ThorSerialize\Traits.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestBackend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cards.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="json_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

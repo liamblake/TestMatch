@@ -19,6 +19,7 @@ class Player
 {
   private:
 	std::string first_name;
+	std::string middle_name;
 	std::string last_name;
 
 	Stats player_stats;
@@ -33,9 +34,10 @@ class Player
 
 	std::string get_initials();
 	std::string get_full_initials();
+	std::string get_last_name();
 
-	// Return full first and last name
-	std::string get_full_name();
+	// Return full first, last name
+	std::string get_full_name(bool middle = false);
 
 	Stats get_stats();
 	int get_bat_hand();

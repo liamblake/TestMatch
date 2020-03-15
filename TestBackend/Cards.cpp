@@ -10,6 +10,14 @@
 #include <string>
 
 /*
+	Converts bowl-type to 
+*/
+int encode_bowltype(std::string bowltype) {
+	if 
+}
+
+
+/*
 	PlayerCard implementations
 */
 PlayerCard::PlayerCard(Player* c_player) {

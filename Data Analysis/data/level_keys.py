@@ -19,20 +19,20 @@ COUNTRY_CODES = {'Afghanistan': 'AFG', \
                  'ICC World XI': 'ICC'}
 
 
-BOWL_KEYS = {'Right-arm medium': 0, \
-             'Right-arm medium-fast': 1, \
-             'Right-arm fast-medium': 2, \
-             'Right-arm fast': 3, \
-             'Right-arm offbreak': 4, \
-             'Right-arm offbreak, Legbreak': 4, \
-             'Legbreak googly': 5, \
-             'Legbreak': 5, \
-             'Left-arm medium': 6, \
-             'Left-arm medium-fast': 7, \
-             'Left-arm fast-medium': 8, \
-             'Left-arm fast': 9, \
-             'Slow left-arm orthodox': 10, \
-             'Slow left-arm chinaman': 11}         
+BOWL_KEYS = {'Right-arm medium': 'rm', \
+             'Right-arm medium-fast': 'rmf', \
+             'Right-arm fast-medium': 'rfm', \
+             'Right-arm fast': 'rf', \
+             'Right-arm offbreak': 'rob', \
+             'Right-arm offbreak, Legbreak': 'rob', \
+             'Legbreak googly': 'rls', \
+             'Legbreak': 'rls', \
+             'Left-arm medium': 'lm', \
+             'Left-arm medium-fast': 'lmf', \
+             'Left-arm fast-medium': 'lfm', \
+             'Left-arm fast': 'lf', \
+             'Slow left-arm orthodox': 'lo', \
+             'Slow left-arm chinaman': 'lc'}         
 
 
 NUM_MONTHS = {'Jan': '01', \

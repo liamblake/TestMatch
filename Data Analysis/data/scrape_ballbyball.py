@@ -267,6 +267,7 @@ def scrape_game(series_id, game_id):
         
         # Get player name
         name = soup.find_all('div', class_ = 'icc-home')[0].text.split(' / ')[2]
+
         name = name.split(' ')[1]
 
         

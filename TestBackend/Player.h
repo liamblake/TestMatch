@@ -29,7 +29,7 @@ class Player
 
 
   public:
-	Player();
+	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, Stats stats, bool left_arm, std::string bowl_type);
 	~Player();
 
 	std::string get_initials();

@@ -9,13 +9,6 @@
 
 #include <string>
 
-/*
-	Converts bowl-type to 
-*/
-int encode_bowltype(std::string bowltype) {
-	if 
-}
-
 
 /*
 	PlayerCard implementations
@@ -51,5 +44,9 @@ BatStats BatterCard::get_sim_stats() {
 }
 
 void update_score(std::string outcome);
-void dismiss(Dismissal desc);
+
+
+void BatterCard::dismiss(std::string d_mode, Player* d_bowler, Player* d_fielder = nullptr) {
+
+}
 std::string get_card(void);

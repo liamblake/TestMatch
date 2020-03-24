@@ -3,20 +3,40 @@
 #include <string>
 #include "Player.h"
 
-// Stores all stats required from the batter to simulate
+/*
+	Structures for storing related data in one object
+*/
+
+// Stores career batting stats of a player
 struct BatStats {
-	int balls;
-	int runs;
+	// Career averages
+	double strike_rate;
 	double bat_avg;
-	int bat_hand;		// 0: right, 1: left
+
+	// Batting hand
+	// 0: right, 1: left
+	int bat_hand;
+
+	// 
 };
 
+// Stores bowling career stats of a player
 struct BowlStats {
-	int balls;
-	int runs;
-	int wickets;
+	// Career averages
 	double bowl_avg;
-	int bowl_type;		// 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf, 10: slo, 11: slu
+	double strike_rate;
+
+	// Bowling type
+	// 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf, 10: slo, 11: slu
+	int bowl_type;		
+};
+
+struct BatSimStats {
+	struct BowlStats;
+
+	int runs;
+	int balls;
+
 };
 
 
@@ -33,7 +53,7 @@ struct Dismissal {
 };
 
 
-// Abstract base class for bowler and batter cards
+// Abstract base class for bowler and batter cards.
 class PlayerCard {
 
   protected:
@@ -43,8 +63,9 @@ class PlayerCard {
 	// Constructor
 	PlayerCard(Player* c_player);
 	
-	virtual void update_score(std::string outcome) = 0;
-	virtual std::string get_card() = 0;
+	// Pure virtual methods
+	virtual void update_score(int outcome) = 0;
+	virtual std::string get_card(void) = 0;
 
 	// Default destructor
 
@@ -65,18 +86,18 @@ class BatterCard : public PlayerCard {
   public:
 	BatterCard(Player* c_player);
 
-	BatStats get_sim_stats();
-	void update_score(std::string outcome);
-	void dismiss(Dismissal desc);
+	BatStats get_sim_stats(void);
+	void update_score(int outcome);
+	void dismiss(std::string d_mode, Player* d_bowler, Player* d_fielder = nullptr);
 	std::string get_card(void);
 
 };
 
 
-//
+// Contains all information relevant to a bowler bowling in an innings
 class BowlerCard : public PlayerCard {
 
-private:
+  private:
 	int balls;
 	int overs;
 	int maidens;
@@ -85,11 +106,11 @@ private:
 	int no_balls;
 	int wides;
 
-public:
+  public:
 	BowlerCard(Player* c_player);
 
-	BowlStats get_sim_stats();
-	void update_score(std::string outcome);
+	BowlStats get_sim_stats(void);
+	void update_score(int outcome);
 	std::string get_card(void);
 
 };

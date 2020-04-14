@@ -7,20 +7,23 @@
 	Structures for storing related data in one object
 */
 
-// Stores career batting stats of a player
+// Stores all relevant data from batter for simulation
 struct BatStats {
 	// Career averages
-	double strike_rate;
 	double bat_avg;
+	double strike_rate;
 
 	// Batting hand
-	// 0: right, 1: left
-	int bat_hand;
+	// false: right, true: left
+	bool bat_hand;
 
-	// 
+	// Current innings
+	int runs;
+	int balls; 
+
 };
 
-// Stores bowling career stats of a player
+// Stores all relevant data from bowler for simulation
 struct BowlStats {
 	// Career averages
 	double bowl_avg;
@@ -29,15 +32,18 @@ struct BowlStats {
 	// Bowling type
 	// 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf, 10: slo, 11: slu
 	int bowl_type;		
-};
 
-struct BatSimStats {
-	struct BowlStats;
-
-	int runs;
+	// Current innings
 	int balls;
+	int runs;
+	int wickets;
 
+	int spell_balls;
+	int spell_runs;
+	int spell_wkts;
+	
 };
+
 
 
 // Stores all information relating to the dismissal of a batter

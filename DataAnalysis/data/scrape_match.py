@@ -26,6 +26,33 @@ DATA_COLS = ['Outcome', 'Dismissal', 'Day', 'Innings', 'HostCountry', \
              'Commentary']
 
 
+def scroll_down(driver):
+    """A method for scrolling to bottom of a dynamically loading page.
+
+    From https://stackoverflow.com/questions/48850974/selenium-scroll-to-end-of-page-in-dynamically-loading-webpage/48851166#48851166 
+    """
+
+    # Get scroll height.
+    last_height = driver.execute_script("return document.body.scrollHeight")
+
+    while True:
+
+        # Scroll down to the bottom.
+        driver.execute_script("window.scrollTo(0, 0);")
+        sleep(0.25)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        sleep(1)
+
+        # Calculate new scroll height and compare with last scroll height.
+        new_height = driver.execute_script("return document.body.scrollHeight")
+
+        if new_height == last_height:
+              break
+
+
+        last_height = new_height
+
+
 def scrape_players(pd_row):
 
     def get_players(innings1, innings2):
@@ -258,3 +285,25 @@ def scrape_ballbyball(pd_row, players):
                     total2 = add_score(pd_row['Score4'], total2)
 
     # Nested if statements prevent unnessecary checking if game lasted less than 4 innings
+
+
+
+    # 
+    lead = 0
+
+    # Each innings
+    for inns in range(1, len(inns_order) + 1):
+        score = 0
+        data = DataFrame(columns = DATA_COLS)
+
+
+
+
+        # Prepare for next innings
+        if inns != len(inns_order):
+            # If follow on, maintain lead
+            if inns != 2 or not follow_on:
+                # Change lead
+                lead = -lead
+
+            team_bat = inns_order[inns - 1]

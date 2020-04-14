@@ -19,14 +19,14 @@ for ind in matches.index:
 
 	# Load player csv file
 	try:
-		filename = 'players/' + row['Team1'] + row['Team2'] + pd_row['StartDate'].replace(' ', '') + '.csv'
+		filename = 'players/' + row['Team1'] + row['Team2'] + row['StartDate'].replace(' ', '') + '.csv'
 		players = read_csv(filename)
 	except FileNotFoundError:
 		print('Unable to load player CSV file.')
 		continue
 		
 	try:
-		scrape_match(row, players)
+		scrape_ballbyball(row, players)
 		no_succ += 1
 	except (AttributeError, IndexError, ValueError) as e:
 		print("Scrape failed")

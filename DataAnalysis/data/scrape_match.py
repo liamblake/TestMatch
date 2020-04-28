@@ -1,7 +1,7 @@
 """
 
 """
-
+from time import sleep
 
 from pandas import DataFrame, Series
 from requests import get
@@ -16,41 +16,14 @@ PLAYER_COLS = ['Initials', 'Surname', 'Matches', 'BatAvg', 'BallsFaced', 'BatSR'
 
 
 # Each value to be extracted for each delivery
-DATA_COLS = ['Outcome', 'Dismissal', 'Day', 'Innings', 'HostCountry', \
-             'BatTeam', 'TeamWkts', 'TeamScore', 'TeamLead', \
+DATA_COLS = ['Outcome', 'Dismissal', 'Innings', 'HostCountry', \
+             'InnBalls', 'BatTeam', 'TeamWkts', 'TeamScore', 'TeamLead', \
              'Batter', 'BatScore', 'BatBalls', 'BatAvg', 'BatSR', 'BatArm', \
-             'BowlTeam', 
+             'BowlTeam', \
              'Bowler', 'BowlBalls', 'BowlRuns', 'BowlWkts', 'BowlAvg', 'BowlSR', 'BowlType', \
              'SpellBalls', 'SpellRuns', 'SpellWkts', \
              'TossWin', 'TossElect', 'BatTeamTotalRuns', 'BatTeamTotalWkts', 'BowlTeamTotalRuns', 'BowlTeamTotalWkts', \
              'Commentary']
-
-
-def scroll_down(driver):
-    """A method for scrolling to bottom of a dynamically loading page.
-
-    From https://stackoverflow.com/questions/48850974/selenium-scroll-to-end-of-page-in-dynamically-loading-webpage/48851166#48851166 
-    """
-
-    # Get scroll height.
-    last_height = driver.execute_script("return document.body.scrollHeight")
-
-    while True:
-
-        # Scroll down to the bottom.
-        driver.execute_script("window.scrollTo(0, 0);")
-        sleep(0.25)
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        sleep(1)
-
-        # Calculate new scroll height and compare with last scroll height.
-        new_height = driver.execute_script("return document.body.scrollHeight")
-
-        if new_height == last_height:
-              break
-
-
-        last_height = new_height
 
 
 def scrape_players(pd_row):
@@ -151,7 +124,6 @@ def scrape_players(pd_row):
         strainer = SoupStrainer('p', class_ = 'ciPlayerinformationtxt')
         soup = BeautifulSoup(page.content, 'html.parser', parse_only = strainer)
 
-        bat_arm = None
         bowl_arm_txt = None
         for c in soup:
             if c.text[:13] == "Batting style":
@@ -207,20 +179,25 @@ def scrape_ballbyball(pd_row, players):
         # Get scroll height.
         last_height = driver.execute_script("return document.body.scrollHeight")
 
+        changed = 0
+        SCROLL_NUM_LIM = 3      # Number of scrolls required without a change in page height before returning
         while True:
-
+            
             # Scroll down to the bottom.
             driver.execute_script("window.scrollTo(0, 0);")
-            sleep(0.25)
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            sleep(1)
+            sleep(1.5)
 
             # Calculate new scroll height and compare with last scroll height.
             new_height = driver.execute_script("return document.body.scrollHeight")
 
-            if new_height == last_height:
-                  break
+            if changed == SCROLL_NUM_LIM:
+                break
 
+            if new_height != last_height:
+                changed = 0
+            else:
+                changed += 1
 
             last_height = new_height
 
@@ -286,18 +263,169 @@ def scrape_ballbyball(pd_row, players):
 
     # Nested if statements prevent unnessecary checking if game lasted less than 4 innings
 
+    # Extract commentary URL
+    s_url = "https://www.espncricinfo.com/ci/engine/match/" + str(pd_row['urlEnd']) + ".html"
+    page = get(s_url)
+    strainer = SoupStrainer('a', class_ = 'commentary react-router-link')
+    soup = BeautifulSoup(page.content, 'html.parser', parse_only = strainer)
 
+    c_url = soup.find('a', href = True)['href']
 
     # 
     lead = 0
 
     # Each innings
     for inns in range(1, len(inns_order) + 1):
-        score = 0
+        print('Scraping innings ' + str(inns))
+
+        # Load ball commentary and scroll
+        url ="https://www.espncricinfo.com" + c_url + "?innings=" + str(inns)
+        driver = webdriver.Firefox(executable_path = 'geckodriver.exe')
+        driver.get(url)
+        
+        # scroll to bottom of page
+        sleep(0.5)
+        driver_scroll_ballbyball(driver)
+
+        # Parse with BeautifulSoup
+        strainer = SoupStrainer('div', class_ = 'item-wrapper')
+        soup = BeautifulSoup(driver.page_source, 'html.parser', parse_only = strainer)
+        driver.close()
+
+        times = list(reversed(soup.find_all('div', class_ = 'time-stamp')))
+        outcomes = list(reversed(soup.find_all('span', class_ = 'over-score')))
+        descs = list(reversed(soup.find_all('div', class_ = 'description')))
+
+        # All dismissal descriptions in innings
+        disms = list(reversed(soup.find_all('p', class_ = 'dismissal')))
+
+        # Prepare player dictionaries
+        bat_stats = {}
+        bowl_stats = {}
+
+        # Bowler spells
+        curr_bowl = []
+        last_bowl = []
+
+        # Team score
+        t_score = 0
+        t_wkts = 0
+
+
         data = DataFrame(columns = DATA_COLS)
+        data['InnBalls'] = range(len(times))
+
+        # Fill in match information
+        data['HostCountry'] = pd_row['Country']
+        data['TossWin'] = pd_row['TossWin']
+        data['TossElect'] = pd_row['TossElect']
+
+        # Fill in innings information
+        data['Innings'] = inns
+        data['BatTeam'] = pd_row['Team' + str(inns_order[inns - 1] + 1)]
+        data['BowlTeam'] = pd_row['Team' + str((not inns_order[inns - 1]) + 1)]
+
+        if inns_order[inns - 1]:
+            data['BatTeamTotalRuns'] = total2[0]
+            data['BatTeamTotalWkts'] = total2[1]
+            data['BowlTeamTotalRuns'] = total1[0]
+            data['BowlTeamTotalWkts'] = total1[1]
+
+        else:
+            data['BatTeamTotalRuns'] = total1[0]
+            data['BatTeamTotalWkts'] = total1[1]
+            data['BowlTeamTotalRuns'] = total2[0]
+            data['BowlTeamTotalWkts'] = total2[1]
 
 
 
+        # Iterate through each ball
+        for ball, over, outcome, desc in zip(range(len(times)), times, outcomes, descs):
+            if ball == 0 and over.text != '0.1':
+                raise AttributeError('Missing deliveries, cannot scrape')
+
+            data.at[ball,'Outcome'] = outcome.text
+            data.at[ball,'Commentary'] = desc.text
+
+
+            # Get bowler and batter
+            [bowler, batter] = desc.text.split(', ')[0].split(' to ')
+            bowler_full = bowler
+            batter_full = batter
+
+            if False and batter not in bat_stats.keys():
+                # Find in pregame player stats
+                possible = players[players['Surname'].str == batter].values
+                if len(possible) == 0:
+                    # We have a problem - ditch this match and move on
+                    raise AttributeError('Cannot resolve player name conflict: multiple players with name %s' % (batter))
+
+                if len(possible) == 1:
+                    bat_stats.update(possible.to_dict('records'))
+
+
+            # Team score detail
+            data.at[ball, 'TeamScore'] = t_score
+            data.at[ball, 'TeamWkts'] = t_wkts
+            data.at[ball, 'TeamLead'] = lead
+
+            if outcome.text == 'W':
+                # Handle wicket
+
+                # Determine mode of dimissal
+                dimis_str = disms[t_wkts].text
+                dimis_str = dimis_str.replace(batter_full, "")
+                data.at[ball, 'Dismissal'] = dismis_str.split(" ")[1]
+
+                # Handle runout
+
+                t_wkts += 1
+
+                continue
+
+            else:
+                data.at[ball, 'Dismissal'] = 'no'
+
+            # Update team score, batter and bowler figures
+            if outcome.text[-2:] == 'nb':
+                # Assume extra runs on no ball were scored by batter
+                t_score += int(outcome.text[:-2])
+                lead += int(outcome.text[:-2])
+            
+            elif outcome.text[-1:] == 'w':
+                t_score += int(outcome.text[:-1])
+                lead += int(outcome.text[:-1])
+
+            elif outcome.text[-2:] == 'lb':
+                t_score += int(outcome.text[:-2])
+                lead += int(outcome.text[:-2])
+
+            elif outcome.text[-1:] == 'b':
+                t_score += int(outcome.text[:-1])
+                lead += int(outcome.text[:-1])
+
+            else:
+                t_score += int(outcome.text)
+                lead += int(outcome.text)
+
+
+
+
+            # DATA_COLS = ['Outcome', 'Dismissal', 'Innings', 'HostCountry', \
+            #  'InnBalls', 'BatTeam', 'TeamWkts', 'TeamScore', 'TeamLead', \
+            #  'Batter', 'BatScore', 'BatBalls', 'BatAvg', 'BatSR', 'BatArm', \
+            #  'BowlTeam', \
+            #  'Bowler', 'BowlBalls', 'BowlRuns', 'BowlWkts', 'BowlAvg', 'BowlSR', 'BowlType', \
+            #  'SpellBalls', 'SpellRuns', 'SpellWkts', \
+            #  'TossWin', 'TossElect', 'BatTeamTotalRuns', 'BatTeamTotalWkts', 'BowlTeamTotalRuns', 'BowlTeamTotalWkts', \
+            #  'Commentary']
+
+
+        # Save as .csv
+        save_str = pd_row['Team1'] + pd_row['Team2'] + '_' + pd_row['StartDate'].replace(' ', '') + '_inn' + str(inns)
+
+        # Output data to CSV file
+        data.to_csv('ballbyball/' + save_str + '.csv', index = False)
 
         # Prepare for next innings
         if inns != len(inns_order):

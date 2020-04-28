@@ -19,7 +19,9 @@ struct BatStats {
 
 	// Current innings
 	int runs;
-	int balls; 
+	int balls;
+	int fours; 
+	int sixes;
 
 };
 
@@ -35,12 +37,16 @@ struct BowlStats {
 
 	// Current innings
 	int balls;
+	int overs;
+	int maidens;
 	int runs;
 	int wickets;
 
 	int spell_balls;
+	int spell_overs;
+	int spell_maidens;
 	int spell_runs;
-	int spell_wkts;
+	int spell_wickets;
 	
 };
 
@@ -82,10 +88,7 @@ class PlayerCard {
 class BatterCard : public PlayerCard {
 
   private:
-	  int runs;
-	  int balls;
-	  int fours; 
-	  int sixes;
+	  BatStats stats;
 	  bool out;
 	  Dismissal dism;
 
@@ -104,19 +107,16 @@ class BatterCard : public PlayerCard {
 class BowlerCard : public PlayerCard {
 
   private:
-	int balls;
-	int overs;
-	int maidens;
-	int runs;
-	int wickets;
-	int no_balls;
-	int wides;
+	BowlStats stats;
+	bool is_active;
 
   public:
 	BowlerCard(Player* c_player);
 
 	BowlStats get_sim_stats(void);
 	void update_score(int outcome);
+	void start_new_spell();
+
 	std::string get_card(void);
 
 };

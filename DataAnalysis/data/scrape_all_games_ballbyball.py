@@ -3,6 +3,7 @@
 """
 
 from pandas import DataFrame, read_csv
+
 from scrape_match import scrape_ballbyball
 
 # Import
@@ -15,22 +16,24 @@ no_succ = 0
 for ind in matches.index:
 
 	row = matches.loc[ind]
-	print("Scraping %s v %s, %s" % (row['Team1'], row['Team2'], row['StartDate']))
+	print("Scraping match %i:\n%s v %s,\n%s" % (ind, row['Team1'], row['Team2'], row['StartDate']))
 
 	# Load player csv file
 	try:
-		filename = 'players/' + row['Team1'] + row['Team2'] + row['StartDate'].replace(' ', '') + '.csv'
+		filename = 'players/players_' + row['Team1'] + row['Team2'] + '_' + row['StartDate'].replace(' ', '') + '.csv'
 		players = read_csv(filename)
 	except FileNotFoundError:
-		print('Unable to load player CSV file.')
+		print('Unable to load player CSV file: tried %s.' % (filename))
 		continue
 		
 	try:
 		scrape_ballbyball(row, players)
 		no_succ += 1
-	except (AttributeError, IndexError, ValueError) as e:
+	except (AttributeError, IndexError, ValueError, TypeError) as e:
 		print("Scrape failed")
 		print(e)
+
+	print('===============================')
 
 
 print("====== Scraping Finished ======")

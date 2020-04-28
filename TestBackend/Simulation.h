@@ -8,7 +8,7 @@
 // Contains all information describing a team and playing XI
 struct Team {
 	std::string name;
-	Player*[11] players;
+	Player* players [11];
 
   // Indexes refer to players array
 	int captain;
@@ -67,8 +67,8 @@ class Innings {
   	int team_lead;
   	int team_wkts;
 
-  	BatterCard*[11] batters;
-  	BowlerCard*[11] bowlers;
+  	BatterCard* batters [11];
+  	BowlerCard* bowlers [11];
 
   	int striker;
   	int nonstriker;

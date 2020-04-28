@@ -23,27 +23,42 @@ PlayerCard::PlayerCard(Player* c_player) {
 */
 BatterCard::BatterCard(Player* c_player) : PlayerCard(c_player) {
 	// Assume that batter has arrived at crease when object is created
-	runs = 0;
-	balls = 0;
-	fours = 0;
-	sixes = 0;
+
+	// Career averages
+	stats.bat_avg = c_player->get_bat_avg;
+	stats.strike_rate = c_player->get_bat_sr;
+
+	// Batting hand
+	// false: right, true: left
+	stats.bat_hand = c_player->get_bat_hand;
+
+	stats.runs = 0;
+	stats.balls = 0;
+	stats.fours = 0;
+	stats.sixes = 0;
+
 	out = false;
 
 }
 
 BatStats BatterCard::get_sim_stats() {
-	BatStats output;
-
-	output.balls = balls;
-	output.runs = runs;
-	output.bat_avg = player->get_stats().bat_avg;
-	output.bat_hand = player->get_bat_hand();
-
-	return(output);
-
+	return stats;
 }
 
-void update_score(std::string outcome);
+void BatterCard::update_score(int outcome) {
+	.// Needs encoder
+
+	if (outcome == "W") {
+		// Assume that dismiss has also been called with appropriate details
+		
+	} else if (outcome == "0") {
+		// Dot ball
+		stats.balls += 1;
+
+	} else if (outcome == "1") {
+
+	}
+}
 
 
 void BatterCard::dismiss(std::string d_mode, Player* d_bowler, Player* d_fielder = nullptr) {

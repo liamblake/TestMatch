@@ -4,19 +4,23 @@
 
 using namespace std;
 
-Player::Player()
-{
+Player::Player(string c_first_name, string c_middle_name, string c_last_name, string c_team, Stats stats) {
+	first_name = c_first_name;
+	middle_name = c_middle_name;
+	last_name = c_last_name;
+
+	team = c_team;
+
+	player_stats = stats;
+
 }
 
-
-Player::~Player()
-{
-}
 
 // Return initials of first and middle name, e.g. JH
 string Player::get_initials() {
-	first_name.at(0) + middle_name.at(0);
-	return "";
+	
+	string init = first_name.substr(0,1) + middle_name.substr(0,1);
+	return init;
 }
 
 
@@ -47,7 +51,39 @@ Stats Player::get_stats() {
 	return player_stats;
 }
 
+// Specific getters for stats
+int Player::get_innings() {
+	return player_stats.innings;
+}
 
-int Player::get_bat_hand() {
-	return bat_hand;
+double Player::get_bat_avg() {
+	return player_stats.bat_avg;
+}
+
+double Player::get_bat_sr() {
+	return player_stats.bat_sr;
+}
+
+int Player::get_balls_bowled() {
+	return player_stats.balls_bowled;
+}
+
+double Player::get_bowl_avg() {
+	return player_stats.bowl_avg;
+}
+
+double Player::get_bowl_sr() {
+	return player_stats.bowl_sr;
+}
+
+double Player::get_bowl_econ() {
+	return player_stats.bowl_econ;
+}
+
+bool Player::get_bat_hand() {
+	return player_stats.bat_hand;
+}
+
+int Player::get_bowl_type() {
+	return player_stats.bowl_type;
 }

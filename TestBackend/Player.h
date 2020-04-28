@@ -12,6 +12,9 @@ struct Stats {
 	double bowl_avg;
 	double bowl_sr;
 	double bowl_econ;
+
+	bool bat_hand;
+	int bowl_type;
 };
 
 
@@ -29,13 +32,12 @@ class Player
 
 	Stats player_stats;
 
-	bool bat_hand;
-	int bowl_type;
+
 
 
   public:
-	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, std::string team, Stats stats, bool left_arm, std::string bowl_type);
-	~Player();
+	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, std::string c_team, Stats stats);
+	// Default destructor
 
 	// Getters
 	std::string get_initials();
@@ -48,10 +50,19 @@ class Player
 	std::string get_team();
 
 	Stats get_stats();
-	
+
+	// Specific getters for stats
+	int get_innings();
+	double get_bat_avg();
+	double get_bat_sr();
+
+	int get_balls_bowled();
+	double get_bowl_avg();
+	double get_bowl_sr();
+	double get_bowl_econ();
+
 	bool get_bat_hand();
 	int get_bowl_type();
-
 
 };
 

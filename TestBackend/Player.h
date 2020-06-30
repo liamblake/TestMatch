@@ -32,9 +32,6 @@ class Player
 
 	Stats player_stats;
 
-
-
-
   public:
 	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, std::string c_team, Stats stats);
 	// Default destructor

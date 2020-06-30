@@ -3,7 +3,7 @@
 #include <string>
 
 #include "Player.h"
-#include "Cards.h"
+#include "Cards.h" 
 
 // Contains all information describing a team and playing XI
 struct Team {
@@ -24,6 +24,7 @@ struct Ball {
   Player* batter; 
 
   int outcome;
+  bool legal;
   //std::string commentary
 
 };
@@ -35,17 +36,17 @@ class Over {
 
     Ball** balls;
     int num_balls;
+    int num_legal_delivs;
 
   public:
     // Constructor
-    Over(int over_num);
+    Over(int c_over_num);
 
     // going to need to dynamically increment array size somehow
-    void add_ball(int outcome);
+    void add_ball(Ball* ball);
 
     // Destructor
     ~Over();
-
 
 };
 
@@ -67,8 +68,13 @@ class Innings {
   	int team_lead;
   	int team_wkts;
 
+    // Ball-by-ball detail
+    Ball* 
+
+    // Scorecards
   	BatterCard* batters [11];
   	BowlerCard* bowlers [11];
+
 
   	int striker;
   	int nonstriker;
@@ -96,11 +102,33 @@ class Innings {
     void simulate();
 
     // Getters
-    BatterCard* get_batters();
-    BowlerCard* get_bowlers();
-
-
-
+    BatterCard** get_batters();
+    BowlerCard** get_bowlers();
 
 };
 
+
+class Match {
+
+  private:
+
+    // Pitch conditions
+    double pitch_pace;
+    double pitch_spin;
+    double pitch_flat;
+
+
+    Innings* inns[4];
+
+    void simulate_toss();
+
+
+
+  public:
+    Match(Team home_team, Team away_team);
+
+    void pregame();
+    void start();
+
+
+};

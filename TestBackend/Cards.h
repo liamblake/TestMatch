@@ -53,7 +53,8 @@ struct BowlStats {
 
 
 // Stores all information relating to the dismissal of a batter
-struct Dismissal {
+class Dismissal {
+  private:
 	// Mode of dismissal:
 	// 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
 	int mode;
@@ -61,6 +62,14 @@ struct Dismissal {
 	Player* fielder;
 
 	// if bowled or lbw, set fielder = NULL
+
+  public:
+	Dismissal(int c_mode, Player* c_bowler, Player* c_fielder = NULL);
+	
+	std::string print_dism();
+	int get_mode();
+	Player* get_bowler();
+	Player* get_fielder();
 
 };
 
@@ -76,8 +85,8 @@ class PlayerCard {
 	PlayerCard(Player* c_player);
 	
 	// Pure virtual methods
-	virtual void update_score(int outcome) = 0;
-	virtual std::string get_card(void) = 0;
+	virtual void update_score(std::string outcome) = 0;
+	virtual std::string print_card(void) = 0;
 
 	// Default destructor
 
@@ -90,15 +99,17 @@ class BatterCard : public PlayerCard {
   private:
 	  BatStats stats;
 	  bool out;
-	  Dismissal dism;
+	  Dismissal* dism;
 
   public:
 	BatterCard(Player* c_player);
 
 	BatStats get_sim_stats(void);
-	void update_score(int outcome);
-	void dismiss(std::string d_mode, Player* d_bowler, Player* d_fielder = nullptr);
-	std::string get_card(void);
+	void update_score(std::string outcome);
+	void dismiss(int d_mode, Player* d_bowler, Player* d_fielder = nullptr);
+	std::string print_card(void);
+
+	~BatterCard();
 
 };
 
@@ -114,9 +125,9 @@ class BowlerCard : public PlayerCard {
 	BowlerCard(Player* c_player);
 
 	BowlStats get_sim_stats(void);
-	void update_score(int outcome);
+	void update_score(std::string outcome);
 	void start_new_spell();
 
-	std::string get_card(void);
+	std::string print_card(void);
 
 };

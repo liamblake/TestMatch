@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "Player.h"
 #include <string>
 
@@ -36,7 +35,7 @@ string Player::get_last_name() {
 
 
 // Return full first and last name, e.g. John Henry Smith
-string Player::get_full_name(bool middle = false) {
+string Player::get_full_name(bool middle) {
 	if (middle) {
 		return first_name + " " + middle_name + " " + last_name;
 	}

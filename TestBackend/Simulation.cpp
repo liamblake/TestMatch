@@ -4,7 +4,7 @@
 #include "Simulation.h"
 #include "Player.h"
 #include "Cards.h"
-#include "Encoders.h"
+#include "Utility.h"
 
 /* Over class implementations */
 Over::Over(int c_over_num) {
@@ -34,12 +34,52 @@ Over::~Over() {
 }
 
 
+
 /* Innings implementations */
-  	// Private methods used in simulation process
-  	void simulate_delivery();
+int Innings::inns_no = 0;
+
+// Constructor
+Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float c_day) {
+
+  team_bat = c_team_bat;
+  team_bowl = c_team_bowl;
+
+  lead = c_lead;
+  inns_no++;
+
+}
+
+// Private methods used in simulation process
+void Innings::simulate_delivery() {
+
+  BatterCard* batter = batters[striker];
+  BowlerCard* bowler = batters[bowl_1];
+
+
+  int runs;
+
+  if (runs % 2 == 1 && runs != 5) {
+    // Rotate strike
+  }
+
+
+  // Add additional time, sampled from modified normal distribution
+  
+
+  // Check time of day
+
+  // Check for declaration
+  if (check_declaration()) {
+    inns_open = false;
+  }
+
+}
 
     // Check for declaration
-  	bool check_declaration();
+bool check_declaration() {
+  // TODO: implement declaration checking
+  return false;
+}
 
     // Choose next bowler based off of last bowler (from end)
     Player* choose_bowler(BowlerCard last_bowler);
@@ -47,9 +87,6 @@ Over::~Over() {
     // Select a fielder for an appropriate mode of dismissial
   	Player* select_fielder();
 
-
-  	// Constructor
-  	Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_inns_no, int lead);
   	
     void simulate();
 

@@ -3,14 +3,14 @@
    Contains all class implemetations 
 */
 
-#include "pch.h"
 #include "Player.h"
 #include "Cards.h"
-#include "Encoders.h"
+#include "Utility.h"
 
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ using namespace std;
 /* 
 	Dimissial implementations
 */
-Dismissal::Dismissal(int c_mode, Player* c_bowler = nullptr, Player* c_fielder = nullptr) {
+Dismissal::Dismissal(int c_mode, Player* c_bowler, Player* c_fielder) {
 	mode = c_mode;
 	bowler = c_bowler;
 	fielder = c_fielder;
@@ -145,7 +145,7 @@ void BatterCard::update_score(string outcome) {
 		stats.sixes += 1;
 
 	} else if (outcome.substr(1,2) == "nb") {
-		int runs = outcome.at(0) - '0';
+		int runs = outcome.at(0) - '0' - 1;
 		stats.runs += runs;
 		stats.balls += 1;
 
@@ -164,7 +164,7 @@ void BatterCard::update_score(string outcome) {
 }
 
 
-void BatterCard::dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr) {
+void BatterCard::dismiss(int d_mode, Player* d_bowler, Player* d_fielder) {
 	// Construct Dismissal structure
 	dism = new Dismissal(d_mode, d_bowler, d_fielder);
 	out = true;
@@ -183,11 +183,16 @@ string BatterCard::print_card(void) {
 	}
 
 	// Stats
-	output += to_string(stats.runs) + "(" + to_string(stats.balls) + "b " + to_string(stats.fours) + "x4 " + to_string(stats.sixes) + "x6) SR: ";
-	float sr = 100* stats.runs / stats.runs;
-	stringstream ss;
-	ss << fixed << setprecision(2) << sr;
-	output += ss.str();
+	output += to_string(stats.runs) + " (" + to_string(stats.balls) + "b " + to_string(stats.fours) + "x4 " + to_string(stats.sixes) + "x6) SR: ";
+	
+	if (stats.balls == 0) {
+		output += "-";
+	} else {
+		float sr = 100* stats.runs / stats.balls;
+		stringstream ss;
+		ss << fixed << setprecision(2) << sr;
+		output += ss.str();
+	}
 
 	return output;
 }
@@ -195,4 +200,108 @@ string BatterCard::print_card(void) {
 
 BatterCard::~BatterCard() {
 	delete dism;
+}
+
+
+
+
+/*
+	BatterCard implementations
+*/
+BowlerCard::BowlerCard(Player* c_player) : PlayerCard(c_player) {
+	stats.bowl_avg = c_player->get_bowl_avg();
+	stats.strike_rate = c_player->get_bowl_sr();
+	stats.bowl_type = c_player->get_bowl_type();		
+
+	stats.balls = 0;
+	stats.overs = 0;
+	stats.over_balls = 0;
+	stats.maidens = 0;
+	stats.runs = 0;
+	stats.wickets = 0;
+
+	stats.spell_balls = 0;
+	stats.spell_overs = 0;
+	stats.spell_maidens = 0;
+	stats.spell_runs = 0;
+	stats.spell_wickets = 0;
+
+	is_maiden = true;
+
+	active = false;
+}
+
+BowlStats BowlerCard::get_sim_stats(void) {
+	return stats;
+}
+
+void BowlerCard::start_new_spell() {
+	stats.spell_balls = 0;
+	stats.spell_overs = 0;
+	stats.spell_maidens = 0;
+	stats.spell_runs = 0;
+	stats.spell_wickets = 0;
+
+	active = true;
+
+}
+
+string BowlerCard::print_card(void) {
+	string output = player->get_full_initials() + " ";
+
+	output += to_string(stats.overs) + "." + to_string(stats.over_balls) + "-";
+	output += to_string(stats.maidens) + "-";
+	output += to_string(stats.runs) + "-";
+	output += to_string(stats.wickets);
+
+	return output;
+}
+
+void BowlerCard::add_over() {
+
+	if (stats.over_balls == 5) {
+		stats.overs += 1;
+		stats.over_balls = 0;
+
+		if (is_maiden) {
+			stats.maidens += 1;
+			is_maiden = true;
+		}
+
+	} else {
+		stats.over_balls += 1;
+	}
+}
+
+void BowlerCard::update_score(string outcome) {
+
+	stats.balls += 1;
+
+	if (outcome == "W") {
+		stats.wickets += 1;
+		add_over();
+		
+	} else if (outcome.length() == 1) {
+		stats.runs += stoi(outcome);
+
+		if (outcome != "0") {
+			is_maiden = false;
+		}
+		
+		add_over();
+
+	} else if (outcome.substr(1,2) == "nb") {
+		stats.runs += outcome.at(0) - '0' - 1;
+		is_maiden = false;
+
+	} else if (outcome.substr(1,2) == "w") {
+		stats.runs += outcome.at(0) - '0';
+		is_maiden = false;
+
+	} else if (outcome.back() == 'b') {
+		// Byes or leg byes
+		add_over();
+
+	} 
+
 }

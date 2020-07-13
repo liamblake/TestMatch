@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
 #include <string>
 
 /* Structure containing all statistics describing a player. These are available in the DataAnalysis/data/players
@@ -63,3 +64,4 @@ class Player
 
 };
 
+#endif

@@ -3,10 +3,6 @@
 #include <string>
 #include "Player.h"
 
-/*
-	Structures for storing related data in one object
-*/
-
 // Stores all relevant data from batter for simulation
 struct BatStats {
 	// Career averages
@@ -38,19 +34,18 @@ struct BowlStats {
 	// Current innings
 	int balls;
 	int overs;
+	int over_balls;
 	int maidens;
 	int runs;
 	int wickets;
 
 	int spell_balls;
-	int spell_overs;
+	double spell_overs;
 	int spell_maidens;
 	int spell_runs;
 	int spell_wickets;
 	
 };
-
-
 
 // Stores all information relating to the dismissal of a batter
 class Dismissal {
@@ -106,7 +101,7 @@ class BatterCard : public PlayerCard {
 
 	BatStats get_sim_stats(void);
 	void update_score(std::string outcome);
-	void dismiss(int d_mode, Player* d_bowler, Player* d_fielder = nullptr);
+	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
 
 	~BatterCard();
@@ -119,7 +114,11 @@ class BowlerCard : public PlayerCard {
 
   private:
 	BowlStats stats;
-	bool is_active;
+	bool active;
+
+	// Tracks number of runs in a current over to determine whether that over was a maiden
+	bool is_maiden;
+	void add_over();
 
   public:
 	BowlerCard(Player* c_player);

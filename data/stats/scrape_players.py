@@ -8,7 +8,7 @@
 #
 
 
-from os import path
+from os import path, remove
 
 from requests import get
 from bs4 import BeautifulSoup, SoupStrainer
@@ -26,27 +26,27 @@ def get_profile_data(url):
     name = search[0].text.split('Full name\n')[1]
 
     # Account for entries after batting hand and bowl type
-    i = len(search)
+    k = len(search)
     bType = '-'
-    while (i > 0):
+    while (k > 0):
         try:
-            bType = search[i].text.split('Bowling style ')[1]
+            bType = search[k].text.split('Bowling style ')[1]
             break
         except IndexError:
-            i = i - 1
+            k = k - 1
 
-    if i == 0:
-        i = len(search)
+    if k == 0:
+        k = len(search)
     else:
-        i = i - 1
+        k = k - 1
 
     hand = '-'
-    while (i > 0):
+    while (k > 0):
         try:
-            hand = search[i].text.split('Batting style ')[1]
+            hand = search[k].text.split('Batting style ')[1]
             break
         except IndexError:
-            i = i - 1
+            k = k - 1
 
     return name, hand, bType
 
@@ -55,17 +55,21 @@ def get_profile_data(url):
 # Directory for saving data
 DIR = path.dirname(path.realpath(__file__))
 FILENAME = 'PlayerStats.csv'
+FILEPATH = DIR + '/' + FILENAME
 
 # Columns of data
 COLS = ['fullName', 'scoreName', 'team', 'innings', 'batAvg', 'batSR',
         'careerBalls', 'bowlAvg', 'bowlEcon', 'bowlSR', 'batHand', 'bowlType']
+
+# Delete output file to allow for appending
+remove(FILEPATH)
 
 
 # Start scraping process
 print('Starting scraping procedure...')
 
 for p in range(1, 6):
-    print('Scraping page ' + str(p) ' of 5...')
+    print('Scraping page ' + str(p) + ' of 5...')
 
     df = DataFrame(columns=COLS)
     i = 0
@@ -79,7 +83,6 @@ for p in range(1, 6):
     # Bowling stats
     url = 'https://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;orderby=player;page=' + str(p) + ';size=200;spanmax1=31+Dec+2100;spanmin1=01+Jan+2001;spanval1=span;template=results;type=bowling'
     page = get(url)
-    strainer = SoupStrainer('tr')
     bowl_soup = BeautifulSoup(page.content, 'html.parser', parse_only=strainer)
 
     for (bat, bowl) in zip(bat_soup.find_all('tr', class_='data1'), bowl_soup.find_all('tr', class_='data1')):
@@ -103,7 +106,7 @@ for p in range(1, 6):
             tags_bowl = bowl.find_all('td')
             overs = tags_bowl[4].text
             if overs == '-':
-                for i in range(4):
+                for k in range(4):
                     data.append('-')
             else:
                 overs = float(overs)
@@ -121,13 +124,15 @@ for p in range(1, 6):
             # if i == 10:
             #    break
 
-        except (ValueError, IndexError, AttributeError, TypeError, NameError):
+        except (ValueError, IndexError, AttributeError, TypeError, NameError) as e:
             # Ignore and move on
-            pass
+            print('Failed at ', i)
+            print(data)
+            print('Exception: ', e)
 
     # print(df)
-    print('Appending to ' FILENAME)
-    df.to_csv(DIR + '/' + FILENAME, index_label=False, mode='a')
+    print('Appending to ' + FILENAME)
+    df.to_csv(FILEPATH, index_label=False, mode='a')
 
 print('Scraping complete.')
 # NOTE: Connection failure exception is requests.exceptions.ConnectionError

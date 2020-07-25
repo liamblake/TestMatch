@@ -1,38 +1,12 @@
 
 #include <string>
+#include <stdlib.h>
 
 #include "Simulation.h"
 #include "Player.h"
 #include "Cards.h"
 #include "Utility.h"
-
-/* Over class implementations */
-Over::Over(int c_over_num) {
-    over_num = c_over_num;    
-    num_balls = 0;
-    num_legal_delivs = 0;
-
-}
-
-void Over::add_ball(Ball* ball) {
-
-    // Reallocate array
-    balls = arr_add_item<Ball*>(balls, num_balls, ball);
-
-    // Check if legal delivery
-    if (ball->legal) {
-        num_legal_delivs++;
-    }
-
-    num_balls++;
-
-}
-
-// Destructor
-Over::~Over() {
-    delete[] balls;
-}
-
+#include "MatchTime.h"
 
 
 /* Innings implementations */
@@ -99,4 +73,58 @@ BatterCard** Innings::get_batters() {
 
 BowlerCard** Innings::get_bowlers() {
   return bowlers;
+}
+
+
+
+
+
+/*
+  Match implementations
+*/
+Match::Match(Team* home_team, Team* away_team, bool choose_XI) {
+  team1 = home_team;
+  team2 = away_team;
+
+  // Choose batting order if requested
+  if (choose_XI) {
+    // Do nothing as of yet
+  }
+
+  // Time object - default constructor to day 1, start time
+  time = MatchTime();
+
+
+  ready = false;
+
+}
+
+void Match::simulate_toss() {
+
+  // Winner of toss is chosen randomly - 0.5 probability either way
+  double r = ((double) rand() / (RAND_MAX)) + 1;
+  toss_win = (r < 0.5);
+
+
+  // TODO: Implement toss election based on pitch conditions
+  toss_elect = false;
+
+}
+
+
+void Match::pregame() {
+  // Toss
+  simulate_toss();
+
+
+  // Prepare innings
+  bool team_order = toss_win;
+
+  if (team_order) {
+    inns[0] = new Innings(team1, team2, 0, &time, &pitch);
+  } else {
+
+  }
+
+  ready = true;
 }

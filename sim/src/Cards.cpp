@@ -305,3 +305,32 @@ void BowlerCard::update_score(string outcome) {
 	} 
 
 }
+
+
+/* Over class implementations */
+Over::Over(int c_over_num) {
+    over_num = c_over_num;    
+    num_balls = 0;
+    num_legal_delivs = 0;
+
+}
+
+void Over::add_ball(Ball* ball) {
+
+    // Reallocate array
+    balls = arr_add_item<Ball*>(balls, num_balls, ball);
+
+    // Check if legal delivery
+    if (ball->legal) {
+        num_legal_delivs++;
+    }
+
+    num_balls++;
+
+}
+
+// Destructor
+Over::~Over() {
+    delete[] balls;
+}
+

@@ -5,53 +5,30 @@
 
 #include "Player.h"
 #include "Cards.h" 
+#include "MatchTime.h"
 
 
-  // Contains all information describing a team and playing XI
-struct Team {
-  	// std::string name;
-	  Player* players [11];
 
-    // Indexes refer to players array
-	  int captain;
-	  int wicket_keeper;
-	  int bowl_open1;
-	  int bowl_open2;
-
-};
-
-
-// Describes a delivery
-struct Ball {
-  Player* bowler;
-  Player* batter; 
-
-  int outcome;
-  bool legal;
-  std::string commentary;
-
-};
-
-// Describes an over
-class Over {
+class PitchCondition {
   private:
-    int over_num;
+    // some numbers internally describing the pitch
+    
 
-    Ball** balls;
-    int num_balls;
-    int num_legal_delivs;
+    MatchTime* time;
+
 
   public:
-    // Constructor
-    Over(int c_over_num);
+    // Default constructor - random pitch
+    PitchCondition(MatchTime* c_time);
 
-    // going to need to dynamically increment array size somehow
-    void add_ball(Ball* ball);
+    PitchCondition(float somenumbers, MatchTime* c_time));
 
-    // Destructor
-    ~Over();
+    bool toss_choice();
 
-};
+    // Getters for values needed for delivery simulation model
+}
+
+
 
 // An innings
 class Innings {
@@ -70,6 +47,9 @@ class Innings {
   	int team_score;
   	int team_lead;
   	int team_wkts;
+
+    MatchTime* time;
+    PitchCondition* pitch;
 
     // Ball-by-ball detail
     Over** bbb_overs; 
@@ -103,7 +83,7 @@ class Innings {
 
   public:
   	// Constructor
-  	Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, float c_time);
+  	Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchCondition* c_pitch);
   	
     void simulate();
 
@@ -120,21 +100,24 @@ class Match {
     Team* team1;
     Team* team2;
 
+    bool ready;
+    bool toss_win;      // false = team1, true = team2
+    bool toss_elect;    // false = bat, true = bowl
 
     // Pitch conditions
-    double pitch_pace;
-    double pitch_spin;
-    double pitch_flat;
+    PitchCondition pitch;
 
+    MatchTime time;
 
-    Innings* inns[4];
+    int innings;
+    Innings** inns[4];
 
+    // Private helper functions
     void simulate_toss();
-
-
+    void innings_change(bool follow_on);
 
   public:
-    Match(Team* home_team, Team* away_team);
+    Match(Team* home_team, Team* away_team, bool choose_XI = false);
 
     void pregame();
     void start();

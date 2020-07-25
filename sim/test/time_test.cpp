@@ -4,7 +4,7 @@
 #include <string>
 #include <utility>
 
-#include "../MatchTime.h"
+#include "MatchTime.h"
 
 using namespace std;
 

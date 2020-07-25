@@ -15,6 +15,12 @@ Player::Player(string c_first_name, string c_middle_name, string c_last_name, st
 }
 
 
+Player::Player(std::string csv_entry) {
+	// Split at ','
+	
+}
+
+
 // Return initials of first and middle name, e.g. JH
 string Player::get_initials() {
 	

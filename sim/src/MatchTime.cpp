@@ -108,15 +108,18 @@ MatchTime::MatchTime(Time c_tm, int c_day, string c_state) {
 }
 
 // Private utility functions
-void MatchTime::take_lunch() {
+bool MatchTime::take_lunch() {
+    if (state != "Session 1") {
+        // Cannot take lunch if not in Session 1
+        return false;
+    }
+}
+
+bool MatchTime::take_tea() {
 
 }
 
-void MatchTime::take_tea() {
-
-}
-
-void MatchTime::close_day() {
+bool MatchTime::close_day() {
 
 }
 

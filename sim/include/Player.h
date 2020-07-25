@@ -26,8 +26,9 @@ class Player
 {
   private:
 	std::string first_name;
-	std::string middle_name;
 	std::string last_name;
+
+	std::string initials;
 
 	std::string team;
 
@@ -35,6 +36,7 @@ class Player
 
   public:
 	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, std::string c_team, Stats stats);
+	Player(std::string csv_entry);
 	// Default destructor
 
 	// Getters
@@ -61,6 +63,19 @@ class Player
 
 	bool get_bat_hand();
 	int get_bowl_type();
+
+};
+
+  // Contains all information describing a team and playing XI
+struct Team {
+  	  std::string name;
+	  Player* players [11];
+
+    // Indexes refer to players array
+	  int captain;
+	  int wicket_keeper;
+	  int bowl_open1;
+	  int bowl_open2;
 
 };
 

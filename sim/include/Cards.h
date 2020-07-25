@@ -130,3 +130,36 @@ class BowlerCard : public PlayerCard {
 	std::string print_card(void);
 
 };
+
+
+// Describes a delivery
+struct Ball {
+  Player* bowler;
+  Player* batter; 
+
+  int outcome;
+  bool legal;
+  std::string commentary;
+
+};
+
+// Describes an over
+class Over {
+  private:
+    int over_num;
+
+    Ball** balls;
+    int num_balls;
+    int num_legal_delivs;
+
+  public:
+    // Constructor
+    Over(int c_over_num);
+
+    // going to need to dynamically increment array size somehow
+    void add_ball(Ball* ball);
+
+    // Destructor
+    ~Over();
+
+};

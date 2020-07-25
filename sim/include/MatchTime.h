@@ -70,9 +70,9 @@ class MatchTime {
     static gsl_rng* gen;
 
     // Private utility functions
-    void take_lunch();
-    void take_tea();
-    void close_day();
+    bool take_lunch();
+    bool take_tea();
+    bool close_day();
     bool check_state_change();
 
   public:

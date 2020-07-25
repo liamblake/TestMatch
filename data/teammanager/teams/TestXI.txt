@@ -1,0 +1,13 @@
+TestXI
+Alastair Nathan Cook,AN Cook,ENG,291,45.35,46.95,18,7,2.33,18,Left-hand bat,Right-arm slow
+Christopher Henry Gayle,CH Gayle,WI,177,43.1,60.51,6851,43.76,2.64,99.2,Left-hand bat,Right-arm offbreak
+Marnus Labuschagne,M Labuschagne,AUS,23,63.43,56.52,756,38.66,3.68,63,Right-hand bat,Legbreak
+Kumar Chokshanada Sangakkara,KC Sangakkara,SL,226,58.49,54.55,84,-,3.5,-,Left-hand bat,Right-arm offbreak
+Shakib Al Hasan,Shakib Al Hasan,BDESH,105,39.4,62.05,13020,31.12,3.01,62,Left-hand bat,Slow left-arm orthodox
+Travis Michael Head,TM Head,AUS,28,41.96,50.41,126,-,3.61,-,Left-hand bat,Right-arm offbreak
+Bradley-John Watling,BJ Watling,NZ,110,38.5,42.35,-,-,-,-,Right-hand bat,-
+Patrick James Cummins,PJ Cummins,AUS,44,17.02,38.51,6761,21.82,2.76,47.2,Right-hand bat,Right-arm fast
+Dale Willem Steyn,DW Steyn,SA,119,13.59,44.28,18608,22.95,3.24,42.3,Right-hand bat,Right-arm fast
+Ishant Sharma,I Sharma,INDIA,129,8.37,30,18150,32.39,3.18,61.1,Right-hand bat,Right-arm fast-medium
+Herath Mudiyanselage Rangana Keerthi Bandara Herath,HMRKB Herath,SL,141,15,50.19,25360,27.74,2.8,59.3,Left-hand bat,Slow left-arm orthodox
+1,7,9,10

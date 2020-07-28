@@ -21,12 +21,12 @@ class PitchCondition {
     // Default constructor - random pitch
     PitchCondition(MatchTime* c_time);
 
-    PitchCondition(float somenumbers, MatchTime* c_time));
+    PitchCondition(float somenumbers, MatchTime* c_time);
 
     bool toss_choice();
 
     // Getters for values needed for delivery simulation model
-}
+};
 
 
 

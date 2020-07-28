@@ -1,11 +1,12 @@
 #include "Player.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
-Player::Player(string c_first_name, string c_middle_name, string c_last_name, string c_team, Stats stats) {
+Player::Player(string c_first_name, string c_last_name, string c_initials, Stats stats, string c_team) {
 	first_name = c_first_name;
-	middle_name = c_middle_name;
+	initials = c_initials;
 	last_name = c_last_name;
 
 	team = c_team;
@@ -15,17 +16,10 @@ Player::Player(string c_first_name, string c_middle_name, string c_last_name, st
 }
 
 
-Player::Player(std::string csv_entry) {
-	// Split at ','
-	
-}
-
 
 // Return initials of first and middle name, e.g. JH
 string Player::get_initials() {
-	
-	string init = first_name.substr(0,1) + middle_name.substr(0,1);
-	return init;
+	return initials;
 }
 
 
@@ -40,14 +34,9 @@ string Player::get_last_name() {
 }
 
 
-// Return full first and last name, e.g. John Henry Smith
-string Player::get_full_name(bool middle) {
-	if (middle) {
-		return first_name + " " + middle_name + " " + last_name;
-	}
-	else {
-		return first_name + " " + last_name;
-	}
+// Return full first and last name, e.g. John Smith
+string Player::get_full_name() {
+	return first_name + " " + last_name;
 }
 
 
@@ -91,4 +80,33 @@ bool Player::get_bat_hand() {
 
 int Player::get_bowl_type() {
 	return player_stats.bowl_type;
+}
+
+
+// Overload of << operator for printing team list to console
+ostream& operator<<(ostream& os, const Team& team) {
+	os << team.name << endl;
+
+	// Print each player
+	for (int i = 0; i < 11; i++) {
+		os << i + 1 << ". " << team.players[i]->get_full_initials();
+		if (i == team.captain) {
+			os << " (c";
+			if (i == team.wicket_keeper) {
+				os << ", wk";
+			}
+			os << ")";
+
+		} else if (i == team.wicket_keeper) {
+			os << " (wk)";
+		}
+
+
+	os << endl;
+
+	}	
+
+
+	return os;
+	
 }

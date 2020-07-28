@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+
 #include <string>
+#include <iostream>
 
 /* Structure containing all statistics describing a player. These are available in the DataAnalysis/data/players
    directory. */
@@ -35,8 +37,7 @@ class Player
 	Stats player_stats;
 
   public:
-	Player(std::string c_first_name, std::string c_middle_name, std::string c_last_name, std::string c_team, Stats stats);
-	Player(std::string csv_entry);
+	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats, std::string c_team = "");
 	// Default destructor
 
 	// Getters
@@ -45,7 +46,7 @@ class Player
 	std::string get_last_name();
 
 	// Return full first, (middle), last name
-	std::string get_full_name(bool middle = false);
+	std::string get_full_name();
 
 	std::string get_team();
 
@@ -64,6 +65,10 @@ class Player
 	bool get_bat_hand();
 	int get_bowl_type();
 
+	// Function for constructing player from comma seperated string
+	// Keeps IO interface seperate
+	friend Player* csv_to_player(std::string line);
+
 };
 
   // Contains all information describing a team and playing XI
@@ -78,5 +83,9 @@ struct Team {
 	  int bowl_open2;
 
 };
+
+// Overload of << operator for printing team list to console
+std::ostream& operator<<(std::ostream& os, const Team& team);
+// Primarily used for testing
 
 #endif

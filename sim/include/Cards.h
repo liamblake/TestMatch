@@ -44,7 +44,7 @@ struct BowlStats {
 	int spell_maidens;
 	int spell_runs;
 	int spell_wickets;
-	
+
 };
 
 // Stores all information relating to the dismissal of a batter
@@ -116,9 +116,15 @@ class BowlerCard : public PlayerCard {
 	BowlStats stats;
 	bool active;
 
+	// Rudimentary measure of bowler tiredness, improves with each passing over
+	float fatigue;
+
 	// Tracks number of runs in a current over to determine whether that over was a maiden
 	bool is_maiden;
+
 	void add_over();
+
+	
 
   public:
 	BowlerCard(Player* c_player);
@@ -126,6 +132,9 @@ class BowlerCard : public PlayerCard {
 	BowlStats get_sim_stats(void);
 	void update_score(std::string outcome);
 	void start_new_spell();
+
+	// Over passes without bowler bowling - reduces fatigue
+	void over_rest();
 
 	std::string print_card(void);
 

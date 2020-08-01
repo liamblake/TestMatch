@@ -7,6 +7,21 @@
 
 #include "Player.h"
 #include "Cards.h"
+#include "Simulation.h"
+
+// Rudimentary representation of match scorecard, for saving/loading file
+struct ScorecardData {
+    // Needs a corresponding match object
+    Match* match;
+};
+
+// Rudimentary representation of ball-by-ball
+struct BallByBall {
+    // Needs a corresponding match
+    
+
+};
+
 
 // Utility function for splitting string at passed delimeter
 std::vector<std::string> split_str(std::string str, std::string delim = ",");

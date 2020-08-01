@@ -1,6 +1,7 @@
 
 #include <string>
 #include <stdlib.h>
+#include <cmath>
 
 #include "Simulation.h"
 #include "Player.h"
@@ -19,6 +20,9 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
   team_bowl = c_team_bowl;
 
   lead = c_lead;
+
+  wkts = 0;
+
   inns_no++;
 
 }
@@ -27,7 +31,7 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
 void Innings::simulate_delivery() {
 
   BatterCard* batter = batters[striker];
-  BowlerCard* bowler = batters[bowl_1];
+  BowlerCard* bowler = bowlers[bowl_1];
 
 
   int runs;
@@ -45,6 +49,7 @@ void Innings::simulate_delivery() {
   // Check for declaration
   if (check_declaration()) {
     inns_open = false;
+    // Do innings close stuff
   }
 
 }
@@ -53,13 +58,36 @@ void Innings::simulate_delivery() {
 bool check_declaration() {
   // TODO: implement declaration checking
   return false;
+  // AIS: never declare, may lead to some slightly absurd innings
 }
 
-    // Choose next bowler based off of last bowler (from end)
-    Player* choose_bowler(BowlerCard last_bowler);
+// Choose next bowler based off of last bowler (from end)
+Player* choose_bowler(BowlerCard* last_bowler) {
 
-    // Select a fielder for an appropriate mode of dismissial
-  	Player* select_fielder();
+};
+
+// Select a fielder for an appropriate mode of dismissial
+Player* Innings::select_fielder() {
+  // TODO: spice this up
+  // AIS: choose a random fielder (who isn't the bowler)
+  // Uniform distribution, with bias towards wicketkeeper
+
+  const double WK_PROB = 0.4;
+
+  double r = ((double) rand() / (RAND_MAX));
+
+  if (r < WK_PROB) {
+    // Caught by wicketkeeper
+    return team_bat->players[team_bat->wicket_keeper];
+  } else {
+    // Randomly choose one of the 9 remaining fielders
+    // Cast WK_PROB < r < 1 to integer 
+    int index = (int) floor((r - WK_PROB) * 10 / (1 - WK_PROB));  
+
+  }
+
+
+}
 
   	
     void simulate();

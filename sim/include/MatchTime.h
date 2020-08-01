@@ -11,7 +11,7 @@
 #include <gsl/gsl_rng.h>
 
 
-/* tm - structure storing time of day, in 24hr format.
+/* Time - class storing time of day, in 24hr format.
    Overloaded addition operator += allows seconds to be added to stored time.
 */
 class Time {
@@ -30,9 +30,15 @@ class Time {
     void set(unsigned int c_hours, unsigned int c_mins, unsigned int c_secs);
     void set(float f_rep);
 
-    Time& operator+=(unsigned int a_secs);
-
     friend class MatchTime;
+
+    // Overloaded operators
+    Time& operator=(const Time& other);
+    Time& operator=(const float& frep);
+    Time& operator+=(unsigned int a_secs);
+    friend Time& operator+(const Time &tm1, const Time &tm2);
+    friend Time& operator-(const Time &tm1, const Time &tm2);
+    friend bool operator==(const Time &lhs, const Time &rhs);
     friend std::ostream& operator<<(std::ostream& os, const Time& tm);
 
 };
@@ -65,8 +71,10 @@ class MatchTime {
         "Rain Delay"    - Currently unused
     */
 
+    // Indicates whether current session has been extended by 30 minutes
     bool extended;
 
+    // For random sampling from distribution
     static gsl_rng* gen;
 
     // Private utility functions
@@ -84,8 +92,10 @@ class MatchTime {
     std::pair<int, std::string> delivery(bool type, int runs);
     std::pair<int, std::string> end_over();
     std::pair<int, std::string> drinks();
-    void force_early_break();
-    void extend_session();
+    std::string force_early_break();
+    std::string extend_session();
+    std::string end_innings();
+    // Returned strings indicate match state, used for error checking and interaction with Match object
 
     // Getters
     Time get_time();

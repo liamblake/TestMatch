@@ -103,9 +103,7 @@ ostream& operator<<(ostream& os, const Team& team) {
 
 
 	os << endl;
-
-	}	
-
+	}
 
 	return os;
 	

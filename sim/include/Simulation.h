@@ -2,6 +2,7 @@
 #define SIMULATION_H
 
 #include <string>
+#include <utility>
 
 #include "Player.h"
 #include "Cards.h" 
@@ -29,24 +30,42 @@ class PitchCondition {
 };
 
 
+struct Extras {
+  int byes;
+  int legbyes;
+  int noballs;
+  int wides;
+};
+
+
+struct FOW {
+  Player* batter;
+  int wkts;
+  int runs;
+  int overs;
+  int balls;
+};
+
 
 // An innings
 class Innings {
   private:
-  	bool simulated;
 
+    // Each team
     Team* team_bat;
   	Team* team_bowl;
 
+    // General innings info
   	static int inns_no;
-  	bool inns_open;
-    float time;
     int day;
+
   	int overs;
     int balls;
   	int team_score;
-  	int team_lead;
-  	int team_wkts;
+  	int lead;
+  	int wkts;
+
+    bool open;
 
     MatchTime* time;
     PitchCondition* pitch;
@@ -58,13 +77,16 @@ class Innings {
   	BatterCard* batters [11];
   	BowlerCard* bowlers [11];
 
-  	int striker;
-  	int nonstriker;
+    // Current batters
+  	Player* striker;
+  	Player* nonstriker;
 
-    int bowl_1;
-    int bowl_2; 
+    // Bowler of current over (bowl1) and previous over (bowl2)
+    Player* bowl1;
+    Player* bowl2; 
 
-
+    Extras extras;
+    FOW fow;
 
   	// Private methods used in simulation process
   	void simulate_delivery();
@@ -90,6 +112,8 @@ class Innings {
     // Getters
     BatterCard** get_batters();
     BowlerCard** get_bowlers();
+
+    bool is_open();
 
 };
 

@@ -49,7 +49,37 @@ void Time::set(float f_rep) {
     secs = 0;
 }
 
-// Overloaded += operator
+// Overloaded operators
+Time& Time::operator=(const Time& other) {
+    if (this != &other) {
+        hours = other.hours;
+        mins = other.mins;
+        secs = other.secs;
+    }
+
+    return *this;
+}
+
+Time& Time::operator=(const float& other) {
+    
+
+    return *this;
+}
+
+Time operator+(const Time &tm1, const Time &tm2) {
+    
+}
+
+tm operator-(const Time &tm1, const Time &tm2) {
+
+}
+
+bool operator==(const Time &lhs, const Time &rhs) {
+    return ((lhs.hours == rhs.hours) && (lhs.mins == rhs.mins) && (lhs.secs == rhs.secs))
+}
+    
+
+
 Time& Time::operator+=(unsigned int a_secs) {
     int a_mins = a_secs / 60;
 
@@ -113,14 +143,34 @@ bool MatchTime::take_lunch() {
         // Cannot take lunch if not in Session 1
         return false;
     }
+
+    // Push time to end of break
+    tm += LUNCH_DUR;
+    state = "Lunch";
+
 }
 
 bool MatchTime::take_tea() {
+    if (state != "Session 2") {
+        // Cannot take tea if not in Session 2
+        return false;
+    }
+
+    // Push time to end of break
+    tm += TEA_DUR;
+    state = "Tea";
 
 }
 
 bool MatchTime::close_day() {
+    if (state != "Session 3") {
+        // Cannot close if not in Session 3
+        return false;
+    }
 
+    // Push time to end of break
+    tm = 1;
+    state = "Stumps";
 }
 
 bool MatchTime::check_state_change() {

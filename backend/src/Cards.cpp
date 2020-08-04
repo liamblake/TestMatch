@@ -121,7 +121,7 @@ void BatterCard::update_score(string outcome) {
 
 	} else if (outcome == "3") {
 		// 1 run
-		stats.runs += 2;
+		stats.runs += 3;
 		stats.balls += 1;
 
 	} else if (outcome == "4") {
@@ -161,6 +161,8 @@ void BatterCard::update_score(string outcome) {
 
 	}
 
+	// Do nothing on wides
+
 }
 
 
@@ -188,7 +190,7 @@ string BatterCard::print_card(void) {
 	if (stats.balls == 0) {
 		output += "-";
 	} else {
-		float sr = 100* stats.runs / stats.balls;
+		double sr = 100 * stats.runs / (double) stats.balls;
 		stringstream ss;
 		ss << fixed << setprecision(2) << sr;
 		output += ss.str();
@@ -245,6 +247,11 @@ void BowlerCard::start_new_spell() {
 	active = true;
 
 }
+
+void BowlerCard::over_rest() {
+
+}
+
 
 string BowlerCard::print_card(void) {
 	string output = player->get_full_initials() + " ";

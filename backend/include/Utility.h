@@ -5,9 +5,11 @@
 	results (e.g. a scorecard or ball-by-ball description).
 */
 
-#pragma once
+#ifndef UTILITY_H
+#define UTILITY_H
 
 #include <string>
+#include <vector>
 #include <stdexcept>
 
 /* Add new entry to end of array - reallocates memory dynamically.
@@ -18,26 +20,22 @@
 	T new_entry - item to add to end of array arr
 */
 template <class T>
-T* arr_add_item(T* arr, int old_length, T new_entry) {
+inline T* arr_add_item(T* arr, int old_length, T new_entry) {
 	
 	// Reallocate array
-    T* old_arr;
+	T* new_arr = new T[old_length + 1];
     if (old_length > 0) {
-		
-        // Create a copy of the old array
-        old_arr = new T[old_length];
-        for (int i = 0; i < old_length; i++) {
-            old_arr[i] = arr[i];
-        }
 
-        delete[] arr;
-    }
+		for (int i = 0; i < old_length; i++) {
+			new_arr[i] = arr[i];
+		}
+		delete[] arr;
+	}
+
+	delete[] arr;
     
-    arr = new T[old_length + 1];
-    for (int i = 0; i < old_length; i++) {
-            arr[i] = old_arr[i];
-    }
-    delete[] old_arr;
+
+
 
 	arr[old_length] = new_entry;
 
@@ -46,9 +44,60 @@ T* arr_add_item(T* arr, int old_length, T new_entry) {
 }
 
 
+inline std::vector<std::string> split_str(std::string str, std::string delim = ",") {
+	/* TODO: implement with string* return type to save memory,
+			 ideally using the arr_add_item template defined in
+			 Utility.h. Attempts at this have been giving strange
+			 results, where the while loop won't iterate unless
+			 cout << len << endl is included at the start of the
+			 loop.
+	*/
+
+	std::vector<std::string> token;
+
+	// Check for boundary cases
+	if (str.length() == 0) {
+		return token;
+	}
+	
+
+	size_t curr, prev = 0;
+	curr = str.find(delim);
+
+	// Check delim is actually present in string
+	if (curr == std::string::npos) {
+		token.push_back(str);
+		return token;
+	}
+
+
+	while (curr != std::string::npos) {
+		token.push_back(str.substr(prev, curr - prev));
+		prev = curr + delim.length();
+		curr = str.find(delim, prev);
+
+	}
+
+	// Add remaining string
+	token.push_back(str.substr(prev, curr - prev));
+
+	return token;
+}
+
+inline std::string join_str(std::vector<std::string> str_comp, std::string join) {
+	std::string output = "";
+	for (std::string x : str_comp) {
+		output += x + join;
+	}
+
+	// Remove last join added in above loop
+	return output.substr(0, output.size() - join.size());
+}
+
+
 // Encodes bowling type as corresponding integer
 // 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf, 10: slo, 11: slu
-int encode_bowltype(std::string bowltype) {
+inline int encode_bowltype(std::string bowltype) {
 	int output = -1;
 
 	if (bowltype == "rm") {
@@ -93,7 +142,7 @@ int encode_bowltype(std::string bowltype) {
 
 
 // Unencodes bowling type from integer to string
-std::string unencode_bowltype(int encoding) {
+inline std::string unencode_bowltype(int encoding) {
 	std::string output;
 
 	switch (encoding) {
@@ -117,7 +166,7 @@ std::string unencode_bowltype(int encoding) {
 
 // Encodes mode of dismissal as corresponding integer
 // 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
-int encode_dism(std::string mode) {
+inline int encode_dism(std::string mode) {
 	int output = -1;
 	
 	if (mode == "b") {
@@ -141,7 +190,7 @@ int encode_dism(std::string mode) {
 
 // Unencodes mode of dismissal from integer to string
 // 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
-std::string unencode_dism(int encoding) {
+inline std::string unencode_dism(int encoding) {
 	std::string output;
 
 	switch (encoding) {
@@ -171,4 +220,4 @@ std::string unencode_dism(int encoding) {
 
 
 
-
+#endif

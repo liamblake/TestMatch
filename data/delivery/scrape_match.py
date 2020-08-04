@@ -1,12 +1,13 @@
 """
 
 """
+from os import path
 from time import sleep
 
 from pandas import DataFrame, Series
 from requests import get
 from bs4 import BeautifulSoup, SoupStrainer
-from selenium import webdriver
+#from selenium import webdriver
 
 from level_keys import BOWL_KEYS
 
@@ -24,6 +25,8 @@ DATA_COLS = ['Outcome', 'Dismissal', 'Innings', 'HostCountry', \
              'SpellBalls', 'SpellRuns', 'SpellWkts', \
              'TossWin', 'TossElect', 'BatTeamTotalRuns', 'BatTeamTotalWkts', 'BowlTeamTotalRuns', 'BowlTeamTotalWkts', \
              'Commentary']
+
+DIR = path.dirname(path.realpath(__file__))
 
 
 def scrape_players(pd_row):
@@ -266,10 +269,11 @@ def scrape_ballbyball(pd_row, players):
     # Extract commentary URL
     s_url = "https://www.espncricinfo.com/ci/engine/match/" + str(pd_row['urlEnd']) + ".html"
     page = get(s_url)
-    strainer = SoupStrainer('a', class_ = 'commentary react-router-link')
+    strainer = SoupStrainer('a', class_ = 'widget-tab-link ')
     soup = BeautifulSoup(page.content, 'html.parser', parse_only = strainer)
 
-    c_url = soup.find('a', href = True)['href']
+    c_id = soup.find_all('a')[1]['href']
+    c_url = 'https://www.espncricinfo.com' + c_id
 
     # 
     lead = 0
@@ -279,8 +283,8 @@ def scrape_ballbyball(pd_row, players):
         print('Scraping innings ' + str(inns))
 
         # Load ball commentary and scroll
-        url ="https://www.espncricinfo.com" + c_url + "?innings=" + str(inns)
-        driver = webdriver.Firefox(executable_path = 'geckodriver.exe')
+        url = c_url + "?innings=" + str(inns)
+        driver = webdriver.Firefox(executable_path = DIR + '/geckodriver.exe')
         driver.get(url)
         
         # scroll to bottom of page
@@ -425,7 +429,7 @@ def scrape_ballbyball(pd_row, players):
         save_str = pd_row['Team1'] + pd_row['Team2'] + '_' + pd_row['StartDate'].replace(' ', '') + '_inn' + str(inns)
 
         # Output data to CSV file
-        data.to_csv('ballbyball/' + save_str + '.csv', index = False)
+        data.to_csv(DIR + '/ballbyball/' + save_str + '.csv', index = False)
 
         # Prepare for next innings
         if inns != len(inns_order):
@@ -435,3 +439,169 @@ def scrape_ballbyball(pd_row, players):
                 lead = -lead
 
             team_bat = inns_order[inns - 1]
+
+
+def scrape_cricbuzz(url, pd_row, players):
+
+    
+    # Helper function - convert innings score to runs and wickets
+    def add_score(string, total):
+        # Remove '(f/o)' and 'd' from score
+        string = string.replace('d', '')
+        string = string.replace('(f/o)', '')
+
+        score = string.split('/')
+        runs = int(score[0])
+
+        try:
+            wkts = int(score[1])
+        except IndexError:
+            wkts = 10
+
+        return [sum(i) for i in zip(total, [runs, wkts])]
+
+
+    # Helper function - 
+    def find_player(players_df, name):
+        return None
+
+
+    teams = pd_row[['Team1', 'Team2']]
+    date = pd_row['StartDate'].replace(' ', '+')
+
+    # Total runs scored and wickets lost for each team in entire game
+    # Provides some measure of the pitch quality
+    total1 = [0, 0]
+    total2 = [0, 0]
+
+
+    # Team1 always bats first
+    team_bat = 0
+
+        # Determine order of innings from prelimiary data
+    inns_order = [0]
+    total1 = add_score(pd_row['Score1'], total1)
+    follow_on = False
+
+    if pd_row['Score2'] != '-':
+        inns_order.append(1)
+        total2 = add_score(pd_row['Score2'], total2)
+
+        if pd_row['Score3'] != '-':
+            if pd_row['Score3'][-5:] == '(f/o)':
+                # Follow-on enforced
+                follow_on = True
+                inns_order.append(1)
+                total2 = add_score(pd_row['Score3'], total2)
+
+            else:
+                inns_order.append(0)
+                total1 = add_score(pd_row['Score3'], total1)
+
+            if pd_row['Score4'] != '-':
+                if follow_on:
+                    inns_order.append(0)
+                    total1 = add_score(pd_row['Score4'], total1)
+
+                else:
+                    inns_order.append(1)
+                    total2 = add_score(pd_row['Score4'], total2)
+
+    # Nested if statements prevent unnessecary checking if game lasted less than 4 innings
+
+    page = get(url)
+    strainer = SoupStrainer(class_ = ['cb-col cb-col-90 cb-com-ln', 'cb-col cb-col-8 text-bold'])
+    soup = BeautifulSoup(page.content, 'html.parser', parse_only = strainer)
+
+
+    comms = soup.find_all(class_ = 'cb-col cb-col-90 cb-com-ln')
+    overcount = soup.find_all(class_ = 'cb-col cb-col-8 text-bold')
+
+    
+    inns = 0
+    lead = 0
+
+    data = DataFrame(index = range(0,len(overcount)), columns = DATA_COLS)
+
+    # Iterate through each ball-by-ball item in reverse
+    for i,(over_tag, bbb_tag) in enumerate(zip(reversed(overcount), reversed(comms))):
+        over = over_tag.text
+        commentary = bbb_tag.text
+
+        if (over == "0.1"):
+            # Start of new innings
+            balls = 0  
+            inns = inns + 1
+
+            # Prepare player dictionaries
+            bat_stats = {}
+            bowl_stats = {}
+
+            # Team score
+            t_score = 0
+            t_wkts = 0
+
+            # Change lead - check for follow on
+            if not (follow_on and inns == 3):
+                lead = -lead
+
+
+        data.at[i,'InnBalls'] = balls
+        balls = balls + 1
+
+        # Fill in innings information
+        data.at[i,'Innings'] = inns
+        data.at[i,'BatTeam'] = pd_row['Team' + str(inns_order[inns - 1] + 1)]
+        data.at[i,'BowlTeam'] = pd_row['Team' + str((not inns_order[inns - 1]) + 1)]
+
+        # Get batter and bowler
+        comma_split = commentary.split(', ')
+        [bowler,batter] = comma_split[0].split(" to ")
+
+        # Find identifying key in players dataframe
+        bowl_key = find_player(players, bowler)
+        bat_key = find_player(players, batter)
+
+        # Get outcome
+        outcome = comma_split[1]
+        if outcome[:3] == "out":
+            # Dismissal
+            dism_det = (commentary.split(". "))[-1][:-7]
+            outcome = outcome.split(" ")[0]
+            print(dism_det)
+
+            # Handle dismissal
+
+
+        data.at[i, 'Outcome'] = outcome
+
+
+        
+
+
+        
+
+
+
+
+
+    # Fill in match information
+    data['HostCountry'] = pd_row['Country']
+    data['TossWin'] = pd_row['TossWin']
+    data['TossElect'] = pd_row['TossElect']
+
+
+    # Match totals
+    if inns_order[inns - 1]:
+        data['BatTeamTotalRuns'] = total2[0]
+        data['BatTeamTotalWkts'] = total2[1]
+        data['BowlTeamTotalRuns'] = total1[0]
+        data['BowlTeamTotalWkts'] = total1[1]
+    else:
+        data['BatTeamTotalRuns'] = total1[0]
+        data['BatTeamTotalWkts'] = total1[1]
+        data['BowlTeamTotalRuns'] = total2[0]
+        data['BowlTeamTotalWkts'] = total2[1]
+
+    print(data)
+    

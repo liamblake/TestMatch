@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CARDS_H
+#define CARDS_H
 
 #include <string>
 #include "Player.h"
@@ -172,3 +173,5 @@ class Over {
     ~Over();
 
 };
+
+#endif

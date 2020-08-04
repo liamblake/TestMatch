@@ -24,7 +24,7 @@ from requests import get
 from selenium import webdriver
 from time import sleep
 from numpy import floor
-from scrape_dicts import NAMES, NUM_MONTHS, BOWL_KEYS
+from level_keys import NAMES, NUM_MONTHS, BOWL_KEYS
 
 # Global variables
 DIR = path.dirname(path.realpath(__file__))

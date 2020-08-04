@@ -18,6 +18,8 @@ struct Stats {
 
 	bool bat_hand;
 	int bowl_type;
+
+
 };
 
 
@@ -38,6 +40,8 @@ class Player
 
   public:
 	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats, std::string c_team = "");
+	Player(std::string line);
+	
 	// Default destructor
 
 	// Getters
@@ -64,10 +68,6 @@ class Player
 
 	bool get_bat_hand();
 	int get_bowl_type();
-
-	// Function for constructing player from comma seperated string
-	// Keeps IO interface seperate
-	friend Player* csv_to_player(std::string line);
 
 };
 

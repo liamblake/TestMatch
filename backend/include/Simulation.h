@@ -30,20 +30,11 @@ class PitchCondition {
 };
 
 
-struct Extras {
-  int byes;
-  int legbyes;
-  int noballs;
-  int wides;
-};
 
 
-struct FOW {
-  Player* batter;
-  int wkts;
-  int runs;
-  int overs;
-  int balls;
+// Match details required in delivery model
+struct MatchStats {
+
 };
 
 
@@ -57,7 +48,6 @@ class Innings {
 
     // General innings info
   	static int inns_no;
-    int day;
 
   	int overs;
     int balls;
@@ -78,22 +68,25 @@ class Innings {
   	BowlerCard* bowlers [11];
 
     // Current batters
-  	Player* striker;
-  	Player* nonstriker;
+  	BatterCard* striker;
+  	BatterCard* nonstriker;
 
     // Bowler of current over (bowl1) and previous over (bowl2)
-    Player* bowl1;
-    Player* bowl2; 
+    BatterCard* bowl1;
+    BatterCard* bowl2; 
 
     Extras extras;
-    FOW fow;
+    FOW* fow;
+
+    // Simulation models
+    const static NUM_OUTCOMES = 17;
+    static std::string unencode_outcome(int outcome);
+    static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
 
   	// Private methods used in simulation process
-  	void simulate_delivery();
-
+    
+    void simulate_delivery();
     void end_over();
-
-    // Check for declaration
   	bool check_declaration();
 
     // Choose next bowler based off of last bowler (from end)

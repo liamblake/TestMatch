@@ -68,5 +68,8 @@
     <ClCompile Include="test\test.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_time.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

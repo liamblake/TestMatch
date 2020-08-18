@@ -7,10 +7,8 @@
 #include <gsl/gsl_rng.h>
 
 #include "MatchTime.h"
-#include "rtnorm.h"
-
-// Global parameters
 #include "Parameters.h"
+#include "rtnorm.h"
 
 using namespace std;
 
@@ -24,10 +22,10 @@ Time::Time() {
     secs = 0;
 }
 
-Time::Time(unsigned int c_hours, unsigned int c_mins, unsigned int c_secs) {
-    hours = c_hours;
-    mins = c_mins;
-    secs = c_secs;
+Time::Time(int c_hours, int c_mins, int c_secs) {
+    hours = c_hours % 24;
+    mins = c_mins % 60;
+    secs = c_secs % 60;
 }
     
 // Construct from float representation
@@ -37,10 +35,10 @@ Time::Time(float f_rep) {
     secs = 0;
 }
 
-void Time::set(unsigned int c_hours, unsigned int c_mins, unsigned int c_secs) {
-    hours = c_hours;
-    mins = c_mins;
-    secs = c_secs;
+void Time::set(int c_hours, int c_mins, int c_secs) {
+    hours = c_hours % 24;
+    mins = c_mins % 60;
+    secs = c_secs % 60;
 }
 
 void Time::set(float f_rep) {
@@ -61,24 +59,9 @@ Time& Time::operator=(const Time& other) {
 }
 
 Time& Time::operator=(const float& other) {
-    
-
+    set(other);
     return *this;
 }
-
-Time operator+(const Time &tm1, const Time &tm2) {
-    
-}
-
-tm operator-(const Time &tm1, const Time &tm2) {
-
-}
-
-bool operator==(const Time &lhs, const Time &rhs) {
-    return ((lhs.hours == rhs.hours) && (lhs.mins == rhs.mins) && (lhs.secs == rhs.secs))
-}
-    
-
 
 Time& Time::operator+=(unsigned int a_secs) {
     int a_mins = a_secs / 60;
@@ -93,6 +76,21 @@ Time& Time::operator+=(unsigned int a_secs) {
 
 }
 
+
+Time& operator+(const Time &tm1, const Time &tm2) {
+    Time output(tm1.hours + tm2.hours, tm1.mins + tm2.mins, tm1.secs + tm2.secs);
+    return output;
+}
+
+Time& operator-(const Time &tm1, const Time &tm2) {
+    Time output(tm1.hours - tm2.hours, tm1.mins - tm2.mins, tm1.secs - tm2.secs);
+    return output;
+}
+
+bool operator==(const Time &lhs, const Time &rhs) {
+    return ((lhs.hours == rhs.hours) && (lhs.mins == rhs.mins) && (lhs.secs == rhs.secs));
+}
+    
 // Formatted print of Time struct in output stream
 std::ostream& operator<<(ostream& os, const Time& tm) {
     bool am = (tm.hours < 12);
@@ -117,6 +115,8 @@ std::ostream& operator<<(ostream& os, const Time& tm) {
 /* 
     MatchTime implementations 
 */
+
+
 // Default constructor - start of match, day 1
 MatchTime::MatchTime() {
     tm = Time(START_TIME);
@@ -169,7 +169,8 @@ bool MatchTime::close_day() {
     }
 
     // Push time to end of break
-    tm = 1;
+    day += 1;
+    tm.set(START_TIME);
     state = "Stumps";
 }
 
@@ -203,19 +204,21 @@ pair<int, string> MatchTime::delivery(bool type, int runs) {
 }
 
 pair<int, string> MatchTime::end_over() {
-
+    return { 0, "" };
 }
 
 pair<int, string> MatchTime::drinks() {
+    tm += DRINKS_DUR;
 
+    return {DRINKS_DUR, state};
 }
 
-void MatchTime::force_early_break() {
-
+string MatchTime::force_early_break() {
+    return "";
 }
 
-void MatchTime::extend_session() {
-
+string MatchTime::extend_session() {
+    return "";
 }
 
 // Getters

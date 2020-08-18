@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <sstream>
 #include <cmath>
+#include <exception>
 
 using namespace std;
 
@@ -19,9 +20,22 @@ using namespace std;
 	Dimissial implementations
 */
 Dismissal::Dismissal(int c_mode, Player* c_bowler, Player* c_fielder) {
+	// Ensure dismissial mode is valid
+	if (unencode_dism(c_mode) == "-") {
+		throw invalid_argument("c_mode must correspond to a valid dismissial. See encode_dism in Utility.h for a list of valid encodings.");
+	}
+	
 	mode = c_mode;
-	bowler = c_bowler;
-	fielder = c_fielder;
+	bowler = nullptr;
+	fielder = nullptr;
+
+	if (c_mode != encode_dism("ro")) {
+		bowler = c_bowler;
+	}
+
+	if (c_mode == encode_dism("c") || c_mode == encode_dism("ro") || c_mode == encode_dism("st")) {
+		fielder = c_fielder;
+	}
 }
 
 
@@ -72,6 +86,11 @@ PlayerCard::PlayerCard(Player* c_player) {
 }
 
 
+Player* PlayerCard::get_player_ptr() {
+	return player;
+}
+
+
 /*
 	BatterCard implementations
 */
@@ -102,62 +121,62 @@ BatStats BatterCard::get_sim_stats() {
 void BatterCard::update_score(string outcome) {
 
 	if (outcome == "W") {
-		stats.balls += 1;
+		stats.balls++;
 		out = true;
 		
 	} else if (outcome == "0") {
 		// Dot ball
-		stats.balls += 1;
+		stats.balls++;
 
 	} else if (outcome == "1") {
 		// 1 run
-		stats.runs += 1;
-		stats.balls += 1;
+		stats.runs++;
+		stats.balls++;
 
 	} else if (outcome == "2") {
 		// 1 run
 		stats.runs += 2;
-		stats.balls += 1;
+		stats.balls++;
 
 	} else if (outcome == "3") {
 		// 1 run
 		stats.runs += 3;
-		stats.balls += 1;
+		stats.balls++;
 
 	} else if (outcome == "4") {
 		// 1 run
 		stats.runs += 4;
-		stats.balls += 1;
-		stats.fours += 1;
+		stats.balls++;
+		stats.fours++;
 
 	} else if (outcome == "5") {
 		// Overthrows - 5 fives 
 		stats.runs += 5;
-		stats.balls += 1;
-		stats.fours += 1;
+		stats.balls++;
+		stats.fours++;
 
 		// Assume extra runs came from boundary
 
 	} else if (outcome == "6") {
 		// 6 runs
 		stats.runs += 6;
-		stats.balls += 1;
-		stats.sixes += 1;
+		stats.balls++;
+		stats.sixes++;
 
 	} else if (outcome.substr(1,2) == "nb") {
 		int runs = outcome.at(0) - '0' - 1;
 		stats.runs += runs;
-		stats.balls += 1;
+		stats.balls++;
 
 		if (runs == 4) {
-			stats.fours += 1;
+			stats.fours++;
 		} else if (runs == 6) {
-			stats.sixes += 1;
+			stats.sixes++;
 		}
 
 	} else if (outcome.back() == 'b') {
 		// Byes or leg byes
-		stats.balls += 1;
+		stats.balls++;
 
 	}
 
@@ -249,7 +268,7 @@ void BowlerCard::start_new_spell() {
 }
 
 void BowlerCard::over_rest() {
-
+	active = false;
 }
 
 
@@ -264,51 +283,67 @@ string BowlerCard::print_card(void) {
 	return output;
 }
 
-void BowlerCard::add_over() {
+string BowlerCard::print_spell(void) {
+	string output = player->get_full_initials() + " ";
+
+	output += to_string(stats.spell_overs) + "." + to_string(stats.over_balls) + "-";
+	output += to_string(stats.spell_maidens) + "-";
+	output += to_string(stats.spell_runs) + "-";
+	output += to_string(stats.spell_wickets);
+
+	return output;
+}
+
+
+void BowlerCard::add_ball() {
 
 	if (stats.over_balls == 5) {
-		stats.overs += 1;
+		stats.overs++;
 		stats.over_balls = 0;
 
 		if (is_maiden) {
-			stats.maidens += 1;
+			stats.maidens++;
+			stats.spell_maidens++;
 			is_maiden = true;
 		}
 
 	} else {
-		stats.over_balls += 1;
+		stats.over_balls++;
 	}
 }
 
 void BowlerCard::update_score(string outcome) {
 
-	stats.balls += 1;
+	stats.balls++;
 
 	if (outcome == "W") {
-		stats.wickets += 1;
-		add_over();
+		stats.wickets++;
+		stats.spell_wickets++;
+		add_ball();
 		
 	} else if (outcome.length() == 1) {
 		stats.runs += stoi(outcome);
+		stats.spell_runs += stoi(outcome);
 
 		if (outcome != "0") {
 			is_maiden = false;
 		}
 		
-		add_over();
+		add_ball();
 
 	} else if (outcome.substr(1,2) == "nb") {
-		stats.runs += outcome.at(0) - '0' - 1;
+		stats.runs += outcome.at(0) - '0';
+		stats.spell_runs += outcome.at(0) - '0';
 		is_maiden = false;
 
-	} else if (outcome.substr(1,2) == "w") {
+	} else if (outcome.back() == 'w') {
 		stats.runs += outcome.at(0) - '0';
+		stats.spell_runs += outcome.at(0) - '0';
 		is_maiden = false;
 
 	} else if (outcome.back() == 'b') {
 		// Byes or leg byes
-		add_over();
-
+		add_ball();
 	} 
 
 }
@@ -341,3 +376,38 @@ Over::~Over() {
     delete[] balls;
 }
 
+
+// Print methods
+std::string Extras::print() {
+
+
+  std::string output = "";
+  
+  if (byes > 0) {
+	output += "b " + to_string(byes);
+  }
+
+	if (legbyes > 0) {
+	output += ", lb " + to_string(legbyes);
+	}
+
+	if (noballs > 0) {
+	output += ", nb " + to_string(noballs);
+	}
+
+	if (wides > 0) {
+	output += ", w " + to_string(wides);
+	}
+		
+  return output;
+}
+
+std::string FOW::print() {
+  std::string output = to_string(wkts) + "-"
+  						  + to_string(runs) + " ("
+  						  + batter->get_full_name() + ", "
+						  + to_string(overs) + "." + to_string(balls)
+  						  + " ov)";
+
+  return output;
+}

@@ -158,6 +158,10 @@ inline std::string unencode_bowltype(int encoding) {
 		case 3:
 			output = "rf";
 			break;
+
+		default:
+			output = "-";
+			break;
 	}
 
 	return output;
@@ -210,7 +214,7 @@ inline std::string unencode_dism(int encoding) {
 			output = "st";
 			break;
 		default:
-			output = "error";
+			output = "-";
 			break;
 	}
 

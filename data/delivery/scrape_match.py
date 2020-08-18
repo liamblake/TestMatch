@@ -2,7 +2,7 @@
 
 """
 from os import path
-from time import sleep
+from time import sleep, time
 
 from pandas import DataFrame, Series
 from requests import get
@@ -19,7 +19,7 @@ PLAYER_COLS = ['Initials', 'Surname', 'Matches', 'BatAvg', 'BallsFaced', 'BatSR'
 # Each value to be extracted for each delivery
 DATA_COLS = ['Outcome', 'Dismissal', 'Innings', 'HostCountry', \
              'InnBalls', 'BatTeam', 'TeamWkts', 'TeamScore', 'TeamLead', \
-             'Batter', 'BatScore', 'BatBalls', 'BatAvg', 'BatSR', 'BatArm', \
+             'Batter', 'BatPosition', 'BatScore', 'BatBalls', 'BatAvg', 'BatSR', 'BatArm', \
              'BowlTeam', \
              'Bowler', 'BowlBalls', 'BowlRuns', 'BowlWkts', 'BowlAvg', 'BowlSR', 'BowlType', \
              'SpellBalls', 'SpellRuns', 'SpellWkts', \
@@ -465,6 +465,8 @@ def scrape_cricbuzz(url, pd_row, players):
     def find_player(players_df, name):
         return None
 
+    # Log time
+    start_time = time()
 
     teams = pd_row[['Team1', 'Team2']]
     date = pd_row['StartDate'].replace(' ', '+')
@@ -564,6 +566,7 @@ def scrape_cricbuzz(url, pd_row, players):
 
         # Get outcome
         outcome = comma_split[1]
+
         if outcome[:3] == "out":
             # Dismissal
             dism_det = (commentary.split(". "))[-1][:-7]
@@ -571,6 +574,36 @@ def scrape_cricbuzz(url, pd_row, players):
             print(dism_det)
 
             # Handle dismissal
+            t_wkts += 1
+
+            continue
+
+        else:
+            data.at[i, 'Dismissal'] = 'no'
+
+    
+                # Update team score, batter and bowler figures
+        if outcome[-2:] == 'nb':
+            # Assume extra runs on no ball were scored by batter
+            t_score += int(outcome[:-2])
+            lead += int(outcome[:-2])
+        
+        elif outcome[-1:] == 'w':
+            t_score += int(outcome[:-1])
+            lead += int(outcome[:-1])
+
+        elif outcome[-2:] == 'lb':
+            t_score += int(outcome[:-2])
+            lead += int(outcome[:-2])
+
+        elif outcome[-1:] == 'b':
+            t_score += int(outcome[:-1])
+            lead += int(outcome[:-1])
+
+        else:
+            if outcome != "no run":
+                t_score += int(outcome[0])
+                lead += int(outcome[0])
 
 
         data.at[i, 'Outcome'] = outcome
@@ -585,7 +618,7 @@ def scrape_cricbuzz(url, pd_row, players):
 
 
 
-    # Fill in match information
+    # Fill in remaining (universal) match information
     data['HostCountry'] = pd_row['Country']
     data['TossWin'] = pd_row['TossWin']
     data['TossElect'] = pd_row['TossElect']
@@ -604,4 +637,4 @@ def scrape_cricbuzz(url, pd_row, players):
         data['BowlTeamTotalWkts'] = total2[1]
 
     print(data)
-    
+    print("--- %s seconds ---" % (time() - start_time))

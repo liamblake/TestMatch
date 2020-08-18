@@ -62,73 +62,104 @@ Player::Player(std::string line) {
 
 
 // Return initials of first and middle name, e.g. JH
-string Player::get_initials() {
+string Player::get_initials() const {
 	return initials;
 }
 
 
 // Return initials and last name, e.g. JH Smith
-string Player::get_full_initials() {
+string Player::get_full_initials() const {
 	return get_initials() + " " + last_name;
 }
 
 
-string Player::get_last_name() {
+string Player::get_last_name() const {
 	return last_name;
 }
 
 
 // Return full first and last name, e.g. John Smith
-string Player::get_full_name() {
+string Player::get_full_name() const {
 	return first_name + " " + last_name;
 }
 
 
-string Player::get_team() {
+string Player::get_team() const {
 	return team;
 }
 
 
-Stats Player::get_stats() {
+Stats Player::get_stats() const {
 	return player_stats;
 }
 
 // Specific getters for stats
-int Player::get_innings() {
+int Player::get_innings() const {
 	return player_stats.innings;
 }
 
-double Player::get_bat_avg() {
+double Player::get_bat_avg() const {
 	return player_stats.bat_avg;
 }
 
-double Player::get_bat_sr() {
+double Player::get_bat_sr() const {
 	return player_stats.bat_sr;
 }
 
-int Player::get_balls_bowled() {
+int Player::get_balls_bowled() const {
 	return player_stats.balls_bowled;
 }
 
-double Player::get_bowl_avg() {
+double Player::get_bowl_avg() const {
 	return player_stats.bowl_avg;
 }
 
-double Player::get_bowl_sr() {
+double Player::get_bowl_sr() const {
 	return player_stats.bowl_sr;
 }
 
-double Player::get_bowl_econ() {
+double Player::get_bowl_econ() const {
 	return player_stats.bowl_econ;
 }
 
-bool Player::get_bat_hand() {
+bool Player::get_bat_hand() const {
 	return player_stats.bat_hand;
 }
 
-int Player::get_bowl_type() {
+int Player::get_bowl_type() const {
 	return player_stats.bowl_type;
 }
+
+
+/* Team implementations */
+Team::Team(std::string c_name, Player* c_players [11], std::string ind_line);
+Team::Team(std::string csv);
+
+// Default copy constructor
+
+// Getters
+std::string Team::get_name();
+Player* Team::captain();
+Player* Team::wk();
+Player* Team::bowl_open(bool pos);
+
+Player* Team::next_batter(Player* manual) {
+	
+	// Next in original batting lineup
+	
+
+	Player* output = nullptr;
+
+
+
+}
+
+Player* Team::get_nightwatch();
+
+// Sorters
+Player** Team::sort_batavg(bool use_dnb);
+Player** Team::sort_bowlavg(bool use_dnb);
+
 
 
 // Overload of << operator for printing team list to console

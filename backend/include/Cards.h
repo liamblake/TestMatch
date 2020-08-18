@@ -60,7 +60,7 @@ class Dismissal {
 	// if bowled or lbw, set fielder = NULL
 
   public:
-	Dismissal(int c_mode, Player* c_bowler, Player* c_fielder = NULL);
+	Dismissal(int c_mode, Player* c_bowler = nullptr, Player* c_fielder = nullptr);
 	
 	std::string print_dism();
 	int get_mode();
@@ -79,6 +79,9 @@ class PlayerCard {
   public:
 	// Constructor
 	PlayerCard(Player* c_player);
+
+	// Getter
+	Player* get_player_ptr();
 	
 	// Pure virtual methods
 	virtual void update_score(std::string outcome) = 0;
@@ -91,17 +94,20 @@ class PlayerCard {
 
 //
 class BatterCard : public PlayerCard {
+	// TODO: implement MATCHTIME
 
   private:
-	  BatStats stats;
-	  bool out;
-	  Dismissal* dism;
+	BatStats stats;
+	bool out;
+	Dismissal* dism;
+
+	int mins;
 
   public:
 	BatterCard(Player* c_player);
 
 	BatStats get_sim_stats(void);
-	void update_score(std::string outcome);
+	void update_score(std::string outcome);//, float mins);
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
 
@@ -123,7 +129,7 @@ class BowlerCard : public PlayerCard {
 	// Tracks number of runs in a current over to determine whether that over was a maiden
 	bool is_maiden;
 
-	void add_over();
+	void add_ball();
 
 	
 
@@ -134,11 +140,11 @@ class BowlerCard : public PlayerCard {
 	void update_score(std::string outcome);
 	void start_new_spell();
 
-	// Over passes without bowler bowling - reduces fatigue
+	// Over passes (from same end) without bowler bowling - reduces fatigue
 	void over_rest();
 
 	std::string print_card(void);
-
+	std::string print_spell(void);
 };
 
 
@@ -163,6 +169,8 @@ class Over {
     int num_legal_delivs;
 
   public:
+	// Iterators?
+
     // Constructor
     Over(int c_over_num);
 
@@ -172,6 +180,29 @@ class Over {
     // Destructor
     ~Over();
 
+};
+
+
+struct Extras {
+  unsigned int byes;
+  unsigned int legbyes;
+  unsigned int noballs;
+  unsigned int wides;
+
+  std::string print();
+};
+
+
+struct FOW {
+  Player* batter;
+  unsigned int wkts;
+  unsigned int runs;
+  unsigned int overs;
+  unsigned int balls;
+
+  std::string print();
+
+  // TODO: implement value checking for 0 <= balls < 6
 };
 
 #endif

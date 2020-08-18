@@ -45,47 +45,86 @@ class Player
 	// Default destructor
 
 	// Getters
-	std::string get_initials();
-	std::string get_full_initials();
-	std::string get_last_name();
+	std::string get_initials() const;
+	std::string get_full_initials() const;
+	std::string get_last_name() const;
 
 	// Return full first, (middle), last name
-	std::string get_full_name();
+	std::string get_full_name() const;
 
-	std::string get_team();
+	std::string get_team() const;
 
-	Stats get_stats();
+	Stats get_stats() const;
 
 	// Specific getters for stats
-	int get_innings();
-	double get_bat_avg();
-	double get_bat_sr();
+	int get_innings() const;
+	double get_bat_avg() const;
+	double get_bat_sr() const;
 
-	int get_balls_bowled();
-	double get_bowl_avg();
-	double get_bowl_sr();
-	double get_bowl_econ();
+	int get_balls_bowled() const;
+	double get_bowl_avg() const;
+	double get_bowl_sr() const;
+	double get_bowl_econ() const;
 
-	bool get_bat_hand();
-	int get_bowl_type();
+	bool get_bat_hand() const;
+	int get_bowl_type() const;
 
 };
 
   // Contains all information describing a team and playing XI
-struct Team {
-  	  std::string name;
-	  Player* players [11];
+class Team {
+  private:
+  	std::string name;
+	Player* players [11];
+	int dnb [11];
 
     // Indexes refer to players array
-	  int captain;
-	  int wicket_keeper;
-	  int bowl_open1;
-	  int bowl_open2;
+	int i_captain;
+	int i_wk;
+	int i_bowl1;
+	int i_bowl2;
+
+  public:
+	Team(std::string c_name, Player* c_players [11], std::string ind_line);
+	Team(std::string csv);
+
+	// Default copy constructor
+
+	// Getters 
+	std::string get_name();
+	Player* captain();
+	Player* wk();
+	Player* bowl_open(bool pos);
+
+
+	/* Returns a pointer to the next batter in the lineup. 
+
+		If the manual argument is passed, attempts to find
+		that player in those in the lineup that have not batted.
+		If found, will return the pointer, otherwise returns nullptr.
+
+		Arguments:
+			manual (optional): a pointer to the player to search for.
+
+		Output:
+			Returns a Player pointer to the next batter in the team
+			lineup. If manual is passed, will return 
+	*/
+	Player* next_batter(Player* manual = nullptr);
+	Player* get_nightwatch();
+
+
+
+	// Sorters - used for selecting bowlers and changing batting order
+	Player** sort_batavg(bool use_dnb = false);
+	Player** sort_bowlavg(bool use_dnb = false);
+	// Default destructor
+
+
+	// Overload of << operator for printing team list to console
+	friend std::ostream& operator<<(std::ostream& os, const Team& team);
+	// Primarily used for testing
 
 };
-
-// Overload of << operator for printing team list to console
-std::ostream& operator<<(std::ostream& os, const Team& team);
-// Primarily used for testing
 
 #endif

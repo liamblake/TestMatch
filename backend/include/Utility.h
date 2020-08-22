@@ -12,6 +12,7 @@
 #include <vector>
 #include <stdexcept>
 
+
 /* Add new entry to end of array - reallocates memory dynamically.
    Deletes the old array and returns a pointer to the new.
    Arguments:

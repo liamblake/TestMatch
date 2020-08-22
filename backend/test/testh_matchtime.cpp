@@ -1,5 +1,3 @@
-#define BOOST_TEST_MODULE timetests
-
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/output_test_stream.hpp>
 
@@ -13,6 +11,7 @@ using namespace boost::unit_test;
 // Example objects for testing
 
 
+BOOST_AUTO_TEST_SUITE(test_header_time)
 
 void check_ostream(output_test_stream& output, int length, std::string expected) {
     BOOST_TEST(!output.is_empty(false));
@@ -43,3 +42,5 @@ BOOST_AUTO_TEST_CASE(testclass_time_operators) {
 BOOST_AUTO_TEST_CASE(testclass_time_setters) {
 
 }
+
+BOOST_AUTO_TEST_SUITE_END()

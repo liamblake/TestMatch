@@ -65,10 +65,19 @@
     <ClCompile Include="src\Simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test\test.cpp">
+    <ClCompile Include="test\testh_matchtime.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="test\test_time.cpp">
+    <ClCompile Include="test\testh_cards.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\testh_player.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_main.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\testh_utility.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>

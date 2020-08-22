@@ -1,5 +1,3 @@
-#define BOOST_TEST_MODULE autotest
-
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/parameterized_test.hpp>
 //#include <boost/mpl/list.hpp>
@@ -10,130 +8,38 @@
 #include <exception>
 
 #include "Player.h"
-#include "Utility.h"
 #include "Cards.h"
 
 using namespace boost::unit_test;
 
 // Player examples for testing
-Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5}, "Australia");
-Player tp_bowl("Trent", "Boult", "TA", {82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8}, "New Zealand");
-Player tp_field("BJ", "Watling", "BJ", {110, 38.5, 42.35, -1, -1, -1, -1, false, -1}, "New Zealand");
+Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 }, "Australia");
+Player tp_bowl("Trent", "Boult", "TA", { 82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8 }, "New Zealand");
+Player tp_field("BJ", "Watling", "BJ", { 110, 38.5, 42.35, -1, -1, -1, -1, false, -1 }, "New Zealand");
 
-
-
-BOOST_AUTO_TEST_CASE(testclass_player) {
-
-	BOOST_TEST(tp_bat.get_initials() == "M");
-	BOOST_TEST(tp_bat.get_full_initials() == "M Labuschagne");
-	BOOST_TEST(tp_bat.get_last_name() == "Labuschagne");
-	BOOST_TEST(tp_bat.get_full_name() == "Marnus Labuschagne");
-
-	BOOST_TEST(tp_bat.get_team() == "Australia");
-
-	BOOST_TEST(tp_bat.get_innings() == 23);
-	BOOST_TEST(tp_bat.get_bat_avg() == 63.43);
-	BOOST_TEST(tp_bat.get_bat_sr() == 56.52);
-
-	BOOST_TEST(tp_bat.get_balls_bowled() == 756);
-	BOOST_TEST(tp_bat.get_bowl_avg() == 38.66);
-	BOOST_TEST(tp_bat.get_bowl_sr() == 63.0);
-	BOOST_TEST(tp_bat.get_bowl_econ() == 3.68);
-
-	BOOST_TEST(tp_bat.get_bat_hand() == false);
-	BOOST_TEST(tp_bat.get_bowl_type() == 5);
-
-}
-
-//template <class T>
-//bool equals(T* rhs, T* lhs, int len) {
-//	for (int i = 0; i < len; i++) {
-//		if (rhs[i] != lhs[i]) {
-//			return false;
-//		}
-//	}
-//
-//	return true;
-//};
-
-// arr_add_item - template function
-//typedef boost::mpl::list<int, int*, double, std::string> test_types;
-//BOOST_AUTO_TEST_CASE_TEMPLATE(testfunc_add_arr_item, T, test_types) {
-//	// Boundary case - empty array
-//	T* old;
-//	T* expected = new T[1];
-//	expected[0] = T(1);
-//
-//	BOOST_TEST(equals(arr_add_item<T>(old, 0, T(1)), expected, 1));
-//}
-
-
-BOOST_AUTO_TEST_CASE(testfunc_split_str)
-{
-	std::vector<std::string> expected;
-
-	// Boundary case - empty string
-	BOOST_TEST(split_str("").empty());
-
-	// Boundary case - just delimeter
-	expected.push_back("");
-	expected.push_back("");
-	BOOST_TEST(split_str(",") == expected);
-	expected.clear();
-
-	// Boundary case - no delimeter
-	expected.push_back("test");
-	BOOST_TEST(split_str("test") == expected);
-	expected.clear();
-
-	// Standard case - default delimeter
-	expected.push_back("a");
-	expected.push_back("b");
-	expected.push_back("c");
-	BOOST_TEST(split_str("a,b,c") == expected);
-
-	// Standard case - delimeter at end
-	expected.push_back("");
-	BOOST_TEST(split_str("a,b,c,") == expected);
-
-	// Standard case - delimeter at start
-	expected.pop_back();
-	expected.insert(expected.begin(), "");
-	BOOST_TEST(split_str(",a,b,c") == expected);
-	expected.clear();
-
-	// Standard case - other delimeter
-	expected.push_back("1");
-	expected.push_back("2");
-	expected.push_back("3");
-	BOOST_TEST(split_str("1 2 3", " ") == expected);
-
-	// Standard case - other delimeter
-	BOOST_TEST(split_str("1thisisadelimeter2thisisadelimeter3", "thisisadelimeter") == expected);
-}
-
+BOOST_AUTO_TEST_SUITE(test_header_cards)
 
 // Test cases for Dismissal class
 BOOST_AUTO_TEST_CASE(testclass_dismissal) {
 
 	// Expected dismissal strings
-	std::string disms[5] = {"b Boult",
+	std::string disms[5] = { "b Boult",
 							"lbw Boult",
 							"c Watling b Boult",
 							"run out (Watling)",
-							"st Watling b Boult"};
+							"st Watling b Boult" };
 	// Expected bowler pointers
-	Player* expect_bowl[5] = {&tp_bowl, 
+	Player* expect_bowl[5] = { &tp_bowl,
 							 &tp_bowl,
 							 &tp_bowl,
 							 nullptr,
-							 &tp_bowl};
+							 &tp_bowl };
 	// Expected fielder pointers
-	Player* expect_field[5] = {nullptr, 
+	Player* expect_field[5] = { nullptr,
 							   nullptr,
 							   &tp_field,
 							   &tp_field,
-							   &tp_field};
+							   &tp_field };
 
 
 	// Automated - making use of the fact that 
@@ -190,7 +96,7 @@ BOOST_AUTO_TEST_CASE(testclass_battercard) {
 			{ "1b", "M Labuschagne not out 32 (15b 3x4 2x6) SR: 213.33" },
 			{ "1b", "M Labuschagne not out 32 (16b 3x4 2x6) SR: 200.00" },
 			{ "4b", "M Labuschagne not out 32 (17b 3x4 2x6) SR: 188.24" },
-			{ "1w", "M Labuschagne not out 32 (17b 3x4 2x6) SR: 188.24" }};
+			{ "1w", "M Labuschagne not out 32 (17b 3x4 2x6) SR: 188.24" } };
 
 	for (int i = 0; i < 18; i++) {
 		bc.update_score(outcomes[i].first);
@@ -235,7 +141,7 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 		{"4lb", "TA Boult 2.4-1-27-0"},
 		{"1w", "TA Boult 2.4-1-28-0"},
 		{"5w", "TA Boult 2.4-1-33-0"},
-		{"W", "TA Boult 2.5-1-33-1"}};
+		{"W", "TA Boult 2.5-1-33-1"} };
 
 
 	for (int i = 0; i < 21; i++) {
@@ -249,14 +155,14 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 
 BOOST_AUTO_TEST_CASE(testclass_over) {
 	// Test object
-	Over o (1);
+	Over o(1);
 
 }
 
 
 BOOST_AUTO_TEST_CASE(teststruct_fow) {
 	// Test obect 
-	FOW f = {&tp_bat, 1, 20, 8, 2};
+	FOW f = { &tp_bat, 1, 20, 8, 2 };
 	BOOST_TEST(f.print() == "1-20 (Marnus Labuschagne, 8.2 ov)");
 
 	// TEST INVALID VALUE
@@ -265,7 +171,7 @@ BOOST_AUTO_TEST_CASE(teststruct_fow) {
 
 BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	// Test obect 
-	Extras e = {0, 0, 0, 0};
+	Extras e = { 0, 0, 0, 0 };
 
 	// Should print nothing
 	BOOST_TEST(e.print() == "");
@@ -273,3 +179,7 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 
 	// TEST INVALID VALUE
 }
+
+
+
+BOOST_AUTO_TEST_SUITE_END()

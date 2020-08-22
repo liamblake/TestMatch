@@ -71,12 +71,16 @@ class Player
 
 };
 
+template <typename T>
+Player** sort_array(Player* list, int len, T (Player::*sort_val)() const);
+
+
   // Contains all information describing a team and playing XI
 class Team {
   private:
   	std::string name;
-	Player* players [11];
-	int dnb [11];
+	Player** players;
+	int next_in;
 
     // Indexes refer to players array
 	int i_captain;
@@ -84,8 +88,12 @@ class Team {
 	int i_bowl1;
 	int i_bowl2;
 
+	// Utility functions - sort subset of player array
+	Player** sort_batavg_subset(Player* subset, int len);
+	Player** sort_bowlavg_subset(Player* subset, int len);
+
   public:
-	Team(std::string c_name, Player* c_players [11], std::string ind_line);
+	Team(std::string c_name, Player** c_players, std::string ind_line);
 	Team(std::string csv);
 
 	// Default copy constructor

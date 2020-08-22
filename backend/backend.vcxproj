@@ -108,9 +108,9 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>.\bin</OutDir>
     <IntDir>.\build</IntDir>
-    <ExecutablePath>D:\Dropbox\Projects\TestMatch\backend\bin;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>D:\Dropbox\Projects\TestMatch\backend\include;$(IncludePath)</IncludePath>
-    <SourcePath>D:\Dropbox\Projects\TestMatch\backend\src;$(SourcePath)</SourcePath>
+    <ExecutablePath>.\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>.\include;$(IncludePath)</IncludePath>
+    <SourcePath>.\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -132,9 +132,9 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>.\bin</OutDir>
     <IntDir>.\build</IntDir>
-    <ExecutablePath>D:\Dropbox\Projects\TestMatch\backend\bin;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>D:\Dropbox\Projects\TestMatch\backend\include;$(IncludePath)</IncludePath>
-    <SourcePath>D:\Dropbox\Projects\TestMatch\backend\src;$(SourcePath)</SourcePath>
+    <ExecutablePath>.\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>.\include;$(IncludePath)</IncludePath>
+    <SourcePath>.\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -238,14 +238,8 @@
     <ClInclude Include="include\Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test\test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="test\testh_cards.cpp" />
+    <ClCompile Include="test\testh_utility.cpp" />
     <ClCompile Include="src\Cards.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
@@ -267,10 +261,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="test\test_time.cpp">
+    <ClCompile Include="test\testh_matchtime.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="test\testh_player.cpp" />
+    <ClCompile Include="test\test_main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

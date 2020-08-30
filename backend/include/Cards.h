@@ -205,4 +205,62 @@ struct FOW {
   // TODO: implement value checking for 0 <= balls < 6
 };
 
+
+class Milestone {
+  private:
+	Player* player;
+
+	std::string desc;
+
+  public:
+	  Milestone(Player* c_player, std::string c_desc);
+
+	  virtual std::string print() = 0;
+
+
+};
+
+class BatMilestone : public Milestone {
+
+};
+
+class PartnershipMilestone : public BatMilestone {
+
+};
+
+class BowlMilestone : public Milestone {
+
+};
+
+
+class Partnership {
+  private:
+	Player* bat1;
+	Player* bat2;
+
+	unsigned int bat1_runs;
+	unsigned int bat1_balls;
+
+	unsigned int bat2_runs;
+	unsigned int bat2_balls;
+
+	bool not_out;
+
+
+  public:
+	  Partnership(Player* c_bat1, Player* c_bat2);
+
+	  // Getters
+	  Player* get_bat1();
+	  Player* get_bat2();
+
+	  unsigned int get_runs();
+	  unsigned int get_balls();
+
+	  // Setters
+	  Milestone* add_runs(unsigned int runs, bool add_ball = true);
+	  void end();
+
+};
+
 #endif

@@ -21,11 +21,44 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
   team_bowl = c_team_bowl;
 
   lead = c_lead;
-
   wkts = 0;
 
   inns_no++;
+  
+  // Create BatterCards/BowlerCards for each player
+  for (int i = 0; i < 11; i++) {
+    batters[i] = new BatterCard(team_bat.players[i]);
+    bowlers[i] = new BowlerCard(team_bowl.players[i]);
 
+  }
+
+  // Get opening batters
+  BatterCard* bat1 = next_batter();
+  BatterCard* bat2 = next_batter();
+
+  // First on strike is chosen randomly
+  if (((double) rand() / (RAND_MAX)) < 0.5) {
+    striker = bat1;
+    nonstriker = bat2;
+  } else {
+    striker = bat2;
+    nonstriker = bat1;
+  }
+
+  // Initialise batter_status array
+  batter_status[0] = batter_status[1] = 1;
+  for (int i = 2; i < 11; i++) {
+    batter_stats[i] = 0;
+  }
+
+
+  // Get opening bowlers
+  bowl1 = bowlers[team_bowl->i_bowl1];
+  bowl2 = bowlers[team_bowl->i_bowl1];
+
+  // Initialise bowler_status array
+
+  
 }
 
 
@@ -112,12 +145,12 @@ bool check_declaration() {
 }
 
 // Choose next bowler based off of last bowler (from end)
-Player* choose_bowler(BowlerCard* last_bowler) {
+Player* choose_bowler() {
 
 };
 
 // Select a fielder for an appropriate mode of dismissial
-Player* Innings::select_fielder() {
+Player* Innings::select_catcher(bool run_out) {
   // TODO: spice this up
   // AIS: choose a random fielder (who isn't the bowler)
   // Uniform distribution, with bias towards wicketkeeper
@@ -154,6 +187,16 @@ BowlerCard** Innings::get_bowlers() {
 }
 
 
+// Destructor
+Innings::~Innings() {
+  // Delete each dynamically allocated BatterCard and BowlerCard
+  for (int i = 0; i < 11; i++) {
+    delete batters[i], bowlers[i];
+  }
+
+  // Delete scorecard data
+
+}
 
 
 

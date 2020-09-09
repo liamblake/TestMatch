@@ -148,6 +148,64 @@ class BowlerCard : public PlayerCard {
 };
 
 
+
+//   // Contains all information describing a team and playing XI
+// class TeamCard {
+//   private:
+//   	Team static_team;
+// 	int next_in;
+
+
+
+// 	// Utility functions - sort subset of player array
+// 	Player** sort_batavg_subset(Player* subset, int len);
+// 	Player** sort_bowlavg_subset(Player* subset, int len);
+
+//   public:
+// 	TeamCard(Team base_team);
+
+// 	// Default copy constructor
+
+// 	// Getters 
+// 	std::string get_name();
+// 	Player* captain();
+// 	Player* wk();
+// 	Player* bowl_open(bool pos);
+
+
+
+// 	/* Returns a pointer to the next batter in the lineup. 
+
+// 		If the manual argument is passed, attempts to find
+// 		that player in those in the lineup that have not batted.
+// 		If found, will return the pointer, otherwise returns nullptr.
+
+// 		Arguments:
+// 			manual (optional): a pointer to the player to search for.
+
+// 		Output:
+// 			Returns a Player pointer to the next batter in the team
+// 			lineup. If manual is passed, will return 
+// 	*/
+// 	Player* next_batter(Player* manual = nullptr);
+
+// 	/* Returns a pointer to a lower-order batter selected as 
+// 	   as nightwatchman.
+
+// 	   The chosen batter 
+
+// 	*/
+// 	Player* get_nightwatch();
+
+// 	// Sorters - used for selecting bowlers and changing batting order
+// 	Player** sort_batavg(bool use_dnb = false);
+// 	Player** sort_bowlavg(bool use_dnb = false);
+// 	// Default destructor
+
+
+// };
+
+
 // Describes a delivery
 struct Ball {
   Player* bowler;
@@ -208,28 +266,69 @@ struct FOW {
 
 class Milestone {
   private:
-	Player* player;
+  	Player* player;
+	int value;
 
+	/* Pure virtual method - checks if passed value is 
+	   allowed for given milestone type.
+	*/
+	virtual bool is_permitted(int value) = 0;
+
+  protected:
 	std::string desc;
 
   public:
-	  Milestone(Player* c_player, std::string c_desc);
+	Milestone(Player* c_player, int c_value);
 
-	  virtual std::string print() = 0;
+	// Getters
+	Player* get_player();
+	std::string get_desc();
+	int get_value();
+
+	virtual std::string string() = 0;
 
 
 };
 
 class BatMilestone : public Milestone {
+  private:
+	bool is_permitted(int value);
+
+	int runs;
+	int balls;
+	int fours;
+	int sixes;
+
+  public:
+	BatMilestone(Player* batter, int c_milestone, int c_runs, int c_balls, int c_fours, int c_sixes);
+
+	std::string string();
+
+
+
 
 };
 
 class PartnershipMilestone : public BatMilestone {
 
+
+
+
 };
 
 class BowlMilestone : public Milestone {
+  private:
+	bool is_permitted(int value);
 
+	int runs;
+	int overs;
+	int balls;
+	int maidens;
+
+  public:
+	BowlMilestone(Player* bowler, int c_milestone, int c_runs, int c_overs, int c_balls, int c_maidens);
+
+	std::string string();
 };
 
 

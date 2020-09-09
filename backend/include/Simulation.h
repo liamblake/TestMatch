@@ -31,7 +31,6 @@ class PitchCondition {
 
 
 
-
 // Match details required in delivery model
 struct MatchStats {
 
@@ -67,6 +66,14 @@ class Innings {
   	BatterCard* batters [11];
   	BowlerCard* bowlers [11];
 
+    // Status of batters in team
+    // 0 - has not batted; 1 - at crease, not out; 2 - out
+    int batter_status [11];
+
+    // Status of bowlers in team
+    // false - has not bowled; true - has bowled
+    bool bowler_status [11];
+
     // Current batters
   	BatterCard* striker;
   	BatterCard* nonstriker;
@@ -89,11 +96,17 @@ class Innings {
     void end_over();
   	bool check_declaration();
 
+    /* Choose the next batter in after the fall of a wicket
+    
+       Returns a pointer to the BatterCard corresponding
+    */
+    BatterCard* next_batter();
+
     // Choose next bowler based off of last bowler (from end)
-    Player* choose_bowler(BowlerCard last_bowler);
+    BowlerCard* choose_bowler();
 
     // Select a fielder for an appropriate mode of dismissial
-  	Player* select_fielder();
+  	Player* select_catcher(bool run_out = false);
 
 
   public:
@@ -108,14 +121,20 @@ class Innings {
 
     bool is_open();
 
+    // Destructor
+    ~Innings();
+
 };
 
 
 class Match {
 
   private:
-    Team* team1;
-    Team* team2;
+    Team* team1;    // Home team
+    Team* team2;    // Away team
+
+    int country;
+    std::string venue;
 
     bool ready;
     bool toss_win;      // false = team1, true = team2
@@ -139,7 +158,7 @@ class Match {
     void pregame();
     void start();
 
-
+    std::string print_pregame();
 };
 
 #endif

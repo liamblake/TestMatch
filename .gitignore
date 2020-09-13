@@ -6,6 +6,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.RHistory
+data\delivery\bbb_full.csv
+data\analysis\initial_experiments.R
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

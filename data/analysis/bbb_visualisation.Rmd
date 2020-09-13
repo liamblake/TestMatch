@@ -7,9 +7,35 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-pacman::p_load(tidyverse)
+pacman::p_load(tidyverse, ggfortify)
 
-bbb <- readRDS('bbb_full_cleaned.RDS')
+bbb <- readRDS('bbb_test.RDS')
 ```
 
 
+
+```{r}
+
+bbb %>% 
+  group_by(bowl_type) %>%
+  summarise(no_wkts = sum(is_wkt == "W"))
+
+```
+
+
+# Scatterplots
+```{r}
+
+bbb %>% ggplot(aes(bowl_avg, bat_avg, color = outcome)) + geom_point(alpha = 0.5)
+
+
+```
+
+
+
+```{r}
+num_dat <-bbb %>% select(-where(is.factor), outcome) %>% na.omit(where(is.numeric))
+pca <- prcomp(num_dat %>% select(-outcome))
+autoplot(pca, data = num_dat, colour = "outcome")
+
+```

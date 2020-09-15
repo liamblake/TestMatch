@@ -327,6 +327,7 @@ bowl_team}
 
 
     # Fill in match information
+    ret_df['StartDate'] = start_date
     ret_df['HostCountry'] = home_team 
     ret_df['Venue'] = match_detail['Venue']
     ret_df['TossWin'] = COUNTRY_CODES[info['toss']['winner']]
@@ -353,17 +354,19 @@ output_dir = DIR + '/bbb_full.csv'
 bbb_dir = fsencode(DIR + "/ballbyball")
 first_entry = True
 
-for file in listdir(bbb_dir):
+for (id, file) in enumerate(listdir(bbb_dir)):
     name = fsdecode(file)
-    #print('Parsing ' + name + '...')
+    print('Parsing ' + name + '...')
 
     try:
         dat = concat_bbb_stats(DIR + "/ballbyball/" + name)
-        #print('Appending to ' + output_dir + '...')
+        print('Appending to ' + output_dir + '...')
+        # Add unique match id
+        dat['GameID'] = id + 1
         dat.to_csv(output_dir, mode='a', header=first_entry, index = False)
         first_entry = False
 
-        #print('Success!')
+        print('Success!')
 
     except Exception as e:
         #print(e)

@@ -32,8 +32,8 @@ g_wkts_sum <- bbb %>% group_by(game_id) %>%
   rename(seam_wkts = n)
 
 bbb <- bbb %>% mutate(pitch_factor = (bat_team_total_runs + bowl_team_total_runs)/(bat_team_total_wkts + bowl_team_total_wkts)) %>%
-  mutate(seam_factor = as.list(pitch_factor*g_wkts_sum[as.integer(game_id),2]/g_wkts_sum[as.integer(game_id),4])) %>%
-  mutate(spin_factor = as.list(pitch_factor*g_wkts_sum[as.integer(game_id),3]/g_wkts_sum[as.integer(game_id),4]))
+  mutate(seam_factor = unlist(pitch_factor*g_wkts_sum[as.integer(game_id),2]/g_wkts_sum[as.integer(game_id),4], use.name = FALSE)) %>%
+  mutate(spin_factor = unlist(pitch_factor*g_wkts_sum[as.integer(game_id),3]/g_wkts_sum[as.integer(game_id),4], use.name = FALSE))
 
 # Extras
 
@@ -44,11 +44,10 @@ bbb <- bbb %>% mutate(pitch_factor = (bat_team_total_runs + bowl_team_total_runs
 # Omit unused columns
 bbb <- bbb %>% select(-c(spell_balls, spell_runs, spell_wkts))
 
-# Shuffle data and split
+# Shuffle data and split 
 bbb <- sample_frac(bbb, 1L)
-split <- initial_split(bbb, strata = outcome)
 
+bbb_wkts <- bbb %>% select(-c(bat_team, batter, bowler, outcome, bat_team_total_runs, bat_team_total_wkts, bowl_team_total_wkts, bowl_team_total_runs, toss_win, toss_elect, winner, margin, game_id, bat_win_toss))
 
 # Output to .RDS files
-saveRDS(training(split), "bbb_train.RDS")
-saveRDS(testing(split), "bbb_test.RDS")
+saveRDS(bbb_wkts, "bbb_wkt.RDS")

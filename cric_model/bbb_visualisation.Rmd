@@ -7,9 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-pacman::p_load(tidyverse, ggfortify)
+pacman::p_load(tidyverse, ggfortify, corrplot)
 
-bbb <- readRDS('bbb_test.RDS')
+bbb <- readRDS('bbb_wkt.RDS')
 ```
 
 
@@ -26,7 +26,7 @@ bbb %>%
 # Scatterplots
 ```{r}
 
-bbb %>% ggplot(aes(bowl_avg, bat_avg, color = outcome)) + geom_point(alpha = 0.5)
+bbb %>% ggplot(aes(bowl_avg, bat_avg, color = is_wkt)) + geom_point(alpha = 0.5)
 
 
 ```
@@ -34,9 +34,9 @@ bbb %>% ggplot(aes(bowl_avg, bat_avg, color = outcome)) + geom_point(alpha = 0.5
 
 
 ```{r}
-num_dat <-bbb %>% select(-where(is.factor), outcome) %>% na.omit(where(is.numeric))
-pca <- prcomp(num_dat %>% select(-outcome))
-autoplot(pca, data = num_dat, colour = "outcome")
+num_dat <-bbb %>% select(-where(is.factor), is_wkt) %>% na.omit(where(is.numeric))
+pca <- prcomp(num_dat %>% select(-is_wkt))
+autoplot(pca, data = num_dat, colour = "wicket")
 
 ```
 
@@ -70,4 +70,14 @@ wk_bf <- bbb %>% filter(is_wkt == "W") %>% group_by(bat_balls) %>% tally()
 
 wk_bf[,2] <- wk_bf[,2]/all_bf[,2]
 wk_bf %>% ggplot(aes(bat_balls, n)) + geom_point()
+```
+
+
+
+```{r}
+bbb %>% select_if(is.numeric) %>% 
+  na.omit() %>%
+  cor() %>% 
+  corrplot()
+
 ```

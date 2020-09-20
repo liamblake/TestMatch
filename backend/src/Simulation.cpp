@@ -76,6 +76,31 @@ double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) 
   return output;
 }
 
+int Innings::MODEL_WICKET_TYPE(int bowltype) {
+  // Unencode bowltype
+  std::string btype_str = unencode_bowltype(bowltype);
+
+  std::string DISM_MODES [8] = {"b", "c", "c&b", "lbw", "ro", "st"}
+  double DISM_MODE_DIST [8];
+
+  // Check if "f" is in bowl_type - indicates whether stumpings are possible
+  if (btype_str.find('f') == std::string::npos) {
+    // Spinner model
+    DISM_MODE_DIST = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
+  } else {
+    // Seamer model
+    DISM_MODE_DIST = {0.175, 0.640, 0.0141, 0.144, 0.0242};
+  } 
+
+  // Sample from distribution
+  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES, &DISM_MODE_DIST, 8);
+  return encode_bowltype(dism_mode);
+
+
+
+}
+
+
 
 // Private methods used in simulation process
 void Innings::simulate_delivery() {

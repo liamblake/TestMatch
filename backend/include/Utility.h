@@ -183,11 +183,14 @@ inline int encode_dism(std::string mode) {
 	else if (mode == "c") {
 		output = 2;
 	}
-	else if (mode == "ro") {
+	else if (mode == "c&b") {
 		output = 3;
 	}
-	else if (mode == "st") {
+	else if (mode == "ro") {
 		output = 4;
+	}
+	else if (mode == "st") {
+		output = 5;
 	}
 
 	return output;
@@ -209,9 +212,11 @@ inline std::string unencode_dism(int encoding) {
 			output = "c";
 			break;
 		case 3:
+			output = "c&b";
+		case 4:
 			output = "ro";
 			break;
-		case 4:
+		case 5:
 			output = "st";
 			break;
 		default:
@@ -223,6 +228,15 @@ inline std::string unencode_dism(int encoding) {
 
 }
 
+
+template <typename T>
+T sample_cdf(T* values, double* dist = nullptr, int length) {
+	// Default -- uniform distribution
+	
+	
+	// Generate random number
+	double r = 
+}
 
 
 #endif

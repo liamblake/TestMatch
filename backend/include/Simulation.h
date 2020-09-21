@@ -79,14 +79,14 @@ class Innings {
   	BatterCard* nonstriker;
 
     // Bowler of current over (bowl1) and previous over (bowl2)
-    BatterCard* bowl1;
-    BatterCard* bowl2; 
+    BowlerCard* bowl1;
+    BowlerCard* bowl2; 
 
     Extras extras;
     FOW* fow;
 
     // Simulation models
-    const static NUM_OUTCOMES = 17;
+    const static int NUM_OUTCOMES = 17;
     static std::string unencode_outcome(int outcome);
     static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
     static int MODEL_WICKET_TYPE(int bowltype);

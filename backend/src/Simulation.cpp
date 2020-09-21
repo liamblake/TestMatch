@@ -80,20 +80,20 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
   // Unencode bowltype
   std::string btype_str = unencode_bowltype(bowltype);
 
-  std::string DISM_MODES [8] = {"b", "c", "c&b", "lbw", "ro", "st"}
+  std::string DISM_MODES[8] = { "b", "c", "c&b", "lbw", "ro", "st" };
   double DISM_MODE_DIST [8];
 
   // Check if "f" is in bowl_type - indicates whether stumpings are possible
   if (btype_str.find('f') == std::string::npos) {
     // Spinner model
-    DISM_MODE_DIST = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
+    double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
   } else {
     // Seamer model
-    DISM_MODE_DIST = {0.175, 0.640, 0.0141, 0.144, 0.0242};
+    double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242};
   } 
 
   // Sample from distribution
-  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES, &DISM_MODE_DIST, 8);
+  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES, 8, &DISM_MODE_DIST);
   return encode_bowltype(dism_mode);
 
 
@@ -105,11 +105,8 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
 // Private methods used in simulation process
 void Innings::simulate_delivery() {
 
-  BatterCard* batter = batters[striker];
-  BowlerCard* bowler = bowlers[bowl_1];
-
   // Get outcome probabilities
-  double* probs = MODEL_DELIVERY(batter->get_sim_stats(), bowler->get_sim_stats(), {});
+  double* probs = MODEL_DELIVERY(striker->get_sim_stats(), bowl1->get_sim_stats(), {});
 
   // Simulate
   double r = ((double) rand() / (RAND_MAX));
@@ -163,14 +160,14 @@ void Innings::simulate_delivery() {
 }
 
     // Check for declaration
-bool check_declaration() {
+bool Innings::check_declaration() {
   // TODO: implement declaration checking
   return false;
   // AIS: never declare, may lead to some slightly absurd innings
 }
 
 // Choose next bowler based off of last bowler (from end)
-Player* choose_bowler() {
+Player* Innings::choose_bowler() {
 
 };
 
@@ -198,7 +195,9 @@ Player* Innings::select_catcher(bool run_out) {
 }
 
   	
-    void simulate();
+void Innings::simulate() {
+
+}
 
 
 

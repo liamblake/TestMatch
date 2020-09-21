@@ -230,12 +230,24 @@ inline std::string unencode_dism(int encoding) {
 
 
 template <typename T>
-T sample_cdf(T* values, double* dist = nullptr, int length) {
+T sample_cdf(T* values, int length, double* dist = nullptr) {
 	// Default -- uniform distribution
-	
+	bool default_dist = (dist == nullptr);
+	if (default_dist) {
+		dist = new double[length];
+	}
 	
 	// Generate random number
-	double r = 
+	double r = ((double)rand() / (RAND_MAX));
+	
+	// Iterate through distribution until first entry > r
+	int i = 0;
+	while (++i < length && r > dist[i]); 
+
+	// Unallocate memory if called
+	if (default_dist) delete[] dist;
+
+	return values[i - 1];
 }
 
 

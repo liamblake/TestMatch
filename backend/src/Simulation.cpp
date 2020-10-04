@@ -57,7 +57,9 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
   bowl2 = bowlers[team_bowl->i_bowl1];
 
   // Initialise bowler_status array
-
+  for (int i = 0; i < 11; i++) {
+    bowler_status[i] = false;
+  }
   
 }
 
@@ -94,7 +96,7 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
 
   // Sample from distribution
   std::string dism_mode = sample_cdf<std::string>(&DISM_MODES, 8, &DISM_MODE_DIST);
-  return encode_bowltype(dism_mode);
+  return encode_dism(dism_mode);
 
 
 
@@ -114,8 +116,6 @@ void Innings::simulate_delivery() {
   while(++i < NUM_OUTCOMES && r > probs[i]); // CHECK THE ++
   std::string outcome = unencode_outcome(i - 1);
   delete[] probs;
-
-  std::string match_state;
 
   if (outcome == "W") {
     // Handle wicket
@@ -197,6 +197,9 @@ Player* Innings::select_catcher(bool run_out) {
   	
 void Innings::simulate() {
 
+  while (inns_state != "END") {
+    simulate_delivery();
+  }
 }
 
 
@@ -260,7 +263,6 @@ void Match::simulate_toss() {
 void Match::pregame() {
   // Toss
   simulate_toss();
-
 
   // Prepare innings
   bool team_order = toss_win;

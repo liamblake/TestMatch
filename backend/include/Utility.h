@@ -233,9 +233,7 @@ template <typename T>
 T sample_cdf(T* values, int length, double* dist = nullptr) {
 	// Default -- uniform distribution
 	bool default_dist = (dist == nullptr);
-	if (default_dist) {
-		dist = new double[length];
-	}
+	if (default_dist) dist = new double[length];
 	
 	// Generate random number
 	double r = ((double)rand() / (RAND_MAX));

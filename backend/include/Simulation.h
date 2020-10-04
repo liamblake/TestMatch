@@ -55,6 +55,7 @@ class Innings {
   	int wkts;
 
     bool open;
+    std::string inns_state;
 
     MatchTime* time;
     PitchCondition* pitch;
@@ -145,6 +146,7 @@ class Match {
     PitchCondition pitch;
 
     MatchTime time;
+    std::string match_state;
 
     int innings;
     Innings** inns[4];

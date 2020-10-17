@@ -14,32 +14,35 @@
 
 using namespace boost::unit_test;
 
+BOOST_AUTO_TEST_SUITE(test_header_cards)
+
 // Player examples for testing
 Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 }, "Australia");
 Player tp_bowl("Trent", "Boult", "TA", { 82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8 }, "New Zealand");
 Player tp_field("BJ", "Watling", "BJ", { 110, 38.5, 42.35, -1, -1, -1, -1, false, -1 }, "New Zealand");
 
-BOOST_AUTO_TEST_SUITE(test_header_cards)
-
 // Test cases for Dismissal class
 BOOST_AUTO_TEST_CASE(testclass_dismissal) {
 
 	// Expected dismissal strings
-	std::string disms[5] = { "b Boult",
+	std::string disms[6] = { "b Boult",
 							"lbw Boult",
 							"c Watling b Boult",
+							"c&b Boult",
 							"run out (Watling)",
 							"st Watling b Boult" };
 	// Expected bowler pointers
-	Player* expect_bowl[5] = { &tp_bowl,
+	Player* expect_bowl[6] = { &tp_bowl,
+							 &tp_bowl,
 							 &tp_bowl,
 							 &tp_bowl,
 							 nullptr,
 							 &tp_bowl };
 	// Expected fielder pointers
-	Player* expect_field[5] = { nullptr,
+	Player* expect_field[6] = {nullptr,
 							   nullptr,
 							   &tp_field,
+							   nullptr,
 							   &tp_field,
 							   &tp_field };
 
@@ -47,7 +50,7 @@ BOOST_AUTO_TEST_CASE(testclass_dismissal) {
 	// Automated - making use of the fact that 
 	// bowler and fielder pointers can be passed
 	// even if dismissal doesn't involve them
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 		Dismissal x(i, &tp_bowl, &tp_field);
 
 		// Test getters

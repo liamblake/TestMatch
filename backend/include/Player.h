@@ -81,14 +81,15 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
 
 
 struct Team {
-	Player* players [11];
+	std::string name;
+	Player* players[11];
 
 	// Indexes refer to players array
 	int i_captain;
 	int i_wk;
 	int i_bowl1;
 	int i_bowl2;
-}
+};
 
 
 

@@ -213,6 +213,7 @@ inline std::string unencode_dism(int encoding) {
 			break;
 		case 3:
 			output = "c&b";
+			break;
 		case 4:
 			output = "ro";
 			break;

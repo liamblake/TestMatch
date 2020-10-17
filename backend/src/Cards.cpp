@@ -55,8 +55,11 @@ string Dismissal::print_dism() {
 
 	if (str_mode == "b" || str_mode == "lbw") {
 		output = str_mode + " " + bowl_name;
-	} else if (str_mode == "c" || str_mode == "st") {
+	}
+	else if (str_mode == "c" || str_mode == "st") {
 		output = str_mode + " " + field_name + " b " + bowl_name;
+	} else if (str_mode == "c&b") {
+		output = str_mode + " " + bowl_name;
 	} else {
 		output = "run out (" + field_name + ")";
 	}
@@ -523,6 +526,10 @@ Milestone::Milestone(Player* c_player, int c_value)
 		// THIS WON'T WORK - NEED A BETTER SOLUTION
 	
 
+bool Milestone::is_permitted(int value) {
+	return true;
+}
+
 // Getters
 Player* Milestone::get_player() {
 	return player;
@@ -536,8 +543,8 @@ std::string Milestone::get_desc() {
 	return desc;
 }
 
-
-/* BatMilestone implementations */
-BatMilestone::BatMilestone() {
-
-}
+//
+///* BatMilestone implementations */
+//BatMilestone::BatMilestone() {
+//
+//}

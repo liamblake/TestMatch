@@ -273,6 +273,11 @@
     <ClCompile Include="test\testh_player.cpp" />
     <ClCompile Include="test\test_main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="models\keras_bbb.onnx">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

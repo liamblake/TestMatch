@@ -16,6 +16,9 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{f5587e36-4a90-4edb-afa0-40a915217bc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{05e2bdca-e58b-4622-8c41-c5bb57979102}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Assorted.h">
@@ -80,5 +83,10 @@
     <ClCompile Include="test\testh_utility.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="models\keras_bbb.onnx">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 pacman::p_load(tidyverse, tidymodels, janitor)
 
 # Load raw data
-bbb <- read_csv('../delivery/bbb_full.csv', na = c("", "-")) %>% as_tibble()
+bbb <- read_csv('bbb_full.csv', na = c("", "-")) %>% as_tibble()
 
 # Prepare data
 bbb <- bbb %>% clean_names()
@@ -51,3 +51,4 @@ bbb_wkts <- bbb %>% select(-c(bat_team, batter, bowler, outcome, bat_team_total_
 
 # Output to .RDS files
 saveRDS(bbb_wkts, "bbb_wkt.RDS")
+saveRDS(bbb, "bbb_full.RDS")

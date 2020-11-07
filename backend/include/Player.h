@@ -4,6 +4,42 @@
 #include <string>
 #include <iostream>
 
+/* 
+*/
+class OverCount {
+  
+  private:
+	int overs;
+	int balls;
+
+	// Internal addition of ball
+	void add_ball();
+
+  public:
+	OverCount();
+	OverCount(int c_overs, int c_balls);
+
+	// Overloaded operators
+	OverCount& operator++();
+	OverCount& operator++(int);
+	OverCount& operator+=(const int rhs);
+	OverCount& operator-=(const int rhs);
+	friend OverCount operator+(const OverCount& lhs, const OverCount& rhs);
+	friend OverCount operator+(const OverCount& lhs, const int rhs);
+	friend OverCount operator-(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator==(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator!=(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator<(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator>(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator<=(const OverCount& lhs, const OverCount& rhs);
+	friend bool operator>=(const OverCount& lhs, const OverCount& rhs);
+
+	explicit operator std::string() const;
+	explicit operator float() const;
+
+};
+
+
 /* Structure containing all statistics describing a player. These are available in the /data/players
    directory. */
 struct Stats {

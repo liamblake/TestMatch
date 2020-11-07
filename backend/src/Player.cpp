@@ -9,6 +9,95 @@ using namespace std;
 
 
 
+/*
+	OverCount implementations
+*/
+void OverCount::add_ball() {
+
+}
+
+OverCount::OverCount() : overs(0), balls(0) {}
+
+OverCount::OverCount(int c_overs, int c_balls) : overs(c_overs), balls(c_balls) {}
+
+OverCount& OverCount::operator++()
+{
+	add_ball();
+	return *this;
+}
+
+OverCount& OverCount::operator++(int) {
+	OverCount tmp(*this);
+	operator++();
+	return tmp;
+}
+
+OverCount& OverCount::operator+=(const int rhs)
+{
+	// TODO: insert return statement here
+}
+
+OverCount& OverCount::operator-=(const int rhs)
+{
+	// TODO: insert return statement here
+}
+
+OverCount::operator std::string() const {
+}
+
+OverCount::operator float() const {
+
+}
+
+
+OverCount operator+(const OverCount& lhs, const OverCount& rhs)
+{
+	return OverCount();
+}
+
+OverCount operator+(const OverCount& lhs, const int rhs)
+{
+	return OverCount();
+}
+
+OverCount operator-(const OverCount& lhs, const OverCount& rhs)
+{
+	return OverCount();
+}
+
+bool operator==(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+bool operator!=(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+bool operator<(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+bool operator>(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+bool operator<=(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+bool operator>=(const OverCount& lhs, const OverCount& rhs)
+{
+	return false;
+}
+
+
+
+
 Player::Player(string c_first_name, string c_last_name, string c_initials, Stats stats, string c_team) {
 	first_name = c_first_name;
 	initials = c_initials;

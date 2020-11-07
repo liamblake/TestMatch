@@ -251,14 +251,25 @@ struct Extras {
 };
 
 
-struct FOW {
-  Player* batter;
-  unsigned int wkts;
-  unsigned int runs;
-  unsigned int overs;
-  unsigned int balls;
+class FOW {
+  private:
+	Player* batter;
+	unsigned int wkts;
+	unsigned int runs;
+	unsigned int overs;
+	unsigned int balls;
 
-  std::string print();
+  public:
+	FOW(Player* c_batter, unsigned int c_wkts, unsigned int c_runs, unsigned int c_overs, unsigned int c_balls);
+  
+	// Getters
+	Player* get_batter();
+	unsigned int get_wkts();
+	unsigned int get_runs();
+	unsigned int get_overs();
+	unsigned int get_balls();
+
+	std::string print();
 
   // TODO: implement value checking for 0 <= balls < 6
 };

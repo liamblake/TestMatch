@@ -13,6 +13,10 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(test_header_player)
 
+BOOST_AUTO_TEST_CASE(testclass_overcount) {
+
+}
+
 BOOST_AUTO_TEST_CASE(testclass_player) {
 
 	Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 }, "Australia");

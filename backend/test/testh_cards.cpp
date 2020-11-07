@@ -69,12 +69,6 @@ BOOST_AUTO_TEST_CASE(testclass_dismissal) {
 }
 
 
-
-void testcases_battercard(std::pair<std::string, std::string> x) {
-
-
-}
-
 BOOST_AUTO_TEST_CASE(testclass_battercard) {
 	// Test object
 	BatterCard bc(&tp_bat);
@@ -146,7 +140,8 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 		{"4lb", "TA Boult 2.4-1-27-0"},
 		{"1w", "TA Boult 2.4-1-28-0"},
 		{"5w", "TA Boult 2.4-1-33-0"},
-		{"W", "TA Boult 2.5-1-33-1"} };
+		{"W", "TA Boult 2.5-1-33-1"} 
+	};
 
 
 	for (int i = 0; i < 21; i++) {
@@ -180,6 +175,7 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 
 	// Should print nothing
 	BOOST_TEST(e.print() == "");
+
 
 
 	// TEST INVALID VALUE

@@ -1,5 +1,7 @@
 pacman::p_load(tidyverse, tidymodels)
 
+set.seed(8112020)
+
 # Save as .csv
 save_to_csv <- function(obj, filename) {
   # Save labels
@@ -12,7 +14,11 @@ save_to_csv <- function(obj, filename) {
 # Encode categorical variables and
 prep_data <- function(df, filename, no_outs, add_class = "") {
   # Encode categorical variables
-  rc <- recipe(outcome ~ ., data = df) %>% step_naomit(outcome) %>% step_dummy(all_nominal()) %>% step_meanimpute(all_numeric())
+  rc <- recipe(outcome ~ ., data = df) %>% 
+    step_naomit(outcome) %>%
+    step_dummy(all_nominal()) %>% 
+    step_meanimpute(all_numeric())
+    
   df_pp <- rc %>% prep(data = df) %>% juice()
   
   # Account for reference category
@@ -55,6 +61,16 @@ bbb <- bbb %>% mutate(runs = case_when(
     nchar(as.character(outcome)) > 1 ~ substring(outcome, 2),
     TRUE ~ "off_bat"
   )))
+
+# Factors
+bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts"), as.factor) %>% mutate_if(is.character, as.factor)
+
+# EDA - informs preprocessing
+bbb %>% ggplot(aes(match_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
+bbb %>% ggplot(aes(inn_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
+bbb %>% ggplot(aes(match_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
+
+
 
 # Save full data
 prep_data(bbb %>% select(-c(is_wkt, dism_mode, extras)), "bbb_full", 22, "0")

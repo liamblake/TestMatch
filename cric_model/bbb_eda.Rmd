@@ -1,0 +1,32 @@
+---
+title: "Ball-by-ball EDA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load
+bbb <- readRDS("bbb_for_EDA.rds")
+```
+
+
+# Univariate Relationships
+
+## Histograms
+```{r}
+bbb %>% ggplot(aes(match_balls)) + geom_histogram(bins = 50)
+```
+
+```{r}
+bbb %>% ggplot(aes(inn_balls)) + geom_histogram(bins = 50)
+```
+
+```{r}
+bbb %>% ggplot(aes(team_score)) + geom_histogram(bins = 50)
+```
+
+```{r}
+bbb %>% ggplot(aes(match_balls)) + geom_histogram()
+```
+

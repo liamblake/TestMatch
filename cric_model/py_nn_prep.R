@@ -1,3 +1,5 @@
+# TODO: FIX FILE STRUCTURE - I WANT ALL DATA PROCESSING IN THIS FILE, STRAIGHT FROM CSV
+
 pacman::p_load(tidyverse, tidymodels)
 
 set.seed(8112020)
@@ -65,11 +67,8 @@ bbb <- bbb %>% mutate(runs = case_when(
 # Factors
 bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts"), as.factor) %>% mutate_if(is.character, as.factor)
 
-# EDA - informs preprocessing
-bbb %>% ggplot(aes(match_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
-bbb %>% ggplot(aes(inn_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
-bbb %>% ggplot(aes(match_balls)) + geom_histogram(binwith = 0.5, fill = "maroon", colour = "black")
-
+# Output for EDA
+saveRDS(bbb, "bbb_for_EDA.RDS")
 
 
 # Save full data

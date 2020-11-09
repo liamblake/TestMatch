@@ -78,20 +78,13 @@ bbb %>% ggplot(aes(bowl_avg)) + geom_histogram(bins = 50, fill = "maroon", colou
 ```
 
 ```{r}
-bbb %>% ggplot(aes(bat_team_total_runs)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+bbb %>% ggplot(aes(seam_factor)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
 ```{r}
-bbb %>% ggplot(aes(bowl_team_total_runs)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+bbb %>% ggplot(aes(spin_factor)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
-```{r}
-bbb %>% ggplot(aes(bat_team_total_wkts)) + geom_histogram(bins = 20, fill = "maroon", colour = "black")
-```
-
-```{r}
-bbb %>% ggplot(aes(bowl_team_total_wkts)) + geom_histogram(bins = 20, fill = "maroon", colour = "black")
-```
 
 
 # Bivariate Relationships

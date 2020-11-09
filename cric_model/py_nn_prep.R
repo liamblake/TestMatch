@@ -15,25 +15,33 @@ save_to_csv <- function(obj, filename) {
 
 # Encode categorical variables and
 prep_data <- function(df, filename, no_outs, add_class = "") {
+  # Split into training, testing
+  df_split <- initial_split(df, strata = outcome)
+  df_train <- training(df_split)
+  df_test <- testing(df_split)
+  
   # Encode categorical variables
-  rc <- recipe(outcome ~ ., data = df) %>% 
+  rc <- recipe(outcome ~ ., data = df_train) %>% 
     step_naomit(outcome) %>%
     step_dummy(all_nominal()) %>% 
     step_meanimpute(all_numeric())
     
-  df_pp <- rc %>% prep(data = df) %>% juice()
+  prc <- rc %>% prep(data = df_train) 
+  df_train <- prc %>% juice()
+  df_test <- prc %>% bake(df_test)
   
   # Account for reference category
   if (no_outs > 2) {
-    df_pp <- df_pp %>% add_column(nc = as.integer(!rowSums((df_pp %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
+    df_train <- df_train %>% add_column(nc = as.integer(!rowSums((df_train %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
     ncn <- paste("outcome_X", add_class, sep = "") 
-    df_pp <- rename(df_pp, !!ncn := nc)
+    df_train <- rename(df_train, !!ncn := nc)
+    
+    df_test <- df_test %>% add_column(nc = as.integer(!rowSums((df_test %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
+    ncn <- paste("outcome_X", add_class, sep = "") 
+    df_test <- rename(df_test, !!ncn := nc)
   }
   
-  # Split into training, testing
-  df_split <- initial_split(df_pp)
-  df_train <- training(df_split)
-  df_test <- testing(df_split)
+
   
   # Export to .csv
   save_to_csv(df_train, paste("data/", filename, "_train", sep = ""))
@@ -65,24 +73,25 @@ bbb <- bbb %>% mutate(runs = case_when(
   )))
 
 # Factors
-bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts"), as.factor) %>% mutate_if(is.character, as.factor)
+bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts", "runs"), as.factor) %>% mutate_if(is.character, as.factor)
 
 # Output for EDA
 saveRDS(bbb, "bbb_for_EDA.RDS")
 
 
 # Save full data
-prep_data(bbb %>% select(-c(is_wkt, dism_mode, extras)), "bbb_full", 22, "0")
+#prep_data(bbb %>% select(-c(is_wkt, dism_mode, extras, run)), "bbb_full", 22, "0")
 
 # Wicket data
-bbb %>% select(-c(outcome, dism_mode, extras)) %>%
+bbb %>% select(-c(outcome, dism_mode, extras, runs)) %>%
   rename(outcome = is_wkt) %>%
   na.omit(outcome) %>%
   prep_data("is_wkt", 2)
 
 
 # Dismissal data
-bbb %>% select(-c(outcome, is_wkt, extras)) %>%
+bbb %>% filter(outcome == "W") %>%
+  select(-c(outcome, is_wkt, extras, runs)) %>%
   rename(outcome = dism_mode) %>%
   na.omit(outcome) %>%
   prep_data("dism_mode", 8, "bowled")

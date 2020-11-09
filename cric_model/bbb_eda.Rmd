@@ -6,27 +6,103 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
+pacman::p_load(tidyverse, corrplot)
+
 # Load
 bbb <- readRDS("bbb_for_EDA.rds")
 ```
 
 
+# Summary
+```{r}
+skimr::skim(bbb)
+```
+
 # Univariate Relationships
 
 ## Histograms
 ```{r}
-bbb %>% ggplot(aes(match_balls)) + geom_histogram(bins = 50)
+bbb %>% ggplot(aes(match_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
 ```{r}
-bbb %>% ggplot(aes(inn_balls)) + geom_histogram(bins = 50)
+bbb %>% ggplot(aes(inn_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
 ```{r}
-bbb %>% ggplot(aes(team_score)) + geom_histogram(bins = 50)
+bbb %>% ggplot(aes(team_score)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
 ```{r}
-bbb %>% ggplot(aes(match_balls)) + geom_histogram()
+bbb %>% ggplot(aes(team_lead)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
+
+```{r}
+bbb %>% ggplot(aes(bat_score)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+
+```{r}
+bbb %>% ggplot(aes(bat_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+
+```{r}
+bbb %>% ggplot(aes(bat_avg)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(career_bat_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+
+```{r}
+bbb %>% ggplot(aes(bat_sr)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bowl_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+
+```{r}
+bbb %>% ggplot(aes(bowl_runs)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(career_bowl_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bowl_avg)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bat_team_total_runs)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bowl_team_total_runs)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bat_team_total_wkts)) + geom_histogram(bins = 20, fill = "maroon", colour = "black")
+```
+
+```{r}
+bbb %>% ggplot(aes(bowl_team_total_wkts)) + geom_histogram(bins = 20, fill = "maroon", colour = "black")
+```
+
+
+# Bivariate Relationships
+```{r}
+bbb %>% select_if(is.numeric) %>% na.omit() %>% cor() %>% corrplot()
+```
+
+
+
+
+
+
+
 

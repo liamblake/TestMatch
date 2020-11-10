@@ -10,6 +10,7 @@ pacman::p_load(tidyverse, corrplot)
 
 # Load
 bbb <- readRDS("bbb_for_EDA.rds")
+
 ```
 
 
@@ -29,6 +30,7 @@ bbb %>% ggplot(aes(match_balls)) + geom_histogram(bins = 50, fill = "maroon", co
 bbb %>% ggplot(aes(inn_balls)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
+
 ```{r}
 bbb %>% ggplot(aes(team_score)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
@@ -36,6 +38,14 @@ bbb %>% ggplot(aes(team_score)) + geom_histogram(bins = 50, fill = "maroon", col
 ```{r}
 bbb %>% ggplot(aes(team_lead)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
+```{r}
+bbb %>% ggplot(aes(sample = team_lead)) +
+    stat_qq() +
+    stat_qq_line()
+
+```
+
+
 
 ```{r}
 bbb %>% ggplot(aes(bat_score)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
@@ -82,9 +92,25 @@ bbb %>% ggplot(aes(seam_factor)) + geom_histogram(bins = 50, fill = "maroon", co
 ```
 
 ```{r}
+bbb %>%ggplot(aes(sample = seam_factor)) +
+    stat_qq() +
+    stat_qq_line()
+
+```
+
+
+
+
+```{r}
 bbb %>% ggplot(aes(spin_factor)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
+```{r}
+bbb %>%ggplot(aes(sample = spin_factor)) +
+    stat_qq() +
+    stat_qq_line()
+
+```
 
 
 # Bivariate Relationships

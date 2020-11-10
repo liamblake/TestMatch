@@ -22,23 +22,24 @@ prep_data <- function(df, filename, no_outs, add_class = "") {
   # Encode categorical variables
   rc <- recipe(outcome ~ ., data = df_train) %>% 
     step_naomit(outcome) %>%
-    step_dummy(all_nominal()) %>% 
-    step_meanimpute(all_numeric())
+    step_dummy(all_nominal(), one_hot = TRUE) %>% 
+    step_meanimpute(all_numeric()) %>%
+    step_range(c(seam_factor,spin_factor))  # Normalise pitch factors to be between 0 and 1
   
   prc <- rc %>% prep(data = df_train) 
   df_train <- prc %>% juice()
   df_test <- prc %>% bake(df_test)
   
   # Account for reference category
-  if (no_outs > 2) {
-    df_train <- df_train %>% add_column(nc = as.integer(!rowSums((df_train %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
-    ncn <- paste("outcome_X", add_class, sep = "") 
-    df_train <- rename(df_train, !!ncn := nc)
+  #if (no_outs > 2) {
+  #  df_train <- df_train %>% add_column(nc = as.integer(!rowSums((df_train %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
+  #  ncn <- paste("outcome_X", add_class, sep = "") 
+  #  df_train <- rename(df_train, !!ncn := nc)
     
-    df_test <- df_test %>% add_column(nc = as.integer(!rowSums((df_test %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
-    ncn <- paste("outcome_X", add_class, sep = "") 
-    df_test <- rename(df_test, !!ncn := nc)
-  }
+  #  df_test <- df_test %>% add_column(nc = as.integer(!rowSums((df_test %>% select(starts_with("outcome")))[1:(no_outs - 1)])))
+  #  ncn <- paste("outcome_X", add_class, sep = "") 
+  #  df_test <- rename(df_test, !!ncn := nc)
+  #}
   
   
   
@@ -48,11 +49,11 @@ prep_data <- function(df, filename, no_outs, add_class = "") {
 }
 
 # Load raw data
-bbb <- read_csv('../../../bbb_full.csv', na = c("", "-")) %>% as_tibble()
+bbb <- read_csv('../../bbb_full.csv', na = c("", "-")) %>% as_tibble()
 bbb <- bbb %>% clean_names()
 
 # Factors
-bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts", "runs", "game_id"), as.factor) %>% mutate_if(is.character, as.factor)
+bbb <- bbb %>% mutate_at(c("innings", "bat_position", "team_wkts", "bowl_wkts"), as.factor) %>% mutate_if(is.character, as.factor)
 
 # Convert career overs to balls
 bbb <- bbb %>% mutate(career_overs = 5*floor(career_overs) + career_overs) %>%
@@ -81,12 +82,12 @@ bbb <- bbb %>% group_by(game_id) %>% mutate(gws_ind = which(g_wkts_sum[,1] == ga
   mutate(pitch_factor = (bat_team_total_runs + bowl_team_total_runs)/(bat_team_total_wkts + bowl_team_total_wkts)) %>%
   mutate(seam_factor = unlist(pitch_factor*g_wkts_sum[gws_ind,2]/g_wkts_sum[gws_ind,4], use.name = FALSE)) %>%
   mutate(spin_factor = unlist(pitch_factor*g_wkts_sum[gws_ind,3]/g_wkts_sum[gws_ind,4], use.name = FALSE))
-
+  
 # Remove unwanted factors
 bbb <- bbb %>% select(-c(bat_team, bowl_team, batter, bowler, toss_win, venue, winner, margin, start_date, spell_balls, spell_runs, spell_wkts, toss_win, toss_elect, game_id, bowl_class, pitch_factor, bat_team_total_runs, bat_team_total_wkts, bowl_team_total_runs, bowl_team_total_wkts, gws_ind)) %>%
-  mutate(outcome = case_when(
+  mutate(outcome = as.factor(case_when(
     str_detect(outcome, "W_") ~ "W", 
-    TRUE ~ outcome))
+    TRUE ~ as.character(outcome))))
 
 # Remove outcomes which occur too infrequently
 bbb$outcome <- fct_lump_min(bbb$outcome, 15)
@@ -94,10 +95,10 @@ bbb <- bbb[bbb$outcome != "Other",]
 bbb$outcome <- droplevels(bbb$outcome)
 
 # Add extras column
-bbb <- bbb %>% mutate(runs = case_when(
+bbb <- bbb %>% mutate(runs = as.factor(case_when(
   str_detect(outcome, "W") ~ 0, 
   TRUE ~ as.double(substring(outcome, 1, 1))
-)) %>% 
+))) %>% 
   mutate(extras = as.factor(case_when(
     nchar(as.character(outcome)) > 1 ~ substring(outcome, 2),
     TRUE ~ "off_bat"
@@ -115,7 +116,8 @@ bbb <- sample_frac(bbb, 1L)
 #prep_data(bbb %>% select(-c(is_wkt, dism_mode, extras, run)), "bbb_full", 22, "0")
 
 # Wicket data
-bbb %>% select(-c(outcome, dism_mode, extras, runs)) %>%
+set.seed(1153)
+bbb %>% sample_frac(0.9) %>% select(-c(outcome, dism_mode, extras, runs)) %>%
   rename(outcome = is_wkt) %>%
   na.omit(outcome) %>%
   prep_data("is_wkt", 2)
@@ -130,14 +132,16 @@ bbb %>% filter(outcome == "W") %>%
 
 
 # Ball outcome data
-bbb %>% filter(outcome != "W") %>% 
+set.seed(1153)
+bbb %>% sample_frac(0.9) %>% filter(outcome != "W") %>% 
   select(-c(outcome, is_wkt, dism_mode, runs)) %>%
   rename(outcome = extras) %>%
   na.omit(outcome) %>%
   prep_data("outcome", 5, "b")
 
 # Runs scored for each ball outcome
-bbb %>% filter(outcome != "W" & extras == "off_bat") %>% 
+set.seed(1153)
+bbb %>% sample_frac(0.9) %>% filter(outcome != "W" & extras == "off_bat") %>% 
   select(-c(outcome, is_wkt, dism_mode, extras)) %>%
   rename(outcome = runs) %>%
   na.omit(outcome) %>%

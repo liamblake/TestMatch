@@ -13,7 +13,7 @@ class OverCount {
 	int balls;
 
 	// Internal addition of ball
-	void add_ball();
+	void add_ball(int add = 1);
 
   public:
 	OverCount();

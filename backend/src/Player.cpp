@@ -12,8 +12,14 @@ using namespace std;
 /*
 	OverCount implementations
 */
-void OverCount::add_ball() {
-
+void OverCount::add_ball(int add) {
+	balls += add;
+	if (balls >= 6) {
+		balls = 0;
+		overs = overs + 1;
+	} else {
+		balls = balls + 1;
+	}
 }
 
 OverCount::OverCount() : overs(0), balls(0) {}
@@ -32,12 +38,13 @@ OverCount& OverCount::operator++(int) {
 	return tmp;
 }
 
-OverCount& OverCount::operator+=(const int rhs)
+OverCount& OverCount::operator+=(int rhs)
 {
-	// TODO: insert return statement here
+	add_ball(rhs);
+	return *this;
 }
 
-OverCount& OverCount::operator-=(const int rhs)
+OverCount& OverCount::operator-=(int rhs)
 {
 	// TODO: insert return statement here
 }
@@ -46,7 +53,7 @@ OverCount::operator std::string() const {
 }
 
 OverCount::operator float() const {
-
+	return (float)overs + 0.1 * balls;
 }
 
 
@@ -57,42 +64,50 @@ OverCount operator+(const OverCount& lhs, const OverCount& rhs)
 
 OverCount operator+(const OverCount& lhs, const int rhs)
 {
-	return OverCount();
+	OverCount ret(lhs.overs, lhs.balls + rhs);
+	return ret;
 }
 
 OverCount operator-(const OverCount& lhs, const OverCount& rhs)
 {
-	return OverCount();
+	OverCount ret(lhs.overs, lhs.balls + rhs);
+	return ret;
 }
 
 bool operator==(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	return lhs.balls == rhs.balls && lhs.overs == rhs.overs;
 }
 
 bool operator!=(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	return !(lhs == rhs);
 }
 
 bool operator<(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	if (lhs.overs == rhs.overs) {
+		return lhs.balls == rhs.balls;
+	}
+	else {
+		return lhs.overs < rhs.overs;
+	}
+	
 }
 
 bool operator>(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	return rhs < lhs;
 }
 
 bool operator<=(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	return lhs < rhs || lhs == rhs;
 }
 
 bool operator>=(const OverCount& lhs, const OverCount& rhs)
 {
-	return false;
+	return rhs <= lhs;
 }
 
 

@@ -13,7 +13,10 @@
 class PitchCondition {
   private:
     // some numbers internally describing the pitch
-    
+      double pace_factor;
+      double spin_factor;
+
+    // Implementation depends on the final model
 
     MatchTime* time;
 

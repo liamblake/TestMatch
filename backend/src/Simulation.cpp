@@ -48,7 +48,7 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
   // Initialise batter_status array
   batter_status[0] = batter_status[1] = 1;
   for (int i = 2; i < 11; i++) {
-    batter_stats[i] = 0;
+    batter_status[i] = 0;
   }
 
 
@@ -66,7 +66,7 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
 
 // Generates probability distribution for each possible outcome
 double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) {
-  double* output = new float[NUM_OUTCOMES];
+  double* output = new double[NUM_OUTCOMES];
 
   // PLACEHOLDER - UNIFORM DISTRIBUTION
   double step = 1/NUM_OUTCOMES; 

@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Cards.h"
 
+
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(test_header_cards)
@@ -161,11 +162,16 @@ BOOST_AUTO_TEST_CASE(testclass_over) {
 
 
 BOOST_AUTO_TEST_CASE(teststruct_fow) {
-	// Test obect 
-	//FOW f = { &tp_bat, 1, 20, 8, 2 };
-	//BOOST_TEST(f.print() == "1-20 (Marnus Labuschagne, 8.2 ov)");
+	// Test object 
+	FOW f = { &tp_bat, 1, 20, 8, 2 };
 
-	// TEST INVALID VALUE
+	// Test print object
+	BOOST_TEST(f.print() == "20-1 (Marnus Labuschagne, 8.2 ov)");
+
+	// Boundary case - all zero integers
+	f.wkts = 0; f.runs = 0; f.overs = 0; f.balls = 0;
+	BOOST_TEST(f.print() == "0-0 (Marnus Labuschagne, 0.0 ov)");
+
 }
 
 
@@ -176,9 +182,42 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	// Should print nothing
 	BOOST_TEST(e.print() == "");
 
+	// Each individual extra
+	e.byes = 1;
+	BOOST_TEST(e.print() == "b 1");
+	e.byes = 0;
+
+	e.legbyes = 2;
+	BOOST_TEST(e.print() == "lb 2");
+	e.legbyes = 0;
+
+	e.noballs = 10;
+	BOOST_TEST(e.print() == "nb 10");
+	e.noballs = 0;
+
+	e.wides = 100;
+	BOOST_TEST(e.print() == "w 100");
+	e.wides = 0;
+
+	// Each combination
+	e.byes = 1;
+	e.legbyes = 2;
+	BOOST_TEST(e.print() == "b 1, lb 2");
+
+	e.noballs = 3;
+	BOOST_TEST(e.print() == "b 1, lb 2, nb 3");
+
+	e.wides = 5;
+	BOOST_TEST(e.print() == "b 1, lb 2, nb 3, w 5");
+
+	e.legbyes = 0;
+	BOOST_TEST(e.print() == "b 1, nb 3, w 5");
 
 
-	// TEST INVALID VALUE
+}
+
+BOOST_AUTO_TEST_CASE(testclass_milestone) {
+
 }
 
 

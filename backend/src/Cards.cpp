@@ -480,30 +480,30 @@ Over::~Over() {
 std::string Extras::print() {
 
 
-  std::string output = "";
+  std::vector<std::string> strings;
   
   if (byes > 0) {
-	output += "b " + to_string(byes);
+	strings.push_back("b " + to_string(byes));
   }
 
 	if (legbyes > 0) {
-	output += ", lb " + to_string(legbyes);
+		strings.push_back("lb " + to_string(legbyes));
 	}
 
 	if (noballs > 0) {
-	output += ", nb " + to_string(noballs);
+		strings.push_back("nb " + to_string(noballs));
 	}
 
 	if (wides > 0) {
-	output += ", w " + to_string(wides);
+		strings.push_back("w " + to_string(wides));
 	}
 		
-  return output;
+  return join_str(strings, ", ");
 }
 
 std::string FOW::print() {
-  std::string output = to_string(wkts) + "-"
-  						  + to_string(runs) + " ("
+  std::string output = to_string(runs) + "-"
+  						  + to_string(wkts) + " ("
   						  + batter->get_full_name() + ", "
 						  + to_string(overs) + "." + to_string(balls)
   						  + " ov)";

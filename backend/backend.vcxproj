@@ -235,10 +235,11 @@
     <ClInclude Include="include\Assorted.h" />
     <ClInclude Include="include\Cards.h" />
     <ClInclude Include="include\FileIO.h" />
-    <ClInclude Include="include\MatchTime.h" />
+    <ClInclude Include="include\MatchTime.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="include\Parameters.h" />
     <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\rtnorm.h" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Utility.h" />
   </ItemGroup>
@@ -254,20 +255,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\MatchTime.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\rtnorm.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\Simulation.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test\testh_matchtime.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test\testh_player.cpp" />

@@ -251,23 +251,13 @@ struct Extras {
 };
 
 
-class FOW {
-  private:
+struct FOW {
+
 	Player* batter;
 	unsigned int wkts;
 	unsigned int runs;
 	unsigned int overs;
 	unsigned int balls;
-
-  public:
-	FOW(Player* c_batter, unsigned int c_wkts, unsigned int c_runs, unsigned int c_overs, unsigned int c_balls);
-  
-	// Getters
-	Player* get_batter();
-	unsigned int get_wkts();
-	unsigned int get_runs();
-	unsigned int get_overs();
-	unsigned int get_balls();
 
 	std::string print();
 

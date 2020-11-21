@@ -9,14 +9,4 @@
 #define PARAMETERS_H
 
 
-
-
-
-// Fatigue measures - how quickly bowlers tire
-extern const double MAX_FATIGUE = 100;
-extern const double STEP_FATIGUE_FAST = 6;
-extern const double STEP_FATIUE_MED = 3;
-extern const double STEP_FATIGUE_SLOW = 1;
-// This model needs some improvement
-
 #endif

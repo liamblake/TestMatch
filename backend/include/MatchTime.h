@@ -9,6 +9,9 @@
 #include <utility>
 #include <iostream>
 
+// TIME ALREADY EXISTS IN THE UTILITY HEADER - EITHER RENAME OR LOOK AT OPTION
+// PERHAPS OVERLOADED tm TYPE FROM ctime HEADER
+
 // Parameters
 // Session time details
 const float START_TIME = 10.30;
@@ -71,6 +74,9 @@ class Time {
 };
 
 // Formatted print of Time struct in output stream
+Time& operator+(const Time& tm1, const Time& tm2);
+Time& operator-(const Time& tm1, const Time& tm2);
+bool operator==(const Time& lhs, const Time& rhs);
 std::ostream& operator<<(std::ostream& os, const Time& tm);
 
 

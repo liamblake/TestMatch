@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <ProjectOutputs>D:\liaml\Documents\Projects\TestMatch\backend\bin\backend.exe</ProjectOutputs>
-  <ContentFiles></ContentFiles>
+  <ContentFiles>D:\liaml\Documents\Projects\TestMatch\backend\models\keras_bbb.onnx</ContentFiles>
   <SatelliteDlls></SatelliteDlls>
   <NonRecipeFileRefs></NonRecipeFileRefs>
 </Project>

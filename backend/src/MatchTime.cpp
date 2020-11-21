@@ -4,11 +4,9 @@
 #include <iomanip>
 #include <exception>
 #include <cmath>
-#include <gsl/gsl_rng.h>
 
 #include "MatchTime.h"
-#include "Parameters.h"
-#include "rtnorm.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -122,9 +120,6 @@ MatchTime::MatchTime() {
     tm = Time(START_TIME);
     day = 1;
     state = "Match Start";
-
-    gsl_rng_env_setup();                                    // Read variable environnement
-    gsl_rng* gen = gsl_rng_alloc (gsl_rng_default);          // Rand generator allocation
 }
 
 MatchTime::MatchTime(Time c_tm, int c_day, string c_state) {
@@ -132,9 +127,6 @@ MatchTime::MatchTime(Time c_tm, int c_day, string c_state) {
     day = c_day;
     state = c_state;
     extended = false;
-
-    gsl_rng_env_setup();                                    // Read variable environnement
-    gsl_rng* gen = gsl_rng_alloc (gsl_rng_default);          // Rand generator allocation
 }
 
 // Private utility functions
@@ -185,16 +177,16 @@ bool MatchTime::check_state_change() {
 pair<int, string> MatchTime::delivery(bool type, int runs) {
     
     // Randomnly generate time elapsed by delivery
-    pair <double, double> s;
+    double s;
     if (type) {
         // Spin bowler
-        s = rtnorm(gen, SPIN_MINDUR, SPIN_MAXDUR, SPIN_MEANDUR + runs*RUN_DUR, DEL_STDDUR);
+        s = rtexp(SPIN_MEANDUR, SPIN_MINDUR, SPIN_MAXDUR) + runs * RUN_DUR;
     } else {
         // Pace bowler
-        s = rtnorm(gen, PACE_MINDUR, PACE_MAXDUR, PACE_MEANDUR + runs*RUN_DUR, DEL_STDDUR);
+        s = rtexp(PACE_MEANDUR, PACE_MINDUR, PACE_MAXDUR) + runs * RUN_DUR;
     }
 
-    int elapsed = (int) ceil(get<0>(s));
+    int elapsed = (int) round(s);
 
     check_state_change();
     pair<int, string> output = {elapsed, state};

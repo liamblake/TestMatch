@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <utility>
+#include <cmath>
 
 
 /* Add new entry to end of array - reallocates memory dynamically.
@@ -247,6 +249,31 @@ T sample_cdf(T* values, int length, double* dist = nullptr) {
 	if (default_dist) delete[] dist;
 
 	return values[i - 1];
+}
+
+
+// Converts ball count to overs and balls
+inline std::pair<int, int> balls_to_ov(unsigned int balls) {
+	std::pair<int, int> output(
+		(int)balls / 6,
+		balls % 6
+	);
+
+	return output;
+}
+
+// Generates a realisation of a truncated exponential distribution
+inline double rtexp(double mean, double min, double max) {
+	double Fmin = exp(min);
+	double Fmax = exp(max);
+
+	// Generate uniform random number
+	double r = ((double)rand() / (RAND_MAX));
+
+	// Inverse sampling
+	double p = r * (Fmax - Fmin) + Fmin;
+	return -mean * log(1 - p);
+
 }
 
 

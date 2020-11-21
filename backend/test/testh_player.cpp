@@ -13,9 +13,26 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(test_header_player)
 
-BOOST_AUTO_TEST_CASE(testclass_overcount) {
-
-}
+//BOOST_AUTO_TEST_CASE(testclass_overcount) {
+//	// Default initialisation
+//	OverCount oc;
+//
+//	BOOST_TEST(oc.as_balls() == 0);
+//	BOOST_TEST(std::string(oc) == "0.0");
+//	BOOST_TEST(float(oc) == 0.0);
+//
+//	// Iterator operands
+//	BOOST_TEST((++oc).as_balls() == 1);
+//	BOOST_TEST((oc++).as_balls() == 1);
+//	BOOST_TEST(oc.as_balls() == 2);
+//
+//	// Other constructor
+//	OverCount oc2 (7,4);
+//	BOOST_TEST(oc2.as_balls() == 46);
+//	BOOST_TEST(std::string(oc2) == "7.4");
+//	BOOST_TEST(float(oc2) == 7.4f);
+//
+//}
 
 BOOST_AUTO_TEST_CASE(testclass_player) {
 

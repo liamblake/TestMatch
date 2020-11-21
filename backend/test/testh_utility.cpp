@@ -58,6 +58,27 @@ BOOST_AUTO_TEST_CASE(testfunc_split_str)
 	BOOST_TEST(split_str("1thisisadelimeter2thisisadelimeter3", "thisisadelimeter") == expected);
 }
 
+BOOST_AUTO_TEST_CASE(testfunc_balls_to_ov) {
+	std::pair<int, int> out = balls_to_ov(0);
+	BOOST_TEST((out.first == 0) & (out.second == 0));
+
+	out = balls_to_ov(1);
+	BOOST_TEST((out.first == 0) & (out.second == 1));
+
+	out = balls_to_ov(6);
+	BOOST_TEST((out.first == 1) & (out.second == 0));
+
+	out = balls_to_ov(11);
+	BOOST_TEST((out.first == 1) & (out.second == 5));
+
+	out = balls_to_ov(7);
+	BOOST_TEST((out.first == 1) & (out.second == 1));
+
+	out = balls_to_ov(480);
+	BOOST_TEST((out.first == 80) & (out.second == 0));
+
+}
+
 
 
 BOOST_AUTO_TEST_SUITE_END()

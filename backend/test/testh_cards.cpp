@@ -162,8 +162,8 @@ BOOST_AUTO_TEST_CASE(testclass_over) {
 
 BOOST_AUTO_TEST_CASE(teststruct_fow) {
 	// Test obect 
-	FOW f = { &tp_bat, 1, 20, 8, 2 };
-	BOOST_TEST(f.print() == "1-20 (Marnus Labuschagne, 8.2 ov)");
+	//FOW f = { &tp_bat, 1, 20, 8, 2 };
+	//BOOST_TEST(f.print() == "1-20 (Marnus Labuschagne, 8.2 ov)");
 
 	// TEST INVALID VALUE
 }

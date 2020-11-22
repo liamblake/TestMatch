@@ -17,17 +17,24 @@ class PitchCondition {
       double spin_factor;
 
     // Implementation depends on the final model
-
-    MatchTime* time;
+    
+      // Access to match time allows for pitch aging
+      MatchTime* time;
 
 
   public:
     // Default constructor - random pitch
     PitchCondition(MatchTime* c_time);
 
-    PitchCondition(float somenumbers, MatchTime* c_time);
+    PitchCondition(double c_pace_factor, double c_spin_factor, MatchTime* c_time);
 
     bool toss_choice();
+
+    // Trigger to update pitch factors
+    void deliv();
+
+    // Describes pitch conditions
+    std::string describe();
 
     // Getters for values needed for delivery simulation model
 };
@@ -53,6 +60,7 @@ class Innings {
 
   	int overs;
     int balls;
+    int abs_delivs;
   	int team_score;
   	int lead;
   	int wkts;

@@ -11,6 +11,14 @@
 #include "MatchTime.h"
 
 
+/* PitchCondition implementations*/
+PitchCondition::PitchCondition(MatchTime* c_time) : time(c_time) {
+    // Randomly generate pitch factors
+}
+
+
+
+
 /* Innings implementations */
 int Innings::inns_no = 0;
 

@@ -111,6 +111,9 @@ class BatterCard : public PlayerCard {
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
 
+	// Copy constructor
+	//BatterCard(const BatterCard& bc);
+
 	~BatterCard();
 
 };
@@ -204,6 +207,26 @@ class BowlerCard : public PlayerCard {
 
 
 // };
+
+
+
+//////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
+struct PitchFactors {
+	double seam;
+	double spin;
+};
+
+struct Venue {
+	std::string name;
+	std::string city;
+	std::string country;
+	
+	PitchFactors* pitch_factors;
+
+};
+
+
+
 
 
 // Describes a delivery

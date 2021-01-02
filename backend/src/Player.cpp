@@ -21,45 +21,6 @@ Player::Player(string c_first_name, string c_last_name, string c_initials, Stats
 }
 
 
-Player::Player(std::string line) {
-	// Split string
-	vector<string> token = split_str(line);
-
-	vector<string> name = split_str(token[1], " ");
-	string inits = name[0];
-
-	// Find first name in fullname with matching initial
-	char finit = inits[0];
-
-	// Check first character
-	string fname;
-	string fullname = token[0];
-	vector<string> full_split = split_str(fullname, " ");
-
-	if (fullname[0] == finit) {
-		fname = full_split[0];
-	}
-	else {
-		// Need to search string components
-		vector<string>::iterator it = full_split.begin();
-		while (it != full_split.end() && (*it)[0] != finit) {
-			it++;
-		}
-
-		if (it <= full_split.end()) {
-			fname = *it;
-		}
-
-
-	}
-
-
-
-	name.erase(name.begin());
-	last_name = join_str(name, " ");
-
-}
-
 
 // Return initials of first and middle name, e.g. JH
 string Player::get_initials() const {

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <cmath>
 #include <utility>
+#include <exception>
 
 #include "Simulation.h"
 #include "Player.h"
@@ -16,14 +17,24 @@ PitchCondition::PitchCondition(MatchTime* c_time) : time(c_time) {
     // Randomly generate pitch factors
 }
 
-
+PitchCondition::PitchCondition(double c_pace_factor, double c_spin_factor, MatchTime* c_time) : time(c_time) {
+    // Check for valid factors
+    if (true) {
+        pace_factor = c_pace_factor;
+        spin_factor = c_spin_factor;
+    }
+    else {
+        // raise exception
+        throw std::invalid_argument("Pace factor and spin factor must sum to 1.");
+    }
+}
 
 
 /* Innings implementations */
 int Innings::inns_no = 0;
 
 // Constructor
-Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float c_day) {
+Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchCondition* c_pitch) {
 
   team_bat = c_team_bat;
   team_bowl = c_team_bowl;
@@ -35,8 +46,8 @@ Innings::Innings(Team c_team_bat, Team c_team_bowl, int c_lead, int c_day, float
   
   // Create BatterCards/BowlerCards for each player
   for (int i = 0; i < 11; i++) {
-    batters[i] = new BatterCard(team_bat.players[i]);
-    bowlers[i] = new BowlerCard(team_bowl.players[i]);
+    batters[i] = new BatterCard(team_bat->players[i]);
+    bowlers[i] = new BowlerCard(team_bowl->players[i]);
 
   }
 
@@ -103,7 +114,7 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
   } 
 
   // Sample from distribution
-  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES, 8, &DISM_MODE_DIST);
+  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES[0], 8, &DISM_MODE_DIST[0]);
   return encode_dism(dism_mode);
 
 
@@ -148,22 +159,14 @@ void Innings::simulate_delivery() {
 
   // Add additional time, sampled from modified normal distribution
   std::pair<int, std::string> t_output = time->delivery(false, runs);
-  match_state = t_output.second;
+  inns_state = t_output.second;
 
   }
 
 
   // Determine next course of action based on match state
 
- 
 
-
-
-  // Check for declaration
-  if (check_declaration()) {
-    inns_open = false;
-    // Do innings close stuff
-  }
 
 }
 
@@ -174,8 +177,63 @@ bool Innings::check_declaration() {
   // AIS: never declare, may lead to some slightly absurd innings
 }
 
+
+// 
+void Innings::check_innings_state() {
+
+    // Win in fourth innings chase
+    if (inns_no == 4 && lead > 0) {
+        inns_state = "bat_win";
+    } else if (wkts == 10) {
+        // Team bowled out
+        // Win by innings
+        if (inns_no == 3 && lead < 0) {
+            inns_state = "bowl_inns_win";
+        } else if (inns_no == 4) {
+            
+            if (lead < 0) {
+                // Loss in fourth innings
+                inns_state = "bowl_win";
+            }
+            else if (lead == 0) {
+                // Tie
+                inns_state = "tie";
+            }
+            
+            
+        }
+        else {
+            inns_state = "end_bo";
+        }
+        
+    }
+
+    // Declaration
+    if (check_declaration()) {
+        inns_state = "end_dec";
+    }
+
+    // Draw
+    if (time->get_day() == 5 && inns_state == "stumps") {
+        inns_state = "draw";
+    }
+}
+
+
+void Innings::end_over() {
+    // Switch ends
+    BatterCard* tmp = striker;
+    striker = nonstriker;
+    nonstriker = striker;
+
+    
+
+}
+
 // Choose next bowler based off of last bowler (from end)
-Player* Innings::choose_bowler() {
+BowlerCard* Innings::choose_bowler() {
+    // TODO: implement system
+    // Placeholder: Bowlers keep bowling
 
 };
 
@@ -191,7 +249,7 @@ Player* Innings::select_catcher(bool run_out) {
 
   if (r < WK_PROB) {
     // Caught by wicketkeeper
-    return team_bat->players[team_bat->wicket_keeper];
+    return team_bat->players[team_bat->i_wk];
   } else {
     // Randomly choose one of the 9 remaining fielders
     // Cast WK_PROB < r < 1 to integer 
@@ -283,3 +341,9 @@ void Match::pregame() {
 
   ready = true;
 }
+
+
+void Match::innings_change() {
+    
+}
+

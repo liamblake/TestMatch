@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <utility>
 
 #include "Player.h"
 #include "Cards.h"
@@ -17,14 +18,20 @@ struct ScorecardData {
 
 // Rudimentary representation of ball-by-ball
 struct BallByBall {
-    // Needs a corresponding match
-    
+    // Needs a corresponding match object
+    Match* match;
 
 };
 
+Player* csv2player(std::string line);
 
-Team load_team(std::string dir);
+Team* load_team(std::string dir);
 void save_team(Team team, std::string dir);
+
+Venue* csv2venue(std::string line);
+
+std::pair<Venue**, int> load_venues(std::string dir = 'data/venues.dat')
+
 
 
 

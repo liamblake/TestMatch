@@ -81,12 +81,6 @@ class Player
 	// Explicit constructor
 	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats, std::string c_team = "");
 	
-	/* Construct Player from comma-separated values in a string.
-	   Expected format it
-	   fullname,scorename,team,batinns,batavg,
-	*/
-	Player(std::string line);
-	
 	// Default destructor
 
 	// Getters

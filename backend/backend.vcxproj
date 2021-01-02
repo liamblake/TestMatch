@@ -244,6 +244,7 @@
     <ClInclude Include="include\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="testh_fileio.cpp" />
     <ClCompile Include="test\testh_cards.cpp" />
     <ClCompile Include="test\testh_utility.cpp" />
     <ClCompile Include="src\Cards.cpp">
@@ -271,9 +272,13 @@
     <ClCompile Include="test\test_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="models\keras_bbb.onnx">
       <DeploymentContent>true</DeploymentContent>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\venues.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

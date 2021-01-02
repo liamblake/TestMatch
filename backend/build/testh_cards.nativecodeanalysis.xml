@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\detail\</FILEPATH>
+      <FILENAME>global_typedef.hpp</FILENAME>
+      <LINE>70</LINE>
+      <COLUMN>29</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'boost::unit_test::test_unit_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>boost::unit_test::ut_detail::test_id_2_unit_type</FUNCTION>
+    <DECORATED>?test_id_2_unit_type@ut_detail@unit_test@boost@@YA?AW4test_unit_type@23@K@Z</DECORATED>
+    <FUNCLINE>68</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tree\</FILEPATH>
+      <FILENAME>observer.hpp</FILENAME>
+      <LINE>89</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'boost::unit_test::assertion_result' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>boost::unit_test::test_observer::assertion_result</FUNCTION>
+    <DECORATED>?assertion_result@test_observer@unit_test@boost@@UAEXW4023@@Z</DECORATED>
+    <FUNCLINE>89</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\smart_ptr\detail\</FILEPATH>
+      <FILENAME>local_counted_base.hpp</FILENAME>
+      <LINE>45</LINE>
+      <COLUMN>76</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>boost::detail::local_counted_base::{ctor}</FUNCTION>
+    <DECORATED>??0local_counted_base@detail@boost@@QAE@XZ</DECORATED>
+    <FUNCLINE>45</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\function\</FILEPATH>
+      <FILENAME>function_base.hpp</FILENAME>
+      <LINE>603</LINE>
+      <COLUMN>2</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'boost::function_base::functor' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>boost::function_base::{ctor}</FUNCTION>
+    <DECORATED>??0function_base@boost@@QAE@XZ</DECORATED>
+    <FUNCLINE>603</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>boost::function_base::functor</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tools\detail\</FILEPATH>
+      <FILENAME>indirections.hpp</FILENAME>
+      <LINE>104</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'boost::test_tools::tt_detail::check_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>boost::test_tools::tt_detail::assertion_type::{ctor}</FUNCTION>
+    <DECORATED>??0assertion_type@tt_detail@test_tools@boost@@QAE@W4check_type@123@@Z</DECORATED>
+    <FUNCLINE>104</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tree\</FILEPATH>
+      <FILENAME>test_unit.hpp</FILENAME>
+      <LINE>82</LINE>
+      <COLUMN>87</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'boost::unit_test::test_unit::run_status' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>boost::unit_test::test_unit::is_enabled</FUNCTION>
+    <DECORATED>?is_enabled@test_unit@unit_test@boost@@QBE_NXZ</DECORATED>
+    <FUNCLINE>82</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tools\</FILEPATH>
+      <FILENAME>assertion.hpp</FILENAME>
+      <LINE>272</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26439</DEFECTCODE>
+    <DESCRIPTION>This kind of function may not throw. Declare it 'noexcept' (f.6).</DESCRIPTION>
+    <FUNCTION>boost::test_tools::assertion::value_expr&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt; &gt; &gt;::{ctor}</FUNCTION>
+    <DECORATED>??0?$value_expr@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@assertion@test_tools@boost@@QAE@$$QAV0123@@Z</DECORATED>
+    <FUNCLINE>272</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tools\</FILEPATH>
+      <FILENAME>assertion.hpp</FILENAME>
+      <LINE>272</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26439</DEFECTCODE>
+    <DESCRIPTION>This kind of function may not throw. Declare it 'noexcept' (f.6).</DESCRIPTION>
+    <FUNCTION>boost::test_tools::assertion::value_expr&lt;Player *&gt;::{ctor}</FUNCTION>
+    <DECORATED>??0?$value_expr@PAVPlayer@@@assertion@test_tools@boost@@QAE@$$QAV0123@@Z</DECORATED>
+    <FUNCLINE>272</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\liaml\Documents\Cpp\vcpkg\installed\x86-windows\include\boost\test\tools\</FILEPATH>
+      <FILENAME>assertion.hpp</FILENAME>
+      <LINE>272</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26439</DEFECTCODE>
+    <DESCRIPTION>This kind of function may not throw. Declare it 'noexcept' (f.6).</DESCRIPTION>
+    <FUNCTION>boost::test_tools::assertion::value_expr&lt;int&gt;::{ctor}</FUNCTION>
+    <DECORATED>??0?$value_expr@H@assertion@test_tools@boost@@QAE@$$QAV0123@@Z</DECORATED>
+    <FUNCLINE>272</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

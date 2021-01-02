@@ -12,14 +12,7 @@
 
 class PitchCondition {
   private:
-    // some numbers internally describing the pitch
-      double pace_factor;
-      double spin_factor;
-
-    // Implementation depends on the final model
-    
-      // Access to match time allows for pitch aging
-      MatchTime* time;
+      PitchFactors* factors;
 
 
   public:
@@ -94,6 +87,7 @@ class Innings {
     BowlerCard* bowl1;
     BowlerCard* bowl2; 
 
+    // Extras and fall-of-wicket
     Extras extras;
     FOW* fow;
 
@@ -106,14 +100,17 @@ class Innings {
   	// Private methods used in simulation process
     
     void simulate_delivery();
-    void end_over();
   	bool check_declaration();
+    void check_innings_state();
 
     /* Choose the next batter in after the fall of a wicket
     
        Returns a pointer to the BatterCard corresponding
     */
     BatterCard* next_batter();
+
+    // Handle end of over
+    void end_over();
 
     // Choose next bowler based off of last bowler (from end)
     BowlerCard* choose_bowler();
@@ -160,7 +157,7 @@ class Match {
     std::string match_state;
 
     int innings;
-    Innings** inns[4];
+    Innings* inns[4];
 
     // Private helper functions
     void simulate_toss();

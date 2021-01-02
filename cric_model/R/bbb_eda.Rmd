@@ -1,6 +1,12 @@
 ---
 title: "Ball-by-ball EDA"
-output: html_document
+output:
+  html_document:
+    theme: spacelab
+    number_sections: yes
+    df_print: paged
+    toc: yes
+    toc_float: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -13,6 +19,24 @@ bbb <- readRDS("bbb_cleaned.rds")
 
 
 bbb <- bbb %>% add_column(runs_int = as.numeric(levels(bbb$runs))[bbb$runs])
+
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+
+# Normalise pitch factors
+bbb <- bbb %>% mutate_at(c("seam_factor", "spin_factor"), rescale01) %>%
+  mutate(n_seam_factor = seam_factor/(seam_factor + spin_factor), n_spin_factor = spin_factor/(seam_factor + spin_factor)) %>% 
+  select(-c(seam_factor, spin_factor)) %>%
+  rename(seam_factor = n_seam_factor, spin_factor = n_spin_factor)
+
+
+# For calculating mode
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
 
 ```
 
@@ -87,7 +111,7 @@ bbb %>% ggplot(aes(career_bowl_balls)) + geom_histogram(bins = 50, fill = "maroo
 ```
 
 ```{r}
-bbb %>% ggplot(aes(bowl_avg)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
+bbb %>% filter(career_bowl_balls > 3000) %>% ggplot(aes(bowl_avg)) + geom_histogram(bins = 50, fill = "maroon", colour = "black")
 ```
 
 ```{r}
@@ -220,3 +244,19 @@ bbb %>% filter(inn_balls < 1000) %>% group_by(inn_balls) %>% summarise(sr = 100*
   ylab("Observed Strike Rate")
 
 ```
+
+
+
+
+# Pitch Factors - by Venue
+```{r}
+bbb %>% na.omit() %>% group_by(host_country) %>% summarise(seam = mean(seam_factor), spin = mean(spin_factor)) %>% ggplot(aes(host_country, seam, color = 'Seam Factor')) + geom_point(color = 'red') + geom_point(aes(y = spin), color = 'blue')
+
+```
+
+## Most Played Venues
+```{r}
+bbb %>% na.omit() %>% group_by(venue) %>% summarise(n = n(), country = Mode(host_country), seam = mean(seam_factor), spin = mean(spin_factor))
+```
+
+

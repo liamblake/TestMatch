@@ -77,10 +77,19 @@
     <ClCompile Include="test\testh_utility.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="testh_fileio.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="models\keras_bbb.onnx">
       <Filter>Assets</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\venues.dat">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

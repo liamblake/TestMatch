@@ -3,7 +3,179 @@
   "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.4.json",
   "runs": [
     {
-      "results": [],
+      "results": [
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'boost::unit_test::test_unit_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/detail/global_typedef.hpp"
+                },
+                "region": {
+                  "startLine": 70,
+                  "startColumn": 13,
+                  "endLine": 70,
+                  "endColumn": 48
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'boost::unit_test::assertion_result' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/tree/observer.hpp"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 21,
+                  "endLine": 89,
+                  "endColumn": 21
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'boost::detail::local_counted_base::count_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/local_counted_base.hpp"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 77,
+                  "endLine": 45,
+                  "endColumn": 79
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'boost::function_base::functor' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/function/function_base.hpp"
+                },
+                "region": {
+                  "startLine": 603,
+                  "startColumn": 3,
+                  "endLine": 603,
+                  "endColumn": 3
+                }
+              }
+            }
+          ],
+          "properties": {
+            "targetSymbol": "boost::function_base::functor"
+          }
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'boost::test_tools::tt_detail::check_type' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/indirections.hpp"
+                },
+                "region": {
+                  "startLine": 104,
+                  "startColumn": 5,
+                  "endLine": 104,
+                  "endColumn": 5
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "The enum type 'boost::unit_test::test_unit::run_status' is unscoped. Prefer 'enum class' over 'enum' (Enum.3)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/tree/test_unit.hpp"
+                },
+                "region": {
+                  "startLine": 82,
+                  "startColumn": 88,
+                  "endLine": 82,
+                  "endColumn": 88
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26439",
+          "message": {
+            "text": "This kind of function may not throw. Declare it 'noexcept' (f.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/tools/assertion.hpp"
+                },
+                "region": {
+                  "startLine": 272,
+                  "startColumn": 5,
+                  "endLine": 272,
+                  "endColumn": 5
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "C26439",
+          "message": {
+            "text": "This kind of function may not throw. Declare it 'noexcept' (f.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///D:/liaml/Documents/Cpp/vcpkg/installed/x86-windows/include/boost/test/tools/assertion.hpp"
+                },
+                "region": {
+                  "startLine": 272,
+                  "startColumn": 5,
+                  "endLine": 272,
+                  "endColumn": 5
+                }
+              }
+            }
+          ]
+        }
+      ],
       "tool": {
         "driver": {
           "name": "PREfast",
@@ -13,9 +185,2178 @@
       },
       "invocations": [
         {
-          "commandLine": "\"D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\HostX86\\x86\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x00BC8190 -il C:\\Users\\liaml\\AppData\\Local\\Temp\\_CL_dd574d98ast -typedil -f src\\Player.cpp -Ze -D_MSC_EXTENSIONS -Zp8 -Gs -pc \\:/ -D_MSC_VER=1927 -D_MSC_FULL_VER=192729112 -D_MSC_BUILD=0 -D_WIN32 -D_M_IX86=600 -D_M_IX86_FP=2 -GR -D_CPPRTTI -I D:\\liaml\\Documents\\Cpp\\vcpkg\\installed\\x86-windows\\include -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -Fo.\\build\\Player.obj -Fd.\\build\\vc142.pdb -Gd -analyze:projectdirectory D:\\liaml\\Documents\\Projects\\TestMatch\\backend\\ -analyze:rulesetdirectory ;D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -D_GLIBCXX_USE_CXX11_ABI=0 -I D:\\liaml\\Documents\\Projects\\TestMatch\\backend\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\atlmfc\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\ucrt -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\um -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\shared -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\winrt -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
+          "commandLine": "\"D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\HostX86\\x86\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x00BC8190 -il C:\\Users\\liaml\\AppData\\Local\\Temp\\_CL_2ce8a71fast -typedil -f test\\testh_utility.cpp -Ze -D_MSC_EXTENSIONS -Zp8 -Gs -pc \\:/ -D_MSC_VER=1927 -D_MSC_FULL_VER=192729112 -D_MSC_BUILD=0 -D_WIN32 -D_M_IX86=600 -D_M_IX86_FP=2 -GR -D_CPPRTTI -I D:\\liaml\\Documents\\Cpp\\vcpkg\\installed\\x86-windows\\include -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -DNDEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -Fo.\\build\\testh_utility.obj -Fd.\\build\\vc142.pdb -Gd -analyze:projectdirectory D:\\liaml\\Documents\\Projects\\TestMatch\\backend\\ -analyze:rulesetdirectory ;D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -D_GLIBCXX_USE_CXX11_ABI=0 -I D:\\liaml\\Documents\\Projects\\TestMatch\\backend\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\atlmfc\\include -I D:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\ucrt -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\um -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\shared -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\winrt -I D:\\Windows Kits\\10\\Include\\10.0.18362.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
           "executionSuccessful": true,
           "ruleConfigurationOverrides": [
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6001"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6011"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6029"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6031"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6053"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6054"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6059"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6063"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6064"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6066"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6067"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6101"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6200"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6201"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6214"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6215"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6216"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6217"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6220"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6226"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6230"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6235"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6236"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6237"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6242"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6248"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6250"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6255"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6258"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6259"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6260"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6262"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6263"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6268"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6269"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6270"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6271"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6272"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6273"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6274"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6276"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6277"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6278"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6279"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6280"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6281"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6282"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6283"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6284"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6285"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6286"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6287"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6288"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6289"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6290"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6291"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6292"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6293"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6294"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6295"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6296"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6297"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6299"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6302"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6303"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6305"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6306"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6308"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6310"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6312"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6314"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6317"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6318"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6319"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6324"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6328"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6331"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6332"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6333"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6335"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6381"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6383"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6384"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6385"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6386"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6387"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6388"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6500"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6501"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6503"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6504"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6505"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6506"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6508"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6509"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6510"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6511"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6513"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6514"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6515"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6516"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6517"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6518"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6522"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6525"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6527"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6530"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6540"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6551"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6552"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6701"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6702"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6703"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6704"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6705"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6706"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6993"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6995"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C6997"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26100"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26101"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26110"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26111"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26112"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26115"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26116"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26117"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26140"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26437"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26439"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26441"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26444"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26449"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26450"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26451"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26452"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26453"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26454"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26478"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26495"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26498"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26812"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26815"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26816"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26817"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26819"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C26820"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28020"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28021"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28022"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28023"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28024"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28039"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28112"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28113"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28125"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28137"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28138"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28159"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28160"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28163"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28164"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28182"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28183"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28193"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28196"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28202"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28203"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28205"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28206"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28207"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28209"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28210"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28211"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28212"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28213"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28214"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28215"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28216"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28217"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28218"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28219"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28220"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28221"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28222"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28223"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28224"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28225"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28226"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28227"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28228"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28229"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28230"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28231"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28232"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28233"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28234"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28235"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28236"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28237"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28238"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28239"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28240"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28241"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28243"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28244"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28245"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28246"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28250"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28251"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28252"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28253"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28254"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28262"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28263"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28267"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28272"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28273"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28275"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28279"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28280"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28282"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28285"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28286"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28287"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28288"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28289"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28290"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28291"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28300"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28301"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28302"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28303"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28304"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28305"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28306"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28307"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28308"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28309"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28350"
+              }
+            },
+            {
+              "configuration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "descriptor": {
+                "id": "C28351"
+              }
+            },
             {
               "configuration": {
                 "enabled": true,
@@ -6529,7 +8870,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "file:///d:/liaml/documents/projects/testmatch/backend/src/player.cpp"
+            "uri": "file:///d:/liaml/documents/projects/testmatch/backend/test/testh_utility.cpp"
           },
           "roles": [
             "analysisTarget",
@@ -6538,7 +8879,623 @@
         },
         {
           "location": {
-            "uri": "file:///d:/liaml/documents/projects/testmatch/backend/include/player.h"
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/unit_test.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/detail/fold_right.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/test_tools.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/user.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/detail/is_binary.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/detail/select_compiler_config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/compiler/visualc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/pragma_message.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/helper_macros.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/detail/is_single_return.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/detail/select_stdlib_config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/stdlib/dinkumware.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/adl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/detail/select_platform_config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/largest_int.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/forwarding.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/shared_count.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/platform/win32.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/tag.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/detail/suffix.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/old/impl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/include_preprocessed.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/detail/workaround.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/workaround.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/config/config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/apply.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/context.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/lazy_ostream.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/suppress_warnings.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/gcc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/enable_warnings.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/pp_variadic.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/control/iif.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/assert.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/comparison/equal.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_function.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/comparison/not_equal.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/yield_k.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/arithmetic/add.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/cat.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/unit_test_suite.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/logical/compl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/variadic/size.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/cv_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mem_fn.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/enum_params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/fpc_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/punctuation/comma_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/control/if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/logical/bool.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/empty.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/punctuation/comma.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/equal_to.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/msvc_never_true.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/checked_delete.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/repeat.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/shared_ptr.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/debug/error.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/detail/auto_rec.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/eat.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/enum_binary_params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/elem.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/compiler.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/expand.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/overload.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/not.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/rem.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/is_1.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/is_empty.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/sequence_tag_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/is_empty_variadic.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/or.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_counted_base_std_atomic.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/punctuation/is_begin_parens.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/punctuation/detail/is_begin_parens.hpp"
           },
           "roles": [
             "resultFile"
@@ -6547,6 +9504,2718 @@
         {
           "location": {
             "uri": "file:///d:/liaml/documents/projects/testmatch/backend/include/utility.h"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/msvc_typename.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/detail/is_empty.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/size.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/variadic/elem.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/or.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_convertible.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/repeat_from_to.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/is_same.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/arithmetic/dec.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/arithmetic/inc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/control/while.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/has_apply.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/fold_left.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/value_wknd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/bool.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/detail/fold_left.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/control/expr_iif.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/adt.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/preprocessor.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/detail/check.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/function_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_member_function_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/fold_right.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/list/reverse.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/string_cast.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/logical/bitand.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/decay.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/control/detail/msvc/while.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/framework.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/arithmetic/sub.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/variadic/to_seq.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/detail/prologue.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/apply_wrap.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/tuple/to_seq.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/ctps.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/basic_cstring/io.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/for_each_i.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/ref.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/assertion_result.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/for.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_nullptr_t.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/detail/msvc/for.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/seq.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/scoped_ptr.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/decorator.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/elem.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/local_counted_base.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/size.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/detail/is_empty.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/for_each.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/old/interface.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/template_arity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/seq/to_tuple.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/ignore_unused.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/and.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/workaround.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/unit_test_log.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/observer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/fwd_decl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/global_typedef.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/basic_cstring/basic_cstring.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/basic_cstring/basic_cstring_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/function1.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/basic_cstring/bcs_char_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/void.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_const.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/config.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/version.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/enable_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_cv.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/log_level.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/aligned_storage.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/sign_mixture.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/wrap_stringstream.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/arg.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/auto_registration.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/yes_no_type.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/class_properties.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/call_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/detail/call_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_arithmetic.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_integral.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/enum_params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/integral_constant.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_floating_point.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/arity_spec.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/intrinsics.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_member_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/utility/addressof.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/addressof.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/shared_ptr.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/begin_end_impl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/no_tr1/memory.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/assert.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/swap.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/checked_delete.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/throw_exception.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/assert/source_location.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/current_function.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/numeric_cast_utils.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/conversion_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/cstdint.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_has_sync.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/exception/exception.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/bad_weak_ptr.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/lexicographic_manip.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/ref.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_counted_base.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_abstract.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_typeinfo_.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_noexcept.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_counted_impl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/unwrap.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/spinlock_pool.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/spinlock.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/spinlock_std_atomic.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/eval_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/make_void.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/operator_bool.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/detail/local_sp_deleter.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/na_assert.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/floating_point_comparison.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/limits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/static_assert.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/bool_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/visit_each.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_const.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_convertible.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/adl_barrier.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/msvc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/intel.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/integral_c_tag.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/placeholders.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/int_float_mixture_enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/static_constant.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_array.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/storage.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/function0.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/is_subranged.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_lvalue_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_rvalue_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_void.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/bind.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/conditional.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/equal_to.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/utility/enable_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/comparison_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/print_helper.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/no_exceptions_support.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/use_preprocessed.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/nested_type_wknd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/na_spec.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/has_xxx.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/lambda_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/bitwise_manip.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/void_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/na.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/na_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/alignment_of.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/lambda.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/ttp.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/int.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/test_unit.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/int_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/nttp_decl.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/nttp.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/identity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/integral_wrapper.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/static_cast.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/function_base.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/lambda_arity_param.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/template_arity_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/for_each.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/arity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/quote.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/dtp.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_volatile.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/array/data.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessor/params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/comma_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repeat.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/test_case_template.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/inc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessor/enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessor/def_params_tail.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/limits/arity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/logical/and.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/facilities/identity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/empty.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/eti.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/integer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/overload_resolution.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/lambda_support.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/stringize.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/has_trivial_copy.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/is_function_cxx_11.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/has_left_shift.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/has_binary_operator.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_complete.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/declval.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_rvalue_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_same.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_reference.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/conversion_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/function_template.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/meta.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/integral.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/numeric_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/has_type.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/numeric_cast.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/apply_wrap.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/has_apply.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/bind_mf2_cc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/type_wrapper.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/yes_no.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/placeholders.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/arrays.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/has_xxx.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/array/elem.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/collection_comparison_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/array/size.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/enum_trailing_params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/template_arity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/has_tag.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_volatile.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/msvc_eti_base.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/is_msvc_eti_arg.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/and.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/identity.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/quote.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/detail/int_float_mixture.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/multiplies.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/integral_c.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/integral_c_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/sign_mixture_enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/numeric/conversion/udt_builtin_mixture_enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/times.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/arithmetic_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/times.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessor/default_params.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/less.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/is_sequence.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/less.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/interface.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/assertion.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_bounds.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/bind_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_extent.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/gpu.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/pp_counter.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/utility/declval.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_const.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/fpc_tolerance.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/fixture.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/smart_ptr/scoped_ptr.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function/detail/maybe_include.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/config/no_tr1/functional.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/integer_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/integer_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_index.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_index/stl_type_index.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_index/type_index_facade.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/container_hash/hash_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/core/demangle.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_pod.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_scalar.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/is_member_function_pointer_cxx_11.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/detail/mp_defer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/has_trivial_destructor.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/composite_traits.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/is_union.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/bind_cc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/enable_if.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/function_equal.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/mem_fn.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/get_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/mem_fn_template.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/mem_fn_cc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/preprocessor/repetition/enum.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/common_type.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/is_forward_iterable.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/is_cstring.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/remove_pointer.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/cstring_comparison_op.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/basic_cstring/compare.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/it_pair.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/arg.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/indirections.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/tolerance_manip.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/begin_end.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tools/detail/per_element_manip.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/lambda.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/detail/throw_exception.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/utils/algorithm.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/begin_end_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/next_prior.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/has_begin.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/traits_lambda_spec.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/sequence_tag.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/apply_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/apply_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/placeholders.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/arg_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/arg_typedef.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/bind.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/bind_fwd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/bind.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/next.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/common_name_wknd.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/protect.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/bind.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/full_lambda.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/config/bcc.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/full_lambda.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/utility/value_init.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/preprocessed/plain/apply.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/deref.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/mpl/aux_/msvc_type.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/aligned_storage.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/type_with_alignment.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_volatile.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/type_traits/add_cv.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/swap.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/tree/global_fixture.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/test/parameterized_test.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/is_placeholder.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/arg.hpp"
+          },
+          "roles": [
+            "resultFile"
+          ]
+        },
+        {
+          "location": {
+            "uri": "file:///d:/liaml/documents/cpp/vcpkg/installed/x86-windows/include/boost/bind/bind_mf_cc.hpp"
           },
           "roles": [
             "resultFile"

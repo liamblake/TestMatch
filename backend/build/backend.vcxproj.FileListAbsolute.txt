@@ -1,3 +1,5 @@
 D:\liaml\Documents\Projects\TestMatch\backend\bin\boost_unit_test_framework-vc142-mt-gd-x32-1_73.dll
 D:\liaml\Documents\Projects\TestMatch\backend\build\backend.vcxproj.CopyComplete
 D:\liaml\Documents\Projects\TestMatch\backend\bin\models\keras_bbb.onnx
+D:\liaml\Documents\Projects\TestMatch\backend\bin\backend.exe.lastcodeanalysissucceeded
+D:\liaml\Documents\Projects\TestMatch\backend\build\NativeCodeAnalysis.read.1.tlog

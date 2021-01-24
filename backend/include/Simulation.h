@@ -134,6 +134,11 @@ class Innings {
     // Destructor
     ~Innings();
 
+    // Test classes
+    friend class TestDelivery;
+    friend class TestBattingLineup;
+    friend class TestBowlingLineup;
+
 };
 
 
@@ -171,5 +176,22 @@ class Match {
 
     std::string print_pregame();
 };
+
+
+/* Test classes, allowing testing of specific and private components
+*/
+class TestDelivery {
+
+};
+
+class TestBattingLineup {
+
+};
+
+class TestBowlingLineup {
+
+};
+
+
 
 #endif

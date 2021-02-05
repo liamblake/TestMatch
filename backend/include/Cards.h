@@ -4,6 +4,9 @@
 #include <string>
 #include "Player.h"
 
+// Global Parameters
+
+
 // Stores all relevant data from batter for simulation
 struct BatStats {
 	// Career averages
@@ -119,6 +122,27 @@ class BatterCard : public PlayerCard {
 };
 
 
+// Measure of tiredness of bowler, model for determining next bowler
+class Fatigue {
+  private:
+	double value;
+	int bowl_type;
+
+
+  public:
+	  // Constructor
+	  Fatigue(int bowl_type);
+
+	  // Getter
+	  double get_value();
+
+	  // Events which change fatigue
+	  void ball_bowled();
+	  void wicket();
+	  void rest(double time);
+};
+
+
 // Contains all information relevant to a bowler bowling in an innings
 class BowlerCard : public PlayerCard {
 
@@ -127,7 +151,7 @@ class BowlerCard : public PlayerCard {
 	bool active;
 
 	// Rudimentary measure of bowler tiredness, improves with each passing over
-	float fatigue;
+	Fatigue tired;
 
 	// Tracks number of runs in a current over to determine whether that over was a maiden
 	bool is_maiden;
@@ -143,12 +167,17 @@ class BowlerCard : public PlayerCard {
 	void update_score(std::string outcome);
 	void start_new_spell();
 
+	// Get fatigue
+	double get_tiredness();
+
 	// Over passes (from same end) without bowler bowling - reduces fatigue
 	void over_rest();
 
 	std::string print_card(void);
 	std::string print_spell(void);
 };
+
+
 
 
 

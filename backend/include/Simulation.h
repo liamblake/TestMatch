@@ -99,9 +99,14 @@ class Innings {
 
   	// Private methods used in simulation process
     
+    // Simulate a delivery and update appropriate statistics
     void simulate_delivery();
+    
+    // Called after each delivery, checks for changes in game state, such as end of over, end of innings, declaration, scheduled break, etc.
+    void check_state();
+
+    // Check for declaration
   	bool check_declaration();
-    void check_innings_state();
 
     /* Choose the next batter in after the fall of a wicket
     

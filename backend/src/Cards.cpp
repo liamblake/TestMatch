@@ -82,6 +82,21 @@ Player* Dismissal::get_fielder() {
 
 
 /*
+	Fatigue implementations
+*/
+Fatigue::Fatigue(int c_bowl_type) : value(0), bowl_type(c_bowl_type) {}
+
+double Fatigue::get_value() {
+	return value;
+}
+
+void Fatigue::ball_bowled() {}
+void Fatigue::wicket() {}
+void Fatigue::rest(double time) {}
+
+
+
+/*
 	PlayerCard implementations
 */
 PlayerCard::PlayerCard(Player* c_player) {

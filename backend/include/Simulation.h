@@ -93,7 +93,7 @@ class Innings {
 
     // Simulation models
     const static int NUM_OUTCOMES = 17;
-    static std::string unencode_outcome(int outcome);
+    const static std::string* OUTCOMES;
     static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
     static int MODEL_WICKET_TYPE(int bowltype);
 

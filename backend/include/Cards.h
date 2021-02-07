@@ -1,3 +1,5 @@
+// -*- lsst-c++ -*-
+
 #ifndef CARDS_H
 #define CARDS_H
 
@@ -5,7 +7,8 @@
 #include "Player.h"
 
 // Global Parameters
-
+const double PACE_MEAN_FATIGUE = 0.1;
+const double SPIN_MEAN_FATIGUE = 0.04;
 
 // Stores all relevant data from batter for simulation
 struct BatStats {
@@ -52,6 +55,7 @@ struct BowlStats {
 };
 
 // Stores all information relating to the dismissal of a batter
+
 class Dismissal {
   private:
 	// Mode of dismissal:
@@ -70,6 +74,31 @@ class Dismissal {
 	Player* get_bowler();
 	Player* get_fielder();
 
+};
+
+
+/**
+ * Measure of tiredness of bowler, model for determining next bowler
+ *
+ *
+ */
+class Fatigue {
+private:
+	double value;
+	int bowl_type;
+
+
+public:
+	// Constructor
+	Fatigue(int c_bowl_type);
+
+	// Getter
+	double get_value();
+
+	// Events which change fatigue
+	void ball_bowled();
+	void wicket();
+	void rest(double time);
 };
 
 
@@ -121,26 +150,6 @@ class BatterCard : public PlayerCard {
 
 };
 
-
-// Measure of tiredness of bowler, model for determining next bowler
-class Fatigue {
-  private:
-	double value;
-	int bowl_type;
-
-
-  public:
-	  // Constructor
-	  Fatigue(int bowl_type);
-
-	  // Getter
-	  double get_value();
-
-	  // Events which change fatigue
-	  void ball_bowled();
-	  void wicket();
-	  void rest(double time);
-};
 
 
 // Contains all information relevant to a bowler bowling in an innings

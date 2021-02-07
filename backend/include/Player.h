@@ -1,50 +1,23 @@
+// -*- lsst-c++ -*-
+/* Player.h
+ *
+ * 
+ * 
+*/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <string>
 #include <iostream>
 
-/* 
+
+
+
+
+/**
+ * @brief 
 */
-//class OverCount {
-//  
-//  private:
-//	int overs;
-//	int balls;
-//
-//	// Internal addition of ball
-//	void add_ball(int add = 1);
-//
-//  public:
-//	OverCount();
-//	OverCount(int c_overs, int c_balls);
-//
-//	int as_balls();
-//
-//	// Copy constrecutor
-//	OverCount(const OverCount& oc);
-//
-//	// Overloaded operators
-//	OverCount& operator++();
-//	OverCount& operator++(int);
-//	OverCount& operator+=(const int rhs);
-//	friend OverCount operator+(const OverCount& lhs, const OverCount& rhs);
-//	friend OverCount operator+(const OverCount& lhs, const int rhs);
-//	friend bool operator==(const OverCount& lhs, const OverCount& rhs);
-//	friend bool operator!=(const OverCount& lhs, const OverCount& rhs);
-//	friend bool operator<(const OverCount& lhs, const OverCount& rhs);
-//	friend bool operator>(const OverCount& lhs, const OverCount& rhs);
-//	friend bool operator<=(const OverCount& lhs, const OverCount& rhs);
-//	friend bool operator>=(const OverCount& lhs, const OverCount& rhs);
-//
-//	explicit operator std::string() const;
-//	explicit operator float() const;
-//
-//};
-
-
-/* Structure containing all statistics describing a player. These are available in the /data/players
-   directory. */
 struct Stats {
 	int innings;
 	double bat_avg;
@@ -62,8 +35,12 @@ struct Stats {
 };
 
 
-/* Class completely describing a player and all required pregame information to 
-   simulate. 
+/**
+ * @brief Storage for all detail describing a player
+ * 
+ * Stores all information needed to describe a player, including name, team and statistics. Values are stored privately and
+ * accessed using getters, following typical OOP convention. Class also includes methods for formatting name (e.g. initials and last name,
+ * full name, etc.), and getters for each statistic stored in the Stats object. 
 */
 class Player
 {
@@ -109,10 +86,28 @@ class Player
 
 };
 
+/**
+ * @brief 
+ * @tparam T 
+ * @param list 
+ * @param len 
+ * @param sort_val 
+ * @return 
+*/
 template <typename T>
 Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
 
 
+/**
+ * @brief Storage for a playing XI of Player objects
+ * 
+ * Stores 11 Player objects in order corresponding to a playing XI, and also includes team name and 
+ * indices corresponding to specialist roles in the team. The XI is stored as a static array of 11 Player
+ * pointers, ordered by the desired batting order (under standard conditions - see the functions get_nightwatch,
+ * - in Simulation.h for situations where this batting order is changed). The team name is stored as a string, and
+ * the struct also includes 4 integers storing indices pointing to the captain, wicketkeeper and the two opening 
+ * bowlers in the playing XI array.
+*/
 struct Team {
 	std::string name;
 	Player* players[11];
@@ -126,9 +121,13 @@ struct Team {
 
 
 
-// Overload of << operator for printing team list to console
+/**
+ * @brief Prints to the console a nicely formatted playing XI from a Team struct
+ * @param os 
+ * @param team 
+ * @return 
+ * @relatesals Team
+*/
 std::ostream& operator<<(std::ostream& os, const Team& team);
-// Primarily used for testing
 
-
-#endif
+#endif // PLAYER_H

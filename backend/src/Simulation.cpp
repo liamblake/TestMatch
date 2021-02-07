@@ -17,6 +17,7 @@ PitchCondition::PitchCondition(MatchTime* c_time) : time(c_time) {
     // Randomly generate pitch factors
 }
 
+
 PitchCondition::PitchCondition(double c_pace_factor, double c_spin_factor, MatchTime* c_time) : time(c_time) {
     // Check for valid factors
     if (true) {
@@ -126,15 +127,16 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
 // Private methods used in simulation process
 void Innings::simulate_delivery() {
 
+    // Pass game information to delivery model
+
   // Get outcome probabilities
   double* probs = MODEL_DELIVERY(striker->get_sim_stats(), bowl1->get_sim_stats(), {});
 
   // Simulate
-  double r = ((double) rand() / (RAND_MAX));
-  int i = 0;
-  while(++i < NUM_OUTCOMES && r > probs[i]); // CHECK THE ++
-  std::string outcome = unencode_outcome(i - 1);
+  std::string outcome = sample_disc<std::string>(OUTCOMES, probs, NUM_OUTCOMES, true);
   delete[] probs;
+
+  std::pair<int, std::string> t_output;
 
   if (outcome == "W") {
     // Handle wicket
@@ -142,6 +144,14 @@ void Innings::simulate_delivery() {
 
     // Create a object for fall of wicket
     fow[wkts] = {striker->get_player(), wkts + 1, runs, overs, balls};
+
+
+    // Update match time
+    t_output = time->delivery(false, runs);
+
+    // Determine next batter
+
+
 
 
   } else {
@@ -157,16 +167,15 @@ void Innings::simulate_delivery() {
 
     }
 
-  // Add additional time, sampled from modified normal distribution
-  std::pair<int, std::string> t_output = time->delivery(false, runs);
-  inns_state = t_output.second;
+  // Update match time
+    t_output = time->delivery(false, runs);
 
   }
 
 
-  // Determine next course of action based on match state
-
-
+  // Check match state and end this delivery cycle
+  inns_state = t_output.second;
+  check_state();
 
 }
 

@@ -91,6 +91,9 @@ int Player::get_bowl_type() const {
 	return player_stats.bowl_type;
 }
 
+/**
+ * 
+*/
 template <typename T>
 Player** sort_array(Player** list, int len, T (Player::*sort_val)() const) {
 	// TODO: improve this algorithm

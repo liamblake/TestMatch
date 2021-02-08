@@ -1,7 +1,7 @@
 // -*- lsst-c++ -*-
 /* Player.h
  *
- * 
+ * Interface for basic player storage types. 
  * 
 */
 
@@ -12,25 +12,28 @@
 #include <iostream>
 
 
-
-
-
 /**
- * @brief 
+ * @brief Storage for all career statistics of an individual player
+ * 
+ * Self-explanatory, contains basic data types storing each relevant statistic.
+ * See each declaration for a more detailed explanation.
+ * 
 */
 struct Stats {
-	int innings;
-	double bat_avg;
-	double bat_sr;
+	// Batting statistics
+	int innings;		// Number of innings batted over career
+	double bat_avg;		// Batting average (average runs per dismissal)
+	double bat_sr;		// Batting strike rate (average runs per 100 balls faced)
 
-	int balls_bowled;
-	double bowl_avg;
-	double bowl_sr;
-	double bowl_econ;
+	// Bowling statistics
+	int balls_bowled;	// Number of balls bowled over career
+	double bowl_avg;	// Bowling average (average runs conceded per wicket)
+	double bowl_sr;		// Bowling strike rate (average balls bowled per wicket)
+	double bowl_econ;	// Bowling economy (average runs conceded per 6 balls bowled)
 
-	bool bat_hand;
-	int bowl_type;
-
+	// General descriptors
+	bool bat_hand;		// Batting hand (false = right, true = left)
+	int bowl_type;		// Bowling type, encoded as integer, see Utility.h for encodings
 
 };
 

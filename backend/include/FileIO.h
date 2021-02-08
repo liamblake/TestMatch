@@ -1,3 +1,8 @@
+// -*- lsst-c++ -*-
+/* FileIO.h
+ *
+ * 
+*/
 
 #ifndef FILEIO_H
 #define FILEIO_H
@@ -30,9 +35,7 @@ void save_team(Team team, std::string dir);
 
 Venue* csv2venue(std::string line);
 
-std::pair<Venue**, int> load_venues(std::string dir = 'data/venues.dat')
+std::pair<Venue**, int> load_venues(std::string dir = "data/venues.dat");
 
 
-
-
-#endif
+#endif // FILEIO_H

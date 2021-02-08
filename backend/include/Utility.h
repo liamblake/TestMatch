@@ -1,8 +1,15 @@
-/* Utility.h
-
-	Contains helper functions for converting between strings and their encodings as integers,
-	and vice-versa. These are used primarily in conversions from simulation backend to printed/displayed
-	results (e.g. a scorecard or ball-by-ball description).
+// -*- lsst-c++ -*-
+/* Cards.h
+ *
+ * Contains various helper functions used throughout the program. Includes functions for converting
+ * between strings and their encodings as integers, and vice-versa. These are used primarily in 
+ * conversions from simulation backend to printed/displayed results (e.g. a scorecard or ball-by-ball description).
+ * 
+ * Note that all the functions here are defined and implementated here (with the inline keyword). This is probably
+ * bad practice, but I wanted to avoid having an additional .cpp file since no class is declared here. If I need to
+ * declare a class here for whatever reason, I will probably move the implementations here to a .cpp, but for now,
+ * the header is all we need.
+ * 
 */
 
 #ifndef UTILITY_H
@@ -21,6 +28,10 @@
 	T* arr - pointer to array of type T
 	int old_length - length of array arr
 	T new_entry - item to add to end of array arr
+
+	This exists because overs can contain an arbitrary amount of balls
+	(due to extras), but I don't want to use vectors since I will be wasting 
+	a lot of memory. 
 */
 template <class T>
 inline T* arr_add_item(T* arr, int old_length, T new_entry) {
@@ -36,10 +47,6 @@ inline T* arr_add_item(T* arr, int old_length, T new_entry) {
 	}
 
 	delete[] arr;
-    
-
-
-
 	arr[old_length] = new_entry;
 
 	return arr;
@@ -277,4 +284,4 @@ inline double rtexp(double mean, double min, double max) {
 }
 
 
-#endif
+#endif // UTILITY_H

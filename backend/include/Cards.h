@@ -1,4 +1,8 @@
 // -*- lsst-c++ -*-
+/* Cards.h
+ *
+ * 
+*/
 
 #ifndef CARDS_H
 #define CARDS_H
@@ -424,4 +428,4 @@ class Partnership {
 
 };
 
-#endif
+#endif // CARDS_H

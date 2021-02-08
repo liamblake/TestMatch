@@ -1,5 +1,7 @@
+// -*- lsst-c++ -*-
 /* MatchTime.h
-   Class declaration for MatchTime object tracking current time in simulated match
+ *
+ * 
 */
 
 #ifndef MATCHTIME_H
@@ -140,4 +142,4 @@ class MatchTime {
 
 
 
-#endif
+#endif // MATCHTIME_H

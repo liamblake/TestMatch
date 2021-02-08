@@ -1,3 +1,9 @@
+// -*- lsst-c++ -*-
+/* Simulation.h
+ *
+ * 
+*/
+
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
@@ -199,4 +205,4 @@ class TestBowlingLineup {
 
 
 
-#endif
+#endif // SIMULATION_h

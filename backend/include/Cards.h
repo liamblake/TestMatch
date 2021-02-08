@@ -14,7 +14,11 @@
 const double PACE_MEAN_FATIGUE = 0.1;
 const double SPIN_MEAN_FATIGUE = 0.04;
 
-// Stores all relevant data from batter for simulation
+/**
+ * @brief Storage for batting statistics for simulation
+ * 
+ * 
+*/
 struct BatStats {
 	// Career averages
 	double bat_avg;
@@ -32,7 +36,11 @@ struct BatStats {
 
 };
 
-// Stores all relevant data from bowler for simulation
+/**
+ * @brief Storage for bowling statistics for simulation
+ *
+ *
+*/
 struct BowlStats {
 	// Career averages
 	double bowl_avg;
@@ -58,8 +66,10 @@ struct BowlStats {
 
 };
 
-// Stores all information relating to the dismissal of a batter
 
+/**
+ * @brief Storage of dismissal details
+*/
 class Dismissal {
   private:
 	// Mode of dismissal:
@@ -71,21 +81,47 @@ class Dismissal {
 	// if bowled or lbw, set fielder = NULL
 
   public:
+	/**
+	 * @brief 
+	 * @param c_mode 
+	 * @param c_bowler 
+	 * @param c_fielder 
+	*/
 	Dismissal(int c_mode, Player* c_bowler = nullptr, Player* c_fielder = nullptr);
 	
+
+	/**
+	 * @brief 
+	 * @return 
+	*/
 	std::string print_dism();
+
+	/**
+	 * @brief 
+	 * @return 
+	*/
 	int get_mode();
+
+	/**
+	 * @brief 
+	 * @return 
+	*/
 	Player* get_bowler();
+
+	/**
+	 * @brief 
+	 * @return 
+	*/
 	Player* get_fielder();
 
 };
 
 
 /**
- * Measure of tiredness of bowler, model for determining next bowler
- *
- *
- */
+ * @brief Measure of tiredness of bowler, model for determining next bowler
+ * 
+ * 
+*/
 class Fatigue {
 private:
 	double value;
@@ -106,7 +142,9 @@ public:
 };
 
 
-// Abstract base class for bowler and batter cards.
+/**
+ * @brief Abstract base class for bowler and batter cards.
+*/
 class PlayerCard {
 
   protected:
@@ -128,7 +166,9 @@ class PlayerCard {
 };
 
 
-//
+/**
+ * @brief 
+*/
 class BatterCard : public PlayerCard {
 	// TODO: implement MATCHTIME
 
@@ -156,7 +196,9 @@ class BatterCard : public PlayerCard {
 
 
 
-// Contains all information relevant to a bowler bowling in an innings
+/**
+ * @brief Storage as all information relevant to a bowler bowling in an innings
+*/
 class BowlerCard : public PlayerCard {
 
   private:

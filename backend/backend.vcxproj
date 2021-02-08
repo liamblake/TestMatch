@@ -241,6 +241,7 @@
     <ClInclude Include="include\Parameters.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Simulation.h" />
+    <ClInclude Include="include\TestObjs.h" />
     <ClInclude Include="include\Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="models\keras_bbb.onnx">
       <DeploymentContent>true</DeploymentContent>
     </None>

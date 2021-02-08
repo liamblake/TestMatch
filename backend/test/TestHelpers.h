@@ -1,3 +1,9 @@
+// -*- lsst-c++ -*-
+/* TestHelpers.h
+ *
+ *
+*/
+
 #ifndef TESTHELPERS_H
 #define TESTHELPERS_H
 
@@ -30,6 +36,27 @@ inline void test_player_values(Player* player, std::string exp_first_name, std::
 	BOOST_TEST(player->get_bowl_type() == exp_stats.bowl_type);
 }
 
+class Tester {
 
+
+  public:
+
+	  virtual bool run_tests() = 0;
+};
+
+
+/* Test classes, allowing testing of specific and private components
+*/
+class TestDelivery : public Tester {
+
+};
+
+class TestBattingLineup : public Tester {
+
+};
+
+class TestBowlingLineup : public Tester {
+
+};
 
 #endif

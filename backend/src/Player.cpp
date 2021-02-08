@@ -9,12 +9,10 @@ using namespace std;
 
 
 
-Player::Player(string c_first_name, string c_last_name, string c_initials, Stats stats, string c_team) {
+Player::Player(string c_first_name, string c_last_name, string c_initials, Stats stats) {
 	first_name = c_first_name;
 	initials = c_initials;
 	last_name = c_last_name;
-
-	team = c_team;
 
 	player_stats = stats;
 
@@ -44,10 +42,6 @@ string Player::get_full_name() const {
 	return first_name + " " + last_name;
 }
 
-
-string Player::get_team() const {
-	return team;
-}
 
 
 Stats Player::get_stats() const {

@@ -1,7 +1,7 @@
 // -*- lsst-c++ -*-
 /* Player.h
  *
- * Interface for basic player storage types. 
+ * Interface for basic player storage types. Individual players and their relevant career statistics
  * 
 */
 
@@ -48,18 +48,16 @@ struct Stats {
 class Player
 {
   private:
-	std::string first_name;
-	std::string last_name;
+	// Names
+	std::string first_name;		// First name of player, e.g. John
+	std::string last_name;		// Surname of player, e.g. Smith
+	std::string initials;		// Initials of first and middle names, e.g. for John Doe Smith, store JD
 
-	std::string initials;
-
-	std::string team;
-
-	Stats player_stats;
+	Stats player_stats;		// Player career statistics
 
   public:
 	// Explicit constructor
-	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats, std::string c_team = "");
+	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats);
 	
 	// Default destructor
 
@@ -71,31 +69,29 @@ class Player
 	std::string get_full_name() const;
 	std::string get_full_initials() const;
 
-	std::string get_team() const;
+	// Return Stats struct
 	Stats get_stats() const;
 
-	// Specific getters for stats
+	// Specific getters for career statistics, stored in player_stats
 	int get_innings() const;
 	double get_bat_avg() const;
 	double get_bat_sr() const;
-
 	int get_balls_bowled() const;
 	double get_bowl_avg() const;
 	double get_bowl_sr() const;
 	double get_bowl_econ() const;
-
 	bool get_bat_hand() const;
 	int get_bowl_type() const;
 
 };
 
 /**
- * @brief 
- * @tparam T 
- * @param list 
- * @param len 
- * @param sort_val 
- * @return 
+ * @brief Sorts a dynamic array of Player pointers by a passed statistic.
+ * @tparam T Typename of statistic sorting by, return type of sort_val.
+ * @param list Pointer to array of Player pointers to be sorted.
+ * @param len Length of array to be sorted.
+ * @param sort_val Function pointer to Player getter method of the desired statistic to sort the array by.
+ * @return Pointer to a NEW sorted array of Player pointers, of size len. Dynamically allocated, must be deleted.
 */
 template <typename T>
 Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
@@ -115,7 +111,7 @@ struct Team {
 	std::string name;
 	Player* players[11];
 
-	// Indexes refer to players array
+	// Indices refer to players array
 	int i_captain;
 	int i_wk;
 	int i_bowl1;
@@ -125,9 +121,9 @@ struct Team {
 
 
 /**
- * @brief Prints to the console a nicely formatted playing XI from a Team struct
+ * @brief Prints to the console a nicely formatted playing XI from a Team struct.
  * @param os 
- * @param team 
+ * @param team Team object to be printed.
  * @return 
  * @relatesals Team
 */

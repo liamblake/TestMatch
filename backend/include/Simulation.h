@@ -189,20 +189,6 @@ class Match {
 };
 
 
-/* Test classes, allowing testing of specific and private components
-*/
-class TestDelivery {
-
-};
-
-class TestBattingLineup {
-
-};
-
-class TestBowlingLineup {
-
-};
-
 
 
 #endif // SIMULATION_h

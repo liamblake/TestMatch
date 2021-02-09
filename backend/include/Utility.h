@@ -1,5 +1,5 @@
 // -*- lsst-c++ -*-
-/* Cards.h
+/* Utility.h
  *
  * Contains various helper functions used throughout the program. Includes functions for converting
  * between strings and their encodings as integers, and vice-versa. These are used primarily in 

@@ -46,13 +46,62 @@ struct MatchStats {
 };
 
 
+class TeamManager {
+  private:
+    Team xi;
+    PlayerCard* cards [11];
+
+    virtual void initialise() = 0;
+
+  public:
+    TeamManager(Team c_xi);
+
+    friend class Innings;
+
+};
+
+
+class BattingManager : public TeamManager {
+  private:
+    void initialise():
+
+  public:
+    BattingManager(Team c_xi);
+
+    // Various options for determining next batter
+    BatterCard* next_in();
+    BatterCard* nightwatch();
+    BatterCard* promote_hitter();
+
+
+};
+
+
+class BowlingManager : public TeamManager {
+  private:
+    void initialise();
+
+  public:
+    BowlingManager(Team c_xi);
+
+    // Various options for getting a new bowler
+    BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
+
+
+    // 
+
+};
+
+
 // An innings
 class Innings {
   private:
 
     // Each team
-    Team* team_bat;
-  	Team* team_bowl;
+    BattingManager* team_bat;
+  	BowlingManager* team_bowl;
 
     // General innings info
   	static int inns_no;
@@ -114,11 +163,6 @@ class Innings {
     // Check for declaration
   	bool check_declaration();
 
-    /* Choose the next batter in after the fall of a wicket
-    
-       Returns a pointer to the BatterCard corresponding
-    */
-    BatterCard* next_batter();
 
     // Handle end of over
     void end_over();

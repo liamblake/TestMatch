@@ -233,67 +233,6 @@ class BowlerCard : public PlayerCard {
 };
 
 
-
-
-
-//   // Contains all information describing a team and playing XI
-// class TeamCard {
-//   private:
-//   	Team static_team;
-// 	int next_in;
-
-
-
-// 	// Utility functions - sort subset of player array
-// 	Player** sort_batavg_subset(Player* subset, int len);
-// 	Player** sort_bowlavg_subset(Player* subset, int len);
-
-//   public:
-// 	TeamCard(Team base_team);
-
-// 	// Default copy constructor
-
-// 	// Getters 
-// 	std::string get_name();
-// 	Player* captain();
-// 	Player* wk();
-// 	Player* bowl_open(bool pos);
-
-
-
-// 	/* Returns a pointer to the next batter in the lineup. 
-
-// 		If the manual argument is passed, attempts to find
-// 		that player in those in the lineup that have not batted.
-// 		If found, will return the pointer, otherwise returns nullptr.
-
-// 		Arguments:
-// 			manual (optional): a pointer to the player to search for.
-
-// 		Output:
-// 			Returns a Player pointer to the next batter in the team
-// 			lineup. If manual is passed, will return 
-// 	*/
-// 	Player* next_batter(Player* manual = nullptr);
-
-// 	/* Returns a pointer to a lower-order batter selected as 
-// 	   as nightwatchman.
-
-// 	   The chosen batter 
-
-// 	*/
-// 	Player* get_nightwatch();
-
-// 	// Sorters - used for selecting bowlers and changing batting order
-// 	Player** sort_batavg(bool use_dnb = false);
-// 	Player** sort_bowlavg(bool use_dnb = false);
-// 	// Default destructor
-
-
-// };
-
-
-
 //////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
 struct PitchFactors {
 	double seam;
@@ -315,13 +254,15 @@ struct Venue {
 
 // Describes a delivery
 struct Ball {
-  Player* bowler;
-  Player* batter; 
+	Player* bowler;
+  	Player* batter; 
 
-  int outcome;
-  bool legal;
-  std::string commentary;
+	int outcome;
+  	bool legal;
+  	std::string commentary;
 
+ 	// For linked list implementation
+	Ball* next = nullptr;
 };
 
 // Describes an over
@@ -329,7 +270,7 @@ class Over {
   private:
     int over_num;
 
-    Ball** balls;
+    Ball* first;
     int num_balls;
     int num_legal_delivs;
 
@@ -339,7 +280,7 @@ class Over {
     // Constructor
     Over(int c_over_num);
 
-    // going to need to dynamically increment array size somehow
+
     void add_ball(Ball* ball);
 
     // Destructor

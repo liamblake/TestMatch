@@ -128,12 +128,25 @@ BatterCard::BatterCard(Player* c_player) : PlayerCard(c_player) {
 	stats.fours = 0;
 	stats.sixes = 0;
 
+	active = false;
 	out = false;
 
 }
 
 BatStats BatterCard::get_sim_stats() {
 	return stats;
+}
+
+bool BatterCard::is_active() {
+	return active;
+}
+
+void BatterCard::activate() {
+	if (!active) {
+		active = true;
+	} else {
+		// Throw exception - Batter can only be activated once
+	}
 }
 
 void BatterCard::update_score(string outcome) {
@@ -363,6 +376,42 @@ void BowlerCard::update_score(string outcome) {
 		// Byes or leg byes
 		add_ball();
 	} 
+
+}
+
+
+template <typename T>
+PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() const) {
+	// Extract player pointers from cards;
+	Player** ply_unsrt = new Player* [len];
+	for (int i = 0; i < len; i++) ply_unsrt[i] = list[i]->get_player_ptr();
+
+	// Sort by desired statistic
+	Player** ply_srt = sort_array<T>(ply_unsrt, len, sort_val);
+
+	// Sort PlayerCard pointers by Player sorting
+	PlayerCard** sorted = new Player* [len];
+	for (int i = 0; i < len; i++) {
+		int itt = 0;
+		while (ply_srt[i] != list[itt] && itt < len) itt++;
+
+		if (itt == len) {
+			// Something has gone terribly wrong, raise an exception
+		}
+
+		sorted[i] = list[itt];
+
+		/** 
+		 * Definitely not the most efficient method, but for now we are
+		 * unlikely to need to sort arrays of more than 11 player pointers, so
+		 * the inefficiency shouldn't be an issue. 
+		 **/
+	}
+
+	// Free temporarily allocated memory
+	delete[] unsorted, sorted;
+
+	return sorted;
 
 }
 

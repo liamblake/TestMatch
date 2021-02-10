@@ -11,31 +11,71 @@
 #include "Utility.h"
 #include "MatchTime.h"
 
+//~~~~~~~~~~~~~~ TeamManager implementations ~~~~~~~~~~~~~~//
+TeamManager::TeamManager(PlayerCard* c_cards [11]) : cards(c_cards) {
 
-/* PitchCondition implementations*/
-PitchCondition::PitchCondition(MatchTime* c_time) : time(c_time) {
-    // Randomly generate pitch factors
+  // Class-specific initialisations
+  initialise();
 }
 
 
-PitchCondition::PitchCondition(double c_pace_factor, double c_spin_factor, MatchTime* c_time) : time(c_time) {
-    // Check for valid factors
-    if (true) {
-        pace_factor = c_pace_factor;
-        spin_factor = c_spin_factor;
-    }
-    else {
-        // raise exception
-        throw std::invalid_argument("Pace factor and spin factor must sum to 1.");
-    }
+//~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
+BattingManager::BattingManager(BatterCard* c_cards [11]) : TeamManager(c_cards) {};
+
+void BattingManager::initialise() {
+
+  // Mark each batter as inactive
+  for (int i = 0; i < 11; i++) {
+    batted[i] = false;
+
+  }
 }
+
+
+PlayerCard* BattingManager::next_ordered() {
+  
+  // Find the first batter in the ordered XI who is yet to bat
+  int itt = 0;
+  while (batted[itt] && itt < 11) itt++;
+
+  
+  if (itt == 11) {
+    // Throw exception if all players have batted
+
+  } else {
+    return cards[itt];
+  }
+
+
+}
+
+PlayerCard* BattingManager::nightwatch() {
+
+}
+
+PlayerCard* BattingManager::promote_hitter() {
+
+}
+
+PlayerCard* BattingManager::next_in(Innings* inns_obj) {
+  
+
+
+
+
+}
+
+
+
+
+
 
 
 /* Innings implementations */
 int Innings::inns_no = 0;
 
 // Constructor
-Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchCondition* c_pitch) {
+Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchFactors* c_pitch) {
 
   team_bat = c_team_bat;
   team_bowl = c_team_bowl;

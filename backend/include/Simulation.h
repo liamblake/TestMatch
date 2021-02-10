@@ -15,31 +15,6 @@
 #include "MatchTime.h"
 
 
-
-class PitchCondition {
-  private:
-      PitchFactors* factors;
-
-
-  public:
-    // Default constructor - random pitch
-    PitchCondition(MatchTime* c_time);
-
-    PitchCondition(double c_pace_factor, double c_spin_factor, MatchTime* c_time);
-
-    bool toss_choice();
-
-    // Trigger to update pitch factors
-    void deliv();
-
-    // Describes pitch conditions
-    std::string describe();
-
-    // Getters for values needed for delivery simulation model
-};
-
-
-
 // Match details required in delivery model
 struct MatchStats {
 
@@ -47,32 +22,33 @@ struct MatchStats {
 
 
 class TeamManager {
-  private:
-    Team xi;
+  protected:
     PlayerCard* cards [11];
 
     virtual void initialise() = 0;
 
   public:
-    TeamManager(Team c_xi);
-
-    friend class Innings;
+    TeamManager(PlayerCard* c_cards [11]);
 
 };
 
 
 class BattingManager : public TeamManager {
   private:
-    void initialise():
-
-  public:
-    BattingManager(Team c_xi);
+    void initialise();
+    bool batted [11];
 
     // Various options for determining next batter
-    BatterCard* next_in();
-    BatterCard* nightwatch();
-    BatterCard* promote_hitter();
+    PlayerCard* next_ordered();
+    PlayerCard* nightwatch();
+    PlayerCard* promote_hitter();
 
+  public:
+    // Constructor
+    BattingManager(BatterCard* c_cards [11]);
+
+    // Get next batter in given 
+    PlayerCard* next_in(Innings* inns_obj);
 
 };
 
@@ -81,16 +57,20 @@ class BowlingManager : public TeamManager {
   private:
     void initialise();
 
-  public:
-    BowlingManager(Team c_xi);
-
     // Various options for getting a new bowler
     BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
     BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
     BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
 
+  public:
+    BowlingManager(Team c_xi);
 
-    // 
+    // Manage bowler changes at end of over
+    BowlerCard* end_over(Innings* inns_obj);
+
+    // Select a fielder for an appropriate mode of dismissial
+  	Player* select_catcher(bool run_out = false);
 
 };
 
@@ -120,7 +100,8 @@ class Innings {
     PitchCondition* pitch;
 
     // Ball-by-ball detail
-    Over** bbb_overs; 
+    Over* first_over;
+    Over* last_over;
 
     // Scorecards
   	BatterCard* batters [11];
@@ -163,16 +144,8 @@ class Innings {
     // Check for declaration
   	bool check_declaration();
 
-
     // Handle end of over
     void end_over();
-
-    // Choose next bowler based off of last bowler (from end)
-    BowlerCard* choose_bowler();
-
-    // Select a fielder for an appropriate mode of dismissial
-  	Player* select_catcher(bool run_out = false);
-
 
   public:
   	// Constructor
@@ -189,11 +162,6 @@ class Innings {
     // Destructor
     ~Innings();
 
-    // Test classes
-    friend class TestDelivery;
-    friend class TestBattingLineup;
-    friend class TestBowlingLineup;
-
 };
 
 
@@ -204,14 +172,11 @@ class Match {
     Team* team2;    // Away team
 
     int country;
-    std::string venue;
+    Venue* venue;
 
     bool ready;
     bool toss_win;      // false = team1, true = team2
     bool toss_elect;    // false = bat, true = bowl
-
-    // Pitch conditions
-    PitchCondition pitch;
 
     MatchTime time;
     std::string match_state;

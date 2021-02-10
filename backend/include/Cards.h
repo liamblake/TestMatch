@@ -174,15 +174,23 @@ class BatterCard : public PlayerCard {
 
   private:
 	BatStats stats;
+	bool active;
 	bool out;
 	Dismissal* dism;
 
 	int mins;
 
+	// 
+	int playstyle_flag = 0;
+
   public:
 	BatterCard(Player* c_player);
 
 	BatStats get_sim_stats(void);
+
+	bool is_active();
+
+	void activate();
 	void update_score(std::string outcome);//, float mins);
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
@@ -233,6 +241,11 @@ class BowlerCard : public PlayerCard {
 };
 
 
+template <typename T>
+PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() const);
+
+
+
 //////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
 struct PitchFactors {
 	double seam;
@@ -274,14 +287,17 @@ class Over {
     int num_balls;
     int num_legal_delivs;
 
+	Over* next = nullptr;
+
   public:
 	// Iterators?
 
     // Constructor
     Over(int c_over_num);
 
-
     void add_ball(Ball* ball);
+
+	void link_over(Over* p_next);
 
     // Destructor
     ~Over();
@@ -312,6 +328,18 @@ struct FOW {
   // TODO: implement value checking for 0 <= balls < 6
 };
 
+
+
+
+
+
+
+
+
+
+
+
+///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES
 
 class Milestone {
   private:

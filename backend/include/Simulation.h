@@ -21,41 +21,31 @@ struct MatchStats {
 };
 
 
-class TeamManager {
-  protected:
-    PlayerCard* cards [11];
-
-    virtual void initialise() = 0;
-
-  public:
-    TeamManager(PlayerCard* c_cards [11]);
-
-};
 
 
-class BattingManager : public TeamManager {
+class BattingManager {
   private:
-    void initialise();
+    BatterCard* cards [11];
     bool batted [11];
 
     // Various options for determining next batter
-    PlayerCard* next_ordered();
-    PlayerCard* nightwatch();
-    PlayerCard* promote_hitter();
+    BatterCard* next_ordered();
+    BatterCard* nightwatch();
+    BatterCard* promote_hitter();
 
   public:
     // Constructor
     BattingManager(BatterCard* c_cards [11]);
 
     // Get next batter in given 
-    PlayerCard* next_in(Innings* inns_obj);
+    BatterCard* next_in(Innings* inns_obj);
 
 };
 
 
-class BowlingManager : public TeamManager {
+class BowlingManager {
   private:
-    void initialise();
+    BowlerCard* card_list [11];
 
     // Various options for getting a new bowler
     BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
@@ -69,11 +59,20 @@ class BowlingManager : public TeamManager {
     // Manage bowler changes at end of over
     BowlerCard* end_over(Innings* inns_obj);
 
-    // Select a fielder for an appropriate mode of dismissial
-  	Player* select_catcher(bool run_out = false);
-
 };
 
+
+class FieldingManager {
+  private:
+    Player* player_list [11];
+    int wk_idx;
+
+  public:
+    // Select a fielder for an appropriate mode of dismissial
+  	Player* select_catcher(Player* bowler, bool run_out = false);
+
+
+};
 
 // An innings
 class Innings {
@@ -97,7 +96,7 @@ class Innings {
     std::string inns_state;
 
     MatchTime* time;
-    PitchCondition* pitch;
+    PitchFactors* pitch;
 
     // Ball-by-ball detail
     Over* first_over;

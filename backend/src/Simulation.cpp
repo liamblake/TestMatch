@@ -1,4 +1,3 @@
-
 #include <string>
 #include <stdlib.h>
 #include <cmath>
@@ -11,18 +10,8 @@
 #include "Utility.h"
 #include "MatchTime.h"
 
-//~~~~~~~~~~~~~~ TeamManager implementations ~~~~~~~~~~~~~~//
-TeamManager::TeamManager(PlayerCard* c_cards [11]) : cards(c_cards) {
-
-  // Class-specific initialisations
-  initialise();
-}
-
-
 //~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
-BattingManager::BattingManager(BatterCard* c_cards [11]) : TeamManager(c_cards) {};
-
-void BattingManager::initialise() {
+BattingManager::BattingManager(BatterCard* c_cards [11]) : cards(c_cards) {
 
   // Mark each batter as inactive
   for (int i = 0; i < 11; i++) {

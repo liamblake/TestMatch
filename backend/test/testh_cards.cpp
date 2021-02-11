@@ -18,9 +18,9 @@ using namespace boost::unit_test;
 BOOST_AUTO_TEST_SUITE(test_header_cards)
 
 // Player examples for testing
-Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 }, "Australia");
-Player tp_bowl("Trent", "Boult", "TA", { 82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8 }, "New Zealand");
-Player tp_field("BJ", "Watling", "BJ", { 110, 38.5, 42.35, -1, -1, -1, -1, false, -1 }, "New Zealand");
+Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 });
+Player tp_bowl("Trent", "Boult", "TA", { 82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8 });
+Player tp_field("BJ", "Watling", "BJ", { 110, 38.5, 42.35, -1, -1, -1, -1, false, -1 });
 
 // Test cases for Dismissal class
 BOOST_AUTO_TEST_CASE(testclass_dismissal) {
@@ -155,9 +155,33 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 
 
 BOOST_AUTO_TEST_CASE(testclass_over) {
-	// Test object
+	// Test objects
+	Ball b1 = { &tp_bat, &tp_bowl, 1, true, "" };
+	Ball b2 = { &tp_field, &tp_bat, 9, false, "" };
 	Over o(1);
 
+	// Default pointers
+	BOOST_TEST(o.get_first() == nullptr);
+	BOOST_TEST(o.get_last() == nullptr);
+	BOOST_TEST(o.get_next() == nullptr);
+	BOOST_TEST(o.get_num_balls() == 0);
+	BOOST_TEST(o.get_num_legal_delivs() == 0);
+
+	// Add some balls
+	o.add_ball(&b1);
+	BOOST_TEST(o.get_first() == &b1);
+	BOOST_TEST(o.get_last() == &b1);
+	BOOST_TEST(o.get_next() == nullptr);
+	BOOST_TEST(o.get_num_balls() == 1);
+	BOOST_TEST(o.get_num_legal_delivs() == 1);
+
+	o.add_ball(&b2);
+	BOOST_TEST(o.get_first() == &b1);
+	BOOST_TEST(o.get_last() == &b2);
+	BOOST_TEST(o.get_next() == nullptr);
+	BOOST_TEST(o.get_num_balls() == 2);
+	BOOST_TEST(o.get_num_legal_delivs() == 1);
+	BOOST_TEST(b1.next = &b2);
 }
 
 

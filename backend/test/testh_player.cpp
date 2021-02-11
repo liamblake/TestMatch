@@ -36,14 +36,12 @@ BOOST_AUTO_TEST_SUITE(test_header_player)
 
 BOOST_AUTO_TEST_CASE(testclass_player) {
 
-	Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 }, "Australia");
+	Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 });
 
 	BOOST_TEST(tp_bat.get_initials() == "M");
 	BOOST_TEST(tp_bat.get_full_initials() == "M Labuschagne");
 	BOOST_TEST(tp_bat.get_last_name() == "Labuschagne");
 	BOOST_TEST(tp_bat.get_full_name() == "Marnus Labuschagne");
-
-	BOOST_TEST(tp_bat.get_team() == "Australia");
 
 	BOOST_TEST(tp_bat.get_innings() == 23);
 	BOOST_TEST(tp_bat.get_bat_avg() == 63.43);

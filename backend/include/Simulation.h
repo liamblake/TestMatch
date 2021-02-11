@@ -9,11 +9,14 @@
 
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "Player.h"
 #include "Cards.h" 
-#include "MatchTime.h"
+//#include "MatchTime.h"
 
+// Forward declaration allows for referencing Innings object in managers
+class Innings;
 
 // Match details required in delivery model
 struct MatchStats {
@@ -22,7 +25,11 @@ struct MatchStats {
 
 
 
-
+/**
+ * @brief Manages batting order by passing BatterCard pointers to Innings
+ * 
+ * 
+*/
 class BattingManager {
   private:
     BatterCard* cards [11];
@@ -35,17 +42,33 @@ class BattingManager {
 
   public:
     // Constructor
-    BattingManager(BatterCard* c_cards [11]);
+    BattingManager();
 
-    // Get next batter in given 
+    /**
+     * @brief 
+     * @param c_cards 
+    */
+    void set_cards(BatterCard* c_cards[11]);
+
+    /**
+     * @brief 
+     * @param inns_obj Pointer to Innings object, used to get game situation
+     * @return Pointer to BatterCard corresponding to the new batter
+    */
     BatterCard* next_in(Innings* inns_obj);
 
 };
 
 
+/**
+ * @brief 
+*/
 class BowlingManager {
   private:
-    BowlerCard* card_list [11];
+    BowlerCard* cards[11];
+
+    int n_over_calls;
+
 
     // Various options for getting a new bowler
     BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
@@ -54,36 +77,57 @@ class BowlingManager {
     BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
 
   public:
-    BowlingManager(Team c_xi);
+    BowlingManager();
 
-    // Manage bowler changes at end of over
+    void set_cards(BowlerCard* c_cards[11]);
+
+    /**
+     * @brief 
+     * @param inns_obj Pointer to Innings object, used to get game situation
+     * @return Pointer to BowlerCard corresponding to the bowler bowling the next over
+    */
     BowlerCard* end_over(Innings* inns_obj);
 
 };
 
 
+/**
+ * @brief 
+*/
 class FieldingManager {
   private:
-    Player* player_list [11];
+    Player* players [11];
     int wk_idx;
 
   public:
-    // Select a fielder for an appropriate mode of dismissial
+      FieldingManager(int c_wk_idx);
+
+      void set_cards(Player* c_plys[11]);
+  	/**
+  	 * @brief Select a fielder for an appropriate mode of dismissial
+  	 * @param bowler Pointer to the bowler Player object
+  	 * @param run_out Logical indicating whether the dismissal is a runout, default false
+  	 * @return 
+  	*/
   	Player* select_catcher(Player* bowler, bool run_out = false);
 
 
 };
 
-// An innings
+
+/**
+ * @brief 
+*/
 class Innings {
   private:
 
     // Each team
-    BattingManager* team_bat;
-  	BowlingManager* team_bowl;
+    Team* team_bat;
+  	Team* team_bowl;
 
     // General innings info
   	static int inns_no;
+    bool quiet;
 
   	int overs;
     int balls;
@@ -95,7 +139,7 @@ class Innings {
     bool open;
     std::string inns_state;
 
-    MatchTime* time;
+    //MatchTime* time;
     PitchFactors* pitch;
 
     // Ball-by-ball detail
@@ -106,13 +150,10 @@ class Innings {
   	BatterCard* batters [11];
   	BowlerCard* bowlers [11];
 
-    // Status of batters in team
-    // 0 - has not batted; 1 - at crease, not out; 2 - out
-    int batter_status [11];
-
-    // Status of bowlers in team
-    // false - has not bowled; true - has bowled
-    bool bowler_status [11];
+    // Managers
+    BattingManager man_bat;
+    BowlingManager man_bowl;
+    FieldingManager man_field;
 
     // Current batters
   	BatterCard* striker;
@@ -127,8 +168,9 @@ class Innings {
     FOW* fow;
 
     // Simulation models
-    const static int NUM_OUTCOMES = 17;
-    const static std::string* OUTCOMES;
+    static int NUM_OUTCOMES;
+    static std::vector<std::string> OUTCOMES;
+    std::string* temp_outcomes;
     static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
     static int MODEL_WICKET_TYPE(int bowltype);
 
@@ -146,11 +188,24 @@ class Innings {
     // Handle end of over
     void end_over();
 
+    /**
+     * @brief Functions for swapping batter and bowler pointers respectively
+    */
+    void swap_batters();
+    void swap_bowlers();
+
+    /**
+     * @brief Called when innings closed, sets all batters to inactive, etc.
+    */
+    void cleanup();
+
   public:
   	// Constructor
-  	Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchCondition* c_pitch);
+    Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch); //MatchTime* c_time);
   	
-    void simulate();
+    void simulate(bool c_quiet = true);
+
+    std::string print(void);
 
     // Getters
     BatterCard** get_batters();
@@ -161,7 +216,18 @@ class Innings {
     // Destructor
     ~Innings();
 
+    // Allow manager objects to access private members
+    friend class BattingManager;
+    friend class BowlingManager;
+    friend class FieldingManager;
+
 };
+
+
+
+
+
+
 
 
 class Match {
@@ -177,7 +243,7 @@ class Match {
     bool toss_win;      // false = team1, true = team2
     bool toss_elect;    // false = bat, true = bowl
 
-    MatchTime time;
+    //MatchTime time;
     std::string match_state;
 
     int innings;

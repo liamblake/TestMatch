@@ -85,6 +85,15 @@ int Player::get_bowl_type() const {
 	return player_stats.bowl_type;
 }
 
+
+void Player::inflate_bowl_avg() {
+	const double INFLATION_FACTOR = 3;
+
+	player_stats.bowl_avg *= INFLATION_FACTOR;
+	player_stats.bowl_sr *= INFLATION_FACTOR;
+}
+
+
 /**
  * 
 */

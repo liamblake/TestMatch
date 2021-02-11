@@ -260,7 +260,7 @@ BatterCard::~BatterCard() {
 /*
 	BatterCard implementations
 */
-BowlerCard::BowlerCard(Player* c_player) : PlayerCard(c_player) {
+BowlerCard::BowlerCard(Player* c_player) : PlayerCard(c_player), tiredness(c_player->get_bowl_type()) {
 	stats.bowl_avg = c_player->get_bowl_avg();
 	stats.strike_rate = c_player->get_bowl_sr();
 	stats.bowl_type = c_player->get_bowl_type();		
@@ -409,25 +409,58 @@ PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() cons
 	}
 
 	// Free temporarily allocated memory
-	delete[] unsorted, sorted;
+	delete[] ply_unsrt, ply_srt;
 
 	return sorted;
 
 }
 
 
+BatterCard** create_batting_cards(Team team) {
+	BatterCard** cards = new BatterCard * [11];
+	for (int i = 0; i < 11; i++) {
+		cards[i] = new BatterCard(team.players[i]);
+	}
+
+	return cards;
+}
+
+BowlerCard** create_bowling_cards(Team team) {
+	BowlerCard** cards = new BowlerCard * [11];
+	for (int i = 0; i < 11; i++) {
+		cards[i] = new BowlerCard(team.players[i]);
+	}
+
+	return cards;
+}
+
+
+
 /* Over class implementations */
 Over::Over(int c_over_num) {
     over_num = c_over_num;    
+
     num_balls = 0;
     num_legal_delivs = 0;
 
+	first = last = nullptr;
+
 }
 
+/**
+ * 
+ * 
+*/
 void Over::add_ball(Ball* ball) {
 
-    // Reallocate array
-    balls = arr_add_item<Ball*>(balls, num_balls, ball);
+    // Add to linked list
+	if (last == nullptr) {
+		first = last = ball;
+	}
+	else {
+		last->next = ball;
+		last = ball;
+	}
 
     // Check if legal delivery
     if (ball->legal) {
@@ -436,11 +469,35 @@ void Over::add_ball(Ball* ball) {
 
     num_balls++;
 
+
 }
 
-// Destructor
-Over::~Over() {
-    delete[] balls;
+void Over::set_next(Over* p_next) {
+	next = p_next;
+}
+
+int Over::get_over_num() {
+	return over_num;
+}
+
+int Over::get_num_balls() {
+	return num_balls;
+}
+
+int Over::get_num_legal_delivs() {
+	return num_legal_delivs;
+}
+
+Ball* Over::get_first() {
+	return first;
+}
+
+Ball* Over::get_last() {
+	return last;
+}
+
+Over* Over::get_next() {
+	return next;
 }
 
 

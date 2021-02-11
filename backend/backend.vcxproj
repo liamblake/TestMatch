@@ -13,6 +13,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Demonstrative|Win32">
+      <Configuration>Demonstrative</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Demonstrative|x64">
+      <Configuration>Demonstrative</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -46,6 +54,12 @@
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -60,6 +74,12 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
@@ -83,6 +103,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -90,6 +113,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -105,6 +131,14 @@
     <SourcePath>D:\Dropbox\Projects\TestMatch\backend\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>.\bin</OutDir>
+    <IntDir>.\build</IntDir>
+    <ExecutablePath>.\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>.\include;$(IncludePath)</IncludePath>
+    <SourcePath>.\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>.\bin</OutDir>
     <IntDir>.\build</IntDir>
@@ -136,6 +170,14 @@
     <IncludePath>.\include;$(IncludePath)</IncludePath>
     <SourcePath>.\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>.\bin</OutDir>
+    <IntDir>.\build</IntDir>
+    <ExecutablePath>.\bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>.\include;$(IncludePath)</IncludePath>
+    <SourcePath>.\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>.\bin</OutDir>
@@ -145,6 +187,9 @@
     <SourcePath>D:\Dropbox\Projects\TestMatch\backend\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'" Label="Vcpkg">
     <VcpkgEnableManifest>false</VcpkgEnableManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -160,6 +205,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>-D_GLIBCXX_USE_CXX11_ABI=0 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\liaml\Documents\Cpp\vcpkg\packages\boost-test_x86-windows\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
@@ -215,6 +275,19 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>-D_GLIBCXX_USE_CXX11_ABI=0 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -237,6 +310,7 @@
     <ClInclude Include="include\FileIO.h" />
     <ClInclude Include="include\MatchTime.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="include\Parameters.h" />
     <ClInclude Include="include\Player.h" />
@@ -245,36 +319,61 @@
     <ClInclude Include="include\Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="testh_fileio.cpp" />
-    <ClCompile Include="test\testh_cards.cpp" />
-    <ClCompile Include="test\testh_utility.cpp" />
+    <ClCompile Include="test\demonstrative_test.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\testh_fileio.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\testh_cards.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\testh_simulation.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\testh_utility.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Cards.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\FileIO.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\MatchTime.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Simulation.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test\testh_matchtime.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="test\testh_player.cpp" />
-    <ClCompile Include="test\test_main.cpp" />
+    <ClCompile Include="test\testh_player.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test\test_main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="models\keras_bbb.onnx">
       <DeploymentContent>true</DeploymentContent>
     </None>

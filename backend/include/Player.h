@@ -16,7 +16,7 @@
  * @brief Storage for all career statistics of an individual player
  * 
  * Self-explanatory, contains basic data types storing each relevant statistic.
- * See each declaration for a more detailed explanation.
+ * See each declaration for a more detailed explanation. Set default values here
  * 
 */
 struct Stats {
@@ -26,14 +26,14 @@ struct Stats {
 	double bat_sr;		// Batting strike rate (average runs per 100 balls faced)
 
 	// Bowling statistics
-	int balls_bowled;	// Number of balls bowled over career
-	double bowl_avg;	// Bowling average (average runs conceded per wicket)
-	double bowl_sr;		// Bowling strike rate (average balls bowled per wicket)
-	double bowl_econ;	// Bowling economy (average runs conceded per 6 balls bowled)
+	int balls_bowled = 0;	// Number of balls bowled over career
+	double bowl_avg = 1000;	// Bowling average (average runs conceded per wicket)
+	double bowl_sr = 1000;		// Bowling strike rate (average balls bowled per wicket)
+	double bowl_econ = 4;	// Bowling economy (average runs conceded per 6 balls bowled)
 
 	// General descriptors
 	bool bat_hand;		// Batting hand (false = right, true = left)
-	int bowl_type;		// Bowling type, encoded as integer, see Utility.h for encodings
+	int bowl_type = 0;		// Bowling type, encoded as integer, see Utility.h for encodings
 
 };
 
@@ -82,6 +82,9 @@ class Player
 	double get_bowl_econ() const;
 	bool get_bat_hand() const;
 	int get_bowl_type() const;
+
+	// For dealing with cheating part-time bowlers
+	void inflate_bowl_avg();
 
 };
 

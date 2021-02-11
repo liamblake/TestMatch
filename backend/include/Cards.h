@@ -188,9 +188,9 @@ class BatterCard : public PlayerCard {
 
 	BatStats get_sim_stats(void);
 
-	bool is_active();
+	bool is_active(void);
 
-	void activate();
+	void activate(void);
 	void update_score(std::string outcome);//, float mins);
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
@@ -214,7 +214,7 @@ class BowlerCard : public PlayerCard {
 	bool active;
 
 	// Rudimentary measure of bowler tiredness, improves with each passing over
-	Fatigue tired;
+	Fatigue tiredness;
 
 	// Tracks number of runs in a current over to determine whether that over was a maiden
 	bool is_maiden;
@@ -245,13 +245,23 @@ template <typename T>
 PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() const);
 
 
+BatterCard** create_batting_cards(Team team);
+BowlerCard** create_bowling_cards(Team team);
+
 
 //////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
+
+/**
+ * @brief 
+*/
 struct PitchFactors {
 	double seam;
 	double spin;
 };
 
+/**
+ * @brief 
+*/
 struct Venue {
 	std::string name;
 	std::string city;
@@ -263,14 +273,21 @@ struct Venue {
 
 
 
-
-
-// Describes a delivery
+/**
+ * @brief Storage for all information describing a single delivery
+ * 
+ * Stores all information describing a single delivery, including pointers to the 
+ * Player objects storing the bowler and batter, the encoded outcome, whether the 
+ * delivery was legal (i.e. not a no ball, wide) and a (currently unused) string containing
+ * commentary describing the ball. The Ball struct also functions as a node in the linked list
+ * implementation of an Over, storing a reference to the next Ball object in the over. This pointer
+ * is null by default.
+*/
 struct Ball {
 	Player* bowler;
   	Player* batter; 
 
-	int outcome;
+	std::string outcome;
   	bool legal;
   	std::string commentary;
 
@@ -278,12 +295,21 @@ struct Ball {
 	Ball* next = nullptr;
 };
 
-// Describes an over
+
+/**
+ * @brief 
+ * 
+ * ... Functions as BOTH a linked list (with Ball objects as nodes), and nodes in a larger
+ * linked list managed by the Innings object. Accordingly contains a pointer to the next Over object
+ * in the innings, which is null by default.
+*/
 class Over {
   private:
     int over_num;
 
     Ball* first;
+	Ball* last;
+
     int num_balls;
     int num_legal_delivs;
 
@@ -295,12 +321,27 @@ class Over {
     // Constructor
     Over(int c_over_num);
 
+
+	/**
+ * @brief
+ * @param p_next
+*/
+	void set_next(Over* p_next);
+
+	int get_over_num();
+	int get_num_balls();
+	int get_num_legal_delivs();
+	Ball* get_first();
+	Ball* get_last();
+	Over* get_next();
+
+    /**
+     * @brief Add a Ball object to the end of the over
+     * @param ball Pointer to the new Ball object
+    */
     void add_ball(Ball* ball);
 
-	void link_over(Over* p_next);
 
-    // Destructor
-    ~Over();
 
 };
 

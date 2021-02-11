@@ -11,7 +11,7 @@
 #include "MatchTime.h"
 
 //~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
-BattingManager::BattingManager(BatterCard* c_cards [11]) : cards(c_cards) {
+BattingManager::BattingManager() {
 
   // Mark each batter as inactive
   for (int i = 0; i < 11; i++) {
@@ -20,8 +20,12 @@ BattingManager::BattingManager(BatterCard* c_cards [11]) : cards(c_cards) {
   }
 }
 
+void BattingManager::set_cards(BatterCard* c_cards[11]) {
+    for (int i = 0; i < 11; i++) cards[i] = c_cards[i];
+}
 
-PlayerCard* BattingManager::next_ordered() {
+
+BatterCard* BattingManager::next_ordered() {
   
   // Find the first batter in the ordered XI who is yet to bat
   int itt = 0;
@@ -32,23 +36,27 @@ PlayerCard* BattingManager::next_ordered() {
     // Throw exception if all players have batted
 
   } else {
-    return cards[itt];
+      batted[itt] = true;
+      return cards[itt];
   }
 
 
 }
 
-PlayerCard* BattingManager::nightwatch() {
-
+BatterCard* BattingManager::nightwatch() {
+    return nullptr;
 }
 
-PlayerCard* BattingManager::promote_hitter() {
-
+BatterCard* BattingManager::promote_hitter() {
+    return nullptr;
 }
 
-PlayerCard* BattingManager::next_in(Innings* inns_obj) {
+BatterCard* BattingManager::next_in(Innings* inns_obj) {
   
-
+    // Start of innings
+    if (inns_obj->balls == 0) {
+        return next_ordered();
+    }
 
 
 
@@ -56,21 +64,70 @@ PlayerCard* BattingManager::next_in(Innings* inns_obj) {
 
 
 
+//~~~~~~~~~~~~~~ BowlingManager implementations ~~~~~~~~~~~~~~//
+BowlingManager::BowlingManager() : n_over_calls(0) {};
+
+void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
+    for (int i = 0; i < 11; i++) {
+        cards[i] = c_cards[i];
+        
+        // Correct for "cheating" part-time bowlers - blow up bowling averages 
+        Player* ply_ptr = cards[i]->get_player_ptr();
+        if (ply_ptr->get_innings() > 0 && ply_ptr->get_balls_bowled() / ply_ptr->get_innings() < 1) {
+            ply_ptr->inflate_bowl_avg();
+        }
+    }
+
+}
+
+
+BowlerCard* BowlingManager::new_pacer(BowlerCard* ignore1, BowlerCard* ignore2) {
+    return nullptr;
+}
+
+BowlerCard* BowlingManager::new_spinner(BowlerCard* ignore1, BowlerCard* ignore2) {
+    return nullptr;
+}
+
+BowlerCard* BowlingManager::part_timer(BowlerCard* ignore1, BowlerCard* ignore2) {
+    return nullptr;
+}
+
+BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1, BowlerCard* ignore2) {
+    return nullptr;
+}
+
+BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
+    return nullptr;
+}
+
+
+//~~~~~~~~~~~~~~ FieldingManager implementations ~~~~~~~~~~~~~~//
+FieldingManager::FieldingManager(int c_wk_idx) : wk_idx(c_wk_idx) {}
+
+void FieldingManager::set_cards(Player* c_plys[11]) {
+    for (int i = 0; i < 11; i++) players[i] = c_plys[i];
+}
+
+Player* FieldingManager::select_catcher(Player* bowler, bool run_out) {
+    return nullptr;
+}
 
 
 
-
-/* Innings implementations */
+//~~~~~~~~~~~~~~ Innings implementations ~~~~~~~~~~~~~~//
 int Innings::inns_no = 0;
+int Innings::NUM_OUTCOMES = 22;
+std::vector<std::string> Innings::OUTCOMES = {"0", "1", "1b", "1lb", "1nb", "1wd", 
+                                              "2", "2b", "2lb", "2nb", "2wd",
+                                              "3", "3b", "3lb",
+                                              "4", "4b", "4lb",
+                                              "5", "5lb", "5wd",
+                                              "6", "W"};
 
 // Constructor
-Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_time, PitchFactors* c_pitch) {
-
-  team_bat = c_team_bat;
-  team_bowl = c_team_bowl;
-
-  lead = c_lead;
-  wkts = 0;
+Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch) :
+    team_bat(c_team_bat), team_bowl(c_team_bowl), lead(c_lead), wkts(0), pitch(c_pitch), man_field(c_team_bowl->i_wk) {
 
   inns_no++;
   
@@ -81,9 +138,15 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_t
 
   }
 
+  // Initialise managers
+  man_bat.set_cards(batters);
+  man_bowl.set_cards(bowlers);
+  man_field.set_cards(team_bat->players);
+
+
   // Get opening batters
-  BatterCard* bat1 = next_batter();
-  BatterCard* bat2 = next_batter();
+  BatterCard* bat1 = man_bat.next_in(this);
+  BatterCard* bat2 = man_bat.next_in(this);
 
   // First on strike is chosen randomly
   if (((double) rand() / (RAND_MAX)) < 0.5) {
@@ -94,21 +157,19 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, MatchTime* c_t
     nonstriker = bat1;
   }
 
-  // Initialise batter_status array
-  batter_status[0] = batter_status[1] = 1;
-  for (int i = 2; i < 11; i++) {
-    batter_status[i] = 0;
-  }
-
-
   // Get opening bowlers
   bowl1 = bowlers[team_bowl->i_bowl1];
-  bowl2 = bowlers[team_bowl->i_bowl1];
+  bowl2 = bowlers[team_bowl->i_bowl2];
 
-  // Initialise bowler_status array
-  for (int i = 0; i < 11; i++) {
-    bowler_status[i] = false;
-  }
+
+  // This ain't a good implementation - get your functions sorted man
+  temp_outcomes = new std::string[NUM_OUTCOMES];
+  for (int i = 0; i < NUM_OUTCOMES; i++) temp_outcomes[i] = OUTCOMES.at(i);
+
+
+  // Set-up the first over
+  first_over = last_over = new Over(1);
+
   
 }
 
@@ -147,8 +208,6 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
   std::string dism_mode = sample_cdf<std::string>(&DISM_MODES[0], 8, &DISM_MODE_DIST[0]);
   return encode_dism(dism_mode);
 
-
-
 }
 
 
@@ -162,148 +221,160 @@ void Innings::simulate_delivery() {
   double* probs = MODEL_DELIVERY(striker->get_sim_stats(), bowl1->get_sim_stats(), {});
 
   // Simulate
-  std::string outcome = sample_disc<std::string>(OUTCOMES, probs, NUM_OUTCOMES, true);
+  std::string outcome = sample_cdf<std::string>(temp_outcomes, NUM_OUTCOMES, probs);
   delete[] probs;
 
   std::pair<int, std::string> t_output;
 
+  // Create a Ball object
+  Ball* new_ball = new Ball;
+  *new_ball = { bowl1->get_player_ptr(), striker->get_player_ptr(), outcome, true, "" };
+  last_over->add_ball(new_ball);
+
+  // Update cards
+  striker->update_score(outcome);
+  bowl1->update_score(outcome);
+
+  // Handle each outcome case
   if (outcome == "W") {
-    // Handle wicket
     
+    wkts++;
+
+    // Randomly choose the type of dismissal
+    int dism = MODEL_WICKET_TYPE(bowl1->get_player_ptr()->get_bowl_type());
+
+    // Pick a fielder
+    Player* fielder = man_field.select_catcher(bowl1->get_player_ptr(), dism == encode_dism("ro"));
+
+    striker->dismiss(dism, bowl1->get_player_ptr(), fielder);
 
     // Create a object for fall of wicket
-    fow[wkts] = {striker->get_player(), wkts + 1, runs, overs, balls};
+    fow[wkts] = {striker->get_player_ptr(), (unsigned int)wkts + 1, (unsigned int)team_score, (unsigned int)overs, (unsigned int)balls};
 
 
     // Update match time
-    t_output = time->delivery(false, runs);
+    //t_output = time->delivery(false, runs);
 
     // Determine next batter
-
-
-
+    if (wkts < 10) {
+        striker = man_bat.next_in(this);
+        if (!quiet) {
+            std::cout << striker->get_player_ptr()->get_full_name() << +" is the new batter to the crease" << std::endl;
+        }
+    } // All out is checked immediately after with check_state
 
   } else {
 
 
-    int runs;
+    int runs = outcome.front() - '0';
 
     if (runs % 2 == 1 && runs != 5) {
       // Rotate strike
-      BatterCard* temp = striker;
-      striker = nonstriker;
-      nonstriker = temp;
+        swap_batters();
 
     }
 
   // Update match time
-    t_output = time->delivery(false, runs);
+    //t_output = time->delivery(false, runs);
 
   }
-
-
-  // Check match state and end this delivery cycle
-  inns_state = t_output.second;
-  check_state();
 
 }
 
     // Check for declaration
 bool Innings::check_declaration() {
   // TODO: implement declaration checking
-  return false;
+    return false;
   // AIS: never declare, may lead to some slightly absurd innings
 }
 
 
 // 
-void Innings::check_innings_state() {
+void Innings::check_state() {
 
-    // Win in fourth innings chase
-    if (inns_no == 4 && lead > 0) {
-        inns_state = "bat_win";
-    } else if (wkts == 10) {
-        // Team bowled out
-        // Win by innings
-        if (inns_no == 3 && lead < 0) {
-            inns_state = "bowl_inns_win";
-        } else if (inns_no == 4) {
-            
-            if (lead < 0) {
-                // Loss in fourth innings
-                inns_state = "bowl_win";
-            }
-            else if (lead == 0) {
-                // Tie
-                inns_state = "tie";
-            }
-            
-            
-        }
-        else {
-            inns_state = "end_bo";
-        }
-        
+    // Check for close of innings
+    // Match object determines who has won, etc.
+    if ((inns_no == 4 && lead > 0) || (wkts == 10)) {
+        inns_state = "END";
+        open = false;
+        return;
     }
 
-    // Declaration
+
+    // Check for declaration
     if (check_declaration()) {
-        inns_state = "end_dec";
+        inns_state = "END_DEC";
+        open = false; 
+        return;
+    };
+
+    // Check for end of over
+    if (last_over->get_num_legal_delivs() == 6) {
+        end_over();
     }
 
-    // Draw
-    if (time->get_day() == 5 && inns_state == "stumps") {
-        inns_state = "draw";
-    }
+    // Check for end of day
+
+    // Check for draw
 }
 
 
 void Innings::end_over() {
     // Switch ends
-    BatterCard* tmp = striker;
-    striker = nonstriker;
-    nonstriker = striker;
+    swap_batters();
+    swap_bowlers();
+
+    // Create a new 
 
     
 
 }
 
-// Choose next bowler based off of last bowler (from end)
-BowlerCard* Innings::choose_bowler() {
-    // TODO: implement system
-    // Placeholder: Bowlers keep bowling
 
-};
 
-// Select a fielder for an appropriate mode of dismissial
-Player* Innings::select_catcher(bool run_out) {
-  // TODO: spice this up
-  // AIS: choose a random fielder (who isn't the bowler)
-  // Uniform distribution, with bias towards wicketkeeper
+void Innings::swap_batters() {
+    BatterCard* tmp = striker;
+    striker = nonstriker;
+    nonstriker = tmp;
+}
 
-  const double WK_PROB = 0.4;
 
-  double r = ((double) rand() / (RAND_MAX));
+void Innings::swap_bowlers() {
+    BowlerCard* tmp = bowl1;
+    bowl1 = bowl2;
+    bowl2 = tmp;
+}
 
-  if (r < WK_PROB) {
-    // Caught by wicketkeeper
-    return team_bat->players[team_bat->i_wk];
-  } else {
-    // Randomly choose one of the 9 remaining fielders
-    // Cast WK_PROB < r < 1 to integer 
-    int index = (int) floor((r - WK_PROB) * 10 / (1 - WK_PROB));  
-
-  }
-
+void Innings::cleanup() {
 
 }
 
   	
-void Innings::simulate() {
+void Innings::simulate(bool quiet) {
 
-  while (inns_state != "END") {
+  while (inns_state != "END" && inns_state != "END_DEC") {
+    // Simulate a single delivery
     simulate_delivery();
+
+    // Check match state
+    check_state();
   }
+
+  cleanup();
+}
+
+
+
+std::string Innings::print() {
+    std::string DIVIDER = "---------------------------------------------\n";
+    std::string BUFFER = "   ";
+    std::string output = "";
+
+    // Header
+    output += DIVIDER + BUFFER + team_bat->name + " " + ordinal(inns_no) + " Innings\n";
+    output += DIVIDER + BUFFER + "Batter ";
+
+    return output;
 }
 
 
@@ -317,6 +388,10 @@ BowlerCard** Innings::get_bowlers() {
   return bowlers;
 }
 
+bool Innings::is_open() {
+    return open;
+}
+
 
 // Destructor
 Innings::~Innings() {
@@ -325,9 +400,17 @@ Innings::~Innings() {
     delete batters[i], bowlers[i];
   }
 
-  // Delete scorecard data
+  delete[] temp_outcomes;
+
+  // Delete each over, each ball
 
 }
+
+
+
+
+
+
 
 
 
@@ -344,7 +427,7 @@ Match::Match(Team* home_team, Team* away_team, bool choose_XI) {
   }
 
   // Time object - default constructor to day 1, start time
-  time = MatchTime();
+  //time = MatchTime();
 
 
   ready = false;
@@ -372,16 +455,10 @@ void Match::pregame() {
   bool team_order = toss_win;
 
   if (team_order) {
-    inns[0] = new Innings(team1, team2, 0, &time, &pitch);
+    //inns[0] = new Innings(team1, team2, 0, &time, &pitch);
   } else {
 
   }
 
   ready = true;
 }
-
-
-void Match::innings_change() {
-    
-}
-

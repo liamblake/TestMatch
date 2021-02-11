@@ -260,3 +260,27 @@ bbb %>% na.omit() %>% group_by(venue) %>% summarise(n = n(), country = Mode(host
 ```
 
 
+
+
+# Coin Toss Analysis
+Investigating relationship between decision at the toss and the pitch factors, to determine an appropriate model.
+```{r}
+tmp <- bbb %>% na.omit() %>% group_by(game_id) %>% summarize(toss_elect = first(toss_elect), seam_factor = mean(seam_factor), spin_factor = mean(spin_factor)) %>% mutate(bin = cut(seam_factor, breaks = seq(from = 0, to = 1, by = 0.05))) %>% group_by(bin,toss_elect, .drop = FALSE) %>% summarise(n = n())
+
+toss_df <- tibble(bin = unique(tmp$bin), n_field = (tmp %>% filter(toss_elect == "field"))$n, n_bat = (tmp %>% filter(toss_elect == "bat"))$n) %>%
+  mutate(n = n_field + n_bat) %>% 
+  mutate(field_prob = n_field/n)
+
+a <- 0.1
+b <- log(0.8/a)
+toss_model <- data.frame(x = 1:21) %>% mutate(y = a*exp(b*seq(from = 0, to = 1, by = 0.05)))
+toss_df %>% ggplot(aes(bin,field_prob)) + geom_col() + geom_line(aes(x,y), data = toss_model)
+
+```
+
+
+
+
+
+
+

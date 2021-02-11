@@ -284,4 +284,39 @@ inline double rtexp(double mean, double min, double max) {
 }
 
 
+template <typename T>
+inline void delete_linkedlist(T* first) {
+	T* tmp = first;
+	while (tmp != nullptr) {
+		
+	}
+}
+
+/**
+ * @brief Converts integer to ordinal string
+ * @param num Integer to be converted
+ * @return Converted string
+ * 
+ * e.g. ordinal(1) returns "1st", ordinal(15) returns "15th"
+*/
+inline std::string ordinal(int num) {
+	std::string output = std::to_string(num);
+
+	char fin = output.back();
+	if (fin == '1') {
+		output += "st";
+	}
+	else if (fin == '2') {
+		output += "nd";
+	}
+	else if (fin == '3'){
+		output += "rd";
+	}
+	else {
+		output += "th";
+	}
+
+	return output;
+}
+
 #endif // UTILITY_H

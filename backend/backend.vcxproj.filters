@@ -80,7 +80,13 @@
     <ClCompile Include="test\testh_utility.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="testh_fileio.cpp">
+    <ClCompile Include="test\testh_fileio.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\testh_simulation.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\demonstrative_test.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,8 +94,6 @@
     <None Include="models\keras_bbb.onnx">
       <Filter>Assets</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="data\venues.dat">

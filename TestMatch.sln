@@ -13,6 +13,9 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Demonstrative|Any CPU = Demonstrative|Any CPU
+		Demonstrative|x64 = Demonstrative|x64
+		Demonstrative|x86 = Demonstrative|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
@@ -28,6 +31,11 @@ Global
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Debug|x64.Build.0 = Debug|x64
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Debug|x86.ActiveCfg = Debug|Win32
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Debug|x86.Build.0 = Debug|Win32
+		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Demonstrative|Any CPU.ActiveCfg = Demonstrative|Win32
+		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Demonstrative|x64.ActiveCfg = Demonstrative|x64
+		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Demonstrative|x64.Build.0 = Demonstrative|x64
+		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Demonstrative|x86.ActiveCfg = Demonstrative|Win32
+		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Demonstrative|x86.Build.0 = Demonstrative|Win32
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Release|Any CPU.ActiveCfg = Release|Win32
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Release|x64.ActiveCfg = Release|x64
 		{88C29AEA-60ED-4E1E-8FB2-451B99DCE790}.Release|x64.Build.0 = Release|x64

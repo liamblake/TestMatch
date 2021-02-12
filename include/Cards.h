@@ -194,6 +194,7 @@ class BatterCard : public PlayerCard {
 	void update_score(std::string outcome);//, float mins);
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
+	std::string print_short(void);
 
 	// Copy constructor
 	//BatterCard(const BatterCard& bc);

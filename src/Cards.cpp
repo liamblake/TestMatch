@@ -250,6 +250,14 @@ string BatterCard::print_card(void) {
 }
 
 
+std::string BatterCard::print_short(void) {
+    std::string output = player->get_full_initials() + " " +
+        std::to_string(stats.runs) + " (" + std::to_string(stats.balls) + ")";
+
+    return output;
+}
+
+
 BatterCard::~BatterCard() {
     delete dism;
 }
@@ -367,7 +375,7 @@ void BowlerCard::update_score(string outcome) {
         stats.spell_runs += outcome.at(0) - '0';
         is_maiden = false;
 
-    } else if (outcome.back() == 'w') {
+    } else if (outcome.back() == 'wd') {
         stats.runs += outcome.at(0) - '0';
         stats.spell_runs += outcome.at(0) - '0';
         is_maiden = false;

@@ -98,7 +98,8 @@ BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1, BowlerCard* ignore
 }
 
 BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
-    return nullptr;
+    // AIS bowlers bowl perpetually
+    return inns_obj->bowl1;
 }
 
 
@@ -124,6 +125,11 @@ std::vector<std::string> Innings::OUTCOMES = {"0", "1", "1b", "1lb", "1nb", "1wd
                                               "4", "4b", "4lb",
                                               "5", "5lb", "5wd",
                                               "6", "W"};
+
+// Printing variables
+bool Innings::AUSTRALIAN_STYLE = false;
+std::string Innings::DIVIDER = "\n---------------------------------------------\n";
+std::string Innings::BUFFER = "   ";
 
 // Constructor
 Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch) : 
@@ -181,10 +187,11 @@ double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) 
   double* output = new double[NUM_OUTCOMES];
 
   // PLACEHOLDER - UNIFORM DISTRIBUTION
-  double step = 1/NUM_OUTCOMES; 
+  double step = 1.0/NUM_OUTCOMES; 
   output[0] = 0;
   for (int i = 1; i < NUM_OUTCOMES; i++) {
     output[i] = output[i - 1] + step;
+
   }
 
   return output;
@@ -194,17 +201,20 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
   // Unencode bowltype
   std::string btype_str = unencode_bowltype(bowltype);
 
-  std::string DISM_MODES[8] = { "b", "c", "c&b", "lbw", "ro", "st" };
-  double DISM_MODE_DIST [8];
+  std::string DISM_MODES[6] = { "b", "c", "c&b", "lbw", "ro", "st" };
+  double DISM_MODE_DIST [6];
 
   // Check if "f" is in bowl_type - indicates whether stumpings are possible
   if (btype_str.find('f') == std::string::npos) {
     // Spinner model
-    double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
+    //double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
+    double DISM_MODE_DIST[6] = {0.157, 0.691, 0.7269, 0.9279, 0.9605, 0.9992};
   } else {
     // Seamer model
-    double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242};
+    //double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242, 0};
+    double DISM_MODE_DIST[6] = {0.175, 0.815, 0.8291, 0.9731, 0.97552, 0.97552 };
   } 
+
 
   // Sample from distribution
   std::string dism_mode = sample_cdf<std::string>(&DISM_MODES[0], 8, &DISM_MODE_DIST[0]);
@@ -232,12 +242,21 @@ void Innings::simulate_delivery() {
   balls++;
   Ball* new_ball = new Ball;
   *new_ball = { bowl1->get_player_ptr(), striker->get_player_ptr(), outcome, true, "" };
-  last_over->add_ball(new_ball);
+
 
   // Update cards
   striker->update_score(outcome);
   bowl1->update_score(outcome);
+  bool is_legal = extras.update_score(outcome);
+  new_ball->legal = is_legal;
 
+  // Add ball to over
+  last_over->add_ball(new_ball);
+
+  if (!is_quiet) {
+      // Print commentary
+      std::cout << comm_ball(overs, bowl1->get_player_ptr(), striker->get_player_ptr(), outcome) << std::endl;
+  }
 
   // Handle each outcome case
   if (outcome == "W") {
@@ -271,7 +290,6 @@ void Innings::simulate_delivery() {
     int runs = outcome.front() - '0';
     team_score += runs;
 
-    bool is_legal = extras.update_score(outcome);
     bool is_rotation;
     if (is_legal) {
         legal_delivs++;
@@ -307,7 +325,7 @@ void Innings::check_state() {
     // Match object determines who has won, etc.
     if ((inns_no == 4 && lead > 0) || (wkts == 10)) {
         inns_state = "END";
-        open = false;
+        is_open = false;
         return;
     }
 
@@ -315,7 +333,7 @@ void Innings::check_state() {
     // Check for declaration
     if (check_declaration()) {
         inns_state = "END_DEC";
-        open = false; 
+        is_open = false; 
         return;
     };
 
@@ -333,6 +351,11 @@ void Innings::check_state() {
 
 
 void Innings::end_over() {
+    
+    if (!is_quiet) {
+        std::cout << DIVIDER << std::endl << comm_over(last_over) << std::endl << DIVIDER << std::endl;
+    }
+    
     overs++;
 
     // Switch ends
@@ -340,13 +363,26 @@ void Innings::end_over() {
     swap_bowlers();
 
     // Create a new over object
-    Over* new_over = new Over(overs);
+    Over* new_over = new Over(overs + 1);
     last_over->set_next(new_over);
     last_over = new_over;
 
-    // Consult the bowling manager
-    bowl1 = man_bowl.end_over();
-    
+    // Special case - second over
+    if (overs == 1) {
+        if (!is_quiet) {
+            std::cout <<  "Opening from the other end is " + bowl1->get_player_ptr()->get_full_name() + ".\n";
+        }
+    }
+    else {
+
+        // Consult the bowling manager
+        BowlerCard* new_bc = man_bowl.end_over(this);
+
+        if (!is_quiet && new_bc != bowl1) {
+            std::cout << "Change of bowling, " + new_bc->get_player_ptr()->get_full_name() + " into the attack.\n";
+        }
+        bowl1 = new_bc;
+    }
 }
 
 
@@ -368,8 +404,63 @@ void Innings::cleanup() {
 
 }
 
+
+std::string Innings::comm_ball(int overs, Player* bowler, Player* batter, std::string outcome) {
+    int balls = last_over->get_num_legal_delivs();
+    if (!(last_over->get_last()->legal)){
+        balls++;
+    }
+    
+    std::string output = std::to_string(overs) + "." + std::to_string(balls) + " " +
+            bowler->get_last_name() + " to " + batter->get_last_name() + ", ";
+
+    if (outcome == "W") {
+        output += "OUT!";
+    }
+    else {
+        output += outcome;
+        // TODO: improve this
+    }
+
+    return output;
+}
+
+
+std::string Innings::comm_over(Over* over) {
+    //std::cout << over << std::endl;
+    std::string output = "End of Over " + std::to_string(over->get_over_num()) + 
+        BUFFER + BUFFER + BUFFER + team_bat->name + ": " + score() + DIVIDER + "\n";
+
+    // Batter bowler details
+    output += striker->print_short() + BUFFER + bowl1->print_card() + "\n";
+    output += nonstriker->print_short() + BUFFER + bowl2->print_card() + "\n";
+
+    return output;
+}
+
+std::string Innings::score() {
+    if (AUSTRALIAN_STYLE) return std::to_string(wkts) + "/" + std::to_string(team_score);
+    else return std::to_string(team_score) + "/" + std::to_string(wkts);
+}
+
   	
 void Innings::simulate(bool quiet) {
+
+    is_quiet = quiet;
+
+    if (is_quiet) {
+        std::cout << "Simulating innings..." << std::endl;
+    }
+    else {
+        // Pre-innings chatter
+        std::cout << "Here come the teams...\n"
+            << team_bowl->name + " lead by captain " + (team_bowl->players[team_bowl->i_captain])->get_full_name() << ".\n"
+            << bowl1->get_player_ptr()->get_full_name() + " has the new ball in hand and is about to bowl to " + striker->get_player_ptr()->get_full_name() + ".\n"
+            << nonstriker->get_player_ptr()->get_full_name() + " is at the non-strikers end.\n"
+            << "Let's go!\n"
+            << DIVIDER << std::endl;
+    }
+
 
   while (inns_state != "END" && inns_state != "END_DEC") {
     // Simulate a single delivery
@@ -385,8 +476,7 @@ void Innings::simulate(bool quiet) {
 
 
 std::string Innings::print() {
-    std::string DIVIDER = "---------------------------------------------\n";
-    std::string BUFFER = "   ";
+
     std::string output = "";
 
     // Header
@@ -407,8 +497,8 @@ BowlerCard** Innings::get_bowlers() {
   return bowlers;
 }
 
-bool Innings::is_open() {
-    return open;
+bool Innings::get_is_open() {
+    return is_open;
 }
 
 

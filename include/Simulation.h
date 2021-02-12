@@ -137,7 +137,7 @@ class Innings {
   	int lead;
   	int wkts;
 
-    bool open;
+    bool is_open;
     std::string inns_state;
 
     //MatchTime* time;
@@ -195,18 +195,36 @@ class Innings {
     void swap_batters();
     void swap_bowlers();
 
-    static bool is_legal(std::string outcome);
+    /**
+     * @brief 
+     * @param outcome 
+     * @return 
+    */
+    std::string comm_ball(int overs, Player* bowler, Player* batter, std::string outcome);
+
+    /**
+     * @brief 
+     * @return 
+    */
+    std::string comm_over(Over* over);
+    
+    // Whether to use Australia style of scoring, wickets/runs, or the international runs/wickets
+    static bool AUSTRALIAN_STYLE;
+    std::string score();
 
     /**
      * @brief Called when innings closed, sets all batters to inactive, etc.
     */
     void cleanup();
 
+    static std::string DIVIDER;
+    static std::string BUFFER;
+
   public:
   	// Constructor
     Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch); //MatchTime* c_time);
   	
-    void simulate(bool c_quiet = true);
+    void simulate(bool quiet = true);
 
     std::string print(void);
 
@@ -214,7 +232,7 @@ class Innings {
     BatterCard** get_batters();
     BowlerCard** get_bowlers();
 
-    bool is_open();
+    bool get_is_open();
 
     // Destructor
     ~Innings();

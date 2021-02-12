@@ -4,13 +4,12 @@
 #include <boost/test/parameterized_test.hpp>
 //#include <boost/mpl/list.hpp>
 
-#define private public // argh
-
 #include <iostream>
 #include <string>
 #include <utility>
 #include <exception>
 
+#define private public // argh
 #include "Player.h"
 #include "Cards.h"
 
@@ -158,8 +157,8 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 
 BOOST_AUTO_TEST_CASE(testclass_over) {
 	// Test objects
-	Ball b1 = { &tp_bat, &tp_bowl, 1, true, "" };
-	Ball b2 = { &tp_field, &tp_bat, 9, false, "" };
+	Ball b1 = { &tp_bat, &tp_bowl, "0", true, "" };
+	Ball b2 = { &tp_field, &tp_bat, "W", false, "" };
 	Over o(1);
 
 	// Default pointers
@@ -203,7 +202,7 @@ BOOST_AUTO_TEST_CASE(teststruct_fow) {
 
 BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	// Test obect 
-	Extras e = { 0, 0, 0, 0 };
+	Extras e;
 
 	// Should print nothing
 	BOOST_TEST(e.print() == "");
@@ -224,7 +223,7 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	BOOST_TEST(e.print() == "nb 10");
 	e.noballs = 0;
 
-	for (int i = 0; i < 20; i++) e.update_score("5nb");
+	for (int i = 0; i < 20; i++) e.update_score("5wd");
 	BOOST_TEST(e.print() == "w 100");
 	e.wides = 0;
 
@@ -233,14 +232,14 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	e.update_score("2lb");
 	BOOST_TEST(e.print() == "b 1, lb 2");
 
-	e.noballs = 3;
+	e.update_score("3nb");
 	BOOST_TEST(e.print() == "b 1, lb 2, nb 3");
 
-	e.wides = 5;
+	e.update_score("5wd");
 	BOOST_TEST(e.print() == "b 1, lb 2, nb 3, w 5");
 
-	e.legbyes = 0;
-	BOOST_TEST(e.print() == "b 1, nb 3, w 5");
+	e.update_score("0lb");
+	BOOST_TEST(e.print() == "b 1, lb 2, nb 3, w 5");
 
 
 }

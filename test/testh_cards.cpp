@@ -4,6 +4,8 @@
 #include <boost/test/parameterized_test.hpp>
 //#include <boost/mpl/list.hpp>
 
+#define private public // argh
+
 #include <iostream>
 #include <string>
 #include <utility>
@@ -206,26 +208,29 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 	// Should print nothing
 	BOOST_TEST(e.print() == "");
 
+	e.update_score("1");
+	BOOST_TEST(e.print() == "");
+
 	// Each individual extra
-	e.byes = 1;
+	e.update_score("1b");
 	BOOST_TEST(e.print() == "b 1");
 	e.byes = 0;
 
-	e.legbyes = 2;
+	e.update_score("2lb");
 	BOOST_TEST(e.print() == "lb 2");
 	e.legbyes = 0;
 
-	e.noballs = 10;
+	for (int i = 0; i < 10; i++) e.update_score("1nb");
 	BOOST_TEST(e.print() == "nb 10");
 	e.noballs = 0;
 
-	e.wides = 100;
+	for (int i = 0; i < 20; i++) e.update_score("5nb");
 	BOOST_TEST(e.print() == "w 100");
 	e.wides = 0;
 
 	// Each combination
-	e.byes = 1;
-	e.legbyes = 2;
+	e.update_score("1b");
+	e.update_score("2lb");
 	BOOST_TEST(e.print() == "b 1, lb 2");
 
 	e.noballs = 3;

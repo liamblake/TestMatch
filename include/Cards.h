@@ -356,7 +356,7 @@ class Extras {
   public:
 	Extras();
 
-	void update_score(std::string outcome);
+	bool update_score(std::string outcome);
 	std::string print();
 };
 

@@ -126,8 +126,10 @@ std::vector<std::string> Innings::OUTCOMES = {"0", "1", "1b", "1lb", "1nb", "1wd
                                               "6", "W"};
 
 // Constructor
-Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch) : overs(0), balls(0), legal_delivs(0), team_score(0),
-    team_bat(c_team_bat), team_bowl(c_team_bowl), lead(c_lead), wkts(0), pitch(c_pitch), man_field(c_team_bowl->i_wk) {
+Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch) : 
+    overs(0), balls(0), legal_delivs(0), team_score(0),
+    team_bat(c_team_bat), team_bowl(c_team_bowl), lead(c_lead), 
+    wkts(0), pitch(c_pitch), man_field(c_team_bowl->i_wk) {
 
   inns_no++;
   
@@ -269,25 +271,19 @@ void Innings::simulate_delivery() {
     int runs = outcome.front() - '0';
     team_score += runs;
 
-    extras.update_score(outcome);
-    if (is_legal(outcome)) {
+    bool is_legal = extras.update_score(outcome);
+    bool is_rotation;
+    if (is_legal) {
         legal_delivs++;
-
         // Check for strike rotation
-        if (runs % 2 == 1 && runs != 5) swap_batters();
+        is_rotation = runs % 2 == 1 && runs != 5;
 
+    } else is_rotation = runs - 1 % 2 == 1;
 
-  // Update match time
-    //t_output = time->delivery(false, runs);
-    } else {
+    // Rotate strike if required
+    if (is_rotation) swap_batters();
 
-      // Wide or no ball
-
-
-
-
-    }
-
+    // Update MatchTime
 
 
 

@@ -109,7 +109,7 @@ class FieldingManager {
   	 * @param run_out Logical indicating whether the dismissal is a runout, default false
   	 * @return 
   	*/
-  	Player* select_catcher(Player* bowler, bool run_out = false);
+  	Player* select_catcher(Player* bowler, int dism_type);
 
 
 };

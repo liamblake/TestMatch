@@ -258,6 +258,17 @@ std::string BatterCard::print_short(void) {
 }
 
 
+std::string BatterCard::print_dism(void) {
+    if (out) {
+       return dism->print_dism();
+    }
+    else {
+        return "not out";
+    }
+}
+
+
+
 BatterCard::~BatterCard() {
     delete dism;
 }
@@ -578,6 +589,10 @@ std::string Extras::print() {
   return join_str(strings, ", ");
 }
 
+
+int Extras::total() {
+    return byes + legbyes + noballs + wides;
+}
 
 
 

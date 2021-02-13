@@ -3,6 +3,8 @@
 #include <cmath>
 #include <utility>
 #include <exception>
+#include <iomanip>
+#include <sstream>
 
 #include "Simulation.h"
 #include "Player.h"
@@ -58,6 +60,9 @@ BatterCard* BattingManager::next_in(Innings* inns_obj) {
         return next_ordered();
     }
 
+    // For now, send next in
+    return next_ordered();
+
 
 
 }
@@ -110,8 +115,45 @@ void FieldingManager::set_cards(Player* c_plys[11]) {
     for (int i = 0; i < 11; i++) players[i] = c_plys[i];
 }
 
-Player* FieldingManager::select_catcher(Player* bowler, bool run_out) {
-    return nullptr;
+Player* FieldingManager::select_catcher(Player* bowler, int dism_type) {
+    Player** potential;
+    int n;
+
+    std::string dism = unencode_dism(dism_type);
+    // Dismissals not involving a fielder
+    if (dism == "b" || dism == "lbw" || dism == "c&b") return nullptr;
+
+    // Stumping
+    if (dism == "st") return players[wk_idx];
+
+
+    if (dism == "ro") {
+        potential = new Player* [11];
+        n = 11;
+    }
+    else {
+        potential = new Player* [10];
+        n = 10;
+    }
+
+    // Don't need to do this every time
+    double* cdf = new double[n];
+    cdf[0] = 0;
+    int j = 0;
+    for (int i = 0; i < 11; i++) {
+        if ((players[i] != bowler) || dism == "ro") {
+            potential[j] = players[i];
+            j++;
+        }
+    }
+
+    // Randomly sample a fielder
+    Player* fielder = sample_cdf<Player*>(potential, n, cdf);
+    // Need to construct CDF giving more weighting to wk
+
+    delete[] potential;
+    delete[] cdf;
+    return fielder;
 }
 
 
@@ -123,12 +165,12 @@ std::vector<std::string> Innings::OUTCOMES = {"0", "1", "1b", "1lb", "1nb", "1wd
                                               "2", "2b", "2lb", "2nb", "2wd",
                                               "3", "3b", "3lb",
                                               "4", "4b", "4lb",
-                                              "5", "5lb", "5wd",
+                                              "5", "5nb", "5wd",
                                               "6", "W"};
 
 // Printing variables
 bool Innings::AUSTRALIAN_STYLE = false;
-std::string Innings::DIVIDER = "\n---------------------------------------------\n";
+std::string Innings::DIVIDER = "\n--------------------------------------------------------------------\n";
 std::string Innings::BUFFER = "   ";
 
 // Constructor
@@ -149,7 +191,7 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* 
   // Initialise managers
   man_bat.set_cards(batters);
   man_bowl.set_cards(bowlers);
-  man_field.set_cards(team_bat->players);
+  man_field.set_cards(team_bowl->players);
 
 
   // Get opening batters
@@ -178,6 +220,8 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* 
   // Set-up the first over
   first_over = last_over = new Over(1);
 
+  // Setup FOW array
+  fow = new FOW[10];
   
 }
 
@@ -186,38 +230,143 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* 
 double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) {
   double* output = new double[NUM_OUTCOMES];
 
-  // PLACEHOLDER - UNIFORM DISTRIBUTION
-  double step = 1.0/NUM_OUTCOMES; 
-  output[0] = 0;
-  for (int i = 1; i < NUM_OUTCOMES; i++) {
-    output[i] = output[i - 1] + step;
+  // PLACEHOLDER - data proportions
+  if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
+      output[0] = 0;
+      output[1] = 0.700414129;
+      output[2] = 0.878619915
+;
+      output[3] = 0.879463788
+          ;
+      output[4] = 0.881999123
+          ;
+      output[5] = 0.884047465
+          ;
+      output[6] = 0.884303973
+          ;
+      output[7] = 0.919880445
+          ;
+      output[8] = 0.920519855
+          ;
+      output[9] = 0.921326553
+          ;
+      output[10] = 0.92133027
+          ;
+      output[11] = 0.921341423
+          ;
+      output[12] = 0.92863144
+          ;
+      output[13] = 0.928873077
+          ;
+      output[14] = 0.929029212
+          ;
+      output[15] = 0.976230307
+          ;
+      output[16] = 0.977791656
+          ;
+      output[17] = 0.978115079
+          ;
+      output[18] = 0.978234039
+          ;
+      output[19] = 0.978241474
+          ;
+      output[20] = 0.978267496
+          ;
+      output[21] = 0.985367921
+          ;
+  }
+  else {
+      output[0] =0;
+      output[1] = 0.72505691
 
+          ;
+      output[2] = 0.844465522
+
+
+          ;
+      output[3] = 0.845466186
+
+          ;
+      output[4] = 0.851517595
+
+          ;
+      output[5] = 0.859254956
+
+          ;
+      output[6] = 0.862496443
+          ;
+      output[7] = 0.899248316
+          ;
+      output[8] = 0.899452243
+          ;
+      output[9] = 0.900194442
+          ;
+      output[10] = 0.900244238
+          ;
+      output[11] = 0.900298776
+          ;
+      output[12] = 0.910843688
+          ;
+      output[13] = 0.910879256
+          ;
+      output[14] = 0.910912454
+          ;
+      output[15] = 0.978537892
+          ;
+      output[16] = 0.979818363
+          ;
+      output[17] = 0.98124585
+          ;
+      output[18] = 0.981426065
+          ;
+      output[19] = 0.981497202
+          ;
+      output[20] = 0.981855259
+          ;
+      output[21] = 0.983420279
+          ;
   }
 
   return output;
 }
 
 int Innings::MODEL_WICKET_TYPE(int bowltype) {
-  // Unencode bowltype
-  std::string btype_str = unencode_bowltype(bowltype);
+    // This desperately needs cleaning up
 
-  std::string DISM_MODES[6] = { "b", "c", "c&b", "lbw", "ro", "st" };
-  double DISM_MODE_DIST [6];
+    // Unencode bowltype
+    std::string btype_str = unencode_bowltype(bowltype);
+
+    std::string DISM_MODES_STATIC[6] = { "b", "c", "c&b", "lbw", "ro", "st" };
+
+    std::string* DISM_MODES = new std::string[6];
+    double* DISM_MODE_DIST = new double [6];
+
+    double DISM_MODE_SPINNER[6] = { 0, 0.157, 0.692, 0.7274, 0.9286, 0.9613 };
+    double DISM_MODE_SEAMER[6] = { 0, 0.175, 0.815, 0.8291, 0.9731, 1 };
+    
+    bool is_spinner = (btype_str.find('f') == std::string::npos);
 
   // Check if "f" is in bowl_type - indicates whether stumpings are possible
-  if (btype_str.find('f') == std::string::npos) {
-    // Spinner model
-    //double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
-    double DISM_MODE_DIST[6] = {0.157, 0.691, 0.7269, 0.9279, 0.9605, 0.9992};
-  } else {
-    // Seamer model
-    //double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242, 0};
-    double DISM_MODE_DIST[6] = {0.175, 0.815, 0.8291, 0.9731, 0.97552, 0.97552 };
-  } 
+    for (int i = 0; i < 6; i++) {
+        DISM_MODES[i] = DISM_MODES_STATIC[i];
+        if (is_spinner) {
+            // Spinner model
+            //double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326, 0.0387};
+            DISM_MODE_DIST[i] = DISM_MODE_SPINNER[i];
+        }
+        else {
+            // Seamer model
+            //double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242, 0};
+            DISM_MODE_DIST[i] = DISM_MODE_SEAMER[i];
+        }
+    }
 
 
   // Sample from distribution
-  std::string dism_mode = sample_cdf<std::string>(&DISM_MODES[0], 8, &DISM_MODE_DIST[0]);
+  std::string dism_mode = sample_cdf<std::string>(DISM_MODES, 6, DISM_MODE_DIST);
+
+  delete[] DISM_MODE_DIST;
+  delete[] DISM_MODES;
   return encode_dism(dism_mode);
 
 }
@@ -267,13 +416,16 @@ void Innings::simulate_delivery() {
     int dism = MODEL_WICKET_TYPE(bowl1->get_player_ptr()->get_bowl_type());
 
     // Pick a fielder
-    Player* fielder = man_field.select_catcher(bowl1->get_player_ptr(), dism == encode_dism("ro"));
+    Player* fielder = man_field.select_catcher(bowl1->get_player_ptr(), dism);
 
     striker->dismiss(dism, bowl1->get_player_ptr(), fielder);
 
     // Create a object for fall of wicket
-    fow[wkts] = {striker->get_player_ptr(), (unsigned int)wkts + 1, (unsigned int)team_score, (unsigned int)overs, (unsigned int)balls};
+    fow[wkts-1] = {striker->get_player_ptr(), (unsigned int)wkts + 1, (unsigned int)team_score, (unsigned int)overs, (unsigned int)balls};
+    
 
+    // Print dismissal
+    std::cout << BUFFER + striker->print_card() << std::endl;
 
     // Update match time
     //t_output = time->delivery(false, runs);
@@ -281,9 +433,12 @@ void Innings::simulate_delivery() {
     // Determine next batter
     if (wkts < 10) {
         striker = man_bat.next_in(this);
+        striker->activate();
+        
         if (!is_quiet) {
             std::cout << striker->get_player_ptr()->get_full_name() << +" is the new batter to the crease" << std::endl;
         }
+
     } // All out is checked immediately after with check_state
 
   } else {
@@ -481,7 +636,43 @@ std::string Innings::print() {
 
     // Header
     output += DIVIDER + BUFFER + team_bat->name + " " + ordinal(inns_no) + " Innings\n";
-    output += DIVIDER + BUFFER + "Batter ";
+    output += DIVIDER + BUFFER + "Batter " + BUFFER + BUFFER +BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + BUFFER + "R" + BUFFER + "B" + BUFFER + "4s" + BUFFER + "6s" + BUFFER + "SR";
+    output += DIVIDER;
+
+    // Print each batter
+    for (int i = 0; i < 11; i++) {
+        BatterCard* ptr = batters[i];
+        BatStats stats = ptr->get_sim_stats();
+
+        // Calculate strike rate
+        double sr = (float)stats.runs / stats.balls * 100;
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << sr;
+        std::string srs = stream.str();
+
+        if (ptr->is_active()) {
+            output += BUFFER + ptr->get_player_ptr()->get_full_initials() +
+                BUFFER + ptr->print_dism() + BUFFER + std::to_string(stats.runs) + 
+                BUFFER + std::to_string(stats.balls) + BUFFER + std::to_string(stats.fours) +
+                BUFFER + std::to_string(stats.sixes) + BUFFER + srs + "\n";
+        }
+    }
+    // Extras
+    output += "\n" + BUFFER + "Extras" + BUFFER + "(" + extras.print() + ")" + BUFFER + std::to_string(extras.total());
+
+
+    output += DIVIDER;
+
+      
+    // Total score
+    int over_balls = last_over->get_num_legal_delivs();
+    double rr = team_score/(overs + (float)over_balls/6.0);
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << rr;
+    std::string s = stream.str();
+    output += BUFFER + "Total" + BUFFER + BUFFER + "(" + std::to_string(overs) + " Ov, RR " + s + ")"
+        + BUFFER + BUFFER + std::to_string(team_score) + DIVIDER;
+
 
     return output;
 }
@@ -510,6 +701,7 @@ Innings::~Innings() {
   }
 
   delete[] temp_outcomes;
+  delete[] fow;
 
   // Delete each over, each ball
 

@@ -195,6 +195,7 @@ class BatterCard : public PlayerCard {
 	void dismiss(int d_mode, Player* d_bowler = nullptr, Player* d_fielder = nullptr);
 	std::string print_card(void);
 	std::string print_short(void);
+	std::string print_dism(void);
 
 	// Copy constructor
 	//BatterCard(const BatterCard& bc);
@@ -359,6 +360,7 @@ class Extras {
 
 	bool update_score(std::string outcome);
 	std::string print();
+	int total();
 };
 
 

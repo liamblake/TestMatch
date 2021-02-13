@@ -58,6 +58,7 @@ int main() {
 	Innings inns(&aus, &nz, 0, &lords_pf);
 	inns.simulate(false);	// Let's go!
 
+	std::cout.precision(3);
 	cout << inns.print() << endl;
 
 	return 0;

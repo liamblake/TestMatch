@@ -55,7 +55,7 @@ int main() {
 
 
 	// For now - an innings object
-	Innings inns(&aus, &nz, 0, &lords_pf);
+	Innings inns(&nz, &aus, 0, &lords_pf);
 	inns.simulate(false);	// Let's go!
 
 	std::cout.precision(3);

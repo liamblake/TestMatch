@@ -22,6 +22,10 @@
 #include <cmath>
 
 
+
+// For the sake of formatting, allow integers and strings to be added
+//std::string operator+() {};
+
 /* Add new entry to end of array - reallocates memory dynamically.
    Deletes the old array and returns a pointer to the new.
    Arguments:

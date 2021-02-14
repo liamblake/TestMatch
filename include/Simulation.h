@@ -69,8 +69,28 @@ class BowlingManager {
 
     int n_over_calls;
 
+    /**
+     * @brief 
+     * @param bowl_avg 
+     * @param bowl_sr 
+     * @param fatigue 
+     * @return 
+    */
+    static double bowler_obj(double bowl_avg, double bowl_sr, double fatigue);
 
-    // Various options for getting a new bowler
+    /**
+     * @brief 
+     * @param fatigue 
+     * @return 
+    */
+    static double take_off_prob(double fatigue);
+
+    /**
+     * @brief Various options for getting a new bowler
+     * @param ignore1 
+     * @param ignore2 
+     * @return A BowlerCard pointer to the new bowler
+    */
     BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
     BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
     BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
@@ -96,6 +116,8 @@ class BowlingManager {
 */
 class FieldingManager {
   private:
+      static double C_WK_PROB;
+
     Player* players [11];
     int wk_idx;
 
@@ -173,6 +195,9 @@ class Innings {
     static std::vector<std::string> OUTCOMES;
     std::string* temp_outcomes;
     static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
+
+    static int NUM_DISM_MODES;
+    static std::vector<std::string> DISM_MODES_STATIC;
     static int MODEL_WICKET_TYPE(int bowltype);
 
   	// Private methods used in simulation process

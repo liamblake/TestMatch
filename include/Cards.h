@@ -57,6 +57,7 @@ struct BowlStats {
 	int maidens;
 	int runs;
 	int wickets;
+	int legal_balls;
 
 	int spell_balls;
 	double spell_overs;

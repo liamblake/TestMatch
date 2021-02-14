@@ -12,6 +12,20 @@
 #include "Utility.h"
 #include "MatchTime.h"
 
+
+//~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
+double FieldingManager::C_WK_PROB = 0.5;
+int Innings::inns_no = 0;
+int Innings::NUM_OUTCOMES = 22;
+std::vector<std::string> Innings::OUTCOMES = { "0", "1", "1b", "1lb", "1nb", "1wd",
+                                              "2", "2b", "2lb", "2nb", "2wd",
+                                              "3", "3b", "3lb",
+                                              "4", "4b", "4lb",
+                                              "5", "5nb", "5wd",
+                                              "6", "W" };
+int Innings::NUM_DISM_MODES = 6;
+std::vector<std::string> Innings::DISM_MODES_STATIC = { "b", "c", "c&b", "lbw", "ro", "st" };
+
 //~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
 BattingManager::BattingManager() {
 
@@ -86,6 +100,21 @@ void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
 }
 
 
+double BowlingManager::bowler_obj(double bowl_avg, double bowl_sr, double fatigue) {
+
+}
+
+/**
+ * 
+ * Logistic curve model with midpoint at x = 30 and growth rate k = 0.2
+ * 
+*/
+double BowlingManager::take_off_prob(double fatigue) {
+    return 1.0 / (1 + exp(-0.2 * (fatigue - 30)));
+}
+
+
+
 BowlerCard* BowlingManager::new_pacer(BowlerCard* ignore1, BowlerCard* ignore2) {
     return nullptr;
 }
@@ -103,8 +132,19 @@ BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1, BowlerCard* ignore
 }
 
 BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
-    // AIS bowlers bowl perpetually
-    return inns_obj->bowl1;
+    // Rest all players who didn't bowl the over
+    for (int i = 0; i < 11; i++) {
+        BowlerCard* ptr = cards[i];
+        if (ptr != inns_obj->bowl2) ptr->over_rest();
+    }
+
+    // Decide whether to take the current bowler off
+    if (((double)rand() / (RAND_MAX)) < take_off_prob(inns_obj->bowl1->get_tiredness())) {
+        // Change bowler
+    }
+    else return inns_obj->bowl1;
+
+
 }
 
 
@@ -144,6 +184,10 @@ Player* FieldingManager::select_catcher(Player* bowler, int dism_type) {
         if ((players[i] != bowler) || dism == "ro") {
             potential[j] = players[i];
             j++;
+            if (j < n) {
+                if (i == wk_idx) cdf[j] = cdf[j - 1] + C_WK_PROB;
+                else cdf[j] = cdf[j - 1] + (1 - C_WK_PROB) / (n - 1);
+            }
         }
     }
 
@@ -159,14 +203,6 @@ Player* FieldingManager::select_catcher(Player* bowler, int dism_type) {
 
 
 //~~~~~~~~~~~~~~ Innings implementations ~~~~~~~~~~~~~~//
-int Innings::inns_no = 0;
-int Innings::NUM_OUTCOMES = 22;
-std::vector<std::string> Innings::OUTCOMES = {"0", "1", "1b", "1lb", "1nb", "1wd", 
-                                              "2", "2b", "2lb", "2nb", "2wd",
-                                              "3", "3b", "3lb",
-                                              "4", "4b", "4lb",
-                                              "5", "5nb", "5wd",
-                                              "6", "W"};
 
 // Printing variables
 bool Innings::AUSTRALIAN_STYLE = false;
@@ -207,6 +243,10 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* 
     nonstriker = bat1;
   }
 
+  // Active openers
+  striker->activate();
+  nonstriker->activate();
+
   // Get opening bowlers
   bowl1 = bowlers[team_bowl->i_bowl1];
   bowl2 = bowlers[team_bowl->i_bowl2];
@@ -234,97 +274,50 @@ double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) 
   if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
       output[0] = 0;
       output[1] = 0.700414129;
-      output[2] = 0.878619915
-;
-      output[3] = 0.879463788
-          ;
-      output[4] = 0.881999123
-          ;
-      output[5] = 0.884047465
-          ;
-      output[6] = 0.884303973
-          ;
-      output[7] = 0.919880445
-          ;
-      output[8] = 0.920519855
-          ;
-      output[9] = 0.921326553
-          ;
-      output[10] = 0.92133027
-          ;
-      output[11] = 0.921341423
-          ;
-      output[12] = 0.92863144
-          ;
-      output[13] = 0.928873077
-          ;
-      output[14] = 0.929029212
-          ;
-      output[15] = 0.976230307
-          ;
-      output[16] = 0.977791656
-          ;
-      output[17] = 0.978115079
-          ;
-      output[18] = 0.978234039
-          ;
-      output[19] = 0.978241474
-          ;
-      output[20] = 0.978267496
-          ;
-      output[21] = 0.985367921
-          ;
+      output[2] = 0.878619915;
+      output[3] = 0.879463788;
+      output[4] = 0.881999123;
+      output[5] = 0.884047465;
+      output[6] = 0.884303973;
+      output[7] = 0.919880445;
+      output[8] = 0.920519855;
+      output[9] = 0.921326553;
+      output[10] = 0.92133027;
+      output[11] = 0.921341423;
+      output[12] = 0.92863144;
+      output[13] = 0.928873077;
+      output[14] = 0.929029212;
+      output[15] = 0.976230307;
+      output[16] = 0.977791656;
+      output[17] = 0.978115079;
+      output[18] = 0.978234039;
+      output[19] = 0.978241474;
+      output[20] = 0.978267496;
+      output[21] = 0.985367921;
   }
   else {
-      output[0] =0;
-      output[1] = 0.72505691
-
-          ;
-      output[2] = 0.844465522
-
-
-          ;
-      output[3] = 0.845466186
-
-          ;
-      output[4] = 0.851517595
-
-          ;
-      output[5] = 0.859254956
-
-          ;
-      output[6] = 0.862496443
-          ;
-      output[7] = 0.899248316
-          ;
-      output[8] = 0.899452243
-          ;
-      output[9] = 0.900194442
-          ;
-      output[10] = 0.900244238
-          ;
-      output[11] = 0.900298776
-          ;
-      output[12] = 0.910843688
-          ;
-      output[13] = 0.910879256
-          ;
-      output[14] = 0.910912454
-          ;
-      output[15] = 0.978537892
-          ;
-      output[16] = 0.979818363
-          ;
-      output[17] = 0.98124585
-          ;
-      output[18] = 0.981426065
-          ;
-      output[19] = 0.981497202
-          ;
-      output[20] = 0.981855259
-          ;
-      output[21] = 0.983420279
-          ;
+      output[0] = 0;
+      output[1] = 0.72505691;
+      output[2] = 0.844465522;
+      output[3] = 0.845466186;
+      output[4] = 0.851517595;
+      output[5] = 0.859254956;
+      output[6] = 0.862496443;
+      output[7] = 0.899248316;
+      output[8] = 0.899452243;
+      output[9] = 0.900194442;
+      output[10] = 0.900244238;
+      output[11] = 0.900298776;
+      output[12] = 0.910843688;
+      output[13] = 0.910879256;
+      output[14] = 0.910912454;
+      output[15] = 0.978537892;
+      output[16] = 0.979818363;
+      output[17] = 0.98124585;
+      output[18] = 0.981426065;
+      output[19] = 0.981497202;
+      output[20] = 0.981855259;
+      output[21] = 0.983420279;
   }
 
   return output;
@@ -336,18 +329,16 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
     // Unencode bowltype
     std::string btype_str = unencode_bowltype(bowltype);
 
-    std::string DISM_MODES_STATIC[6] = { "b", "c", "c&b", "lbw", "ro", "st" };
+    std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
+    double* DISM_MODE_DIST = new double [NUM_DISM_MODES];
 
-    std::string* DISM_MODES = new std::string[6];
-    double* DISM_MODE_DIST = new double [6];
-
-    double DISM_MODE_SPINNER[6] = { 0, 0.157, 0.692, 0.7274, 0.9286, 0.9613 };
-    double DISM_MODE_SEAMER[6] = { 0, 0.175, 0.815, 0.8291, 0.9731, 1 };
+    double DISM_MODE_SPINNER[6] = { 0, 0.157, 0.692, 0.7274, 0.9286, 0.9613};
+    double DISM_MODE_SEAMER[6] = { 0, 0.175, 0.815, 0.8291, 0.9731, 1};
     
     bool is_spinner = (btype_str.find('f') == std::string::npos);
 
   // Check if "f" is in bowl_type - indicates whether stumpings are possible
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < NUM_DISM_MODES; i++) {
         DISM_MODES[i] = DISM_MODES_STATIC[i];
         if (is_spinner) {
             // Spinner model
@@ -363,7 +354,7 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
 
 
   // Sample from distribution
-  std::string dism_mode = sample_cdf<std::string>(DISM_MODES, 6, DISM_MODE_DIST);
+  std::string dism_mode = sample_cdf<std::string>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
 
   delete[] DISM_MODE_DIST;
   delete[] DISM_MODES;
@@ -671,7 +662,37 @@ std::string Innings::print() {
     stream << std::fixed << std::setprecision(2) << rr;
     std::string s = stream.str();
     output += BUFFER + "Total" + BUFFER + BUFFER + "(" + std::to_string(overs) + " Ov, RR " + s + ")"
-        + BUFFER + BUFFER + std::to_string(team_score) + DIVIDER;
+        + BUFFER + BUFFER + std::to_string(team_score) + DIVIDER + "\n";
+
+    // List Did not bat, fall of wickets
+
+
+    // Bowlers
+    output += BUFFER + "Bowling" + BUFFER + BUFFER + "O" + BUFFER + "M" + BUFFER + "R" + BUFFER + "W" + BUFFER + "Econ" + DIVIDER;
+    for (int i = 0; i < 11; i++) {
+        // Calculate and format economy
+        BowlerCard* ptr = bowlers[i];
+        BowlStats stats = ptr->get_sim_stats();
+
+        // Only print if they have bowled a ball
+        if (stats.balls > 0) {
+            std::pair<int, int> overs = balls_to_ov(stats.balls);
+
+            // Calculate economy
+            double econ = stats.runs / (overs.first + overs.second / 6.0);
+            std::stringstream stream;
+            stream << std::fixed << std::setprecision(2) << econ;
+            std::string econs = stream.str();
+
+            output += ptr->get_player_ptr()->get_full_initials() + BUFFER +
+                std::to_string(overs.first) + "." + std::to_string(overs.second) +
+                BUFFER + std::to_string(stats.maidens) + BUFFER +
+                std::to_string(stats.runs) + BUFFER + std::to_string(stats.wickets) +
+                BUFFER + econs + "\n";
+        }
+
+        
+    }
 
 
     return output;

@@ -101,7 +101,7 @@ void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
 
 
 double BowlingManager::bowler_obj(double bowl_avg, double bowl_sr, double fatigue) {
-
+    return 0;
 }
 
 /**
@@ -144,6 +144,7 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
     }
     else return inns_obj->bowl1;
 
+    return inns_obj->bowl1;
 
 }
 

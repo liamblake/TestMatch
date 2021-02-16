@@ -84,13 +84,25 @@ Player* Dismissal::get_fielder() {
 /*
     Fatigue implementations
 */
-Fatigue::Fatigue(int c_bowl_type) : value(0), bowl_type(c_bowl_type) {}
+double Fatigue::MEAN_PACE_FATIGUE = 5;
+double Fatigue::MEAN_SPIN_FATIGUE = 0.5;
+
+Fatigue::Fatigue(int c_bowl_type) : value(0) {
+    is_slow = is_slow_bowler(c_bowl_type);
+    is_extra_pace = (unencode_bowltype(c_bowl_type) == "f");
+
+}
 
 double Fatigue::get_value() {
     return value;
 }
 
-void Fatigue::ball_bowled() {}
+void Fatigue::ball_bowled() {
+    if (is_slow)
+
+}
+
+
 void Fatigue::wicket() {}
 void Fatigue::rest(double time) {}
 
@@ -315,6 +327,10 @@ void BowlerCard::start_new_spell() {
 
     active = true;
 
+}
+
+double BowlerCard::get_tiredness() {
+    return tiredness.get_value();
 }
 
 void BowlerCard::over_rest() {

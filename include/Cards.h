@@ -126,8 +126,15 @@ class Dismissal {
 class Fatigue {
 private:
 	double value;
-	int bowl_type;
+	bool is_slow;
+	bool is_extra_pace;
 
+	// Parameters
+	static double MEAN_PACE_FATIGUE;
+	static double MEAN_SPIN_FATIGUE;
+	static double EXTRA_PACE_PENALTY;
+	static double VAR_PACE_FATIGUE;
+	static double VAR_SPIN_FATIGUE;
 
 public:
 	// Constructor

@@ -318,4 +318,16 @@ inline std::string ordinal(int num) {
 	return output;
 }
 
+
+/**
+ * @brief 
+ * @param bowl_type 
+ * @return 
+*/
+bool is_slow_bowler(int bowl_type) {
+	std::string btype_str = unencode_bowltype(bowl_type);
+	return btype_str.find('f') == std::string::npos);
+}
+
+
 #endif // UTILITY_H

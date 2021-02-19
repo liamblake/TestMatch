@@ -271,7 +271,7 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* 
 double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) {
   double* output = new double[NUM_OUTCOMES];
 
-  // PLACEHOLDER - data proportions
+  // PLACEHOLDER - data proportions, hard-coded model
   if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
       output[0] = 0;
       output[1] = 0.700414129;
@@ -717,15 +717,16 @@ bool Innings::get_is_open() {
 
 // Destructor
 Innings::~Innings() {
-  // Delete each dynamically allocated BatterCard and BowlerCard
-  for (int i = 0; i < 11; i++) {
-    delete batters[i], bowlers[i];
-  }
+    // Delete each dynamically allocated BatterCard and BowlerCard
+    for (int i = 0; i < 11; i++) {
+        delete batters[i], bowlers[i];
+    } 
 
-  delete[] temp_outcomes;
-  delete[] fow;
+    delete[] temp_outcomes;
+    delete[] fow;
 
-  // Delete each over, each ball
+    // Delete each over iteratively
+    delete_linkedlist<Over>(first_over);
 
 }
 
@@ -757,15 +758,32 @@ Match::Match(Team* home_team, Team* away_team, bool choose_XI) {
 
 }
 
+
 void Match::simulate_toss() {
 
   // Winner of toss is chosen randomly - 0.5 probability either way
-  double r = ((double) rand() / (RAND_MAX)) + 1;
-  toss_win = (r < 0.5);
+  toss_win = (((double) rand() / (RAND_MAX)) < 0.5);
 
 
-  // TODO: Implement toss election based on pitch conditions
-  toss_elect = false;
+  /* Somewhat terrible fit to the toss elect probabilities in actual data
+  * Note that spin_factor = 1 - seam_factor, so we only need to consider 
+  * the spin factor when calculating the probability. This is based on the 
+  * intuition that in extreme spinning conditions, a team will bat first, 
+  * whereas in extreme seaming conditions, a team will bowl first. 
+  * 
+  * Using a probability rather than a hard choice adds in that extra uncertainty
+  * that appears whenever human decision is involved.
+  * 
+  * This model, along with the entire pitch condition set-up, will probably 
+  * be eventually improved.
+  **/
+
+    // Exponential model
+    double a = 0.05;
+    double b = log(0.9/a);
+    double bat_prob = a*exp(b*venue->pitch_factors->spin);
+    toss_elect = (((double) rand() / (RAND_MAX)) >= bat_prob);
+
 
 }
 

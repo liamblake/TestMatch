@@ -303,7 +303,7 @@ class Match {
     Match(Team* home_team, Team* away_team, bool choose_XI = false);
 
     void pregame();
-    void start();
+    void start(bool quiet = true);
 
     std::string print_pregame();
 };

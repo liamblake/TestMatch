@@ -8,6 +8,8 @@
 #define CARDS_H
 
 #include <string>
+#include <random>
+
 #include "Player.h"
 
 // Global Parameters
@@ -126,8 +128,11 @@ class Dismissal {
 class Fatigue {
 private:
 	double value;
-	bool is_slow;
-	bool is_extra_pace;
+
+	// Normal distribution object for generating values
+	static std::random_device RD;
+	static std::mt19937 GEN;
+	std::normal_distribution<double>* dist;
 
 	// Parameters
 	static double MEAN_PACE_FATIGUE;
@@ -147,6 +152,9 @@ public:
 	void ball_bowled();
 	void wicket();
 	void rest(double time);
+
+	// Destructor
+	~Fatigue();
 };
 
 
@@ -303,6 +311,8 @@ struct Ball {
 
  	// For linked list implementation
 	Ball* next = nullptr;
+
+	Ball* get_next() {return next;};
 };
 
 
@@ -351,7 +361,7 @@ class Over {
     */
     void add_ball(Ball* ball);
 
-
+	~Over();
 
 };
 

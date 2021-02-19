@@ -4,11 +4,15 @@
  * This is where the fun testing is! This is where I use the simulation to simulate a test match
  * between Australia and New Zealand at Lord's (think WTC final, one can hope), printing
  * ball-by-ball and results. This will be progressively developed as I build the simulation.
+ * 
+ * To compile manually:
+ * gcc -o ../bin/demonstrative.exe ../src/Cards.cpp ../src/Player.cpp ../src/Simulation.cpp demonstrative_test.cpp -I ../include
 */
 
 
 #include <iostream>
 #include <ctime> 
+#include <string>
 
 #include "Player.h"
 #include "Cards.h"

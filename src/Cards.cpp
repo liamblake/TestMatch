@@ -12,6 +12,7 @@
 #include <sstream>
 #include <cmath>
 #include <exception>
+#include <random>
 
 using namespace std;
 
@@ -84,12 +85,35 @@ Player* Dismissal::get_fielder() {
 /*
     Fatigue implementations
 */
+// Distribution parameters
 double Fatigue::MEAN_PACE_FATIGUE = 5;
 double Fatigue::MEAN_SPIN_FATIGUE = 0.5;
+double Fatigue::EXTRA_PACE_PENALTY = 1;
+double Fatigue::VAR_PACE_FATIGUE = 1;
+double Fatigue::VAR_SPIN_FATIGUE = 0.1;
+
+// Uniform number generators
+std::random_device Fatigue::RD {};
+std::mt19937 Fatigue::GEN {RD()};
 
 Fatigue::Fatigue(int c_bowl_type) : value(0) {
-    is_slow = is_slow_bowler(c_bowl_type);
-    is_extra_pace = (unencode_bowltype(c_bowl_type) == "f");
+
+    // Set up sampling distribution
+    double mean, var;
+    if (is_slow_bowler(c_bowl_type)) {
+        mean = MEAN_SPIN_FATIGUE;
+        var = VAR_SPIN_FATIGUE;
+    } else {
+        mean = MEAN_PACE_FATIGUE;
+        var = VAR_PACE_FATIGUE;
+
+        // additional fatigue penalty for "f" bowlers
+        if (unencode_bowltype(c_bowl_type) == "f") {
+            mean += EXTRA_PACE_PENALTY;
+        }
+    }
+
+    dist = new std::normal_distribution<double> (mean, sqrt(var));
 
 }
 
@@ -98,13 +122,22 @@ double Fatigue::get_value() {
 }
 
 void Fatigue::ball_bowled() {
-    if (is_slow)
-
+    value += (*dist)(GEN);
 }
 
 
-void Fatigue::wicket() {}
-void Fatigue::rest(double time) {}
+void Fatigue::wicket() {
+    // ???
+}
+
+void Fatigue::rest(double time) {
+    // Ease fatigue
+    value -= 3*dist->mean();
+}
+
+Fatigue::~Fatigue() {
+    delete dist;
+}
 
 
 
@@ -412,6 +445,9 @@ void BowlerCard::update_score(string outcome) {
         add_ball();
     } 
 
+    // Update fatigue
+    tiredness.ball_bowled();
+
 }
 
 
@@ -428,7 +464,7 @@ PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() cons
     PlayerCard** sorted = new Player* [len];
     for (int i = 0; i < len; i++) {
         int itt = 0;
-        while (ply_srt[i] != list[itt] && itt < len) itt++;
+        while (ply_srt[i] != list[itt]->get_player_ptr() && itt < len) itt++;
 
         if (itt == len) {
             // Something has gone terribly wrong, raise an exception
@@ -535,6 +571,10 @@ Over* Over::get_next() {
     return next;
 }
 
+Over::~Over() {
+    // Delete each ball iteratively
+    delete_linkedlist<Ball>(first);
+}
 
 
 //~~~~~~~~~~~~~~ Extras implementations ~~~~~~~~~~~~~~//

@@ -10,76 +10,14 @@
 #include <string>
 #include <utility>
 #include <iostream>
+#include <chrono>
 
 // TIME ALREADY EXISTS IN THE UTILITY HEADER - EITHER RENAME OR LOOK AT OPTION
 // PERHAPS OVERLOADED tm TYPE FROM ctime HEADER
 
 // Parameters
-// Session time details
-const float START_TIME = 10.30;
-const float LUNCH_START = 12.30;
-const int LUNCH_DUR = 2400;        // 40 minutes
-const float TEA_START = 15.10;
-const int TEA_DUR = 1200;          // 20 minutes
-const float CLOSE_PLAY = 17.30;
 
-const int OVERCHA_DUR = 30;
-const int DRINKS_DUR = 300;        // 5 minutes
-const int INNBRE_DUR = 600;        // 10 minutes
-
-// Maximum amount of time which a session can be extended by
-const int MAXIMUM_EXTEND = 1800;   // 30 minutes
-
-// Delivery duration statistics
-const double PACE_MINDUR = 25;
-const double PACE_MAXDUR = 60;
-const double SPIN_MINDUR = 15;
-const double SPIN_MAXDUR = 40;
-const double PACE_MEANDUR = 45;
-const double SPIN_MEANDUR = 30;
-//const double DEL_STDDUR = 0.5;
-const double RUN_DUR = 10;
-//const double BOUND_DUR = 30;
-
-
-/* Time - class storing time of day, in 24hr format.
-   Overloaded addition operator += allows seconds to be added to stored time.
-*/
-class Time {
-  // TODO: ensure input control
-
-  private:
-	  int hours;
-    int mins;
-   	int secs;
-
-
-  public:
-    Time();
-    Time(int c_hours, int c_mins, int c_secs);
-    Time(float f_rep);
-
-    void set(int c_hours, int c_mins, int c_secs);
-    void set(float f_rep);
-
-    friend class MatchTime;
-
-    // Overloaded operators
-    Time& operator=(const Time& other);
-    Time& operator=(const float& frep);
-    Time& operator+=(unsigned int a_secs);
-    friend Time& operator+(const Time &tm1, const Time &tm2);
-    friend Time& operator-(const Time &tm1, const Time &tm2);
-    friend bool operator==(const Time &lhs, const Time &rhs);
-    friend std::ostream& operator<<(std::ostream& os, const Time& tm);
-
-};
-
-// Formatted print of Time struct in output stream
-Time& operator+(const Time& tm1, const Time& tm2);
-Time& operator-(const Time& tm1, const Time& tm2);
-bool operator==(const Time& lhs, const Time& rhs);
-std::ostream& operator<<(std::ostream& os, const Time& tm);
+//static double BOUND_DUR = 30;
 
 
 /* MatchTime class
@@ -89,7 +27,32 @@ class MatchTime {
 
   private:
 
-    Time tm;
+    // Parameters
+    static float START_TIME;
+    static float LUNCH_START;
+    static int LUNCH_DUR;        // 40 minutes
+    static float TEA_START;
+    static int TEA_DUR;          // 20 minutes
+    static float CLOSE_PLAY;
+
+    static int OVERCHA_DUR;
+    static int DRINKS_DUR;        // 5 minutes
+    static int INNBRE_DUR;        // 10 minutes
+
+    // Maximum amount of time which a session can be extended by
+    static int MAXIMUM_EXTEND;   // 30 minutes
+
+    // Delivery duration statistics
+    static double PACE_MINDUR;
+    static double PACE_MAXDUR;
+    static double SPIN_MINDUR;
+    static double SPIN_MAXDUR;
+    static double PACE_MEANDUR;
+    static double SPIN_MEANDUR;
+    //static double DEL_STDDUR = 0.5;
+    static double RUN_DUR;
+
+    std::chrono::duration time;
     int day;
 
     std::string state;
@@ -117,9 +80,9 @@ class MatchTime {
     bool check_state_change();
 
   public:
-    // Default constructor - start of match, day 1
+    // Default staticructor - start of match, day 1
     MatchTime();
-    MatchTime(Time c_tm, int c_day, std::string c_state);
+    //MatchTime(Time c_tm, int c_day, std::string c_state);
 
     // Time controls for use by simulation
     std::pair<int, std::string> delivery(bool type, int runs);
@@ -132,12 +95,12 @@ class MatchTime {
     // Returned strings indicate match state, used for error checking and interaction with Match object
 
     // Getters
-    Time get_time();
+    std::hh_mm_ss get_time();
     int get_day();
     std::string get_state();
 
     // Overloaded operators
-    friend std::ostream& operator<<(std::ostream& os, const MatchTime& mt);
+    friend std::ostream& operator<<(std::ostream& os, static MatchTime& mt);
 };
 
 

@@ -285,10 +285,12 @@ inline double rtexp(double mean, double min, double max) {
 
 template <typename T>
 inline void delete_linkedlist(T* first) {
-	T* tmp = first;
-	while (tmp != nullptr) {
-		
-	}
+	T* next = first;
+	while (next != nullptr) {
+    	T* tmp = next;
+		next = next->get_next();
+    	delete tmp; 
+  }
 }
 
 /**
@@ -326,7 +328,7 @@ inline std::string ordinal(int num) {
 */
 bool is_slow_bowler(int bowl_type) {
 	std::string btype_str = unencode_bowltype(bowl_type);
-	return btype_str.find('f') == std::string::npos);
+	return btype_str.find('f') == std::string::npos;
 }
 
 

@@ -17,6 +17,7 @@
 #include "Player.h"
 #include "Cards.h"
 #include "Simulation.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -58,12 +59,15 @@ int main() {
 	Venue lords = { "Lords", "London", "ENG", &lords_pf };
 
 
-	// For now - an innings object
-	Innings inns(&nz, &aus, 0, &lords_pf);
-	inns.simulate(false);	// Let's go!
+	// Create a Match object
+	Match m(&nz, &aus, &lords);
+	m.pregame();
+
+	// Simulation
+	m.start(false);
 
 	std::cout.precision(3);
-	cout << inns.print() << endl;
+	cout << m.print_all() << endl;
 
 	return 0;
 }

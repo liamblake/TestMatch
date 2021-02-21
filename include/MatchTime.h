@@ -10,7 +10,6 @@
 #include <string>
 #include <utility>
 #include <iostream>
-#include <chrono>
 
 // TIME ALREADY EXISTS IN THE UTILITY HEADER - EITHER RENAME OR LOOK AT OPTION
 // PERHAPS OVERLOADED tm TYPE FROM ctime HEADER
@@ -52,7 +51,7 @@ class MatchTime {
     //static double DEL_STDDUR = 0.5;
     static double RUN_DUR;
 
-    std::chrono::duration time;
+    //std::chrono::duration time;
     int day;
 
     std::string state;
@@ -95,12 +94,12 @@ class MatchTime {
     // Returned strings indicate match state, used for error checking and interaction with Match object
 
     // Getters
-    std::hh_mm_ss get_time();
+    //std::hh_mm_ss get_time();
     int get_day();
     std::string get_state();
 
     // Overloaded operators
-    friend std::ostream& operator<<(std::ostream& os, static MatchTime& mt);
+    //friend std::ostream& operator<<(std::ostream& os, static MatchTime& mt);
 };
 
 

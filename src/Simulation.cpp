@@ -436,6 +436,7 @@ void Innings::simulate_delivery() {
   } else {
     int runs = outcome.front() - '0';
     team_score += runs;
+    lead += runs;
 
     bool is_rotation;
     if (is_legal) {
@@ -449,6 +450,7 @@ void Innings::simulate_delivery() {
     if (is_rotation) swap_batters();
 
     // Update MatchTime
+
 
 
 
@@ -617,6 +619,14 @@ void Innings::simulate(bool quiet) {
     check_state();
   }
 
+  if (!is_quiet) {
+      // Print lead
+      std::cout << team_bat->name << " ";
+      if (lead > 0) std::cout << "lead by ";
+      else std::cout << "trail by ";
+      std::cout << std::to_string(abs(lead)) << " runs.\n";
+  }
+
   cleanup();
 }
 
@@ -714,6 +724,19 @@ bool Innings::get_is_open() {
     return is_open;
 }
 
+int Innings::get_lead() {
+    return lead;
+}
+
+Team* Innings::get_bat_team() {
+    return team_bat;
+}
+
+Team* Innings::get_bowl_team() {
+    return team_bowl;
+}
+
+
 
 // Destructor
 Innings::~Innings() {
@@ -741,20 +764,10 @@ Innings::~Innings() {
 /*
   Match implementations
 */
-Match::Match(Team* home_team, Team* away_team, bool choose_XI) {
-  team1 = home_team;
-  team2 = away_team;
-
-  // Choose batting order if requested
-  if (choose_XI) {
-    // Do nothing as of yet
-  }
+Match::Match(Team* home_team, Team* away_team, Venue* c_venue) : team1(home_team), team2(away_team), venue(c_venue), ready(false), inns_i(0) {
 
   // Time object - default constructor to day 1, start time
   //time = MatchTime();
-
-
-  ready = false;
 
 }
 
@@ -782,24 +795,100 @@ void Match::simulate_toss() {
     double a = 0.05;
     double b = log(0.9/a);
     double bat_prob = a*exp(b*venue->pitch_factors->spin);
-    toss_elect = (((double) rand() / (RAND_MAX)) >= bat_prob);
+    toss_elect = (((double) rand() / (RAND_MAX)) < bat_prob);
 
+    // Print toss result
+    std::cout << toss_str() << std::endl;
 
 }
 
+void Match::change_innings() {
+    
+    Team* new_bat, *new_bowl;
+
+    if (inns_i == 1 && DECIDE_FOLLOW_ON(lead)) {
+        // Follow on
+        new_bat = inns[inns_i]->get_bat_team();
+        new_bowl = inns[inns_i]->get_bowl_team();
+    }
+    else {
+        // Standard swap
+        lead *= -1;
+        new_bat = inns[inns_i]->get_bowl_team();
+        new_bowl = inns[inns_i]->get_bat_team();
+    }
+
+    inns_i++; 
+    inns[inns_i] = new Innings(new_bat, new_bowl, lead, venue->pitch_factors);
+
+}
+
+
+bool Match::DECIDE_FOLLOW_ON(int lead) {
+    return false;
+    // TODO: fit a model here
+}
+
+
+std::string Match::toss_str() {
+    std::string output;
+
+    Team* ptr;
+    if (toss_win) ptr = team2;
+    else ptr = team1;
+
+    output += ptr->name + " has won the toss and elected to ";
+
+    if (toss_elect) output += "bat.";
+    else output += "bowl.";
+
+    return output;
+}
 
 void Match::pregame() {
   // Toss
   simulate_toss();
 
-  // Prepare innings
-  bool team_order = toss_win;
-
-  if (team_order) {
-    //inns[0] = new Innings(team1, team2, 0, &time, &pitch);
-  } else {
-
-  }
+  // Set up Innings object
+  if ((toss_win && toss_elect) || (!toss_win && !toss_elect)) inns[0] = new Innings(team2, team1, 0, venue->pitch_factors);
+  else inns[0] = new Innings(team1, team2, 0, venue->pitch_factors);
 
   ready = true;
+}
+
+
+void Match::start(bool quiet) {
+
+    while (inns_i < 4) {
+        inns[inns_i]->simulate(quiet);
+        lead = inns[inns_i]->get_lead();
+
+        if (!quiet) {
+            // Print lead
+            std::cout << inns[inns_i]->get_bat_team()->name << " ";
+            if (lead > 0) std::cout << "lead by ";
+            else std::cout << "trail by ";
+            std::cout << std::to_string(abs(lead)) << " runs.\n";
+        }
+
+        // Change innings
+        change_innings();
+    }
+
+}
+
+std::string Match::print_all() {
+    std::string output;
+    for (int i = 0; i < 4; i++) {
+        output += inns[i]->print();
+    }
+
+    return output;
+}
+
+
+Match::~Match() {
+    for (int i = 0; i < 4; i++) {
+        delete inns[i];
+    }
 }

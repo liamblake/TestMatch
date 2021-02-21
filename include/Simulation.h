@@ -258,6 +258,9 @@ class Innings {
     BowlerCard** get_bowlers();
 
     bool get_is_open();
+    int get_lead();
+    Team* get_bat_team();
+    Team* get_bowl_team();
 
     // Destructor
     ~Innings();
@@ -273,39 +276,76 @@ class Innings {
 
 
 
-
-
-
+/**
+ * @brief 
+*/
 class Match {
 
   private:
     Team* team1;    // Home team
     Team* team2;    // Away team
 
-    int country;
     Venue* venue;
 
     bool ready;
     bool toss_win;      // false = team1, true = team2
-    bool toss_elect;    // false = bat, true = bowl
+    bool toss_elect;    // false = bowl, true = bat
 
     //MatchTime time;
     std::string match_state;
 
-    int innings;
+    int inns_i;
     Innings* inns[4];
+    int lead;
 
     // Private helper functions
+    
+    /**
+     * @brief 
+    */
     void simulate_toss();
-    void innings_change(bool follow_on);
+
+    /**
+     * @brief 
+    */
+    void change_innings();
+
+    /**
+     * @brief Decide whether to enforce the follow-on, based on the lead.
+     * @param lead Lead of bowling team at end of previous innings.
+     * @return Boolean indicating whether the follow-on is enforced
+    */
+    static bool DECIDE_FOLLOW_ON(int lead);
+    // TODO: Also consider time left in match when making this decision
+
+    // For printing
+    /**
+     * @brief Returns a string detailing which team won the toss and the choice
+     * @return Aforementioned string
+    */
+    std::string toss_str();
 
   public:
-    Match(Team* home_team, Team* away_team, bool choose_XI = false);
-
+    Match(Team* home_team, Team* away_team, Venue* c_venue);
+    
+    /**
+     * @brief 
+    */
     void pregame();
+    
+    /**
+     * @brief 
+     * @param quiet 
+    */
     void start(bool quiet = true);
 
-    std::string print_pregame();
+    /**
+     * @brief 
+     * @return 
+    */
+    std::string print_all();
+
+    ~Match();
 };
 
 

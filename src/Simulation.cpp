@@ -467,29 +467,39 @@ bool Innings::check_declaration() {
 }
 
 
-// 
-void Innings::check_state() {
+/* Possible return values:
+ *  allout - batting team is bowled out
+ *  won - batting team has succesfully chased a 4th innings target
+ *  draw - reached end of match time
+ *  dec - batting team has declared
+ * 
+ **/
+std::string Innings::check_state() {
 
     // Check for close of innings
-    // Match object determines who has won, etc.
-    if ((inns_no == 4 && lead > 0) || (wkts == 10)) {
-        inns_state = "END";
+    // Match object distinguishes different types of win
+    if ((inns_no == 4 && lead > 0)) {
+        // 4th innings chase
         is_open = false;
-        return;
+        return "win";
+    }
+
+    if (wkts == 10) {
+        // Bowled out
+        is_open = false;
+        return "allout"
     }
 
 
     // Check for declaration
     if (check_declaration()) {
-        inns_state = "END_DEC";
         is_open = false; 
-        return;
+        return "dec";
     };
-
-    // Check for end of day
 
     // Check for draw
 
+    // Check for end of day
 
     // Check for end of over
     if (last_over->get_num_legal_delivs() == 6) {
@@ -593,7 +603,7 @@ std::string Innings::score() {
 }
 
   	
-void Innings::simulate(bool quiet) {
+std::string Innings::simulate(bool quiet) {
 
     is_quiet = quiet;
 
@@ -610,13 +620,13 @@ void Innings::simulate(bool quiet) {
             << DIVIDER << std::endl;
     }
 
-
-  while (inns_state != "END" && inns_state != "END_DEC") {
+    std::string state;
+  while (is_open) {
     // Simulate a single delivery
     simulate_delivery();
 
     // Check match state
-    check_state();
+    state = check_state();
   }
 
   if (!is_quiet) {
@@ -628,6 +638,7 @@ void Innings::simulate(bool quiet) {
   }
 
   cleanup();
+  return state;
 }
 
 
@@ -726,6 +737,10 @@ bool Innings::get_is_open() {
 
 int Innings::get_lead() {
     return lead;
+}
+
+int Innings::get_wkts() {
+    return wkts;
 }
 
 Team* Innings::get_bat_team() {
@@ -859,8 +874,10 @@ void Match::pregame() {
 
 void Match::start(bool quiet) {
 
+    std::string inns_state;
+
     while (inns_i < 4) {
-        inns[inns_i]->simulate(quiet);
+        inns_state = inns[inns_i]->simulate(quiet);
         lead = inns[inns_i]->get_lead();
 
         if (!quiet) {
@@ -871,8 +888,48 @@ void Match::start(bool quiet) {
             std::cout << std::to_string(abs(lead)) << " runs.\n";
         }
 
-        // Change innings
-        change_innings();
+        // Determine if game has been won
+        if (inns_i == 2 && inns_state == "allout" && lead < 0) {
+            // Win by innings
+            winner = inns[inns_i]->get_bowl_team();
+            win_type = 2;
+            margin = -lead;
+            break;
+
+        } else if (inns_i == 3) {
+            // 4th innings scenarios
+            if (inns_state == "allout") {
+                // Tie
+                if (lead == 0) { 
+                    winner = nullptr;
+                    win_type = 3;
+                    margin = 0;
+                } else {
+                    // Bowled out
+                    winner = inns[inns_i]->get_bowl_team();
+                    win_type = 1;
+                    margin = -lead;
+                }
+
+            } else if (inns_state == "won") {
+                // Win chasing
+                winner = inns[inns_i]->get_bat_team();
+                win_type = 0;
+                margin = 10 - inns[inns_i]->get_wkts();
+
+            } else if (inns_state == "draw") {
+                // Draw
+                winner = nullptr;
+                win_type = 4;
+                margin = -lead;
+            } else {
+                // Raise an exception, Innings::simulate() has returned something unknown
+            }
+            
+        } else {
+            // Change innings
+            change_innings();
+        }
     }
 
 }

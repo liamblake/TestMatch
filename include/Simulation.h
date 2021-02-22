@@ -160,7 +160,6 @@ class Innings {
   	int wkts;
 
     bool is_open;
-    std::string inns_state;
 
     //MatchTime* time;
     PitchFactors* pitch;
@@ -206,7 +205,7 @@ class Innings {
     void simulate_delivery();
     
     // Called after each delivery, checks for changes in game state, such as end of over, end of innings, declaration, scheduled break, etc.
-    void check_state();
+    std::string check_state();
 
     // Check for declaration
   	bool check_declaration();
@@ -249,7 +248,8 @@ class Innings {
   	// Constructor
     Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch); //MatchTime* c_time);
   	
-    void simulate(bool quiet = true);
+    // Returns state string explainining why innings has ended
+    std::string simulate(bool quiet = true);
 
     std::string print(void);
 
@@ -259,6 +259,7 @@ class Innings {
 
     bool get_is_open();
     int get_lead();
+    int get_wkts();
     Team* get_bat_team();
     Team* get_bowl_team();
 
@@ -294,9 +295,15 @@ class Match {
     //MatchTime time;
     std::string match_state;
 
+    // Tracking current game state
     int inns_i;
     Innings* inns[4];
     int lead;
+
+    // Storing winner detail
+    Team* winner;     // nullptr indicates draw or tie
+    int win_type;     // 0 - chasing, by wickets; 1 - bowling, by runs; 2 - innings, by runs, 3 - tie, 4 - draw
+    int margin;       // 
 
     // Private helper functions
     
@@ -324,6 +331,8 @@ class Match {
      * @return Aforementioned string
     */
     std::string toss_str();
+
+    std::string winner_str();
 
   public:
     Match(Team* home_team, Team* away_team, Venue* c_venue);

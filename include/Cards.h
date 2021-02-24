@@ -506,4 +506,79 @@ class Partnership {
 
 };
 
+
+
+//~~~~~~~~~~~~~~ Match End Objects ~~~~~~~~~~~~~~//
+
+/**
+ * @brief 
+*/
+class EndMatch {
+  protected:
+	  Team* winner;
+	  int margin;
+
+  public:
+	  EndMatch(Team* c_winner, int c_margin);
+
+	  /**
+	   * @brief 
+	   * @return 
+	  */
+	  virtual std::string print() = 0;
+
+	  // Default destructor
+};
+
+/**
+ * @brief 
+*/
+class EndInningsWin : public EndMatch {
+  public:
+	  EndInningsWin(Team* c_winner, int c_runs);
+
+	  std::string print();
+};
+
+/**
+ * @brief
+*/
+class EndBowlWin : public EndMatch {
+public:
+	EndBowlWin(Team* c_winner, int c_runs);
+
+	std::string print();
+};
+
+/**
+ * @brief 
+*/
+class EndChaseWin : public EndMatch {
+public:
+	EndChaseWin(Team* c_winner, int c_wkts);
+
+	std::string print();
+};
+
+/**
+ * @brief
+*/
+class EndDraw : public EndMatch {
+public:
+	EndDraw();
+
+	virtual std::string print();
+};
+
+/**
+ * @brief 
+*/
+class EndTie : public EndDraw {
+  public:
+	EndTie();
+
+	std::string print();
+};
+
+
 #endif // CARDS_H

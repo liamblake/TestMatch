@@ -148,7 +148,8 @@ class Innings {
   	Team* team_bowl;
 
     // General innings info
-  	static int inns_no;
+  	static int NO_INNS;
+    int inns_no;
     static double PRINT_DELAY;
     bool is_quiet;
 
@@ -301,9 +302,7 @@ class Match {
     int lead;
 
     // Storing winner detail
-    Team* winner;     // nullptr indicates draw or tie
-    int win_type;     // 0 - chasing, by wickets; 1 - bowling, by runs; 2 - innings, by runs, 3 - tie, 4 - draw
-    int margin;       // 
+    EndMatch* ending;
 
     // Private helper functions
     
@@ -322,7 +321,7 @@ class Match {
      * @param lead Lead of bowling team at end of previous innings.
      * @return Boolean indicating whether the follow-on is enforced
     */
-    static bool DECIDE_FOLLOW_ON(int lead);
+    static bool DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score);
     // TODO: Also consider time left in match when making this decision
 
     // For printing

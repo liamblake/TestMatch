@@ -15,7 +15,6 @@
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;
-int Innings::inns_no = 0;
 int Innings::NUM_OUTCOMES = 22;
 std::vector<std::string> Innings::OUTCOMES = { "0", "1", "1b", "1lb", "1nb", "1wd",
                                               "2", "2b", "2lb", "2nb", "2wd",
@@ -204,6 +203,7 @@ Player* FieldingManager::select_catcher(Player* bowler, int dism_type) {
 
 
 //~~~~~~~~~~~~~~ Innings implementations ~~~~~~~~~~~~~~//
+int Innings::NO_INNS = 0;
 
 // Printing variables
 bool Innings::AUSTRALIAN_STYLE = false;
@@ -214,9 +214,10 @@ std::string Innings::BUFFER = "   ";
 Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead, PitchFactors* c_pitch) : 
     overs(0), balls(0), legal_delivs(0), team_score(0),
     team_bat(c_team_bat), team_bowl(c_team_bowl), lead(c_lead), 
-    wkts(0), pitch(c_pitch), man_field(c_team_bowl->i_wk) {
+    wkts(0), pitch(c_pitch), man_field(c_team_bowl->i_wk), is_open(true) {
 
-  inns_no++;
+  NO_INNS++;
+  inns_no = NO_INNS;
   
   // Create BatterCards/BowlerCards for each player
   for (int i = 0; i < 11; i++) {
@@ -487,7 +488,7 @@ std::string Innings::check_state() {
     if (wkts == 10) {
         // Bowled out
         is_open = false;
-        return "allout"
+        return "allout";
     }
 
 
@@ -505,6 +506,8 @@ std::string Innings::check_state() {
     if (last_over->get_num_legal_delivs() == 6) {
         end_over();
     }
+
+    return "";
 
 }
 
@@ -620,7 +623,7 @@ std::string Innings::simulate(bool quiet) {
             << DIVIDER << std::endl;
     }
 
-    std::string state;
+  std::string state;
   while (is_open) {
     // Simulate a single delivery
     simulate_delivery();
@@ -839,9 +842,22 @@ void Match::change_innings() {
 }
 
 
-bool Match::DECIDE_FOLLOW_ON(int lead) {
-    return false;
-    // TODO: fit a model here
+bool Match::DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score) {
+    if (lead > 200) return false;
+
+    // Decision tree model
+    double fo_prob;
+
+    if (lead >= -320) {
+        if (match_balls >= 1215) fo_prob = 0.2105263;
+        else {
+
+        }
+    }
+    else fo_prob = 0.8571428;
+
+    return ((double)rand() / (RAND_MAX)) < fo_prob;
+
 }
 
 
@@ -891,9 +907,7 @@ void Match::start(bool quiet) {
         // Determine if game has been won
         if (inns_i == 2 && inns_state == "allout" && lead < 0) {
             // Win by innings
-            winner = inns[inns_i]->get_bowl_team();
-            win_type = 2;
-            margin = -lead;
+            ending = new EndInningsWin(inns[inns_i]->get_bowl_team(), -lead);
             break;
 
         } else if (inns_i == 3) {
@@ -901,31 +915,24 @@ void Match::start(bool quiet) {
             if (inns_state == "allout") {
                 // Tie
                 if (lead == 0) { 
-                    winner = nullptr;
-                    win_type = 3;
-                    margin = 0;
+                    ending = new EndTie();
                 } else {
                     // Bowled out
-                    winner = inns[inns_i]->get_bowl_team();
-                    win_type = 1;
-                    margin = -lead;
+                    ending = new EndBowlWin(inns[inns_i]->get_bowl_team(), -lead);
                 }
 
-            } else if (inns_state == "won") {
+            } else if (inns_state == "win") {
                 // Win chasing
-                winner = inns[inns_i]->get_bat_team();
-                win_type = 0;
-                margin = 10 - inns[inns_i]->get_wkts();
+                ending = new EndChaseWin(inns[inns_i]->get_bat_team(), 10 - inns[inns_i]->get_wkts());
 
             } else if (inns_state == "draw") {
                 // Draw
-                winner = nullptr;
-                win_type = 4;
-                margin = -lead;
+                ending = new EndDraw();
             } else {
                 // Raise an exception, Innings::simulate() has returned something unknown
+                std::cout << "help " << inns_state << std::endl;
             }
-            
+            break;
         } else {
             // Change innings
             change_innings();
@@ -937,15 +944,21 @@ void Match::start(bool quiet) {
 std::string Match::print_all() {
     std::string output;
     for (int i = 0; i < 4; i++) {
-        output += inns[i]->print();
+        if (inns[i] != nullptr) output += inns[i]->print();
     }
+
+    output += "\n" + ending->print() + ".\n";
 
     return output;
 }
 
 
 Match::~Match() {
+    // Delete each innings
     for (int i = 0; i < 4; i++) {
         delete inns[i];
     }
+
+    delete ending;
+    
 }

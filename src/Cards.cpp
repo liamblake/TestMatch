@@ -700,3 +700,35 @@ std::string Milestone::get_desc() {
 //BatMilestone::BatMilestone() {
 //
 //}
+
+EndMatch::EndMatch(Team* c_winner, int c_margin) : winner(c_winner), margin(c_margin) {}
+
+EndInningsWin::EndInningsWin(Team* c_winner, int c_runs) : EndMatch(c_winner, c_runs) {}
+
+std::string EndInningsWin::print() {
+    return winner->name + " won by an innings and " + std::to_string(margin) + " runs";
+}
+
+EndBowlWin::EndBowlWin(Team* c_winner, int c_runs) : EndMatch(c_winner, c_runs) {}
+
+std::string EndBowlWin::print() {
+    return winner->name + " won by " + std::to_string(margin) + " runs";
+}
+
+EndChaseWin::EndChaseWin(Team* c_winner, int c_wkts) : EndMatch(c_winner, c_wkts) {}
+
+std::string EndChaseWin::print() {
+    return winner->name + " won by " + std::to_string(margin) + " wickets";
+}
+
+EndDraw::EndDraw() : EndMatch(nullptr, 0) {}
+
+std::string EndDraw::print() {
+    return "Match Drawn";
+}
+
+EndTie::EndTie() {}
+
+std::string EndTie::print() {
+    return "Match Tied";
+}

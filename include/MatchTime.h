@@ -11,17 +11,8 @@
 #include <utility>
 #include <iostream>
 
-// TIME ALREADY EXISTS IN THE UTILITY HEADER - EITHER RENAME OR LOOK AT OPTION
-// PERHAPS OVERLOADED tm TYPE FROM ctime HEADER
-
-// Parameters
-
-//static double BOUND_DUR = 30;
 
 
-/* MatchTime class
-
-*/
 class MatchTime {
 
   private:
@@ -51,7 +42,7 @@ class MatchTime {
     //static double DEL_STDDUR = 0.5;
     static double RUN_DUR;
 
-    //std::chrono::duration time;
+    TimeOfDay time;
     int day;
 
     std::string state;
@@ -66,20 +57,24 @@ class MatchTime {
         "Session 3"     - As above
         "Drinks 3"      - As above
         "Innings Break" - Break between team innings
+        "Stumps"        - End of day
         "Rain Delay"    - Currently unused
     */
 
     // Indicates whether current session has been extended by 30 minutes
     bool extended;
 
+    // Indicates whether drinks have been taken in the current session
+    bool after_drinks;
+
     // Private utility functions
     bool take_lunch();
     bool take_tea();
     bool close_day();
-    bool check_state_change();
+    void check_state_change();
 
   public:
-    // Default staticructor - start of match, day 1
+    // Default constructor - start of match, day 1
     MatchTime();
     //MatchTime(Time c_tm, int c_day, std::string c_state);
 
@@ -94,12 +89,13 @@ class MatchTime {
     // Returned strings indicate match state, used for error checking and interaction with Match object
 
     // Getters
-    //std::hh_mm_ss get_time();
+    TimeOfDay get_time();
     int get_day();
     std::string get_state();
 
     // Overloaded operators
-    //friend std::ostream& operator<<(std::ostream& os, static MatchTime& mt);
+    operator std::string();
+
 };
 
 

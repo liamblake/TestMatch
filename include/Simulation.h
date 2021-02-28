@@ -300,6 +300,7 @@ class Match {
     int inns_i;
     Innings* inns[4];
     int lead;
+    int match_balls;
 
     // Storing winner detail
     EndMatch* ending;

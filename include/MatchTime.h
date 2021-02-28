@@ -42,7 +42,7 @@ class MatchTime {
     //static double DEL_STDDUR = 0.5;
     static double RUN_DUR;
 
-    TimeOfDay time;
+    //TimeOfDay time;
     int day;
 
     std::string state;
@@ -89,7 +89,7 @@ class MatchTime {
     // Returned strings indicate match state, used for error checking and interaction with Match object
 
     // Getters
-    TimeOfDay get_time();
+    //TimeOfDay get_time();
     int get_day();
     std::string get_state();
 

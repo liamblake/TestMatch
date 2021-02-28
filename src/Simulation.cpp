@@ -824,7 +824,7 @@ void Match::change_innings() {
     
     Team* new_bat, *new_bowl;
 
-    if (inns_i == 1 && DECIDE_FOLLOW_ON(lead)) {
+    if (inns_i == 1 && DECIDE_FOLLOW_ON(lead, match_balls, 0)) {
         // Follow on
         new_bat = inns[inns_i]->get_bat_team();
         new_bowl = inns[inns_i]->get_bowl_team();
@@ -855,7 +855,7 @@ bool Match::DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score) {
         }
     }
     else fo_prob = 0.8571428;
-
+    return true;
     return ((double)rand() / (RAND_MAX)) < fo_prob;
 
 }

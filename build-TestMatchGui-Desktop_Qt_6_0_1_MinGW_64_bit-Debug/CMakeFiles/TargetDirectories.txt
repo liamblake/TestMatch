@@ -1,0 +1,5 @@
+D:/liaml/Documents/Repos/TestMatch/build-TestMatchGui-Desktop_Qt_6_0_1_MinGW_64_bit-Debug/CMakeFiles/TestMatchGui.dir
+D:/liaml/Documents/Repos/TestMatch/build-TestMatchGui-Desktop_Qt_6_0_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+D:/liaml/Documents/Repos/TestMatch/build-TestMatchGui-Desktop_Qt_6_0_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+D:/liaml/Documents/Repos/TestMatch/build-TestMatchGui-Desktop_Qt_6_0_1_MinGW_64_bit-Debug/CMakeFiles/TestMatchGui_autogen_timestamp_deps.dir
+D:/liaml/Documents/Repos/TestMatch/build-TestMatchGui-Desktop_Qt_6_0_1_MinGW_64_bit-Debug/CMakeFiles/TestMatchGui_autogen.dir

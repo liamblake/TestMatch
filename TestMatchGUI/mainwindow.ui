@@ -6,15 +6,77 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>673</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>TestMatch</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton_tb">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>70</y>
+      <width>391</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Team Builder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_ms">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>130</y>
+      <width>391</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Match Simulator</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_ss">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>250</y>
+      <width>391</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scenario Simulator</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_sv">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>190</y>
+      <width>391</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Scorecard Viewer</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>673</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>

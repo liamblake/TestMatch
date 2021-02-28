@@ -32,6 +32,9 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        scorecardviewer.cpp
+        scorecardviewer.h
+        scorecardviewer.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

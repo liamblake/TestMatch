@@ -1,6 +1,0 @@
-# ninja log v5
-1	416	6361995184489889	TestMatchGui_autogen/timestamp	cb17dc00cbdab97f
-418	2169	6361995201972387	CMakeFiles/TestMatchGui.dir/TestMatchGui_autogen/mocs_compilation.cpp.obj	e582a4b96e59a7da
-417	2298	6361995203229102	CMakeFiles/TestMatchGui.dir/main.cpp.obj	a04c758b499ee083
-420	2390	6361995204186523	CMakeFiles/TestMatchGui.dir/mainwindow.cpp.obj	ef230f295f234c3
-2390	2601	6361995206190717	TestMatchGui.exe	b3f1ec5414cb99e0

@@ -320,9 +320,9 @@ D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/mainwindow.h
  mdp:D:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include/wchar.h
  mdp:D:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include/wctype.h
  mdp:D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/scorecardviewer.h
+D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/main.cpp
 D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/mainwindow.cpp
  uic:./ui_mainwindow.h
-D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/main.cpp
 D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/scorecardviewer.h
  mmc:Q_OBJECT
  mdp:D:/liaml/Documents/Repos/TestMatch/TestMatchGUI/scorecardviewer.h

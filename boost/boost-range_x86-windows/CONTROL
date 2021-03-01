@@ -1,0 +1,8 @@
+Package: boost-range
+Version: 1.73.0
+Depends: boost-array, boost-assert, boost-concept-check, boost-config, boost-container-hash, boost-conversion, boost-core, boost-detail, boost-integer, boost-iterator, boost-mpl, boost-numeric-conversion, boost-optional, boost-preprocessor, boost-regex, boost-static-assert, boost-tuple, boost-type-traits, boost-utility, boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: 9708d17c0a33e7fa93498d39cf76cbb451481610
+Description: Boost range module
+Type: Port

@@ -1,0 +1,8 @@
+Package: boost-utility
+Version: 1.73.0
+Depends: boost-config, boost-container-hash, boost-core, boost-detail, boost-integer, boost-io, boost-preprocessor, boost-static-assert, boost-throw-exception, boost-type-traits, boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: e29d080cb6175d568bc0e2cd7263e636d56e3a5d
+Description: Boost utility module
+Type: Port

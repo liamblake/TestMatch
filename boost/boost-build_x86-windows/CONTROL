@@ -1,0 +1,8 @@
+Package: boost-build
+Version: 1.73.0
+Port-Version: 2
+Architecture: x86-windows
+Multi-Arch: same
+Abi: a52bafb8ee772343d95d7f890c429d3e4438ce1f
+Description: Boost.Build
+Type: Port

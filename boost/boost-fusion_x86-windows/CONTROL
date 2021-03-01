@@ -1,0 +1,8 @@
+Package: boost-fusion
+Version: 1.73.0
+Depends: boost-config, boost-container-hash, boost-core, boost-detail, boost-function-types, boost-mpl, boost-preprocessor, boost-static-assert, boost-tuple, boost-type-traits, boost-typeof, boost-utility, boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: a71a11ce8c414be52556e590b8e3dd83a27ec756
+Description: Boost fusion module
+Type: Port

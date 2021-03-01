@@ -1,0 +1,8 @@
+Package: boost-preprocessor
+Version: 1.73.0
+Depends: boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: 001f52a9ae50e444275c15b914cc3ae765ec2736
+Description: Boost preprocessor module
+Type: Port

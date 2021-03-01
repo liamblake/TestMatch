@@ -1,0 +1,8 @@
+Package: boost-numeric-conversion
+Version: 1.73.0
+Depends: boost-compatibility, boost-config, boost-conversion, boost-core, boost-detail, boost-integer, boost-preprocessor, boost-throw-exception, boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: 80d5a2d648401782b6a08ac4c0290ccc93c7a422
+Description: Boost numeric_conversion module
+Type: Port

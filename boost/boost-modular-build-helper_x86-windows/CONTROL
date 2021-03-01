@@ -1,0 +1,7 @@
+Package: boost-modular-build-helper
+Version: 1.73.0
+Port-Version: 3
+Architecture: x86-windows
+Multi-Arch: same
+Abi: ff88b68d38b46f9fb49606db00b9cd9d19e8105d
+Type: Port

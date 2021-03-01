@@ -1,0 +1,8 @@
+Package: boost-detail
+Version: 1.73.0
+Depends: boost-compatibility, boost-config, boost-preprocessor, boost-vcpkg-helpers
+Architecture: x86-windows
+Multi-Arch: same
+Abi: 9cf07d58480143b0be3cd9f0b84c6b9d5ed6fe31
+Description: Boost detail module
+Type: Port

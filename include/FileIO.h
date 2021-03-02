@@ -15,27 +15,23 @@
 #include "Cards.h"
 #include "Simulation.h"
 
-// Rudimentary representation of match scorecard, for saving/loading file
-struct ScorecardData {
-    // Needs a corresponding match object
-    Match* match;
-};
 
-// Rudimentary representation of ball-by-ball
-struct BallByBall {
-    // Needs a corresponding match object
-    Match* match;
+template <class T>
+void save_data(T* obj, std::string filename);
 
-};
+template <class T>
+T* load_data(std::string filename);
 
-Player* csv2player(std::string line);
 
-Team* load_team(std::string dir);
-void save_team(Team team, std::string dir);
+// Not sure if the following are used, hence the commenta
+// Player* csv2player(std::string line);
 
-Venue* csv2venue(std::string line);
+// Team* load_team(std::string dir);
+// void save_team(Team team, std::string dir);
 
-std::pair<Venue**, int> load_venues(std::string dir = "data/venues.dat");
+// Venue* csv2venue(std::string line);
+
+// std::pair<Venue**, int> load_venues(std::string dir = "data/venues.dat");
 
 
 #endif // FILEIO_H

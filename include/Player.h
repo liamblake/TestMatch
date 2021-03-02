@@ -35,6 +35,23 @@ struct Stats {
 	bool bat_hand;		// Batting hand (false = right, true = left)
 	int bowl_type = 0;		// Bowling type, encoded as integer, see Utility.h for encodings
 
+	// Serialisation
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version) {
+		ar << innings;
+		ar << bat_avg;
+		ar << bat_sr;
+		ar << balls_bowled;
+		ar << bowl_avg;
+		ar << bowl_sr;
+		ar << bowl_econ;
+		ar << bat_hand;
+		ar << bowl_type;
+	};
+
+	// Oh how I wish C++ had introspection
+	friend bool operator==(const Stats& lhs, const Stats& rhs); 
+
 };
 
 
@@ -86,6 +103,12 @@ class Player
 	// For dealing with cheating part-time bowlers
 	void inflate_bowl_avg();
 
+	// Serialisation methods
+	template <class Archive>
+	void serialize(Archive & ar, const unsigned int version);
+
+	friend bool operator==(const Player& lhs, const Player& rhs); 
+
 };
 
 /**
@@ -110,7 +133,9 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
  * the struct also includes 4 integers storing indices pointing to the captain, wicketkeeper and the two opening 
  * bowlers in the playing XI array.
 */
+// Need to fix data encapsulation - make things private and have getters/setters
 struct Team {
+
 	std::string name;
 	Player* players[11];
 
@@ -119,6 +144,20 @@ struct Team {
 	int i_wk;
 	int i_bowl1;
 	int i_bowl2;
+
+	// Serialisation
+	template <class Archive>
+	void serialize(Archive & ar, const unsigned int version) {
+		ar << name;
+		ar << players;
+		ar << i_captain;
+		ar << i_wk;
+		ar << i_bowl1;
+		ar << i_bowl2;
+	};
+
+	friend bool operator==(const Team& lhs, const Team& rhs);
+
 };
 
 
@@ -131,5 +170,7 @@ struct Team {
  * @relatesals Team
 */
 std::ostream& operator<<(std::ostream& os, const Team& team);
+// Not sure if I avtually use this anywhere, but oh well
+
 
 #endif // PLAYER_H

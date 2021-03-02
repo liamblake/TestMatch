@@ -8,6 +8,18 @@
 using namespace std;
 
 
+bool operator==(const Stats& lhs, const Stats& rhs) {
+	return (lhs.innings == rhs.innings) && 
+		   (lhs.bat_avg == rhs.bat_avg) && 
+		   (lhs.bat_sr == rhs.bat_sr) && 
+		   (lhs.balls_bowled == rhs.balls_bowled) &&
+		   (lhs.bowl_avg == rhs.bowl_avg) && 
+		   (lhs.bowl_sr == rhs.bowl_sr) &&
+		   (lhs.bowl_econ == rhs.bowl_econ) && 
+		   (lhs.bat_hand == rhs.bat_hand) &&
+		   (lhs.bowl_type == rhs.bowl_type);  
+}
+
 
 Player::Player(string c_first_name, string c_last_name, string c_initials, Stats stats) {
 	first_name = c_first_name;
@@ -93,6 +105,21 @@ void Player::inflate_bowl_avg() {
 	player_stats.bowl_sr *= INFLATION_FACTOR;
 }
 
+template <class Archive>
+void Player::serialize(Archive & ar, const unsigned int version) {
+	ar << first_name;
+	ar << last_name;
+	ar << initials;
+	ar << player_stats;
+}
+
+bool operator==(const Player& lhs, const Player& rhs) {
+	return (lhs.first_name == rhs.first_name) &&
+		   (lhs.last_name == rhs.last_name) &&
+		   (lhs.initials == rhs.initials) &&
+		   (lhs.player_stats == rhs.player_stats);
+}
+
 
 /**
  * 
@@ -129,6 +156,28 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const) {
 //template Player** sort_array<int>(Player** list, int len, int (Player::*sort_val)() const);
 template Player** sort_array<double>(Player** list, int len, double (Player::*sort_val)() const);
 //template Player** sort_array<std::string>(Player** list, int len, std::string (Player::*sort_val)() const);
+
+
+
+bool operator==(const Team& lhs, const Team& rhs) {
+	bool partial = (lhs.name == rhs.name) &&
+	       		   (lhs.i_captain == rhs.i_captain) &&
+				   (lhs.i_wk == rhs.i_wk) &&
+				   (lhs.i_bowl1 == rhs.i_bowl1) &&
+				   (lhs.i_bowl2 == rhs.i_bowl2);
+
+	if (partial) {
+
+		// Compare each player
+		for (int i = 0; i < 11; i++) {
+			if (lhs.players[i] != rhs.players[i]) return false;
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 
 

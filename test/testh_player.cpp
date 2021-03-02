@@ -7,7 +7,7 @@
 #include <string>
 
 #include "Player.h"
-
+#include "FileIO.h"
 
 using namespace boost::unit_test;
 
@@ -54,6 +54,15 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
 
 	BOOST_TEST(tp_bat.get_bat_hand() == false);
 	BOOST_TEST(tp_bat.get_bowl_type() == 5);
+
+	// Test serialisation
+	save_data<Player>(&tp_bat, "test_loosebuschange.tmpy");
+	Player* tp_new = load_data<Player>("test_loosebuschange.tmpy")
+	BOOST_TEST(*tp_new == tp_bat);
+	BOOST_TEST(tp_new != &tp_bat);
+
+	delete tp_new;
+
 
 }
 

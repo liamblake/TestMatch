@@ -10,6 +10,10 @@
 #include <vector>
 #include <string>
 #include <utility>
+#include <fstream>
+
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
 #include "Player.h"
 #include "Cards.h"
@@ -17,10 +21,32 @@
 
 
 template <class T>
-void save_data(T* obj, std::string filename);
+inline void save_data(T* obj, std::string filename) {
+    // Open character archive for output
+    std::ofstream ofs(filename);
+
+    // Save data 
+    {
+        boost::archive::text_oarchive oa(ofs);
+        //oa << *obj;
+    }
+};
 
 template <class T>
-T* load_data(std::string filename);
+inline T load_data(std::string filename) {
+    // New object
+    T newobj;
+    {
+        // Create and open an archive for input
+        std::ifstream ifs(filename);
+        boost::archive::text_iarchive ia(ifs);
+
+        ia >> newobj;
+    }
+
+    return newobj;
+};
+
 
 
 // Not sure if the following are used, hence the commenta

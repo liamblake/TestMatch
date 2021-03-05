@@ -62,3 +62,14 @@
 5	76	6362537573359772	TestMatchGui_autogen/timestamp	c91e2e33e1d6f412
 77	1553	6362537588061963	CMakeFiles/TestMatchGui.dir/TestMatchGui_autogen/mocs_compilation.cpp.obj	2586fbf0433e493d
 1553	1795	6362537590287454	TestMatchGui.exe	98aa28c128790e2c
+78	323	6363730454621459	TestMatchGui_autogen/timestamp	c91e2e33e1d6f412
+323	3716	6363730488504969	CMakeFiles/TestMatchGui.dir/TestMatchGui_autogen/mocs_compilation.cpp.obj	2586fbf0433e493d
+325	3775	6363730489103368	CMakeFiles/TestMatchGui.dir/scorecardviewer.cpp.obj	d9357c11199177d9
+3775	5338	6363730504628046	TestMatchGui.exe	98aa28c128790e2c
+5	94	6363744351808006	TestMatchGui_autogen/timestamp	c91e2e33e1d6f412
+94	1890	6363744369734346	CMakeFiles/TestMatchGui.dir/TestMatchGui_autogen/mocs_compilation.cpp.obj	2586fbf0433e493d
+1891	2612	6363744376848709	TestMatchGui.exe	98aa28c128790e2c
+5	82	6363745376640591	TestMatchGui_autogen/timestamp	c91e2e33e1d6f412
+82	1589	6363745391666980	CMakeFiles/TestMatchGui.dir/TestMatchGui_autogen/mocs_compilation.cpp.obj	2586fbf0433e493d
+84	1960	6363745395360678	CMakeFiles/TestMatchGui.dir/scorecardviewer.cpp.obj	d9357c11199177d9
+1960	2209	6363745397765003	TestMatchGui.exe	98aa28c128790e2c

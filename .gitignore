@@ -10,7 +10,7 @@
 *.html
 data\delivery\bbb_full.csv
 data\analysis\initial_experiments.R
-boost\
+boost
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

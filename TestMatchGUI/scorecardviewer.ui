@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,6 +57,13 @@
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QTabWidget" name="tab_sv">
        <property name="currentIndex">
         <number>0</number>
@@ -77,7 +84,7 @@
          <property name="currentIndex">
           <number>0</number>
          </property>
-         <widget class="QWidget" name="page_15">
+         <widget class="QWidget" name="inns1">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -89,8 +96,137 @@
           <attribute name="label">
            <string>Page 1</string>
           </attribute>
+          <widget class="QWidget" name="verticalLayoutWidget_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>801</width>
+             <height>431</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QTableWidget" name="tableWidget">
+              <row>
+               <property name="text">
+                <string/>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string/>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string/>
+               </property>
+              </row>
+              <row>
+               <property name="text">
+                <string/>
+               </property>
+              </row>
+              <column>
+               <property name="text">
+                <string>Batters</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>R</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>B</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>4s</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>6s</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>SR</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Fall of wickets:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>Did not bat:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_2">
+              <row>
+               <property name="text">
+                <string/>
+               </property>
+              </row>
+              <column>
+               <property name="text">
+                <string>Bowling</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>O</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>M</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>R</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>W</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Econ</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Wd</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>NB</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
-         <widget class="QWidget" name="page_16">
+         <widget class="QWidget" name="inns2">
           <property name="geometry">
            <rect>
             <x>0</x>

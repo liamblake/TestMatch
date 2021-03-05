@@ -342,7 +342,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\FileIO.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug UnitTests|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Demonstrative|x64'">true</ExcludedFromBuild>

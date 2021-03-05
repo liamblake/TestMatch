@@ -1,8 +1,0 @@
-Package: boost-bind
-Version: 1.73.0
-Depends: boost-config, boost-core, boost-detail, boost-vcpkg-helpers
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 1c8a6f1fecdf67bdf9bc7b14c9f9aee9e9127588
-Description: Boost bind module
-Type: Port

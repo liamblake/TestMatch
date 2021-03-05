@@ -1,8 +1,0 @@
-Package: boost-container-hash
-Version: 1.73.0
-Depends: boost-assert, boost-compatibility, boost-config, boost-core, boost-detail, boost-integer, boost-static-assert, boost-type-traits, boost-vcpkg-helpers
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 49fcb9e627b3390f96472050d3fea35981b04975
-Description: Boost container_hash module
-Type: Port

@@ -1,7 +1,0 @@
-Package: boost-vcpkg-helpers
-Version: 7
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 19da0a83a5018453c2494576755bb5f68470ccac
-Description: a set of vcpkg-internal scripts used to modularize boost
-Type: Port

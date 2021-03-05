@@ -1,8 +1,0 @@
-Package: boost-functional
-Version: 1.73.0
-Depends: boost-config, boost-core, boost-mpl, boost-preprocessor, boost-type-traits, boost-typeof, boost-utility, boost-vcpkg-helpers
-Architecture: x86-windows
-Multi-Arch: same
-Abi: 39b0ab53e90ef9d8d7769634b84652bb3e681419
-Description: Boost functional module
-Type: Port

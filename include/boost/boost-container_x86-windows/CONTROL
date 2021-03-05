@@ -1,8 +1,0 @@
-Package: boost-container
-Version: 1.73.0
-Depends: boost-assert, boost-build, boost-config, boost-container-hash, boost-core, boost-integer, boost-intrusive, boost-modular-build-helper, boost-move, boost-static-assert, boost-type-traits, boost-vcpkg-helpers
-Architecture: x86-windows
-Multi-Arch: same
-Abi: b4db36761ce72b479e920a85cf35f9028214808a
-Description: Boost container module
-Type: Port

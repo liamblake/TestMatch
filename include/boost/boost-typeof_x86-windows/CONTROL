@@ -1,8 +1,0 @@
-Package: boost-typeof
-Version: 1.73.0
-Depends: boost-config, boost-preprocessor, boost-type-traits, boost-vcpkg-helpers
-Architecture: x86-windows
-Multi-Arch: same
-Abi: bc4e9d0d445bd32f1c1c16d66dc9064b044cbc04
-Description: Boost typeof module
-Type: Port

@@ -75,6 +75,8 @@ class Player
 	Stats player_stats;		// Player career statistics
 
   public:
+	  Player() {};
+
 	// Explicit constructor
 	Player(std::string c_first_name, std::string c_last_name, std::string c_initials, Stats stats);
 	
@@ -107,7 +109,12 @@ class Player
 
 	// Serialisation methods
 	template <class Archive>
-	void serialize(Archive & ar, const unsigned int version);
+	void serialize(Archive& ar, const unsigned int version) {
+		ar& first_name;
+		ar& last_name;
+		ar& initials;
+		ar& player_stats;
+	};
 
 
 	friend bool operator==(const Player& lhs, const Player& rhs); 

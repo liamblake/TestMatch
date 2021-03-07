@@ -105,14 +105,6 @@ void Player::inflate_bowl_avg() {
 	player_stats.bowl_sr *= INFLATION_FACTOR;
 }
 
-template <class Archive>
-void Player::serialize(Archive & ar, const unsigned int version) {
-	ar << first_name;
-	ar << last_name;
-	ar << initials;
-	ar << player_stats;
-}
-
 bool operator==(const Player& lhs, const Player& rhs) {
 	return (lhs.first_name == rhs.first_name) &&
 		   (lhs.last_name == rhs.last_name) &&

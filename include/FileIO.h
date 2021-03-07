@@ -7,13 +7,11 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include <vector>
 #include <string>
-#include <utility>
 #include <fstream>
 
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 #include "Player.h"
 #include "Cards.h"
@@ -27,21 +25,23 @@ inline void save_data(T* obj, std::string filename) {
 
     // Save data 
     {
-        boost::archive::text_oarchive oa(ofs);
-        //oa << *obj;
+        boost::archive::binary_oarchive oa(ofs);
+        oa << *obj;
     }
 };
 
 template <class T>
-inline T load_data(std::string filename) {
+inline T* load_data(std::string filename) {
     // New object
-    T newobj;
+    T* newobj;
     {
         // Create and open an archive for input
         std::ifstream ifs(filename);
-        boost::archive::text_iarchive ia(ifs);
+        boost::archive::binary_iarchive ia(ifs);
 
-        ia >> newobj;
+        T temp;
+        ia >> temp;
+        newobj = new T(temp);
     }
 
     return newobj;

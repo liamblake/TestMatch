@@ -140,8 +140,8 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 		{"4b", "TA Boult 2.2-1-27-0"},
 		{"1lb", "TA Boult 2.3-1-27-0"},
 		{"4lb", "TA Boult 2.4-1-27-0"},
-		{"1w", "TA Boult 2.4-1-28-0"},
-		{"5w", "TA Boult 2.4-1-33-0"},
+		{"1wd", "TA Boult 2.4-1-28-0"},
+		{"5wd", "TA Boult 2.4-1-33-0"},
 		{"W", "TA Boult 2.5-1-33-1"} 
 	};
 

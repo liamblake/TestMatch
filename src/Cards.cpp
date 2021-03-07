@@ -435,7 +435,7 @@ void BowlerCard::update_score(string outcome) {
         stats.spell_runs += outcome.at(0) - '0';
         is_maiden = false;
 
-    } else if (outcome.back() == 'wd') {
+    } else if (outcome.substr(1,2) == "wd") {
         stats.runs += outcome.at(0) - '0';
         stats.spell_runs += outcome.at(0) - '0';
         is_maiden = false;

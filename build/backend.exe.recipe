@@ -2,12 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\liaml\Documents\Repos\TestMatch\bin\backend.exe</FullPath>
+      <FullPath>D:\liaml\Documents\Repos\TestMatch\TestMatch-Backend\bin\backend.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\liaml\Documents\Repos\TestMatch\models\keras_bbb.onnx</FullPath>
+      <FullPath>D:\liaml\Documents\Repos\TestMatch\TestMatch-Backend\models\keras_bbb.onnx</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

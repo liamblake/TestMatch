@@ -40,22 +40,21 @@ struct Stats {
 	// Serialisation
 	template<class Archive>
 	void serialize(Archive & ar, const unsigned int version) {
-		ar << innings;
-		ar << bat_avg;
-		ar << bat_sr;
-		ar << balls_bowled;
-		ar << bowl_avg;
-		ar << bowl_sr;
-		ar << bowl_econ;
-		ar << bat_hand;
-		ar << bowl_type;
+		ar & innings;
+		ar & bat_avg;
+		ar & bat_sr;
+		ar & balls_bowled;
+		ar & bowl_avg;
+		ar & bowl_sr;
+		ar & bowl_econ;
+		ar & bat_hand;
+		ar & bowl_type;
 	};
-
-	// Oh how I wish C++ had introspection
-	friend bool operator==(const Stats& lhs, const Stats& rhs); 
 
 };
 
+// Oh how I wish C++ had introspection
+bool operator==(const Stats& lhs, const Stats& rhs);
 
 /**
  * @brief Storage for all detail describing a player
@@ -110,10 +109,10 @@ class Player
 	// Serialisation methods
 	template <class Archive>
 	void serialize(Archive& ar, const unsigned int version) {
-		ar& first_name;
-		ar& last_name;
-		ar& initials;
-		ar& player_stats;
+		ar & first_name;
+		ar & last_name;
+		ar & initials;
+		ar & player_stats;
 	};
 
 
@@ -170,17 +169,6 @@ struct Team {
 
 };
 
-
-
-/**
- * @brief Prints to the console a nicely formatted playing XI from a Team struct.
- * @param os 
- * @param team Team object to be printed.
- * @return 
- * @relatesals Team
-*/
-std::ostream& operator<<(std::ostream& os, const Team& team);
-// Not sure if I avtually use this anywhere, but oh well
 
 
 #endif // PLAYER_H

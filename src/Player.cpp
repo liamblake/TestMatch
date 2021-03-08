@@ -173,29 +173,3 @@ bool operator==(const Team& lhs, const Team& rhs) {
 
 
 
-
-// Overload of << operator for printing team list to console
-ostream& operator<<(ostream& os, const Team& team) {
-	os << team.name << endl;
-
-	// Print each player
-	for (int i = 0; i < 11; i++) {
-		os << i + 1 << ". " << team.players[i]->get_full_initials();
-		if (i == team.i_captain) {
-			os << " (c";
-			if (i == team.i_wk) {
-				os << ", wk";
-			}
-			os << ")";
-
-		} else if (i == team.i_wk) {
-			os << " (wk)";
-		}
-
-
-	os << endl;
-	}
-
-	return os;
-	
-}

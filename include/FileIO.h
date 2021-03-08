@@ -10,8 +10,8 @@
 #include <string>
 #include <fstream>
 
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
 #include "Player.h"
 #include "Cards.h"
@@ -25,26 +25,19 @@ inline void save_data(T* obj, std::string filename) {
 
     // Save data 
     {
-        boost::archive::binary_oarchive oa(ofs);
+        boost::archive::text_oarchive oa(ofs);
         oa << *obj;
     }
 };
 
 template <class T>
-inline T* load_data(std::string filename) {
-    // New object
-    T* newobj;
-    {
+inline void load_data(T &new_obj, std::string filename) {
+
         // Create and open an archive for input
         std::ifstream ifs(filename);
-        boost::archive::binary_iarchive ia(ifs);
+        boost::archive::text_iarchive ia(ifs);
+        ia >> new_obj;
 
-        T temp;
-        ia >> temp;
-        newobj = new T(temp);
-    }
-
-    return newobj;
 };
 
 

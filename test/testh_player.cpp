@@ -13,27 +13,6 @@ using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE(test_header_player)
 
-//BOOST_AUTO_TEST_CASE(testclass_overcount) {
-//	// Default initialisation
-//	OverCount oc;
-//
-//	BOOST_TEST(oc.as_balls() == 0);
-//	BOOST_TEST(std::string(oc) == "0.0");
-//	BOOST_TEST(float(oc) == 0.0);
-//
-//	// Iterator operands
-//	BOOST_TEST((++oc).as_balls() == 1);
-//	BOOST_TEST((oc++).as_balls() == 1);
-//	BOOST_TEST(oc.as_balls() == 2);
-//
-//	// Other constructor
-//	OverCount oc2 (7,4);
-//	BOOST_TEST(oc2.as_balls() == 46);
-//	BOOST_TEST(std::string(oc2) == "7.4");
-//	BOOST_TEST(float(oc2) == 7.4f);
-//
-//}
-
 BOOST_AUTO_TEST_CASE(testclass_player) {
 
 	Player tp_bat("Marnus", "Labuschagne", "M", { 23, 63.43, 56.52, 756, 38.66,  63.0, 3.68, false, 5 });
@@ -56,11 +35,10 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
 	BOOST_TEST(tp_bat.get_bowl_type() == 5);
 
 	// Test serialisation
-	save_data<Player>(&tp_bat, "test/test_loosebuschange.tmpl");
+	save_data<Player>(&tp_bat, "test/testfiles/testfile_serial_player.tmpy");
 	Player tp_new;
-	load_data<Player>(tp_new, "test_loosebuschange.tmpl");
-	BOOST_CHECK_EQUAL(tp_new, tp_bat);
-	//BOOST_TEST(tp_new != &tp_bat);
+	load_data<Player>(tp_new, "test/testfiles/testfile_serial_player.tmpt");
+	BOOST_CHECK(tp_new == tp_bat);
 
 	//delete tp_new;
 

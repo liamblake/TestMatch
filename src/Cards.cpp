@@ -345,6 +345,33 @@ BowlerCard::BowlerCard(Player* c_player) : PlayerCard(c_player), tiredness(c_pla
     is_maiden = true;
 
     active = false;
+
+    competency = DETERMINE_COMPETENCY(c_player);
+}
+
+
+int BowlerCard::DETERMINE_COMPETENCY(Player* player) {
+    if (player->get_innings() == 0) {
+        // Debut case - check role
+        // TODO: Implement this
+
+        return 2;
+    }
+
+
+    double avg_balls_per_match = (double)player->get_balls_bowled() / (double)player->get_innings();
+    
+    if (avg_balls_per_match > 5) {
+        // Full-time if bowled more than 5 overs per innings on average
+        return 0;
+    } else if (avg_balls_per_match > 0) {
+        // Part-time bowler
+        return 1;
+    } else {
+        // Never bowls
+        return 2;
+    }
+    
 }
 
 BowlStats BowlerCard::get_sim_stats(void) {
@@ -364,6 +391,10 @@ void BowlerCard::start_new_spell() {
 
 double BowlerCard::get_tiredness() {
     return tiredness.get_value();
+}
+
+int BowlerCard::get_competency() {
+    return competency;
 }
 
 void BowlerCard::over_rest() {

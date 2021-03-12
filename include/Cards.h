@@ -231,6 +231,9 @@ class BowlerCard : public PlayerCard {
 	BowlStats stats;
 	bool active;
 
+	// Flag indicating whether bowler is considered "part-time"
+	int competency;		// 0 - full-time bowler, 1 - part-time bowler, 2 - only bowl this player when the opposition is 2/700
+
 	// Rudimentary measure of bowler tiredness, improves with each passing over
 	Fatigue tiredness;
 
@@ -239,7 +242,8 @@ class BowlerCard : public PlayerCard {
 
 	void add_ball();
 
-	
+	// Determine whether a given player is considered a "parttime bowler"
+	static int DETERMINE_COMPETENCY(Player* player);
 
   public:
 	BowlerCard(Player* c_player);
@@ -250,6 +254,7 @@ class BowlerCard : public PlayerCard {
 
 	// Get fatigue
 	double get_tiredness();
+	int get_competency();
 
 	// Over passes (from same end) without bowler bowling - reduces fatigue
 	void over_rest();

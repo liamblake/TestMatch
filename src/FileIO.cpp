@@ -1,12 +1,10 @@
 #include <string>
 #include <fstream>
+#include <utility>
 
 #include "FileIO.h"
 #include "Player.h"
 #include "Utility.h"
-
-
-
 
 
 // Player* csv2player(std::string line) {
@@ -44,63 +42,18 @@
 //         name.erase(name.begin());
 //         string last_name = join_str(name, " ");
 
-//         // Create Player object
-//         //Player* output = new Player ();
-//         //return output;
-//         return nullptr;
+         // Create Player object
+         //Player* output = new Player ();
+         //return output;
+         return nullptr;
 
-// }
-
-
-// Team* load_team(string dir) {
-//     Team* output = new Team;
-//     string line;
-//     int i = 0;
-
-//     // Open file and parse line-by-line
-//     ifstream file (dir);
-//     if (file.is_open()) {
-
-//         while (getline(file, line)) {
-//             if (i == 0) {
-//                 output->name = line;
-
-//             } else if (i == 12) {
-//                 // Details on player roles
-//                 vector<string> nums = split_str(line);
-//                 output->i_captain = stoi(nums[0]) - 1;
-//                 output->i_wk = stoi(nums[1]) - 1;
-//                 output->i_bowl1 = stoi(nums[2]) - 1;
-//                 output->i_bowl2 = stoi(nums[3]) - 1;
-
-//             } else {
-
-//                 // Otherwise, create a new player
-//                 output->players[i - 1] = csv2player(line);
-//             }
-            
-//             i++;
-        
-//         }
-        
-//         file.close();
-//     } else {
-//         cout << "Failed to open file at " << dir << endl;
-//     }
-
-//     return output;
-
-// }
+}
 
 
-// void save_team(Team team, string dir) {
 
 
-//     // Open file for writing
-//     ofstream file (dir);
 
 
-//     file.close();
-
-
-// }
+std::pair<Venue**, int>* load_venues(std::string dir) {
+    std::pair<Venue**, int>* output = new std::pair<Venue**, int>* output;
+}

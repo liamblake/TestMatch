@@ -1,2 +1,0 @@
-D:\liaml\Documents\Repos\TestMatch\TestMatch-Backend\bin\models\keras_bbb.onnx
-D:\liaml\Documents\Repos\TestMatch\bin\models\keras_bbb.onnx

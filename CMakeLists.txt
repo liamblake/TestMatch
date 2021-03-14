@@ -1,24 +1,37 @@
 cmake_minimum_required(VERSION 3.0)
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
 project(testmatch_backend)
 
-#SET(BOOST_ROOT "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
-#SET (BOOST_INCLUDEDIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
-#set(Boost_LIBRARY_DIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost/stage/lib")
+set(Boost_DEBUG 1)
+set(Boost_COMPILER "-vc142")
+SET(BOOST_ROOT "D:/boost/boost_1_76_0")
+SET(Boost_INCLUDE_DIR "D:/boost/boost_1_76_0")
+#SET(BOOST_LIBRARYDIR "D:/boost/boost_1_76_0/stage/lib")
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+
+
+SET(GCC_COVERAGE_LINK_FLAGS "-mwindows")
+SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 ###############################################################################
 ## file globbing ##############################################################
 ###############################################################################
 
-set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp)
-file(GLOB_RECURSE includes include/*.cpp)
-file(GLOB sources_unittests src/test/unit/*.cpp)
+set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
+set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
+file(GLOB sources_unittests test/unit/*.cpp)
 
 ###############################################################################
 ## target definitions #########################################################
 ###############################################################################
 
 # add the data to the target, so it becomes visible in some IDE
-add_executable(testmatch_backend ${sources} ${data})
+add_library(testmatch_backend ${sources})
 
 # this lets me include files relative to the root src dir with a <> pair
 target_include_directories(testmatch_backend PUBLIC include)
@@ -27,13 +40,12 @@ target_include_directories(testmatch_backend PUBLIC include)
 ## dependencies ###############################################################
 ###############################################################################
 
-set(Boost_USE_STATIC_LIBS OFF) 
-set(Boost_USE_MULTITHREADED OFF)  
-set(Boost_USE_STATIC_RUNTIME OFF) 
-#set(BOOST_ROOT boost)
-find_package(Boost 1.36.0 COMPONENTS unit_test_framework serialization REQUIRED)
 
-include_directories (testmatch_backend ${Boost_INCLUDE_DIR})
+#set(BOOST_ROOT boost)
+set(Boost_USE_STATIC_LIBS OFF)
+find_package(Boost 1.76.0 COMPONENTS unit_test_framework serialization REQUIRED)
+
+include_directories(testmatch_backend ${Boost_INCLUDE_DIR}})
 target_link_libraries(testmatch_backend PUBLIC
   ${Boost_LIBRARIES}
 )
@@ -42,15 +54,17 @@ target_link_libraries(testmatch_backend PUBLIC
 ## testing ####################################################################
 ###############################################################################
 
-# this is for our testing framework
-# we don't add REQUIRED because it's just for testing
-add_executable(unit_tests ${sources_unittest} ${sources})
+add_executable(unit_tests WIN32 ${sources_unittest} ${sources})
 
-# we add this define to prevent collision with the main
-# this might be better solved by not adding the source with the main to the
-# testing target
 target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
+#target_link_options(unit_tests PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
 
+target_include_directories(unit_tests PUBLIC include)
+include_directories(unit_tests ${Boost_INCLUDE_DIR})
 target_link_libraries(unit_tests PUBLIC
   ${Boost_LIBRARIES}
 )
+
+#add_link_options(unit_tests "-mwindows")
+enable_testing()
+add_test(UnitTests unit_tests)

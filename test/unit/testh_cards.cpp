@@ -157,8 +157,10 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
 
 BOOST_AUTO_TEST_CASE(testclass_over) {
 	// Test objects
-	Ball b1 = { &tp_bat, &tp_bowl, "0", true, "" };
-	Ball b2 = { &tp_field, &tp_bat, "W", false, "" };
+	Ball* b1 = new Ball();
+	*b1 = { &tp_bat, &tp_bowl, "0", true, "" };
+	Ball* b2 = new Ball();
+	*b2 = { &tp_field, &tp_bat, "W", false, "" };
 	Over o(1);
 
 	// Default pointers
@@ -169,20 +171,20 @@ BOOST_AUTO_TEST_CASE(testclass_over) {
 	BOOST_TEST(o.get_num_legal_delivs() == 0);
 
 	// Add some balls
-	o.add_ball(&b1);
-	BOOST_TEST(o.get_first() == &b1);
-	BOOST_TEST(o.get_last() == &b1);
+	o.add_ball(b1);
+	BOOST_TEST(o.get_first() == b1);
+	BOOST_TEST(o.get_last() == b1);
 	BOOST_TEST(o.get_next() == nullptr);
 	BOOST_TEST(o.get_num_balls() == 1);
 	BOOST_TEST(o.get_num_legal_delivs() == 1);
 
-	o.add_ball(&b2);
-	BOOST_TEST(o.get_first() == &b1);
-	BOOST_TEST(o.get_last() == &b2);
+	o.add_ball(b2);
+	BOOST_TEST(o.get_first() == b1);
+	BOOST_TEST(o.get_last() == b2);
 	BOOST_TEST(o.get_next() == nullptr);
 	BOOST_TEST(o.get_num_balls() == 2);
 	BOOST_TEST(o.get_num_legal_delivs() == 1);
-	BOOST_TEST(b1.next = &b2);
+	BOOST_TEST(b1->next == b2);
 }
 
 

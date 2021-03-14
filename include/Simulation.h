@@ -237,6 +237,8 @@ class Innings {
     static bool AUSTRALIAN_STYLE;
     std::string score();
 
+    std::string print_fow();
+
     /**
      * @brief Called when innings closed, sets all batters to inactive, etc.
     */

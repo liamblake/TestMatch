@@ -7,7 +7,7 @@
 #include "Utility.h"
 
 
-// Player* csv2player(std::string line) {
+Player* csv2player(std::string line) {
 //         // Split string
 //         std::vector<std::string> token = split_str(line);
 
@@ -55,5 +55,6 @@
 
 
 std::pair<Venue**, int>* load_venues(std::string dir) {
-    std::pair<Venue**, int>* output = new std::pair<Venue**, int>* output;
+    std::pair<Venue**, int>* output = new std::pair<Venue**, int>;
+    return output;
 }

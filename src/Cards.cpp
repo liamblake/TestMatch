@@ -604,7 +604,7 @@ Over* Over::get_next() {
 
 Over::~Over() {
     // Delete each ball iteratively
-    //delete_linkedlist<Ball>(first);
+    delete_linkedlist<Ball>(first);
 }
 
 

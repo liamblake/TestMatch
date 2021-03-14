@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(testmatch_backend)
 
-SET(BOOST_ROOT "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
-SET (BOOST_INCLUDEDIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
-set(Boost_LIBRARY_DIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost/stage/lib")
+#SET(BOOST_ROOT "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
+#SET (BOOST_INCLUDEDIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost")
+#set(Boost_LIBRARY_DIR "D:/liaml/Documents/Repos/TestMatch/TestMatch-Backend/boost/stage/lib")
 
 ###############################################################################
 ## file globbing ##############################################################
@@ -31,7 +31,7 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED OFF)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
 #set(BOOST_ROOT boost)
-find_package(Boost 1.76.0 COMPONENTS unit_test_framework serialization REQUIRED)
+find_package(Boost 1.36.0 COMPONENTS unit_test_framework serialization REQUIRED)
 
 include_directories (testmatch_backend ${Boost_INCLUDE_DIR})
 target_link_libraries(testmatch_backend PUBLIC

@@ -230,6 +230,9 @@ CMAKE_STRIP:FILEPATH=D:/MinGW/bin/strip.exe
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Dependencies for the target
+backend_LIB_DEPENDS:STATIC=general;Boost::unit_test_framework;general;Boost::serialization;
+
 //The directory containing a CMake configuration file for boost_headers.
 boost_headers_DIR:PATH=D:/boost/boost_1_76_0/lib/cmake/boost_headers-1.76.0
 
@@ -241,9 +244,6 @@ boost_unit_test_framework_DIR:PATH=D:/boost/boost_1_76_0/lib/cmake/boost_unit_te
 
 //Value Computed by CMake
 testmatch_backend_BINARY_DIR:STATIC=D:/liaml/Documents/Repos/TestMatch-Project/backend-master/build
-
-//Dependencies for the target
-testmatch_backend_LIB_DEPENDS:STATIC=general;Boost::unit_test_framework;general;Boost::serialization;
 
 //Value Computed by CMake
 testmatch_backend_SOURCE_DIR:STATIC=D:/liaml/Documents/Repos/TestMatch-Project/backend-master

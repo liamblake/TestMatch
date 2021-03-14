@@ -1,2 +1,0 @@
-D:\MinGW\bin\ar.exe qc ..\lib\libtestmatch_backend.a CMakeFiles/testmatch_backend.dir/src/Cards.cpp.obj CMakeFiles/testmatch_backend.dir/src/FileIO.cpp.obj CMakeFiles/testmatch_backend.dir/src/Player.cpp.obj CMakeFiles/testmatch_backend.dir/src/Simulation.cpp.obj
-D:\MinGW\bin\ranlib.exe ..\lib\libtestmatch_backend.a

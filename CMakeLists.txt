@@ -14,8 +14,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
+SET(GCC_COVERAGE_COMPILE_FLAGS "-static")
+SET(GCC_COVERAGE_LINK_FLAGS "-mwindows -static")
 
-SET(GCC_COVERAGE_LINK_FLAGS "-mwindows")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 ###############################################################################
@@ -26,15 +28,17 @@ set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp inclu
 set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
 file(GLOB sources_unittests test/unit/*.cpp)
 
+file(GLOB sources_demo test/*.cpp)
+
 ###############################################################################
 ## target definitions #########################################################
 ###############################################################################
 
 # add the data to the target, so it becomes visible in some IDE
-add_library(testmatch_backend ${sources})
+add_library(backend ${sources})
 
 # this lets me include files relative to the root src dir with a <> pair
-target_include_directories(testmatch_backend PUBLIC include)
+target_include_directories(backend PUBLIC include)
 
 ###############################################################################
 ## dependencies ###############################################################
@@ -45,8 +49,8 @@ target_include_directories(testmatch_backend PUBLIC include)
 set(Boost_USE_STATIC_LIBS OFF)
 find_package(Boost 1.76.0 COMPONENTS unit_test_framework serialization REQUIRED)
 
-include_directories(testmatch_backend ${Boost_INCLUDE_DIR}})
-target_link_libraries(testmatch_backend PUBLIC
+include_directories(backend ${Boost_INCLUDE_DIR}})
+target_link_libraries(backend PUBLIC
   ${Boost_LIBRARIES}
 )
 
@@ -54,17 +58,28 @@ target_link_libraries(testmatch_backend PUBLIC
 ## testing ####################################################################
 ###############################################################################
 
-add_executable(unit_tests WIN32 ${sources_unittest} ${sources})
-
-target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
-#target_link_options(unit_tests PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
-
-target_include_directories(unit_tests PUBLIC include)
-include_directories(unit_tests ${Boost_INCLUDE_DIR})
-target_link_libraries(unit_tests PUBLIC
+# Demonstrative test (for run-time errors)
+add_executable(demo_test ${sources_demo})
+target_include_directories(demo_test PUBLIC include)
+include_directories(demo_test ${Boost_INCLUDE_DIR})
+target_link_libraries(demo_test PUBLIC
   ${Boost_LIBRARIES}
+  backend
 )
 
+
+# Unit tests
+#add_executable(unit_tests WIN32 ${sources_unittest})
+
+#target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
+
+#target_include_directories(unit_tests PUBLIC include)
+#include_directories(unit_tests ${Boost_INCLUDE_DIR})
+#target_link_libraries(unit_tests PUBLIC
+#  ${Boost_LIBRARIES}
+#  backend
+#)
+
 #add_link_options(unit_tests "-mwindows")
-enable_testing()
-add_test(UnitTests unit_tests)
+#enable_testing()
+#add_test(UnitTests unit_tests)

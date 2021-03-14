@@ -64,26 +64,6 @@ CMAKE_BINARY_DIR = D:\liaml\Documents\Repos\TestMatch-Project\backend-master\bui
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"D:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-.PHONY : rebuild_cache/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	"D:\Program Files\CMake\bin\ctest.exe" --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -93,6 +73,16 @@ edit_cache:
 # Special rule for the target edit_cache
 edit_cache/fast: edit_cache
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	"D:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -126,38 +116,37 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named testmatch_backend
+# Target rules for targets named demo_test
 
 # Build rule for target.
-testmatch_backend: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 testmatch_backend
-.PHONY : testmatch_backend
+demo_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 demo_test
+.PHONY : demo_test
 
 # fast build rule for target.
-testmatch_backend/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/build
-.PHONY : testmatch_backend/fast
+demo_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\demo_test.dir\build.make CMakeFiles/demo_test.dir/build
+.PHONY : demo_test/fast
 
 #=============================================================================
-# Target rules for targets named unit_tests
+# Target rules for targets named backend
 
 # Build rule for target.
-unit_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 unit_tests
-.PHONY : unit_tests
+backend: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 backend
+.PHONY : backend
 
 # fast build rule for target.
-unit_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/build
-.PHONY : unit_tests/fast
+backend/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/build
+.PHONY : backend/fast
 
 src/Cards.obj: src/Cards.cpp.obj
 .PHONY : src/Cards.obj
 
 # target to build an object file
 src/Cards.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Cards.cpp.obj
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Cards.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Cards.cpp.obj
 .PHONY : src/Cards.cpp.obj
 
 src/Cards.i: src/Cards.cpp.i
@@ -165,8 +154,7 @@ src/Cards.i: src/Cards.cpp.i
 
 # target to preprocess a source file
 src/Cards.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Cards.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Cards.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Cards.cpp.i
 .PHONY : src/Cards.cpp.i
 
 src/Cards.s: src/Cards.cpp.s
@@ -174,8 +162,7 @@ src/Cards.s: src/Cards.cpp.s
 
 # target to generate assembly for a file
 src/Cards.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Cards.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Cards.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Cards.cpp.s
 .PHONY : src/Cards.cpp.s
 
 src/FileIO.obj: src/FileIO.cpp.obj
@@ -183,8 +170,7 @@ src/FileIO.obj: src/FileIO.cpp.obj
 
 # target to build an object file
 src/FileIO.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/FileIO.cpp.obj
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/FileIO.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/FileIO.cpp.obj
 .PHONY : src/FileIO.cpp.obj
 
 src/FileIO.i: src/FileIO.cpp.i
@@ -192,8 +178,7 @@ src/FileIO.i: src/FileIO.cpp.i
 
 # target to preprocess a source file
 src/FileIO.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/FileIO.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/FileIO.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/FileIO.cpp.i
 .PHONY : src/FileIO.cpp.i
 
 src/FileIO.s: src/FileIO.cpp.s
@@ -201,8 +186,7 @@ src/FileIO.s: src/FileIO.cpp.s
 
 # target to generate assembly for a file
 src/FileIO.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/FileIO.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/FileIO.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/FileIO.cpp.s
 .PHONY : src/FileIO.cpp.s
 
 src/Player.obj: src/Player.cpp.obj
@@ -210,8 +194,7 @@ src/Player.obj: src/Player.cpp.obj
 
 # target to build an object file
 src/Player.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Player.cpp.obj
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Player.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Player.cpp.obj
 .PHONY : src/Player.cpp.obj
 
 src/Player.i: src/Player.cpp.i
@@ -219,8 +202,7 @@ src/Player.i: src/Player.cpp.i
 
 # target to preprocess a source file
 src/Player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Player.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Player.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Player.cpp.i
 .PHONY : src/Player.cpp.i
 
 src/Player.s: src/Player.cpp.s
@@ -228,8 +210,7 @@ src/Player.s: src/Player.cpp.s
 
 # target to generate assembly for a file
 src/Player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Player.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Player.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Player.cpp.s
 .PHONY : src/Player.cpp.s
 
 src/Simulation.obj: src/Simulation.cpp.obj
@@ -237,8 +218,7 @@ src/Simulation.obj: src/Simulation.cpp.obj
 
 # target to build an object file
 src/Simulation.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Simulation.cpp.obj
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Simulation.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Simulation.cpp.obj
 .PHONY : src/Simulation.cpp.obj
 
 src/Simulation.i: src/Simulation.cpp.i
@@ -246,8 +226,7 @@ src/Simulation.i: src/Simulation.cpp.i
 
 # target to preprocess a source file
 src/Simulation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Simulation.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Simulation.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Simulation.cpp.i
 .PHONY : src/Simulation.cpp.i
 
 src/Simulation.s: src/Simulation.cpp.s
@@ -255,9 +234,32 @@ src/Simulation.s: src/Simulation.cpp.s
 
 # target to generate assembly for a file
 src/Simulation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\testmatch_backend.dir\build.make CMakeFiles/testmatch_backend.dir/src/Simulation.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\unit_tests.dir\build.make CMakeFiles/unit_tests.dir/src/Simulation.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\backend.dir\build.make CMakeFiles/backend.dir/src/Simulation.cpp.s
 .PHONY : src/Simulation.cpp.s
+
+test/demonstrative_test.obj: test/demonstrative_test.cpp.obj
+.PHONY : test/demonstrative_test.obj
+
+# target to build an object file
+test/demonstrative_test.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\demo_test.dir\build.make CMakeFiles/demo_test.dir/test/demonstrative_test.cpp.obj
+.PHONY : test/demonstrative_test.cpp.obj
+
+test/demonstrative_test.i: test/demonstrative_test.cpp.i
+.PHONY : test/demonstrative_test.i
+
+# target to preprocess a source file
+test/demonstrative_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\demo_test.dir\build.make CMakeFiles/demo_test.dir/test/demonstrative_test.cpp.i
+.PHONY : test/demonstrative_test.cpp.i
+
+test/demonstrative_test.s: test/demonstrative_test.cpp.s
+.PHONY : test/demonstrative_test.s
+
+# target to generate assembly for a file
+test/demonstrative_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\demo_test.dir\build.make CMakeFiles/demo_test.dir/test/demonstrative_test.cpp.s
+.PHONY : test/demonstrative_test.cpp.s
 
 # Help Target
 help:
@@ -267,9 +269,8 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... test
-	@echo ... testmatch_backend
-	@echo ... unit_tests
+	@echo ... backend
+	@echo ... demo_test
 	@echo ... src/Cards.obj
 	@echo ... src/Cards.i
 	@echo ... src/Cards.s
@@ -282,6 +283,9 @@ help:
 	@echo ... src/Simulation.obj
 	@echo ... src/Simulation.i
 	@echo ... src/Simulation.s
+	@echo ... test/demonstrative_test.obj
+	@echo ... test/demonstrative_test.i
+	@echo ... test/demonstrative_test.s
 .PHONY : help
 
 

@@ -4,10 +4,10 @@ set(CMAKE_CXX_COMPILER "g++")
 
 project(testmatch_backend)
 
-set(Boost_DEBUG 1)
+#set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")
-SET(BOOST_ROOT "D:/boost/boost_1_76_0")
-SET(Boost_INCLUDE_DIR "D:/boost/boost_1_76_0")
+#SET(BOOST_ROOT "D:/boost/boost_1_76_0")
+#SET(Boost_INCLUDE_DIR "D:/boost/boost_1_76_0")
 #SET(BOOST_LIBRARYDIR "D:/boost/boost_1_76_0/stage/lib")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../lib)

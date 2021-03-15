@@ -5,7 +5,7 @@ set(CMAKE_CXX_COMPILER "g++")
 project(testmatch_backend)
 
 set(Boost_DEBUG 1)
-set(Boost_COMPILER "-vc142")
+#set(Boost_COMPILER "-vc142")
 SET(BOOST_ROOT "D:/boost/boost_1_76_0")
 SET(Boost_INCLUDE_DIR "D:/boost/boost_1_76_0")
 #SET(BOOST_LIBRARYDIR "D:/boost/boost_1_76_0/stage/lib")
@@ -47,7 +47,7 @@ target_include_directories(backend PUBLIC include)
 
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
-find_package(Boost 1.76.0 COMPONENTS unit_test_framework serialization REQUIRED)
+find_package(Boost 1.63.0 COMPONENTS unit_test_framework serialization REQUIRED)
 
 include_directories(backend ${Boost_INCLUDE_DIR}})
 target_link_libraries(backend PUBLIC

@@ -1,2 +1,0 @@
-D:\MinGW\bin\ar.exe qc ..\lib\libbackend.a CMakeFiles/backend.dir/src/Cards.cpp.obj CMakeFiles/backend.dir/src/FileIO.cpp.obj CMakeFiles/backend.dir/src/Player.cpp.obj CMakeFiles/backend.dir/src/Simulation.cpp.obj
-D:\MinGW\bin\ranlib.exe ..\lib\libbackend.a

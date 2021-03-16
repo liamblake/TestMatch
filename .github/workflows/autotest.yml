@@ -52,6 +52,10 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build .
+      
+    - name: list
+      working-directory: ${{github.workspace}}/bin
+      run: ls
 
     - name: Run Unit Tests
       working-directory: ${{github.workspace}}/bin

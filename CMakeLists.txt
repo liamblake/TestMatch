@@ -57,14 +57,15 @@ target_link_libraries(backend PUBLIC
 ###############################################################################
 
 # Demonstrative test (for run-time errors)
-#add_executable(demo_test ${sources_demo})
-#target_include_directories(demo_test PUBLIC include)
-#include_directories(demo_test ${Boost_INCLUDE_DIR})
-#target_link_libraries(demo_test PUBLIC
-#  ${Boost_LIBRARIES}
-#  backend
-#)
+add_executable(demo_test ${sources_demo})
+target_include_directories(demo_test PUBLIC include)
+include_directories(demo_test ${Boost_INCLUDE_DIR})
+target_link_libraries(demo_test PUBLIC
+  ${Boost_LIBRARIES}
+  backend
+)
 
+set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 
 # Unit tests
 add_executable(unit_tests WIN32 ${sources_unittests})

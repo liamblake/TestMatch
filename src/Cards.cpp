@@ -495,7 +495,7 @@ PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() cons
     PlayerCard** sorted = new Player* [len];
     for (int i = 0; i < len; i++) {
         int itt = 0;
-        while (ply_srt[i] != list[itt]->get_player_ptr() && itt < len) itt++;
+        while (itt < len && ply_srt[i] != list[itt]->get_player_ptr()) itt++;
 
         if (itt == len) {
             // Something has gone terribly wrong, raise an exception
@@ -511,7 +511,8 @@ PlayerCard** sort_array(PlayerCard** list, int len, T (Player::*sort_val)() cons
     }
 
     // Free temporarily allocated memory
-    delete[] ply_unsrt, ply_srt;
+    delete[] ply_unsrt;
+    delete[] ply_srt;
 
     return sorted;
 

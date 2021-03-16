@@ -67,7 +67,7 @@ target_link_libraries(backend PUBLIC
 
 
 # Unit tests
-add_executable(unit_tests WIN32 ${sources_unittest})
+add_executable(unit_tests WIN32 ${sources_unittests})
 
 target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
 

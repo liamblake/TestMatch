@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
-set(CMAKE_C_COMPILER "gcc")
-set(CMAKE_CXX_COMPILER "g++")
+#set(CMAKE_C_COMPILER "gcc")
+#set(CMAKE_CXX_COMPILER "g++")
 
 project(testmatch_backend)
 
+# Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")
 #SET(BOOST_ROOT "D:/boost/boost_1_76_0")
@@ -47,7 +48,7 @@ target_include_directories(backend PUBLIC include)
 
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
-find_package(Boost 1.63.0 COMPONENTS unit_test_framework serialization REQUIRED)
+find_package(Boost 1.72.0 COMPONENTS unit_test_framework serialization REQUIRED)
 
 include_directories(backend ${Boost_INCLUDE_DIR}})
 target_link_libraries(backend PUBLIC

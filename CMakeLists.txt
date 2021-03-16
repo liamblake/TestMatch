@@ -57,27 +57,27 @@ target_link_libraries(backend PUBLIC
 ###############################################################################
 
 # Demonstrative test (for run-time errors)
-add_executable(demo_test ${sources_demo})
-target_include_directories(demo_test PUBLIC include)
-include_directories(demo_test ${Boost_INCLUDE_DIR})
-target_link_libraries(demo_test PUBLIC
-  ${Boost_LIBRARIES}
-  backend
-)
-
-
-# Unit tests
-#add_executable(unit_tests WIN32 ${sources_unittest})
-
-#target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
-
-#target_include_directories(unit_tests PUBLIC include)
-#include_directories(unit_tests ${Boost_INCLUDE_DIR})
-#target_link_libraries(unit_tests PUBLIC
+#add_executable(demo_test ${sources_demo})
+#target_include_directories(demo_test PUBLIC include)
+#include_directories(demo_test ${Boost_INCLUDE_DIR})
+#target_link_libraries(demo_test PUBLIC
 #  ${Boost_LIBRARIES}
 #  backend
 #)
 
+
+# Unit tests
+add_executable(unit_tests WIN32 ${sources_unittest})
+
+target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
+
+target_include_directories(unit_tests PUBLIC include)
+include_directories(unit_tests ${Boost_INCLUDE_DIR})
+target_link_libraries(unit_tests PUBLIC
+  ${Boost_LIBRARIES}
+  backend
+)
+
 #add_link_options(unit_tests "-mwindows")
-#enable_testing()
-#add_test(UnitTests unit_tests)
+enable_testing()
+add_test(UnitTests unit_tests)

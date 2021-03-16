@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.0)
 project(testmatch_backend)
 enable_testing()
 
+add_subdirectory(test)
+
 # Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")
@@ -56,5 +58,5 @@ target_link_libraries(backend PUBLIC
 ###############################################################################
 ## testing ####################################################################
 ###############################################################################
-add_subdirectory(test)
+
 

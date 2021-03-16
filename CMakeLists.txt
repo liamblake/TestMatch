@@ -78,6 +78,8 @@ target_link_libraries(unit_tests PUBLIC
   backend
 )
 
+set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+
 #add_link_options(unit_tests "-mwindows")
 enable_testing()
 add_test(UnitTests unit_tests)

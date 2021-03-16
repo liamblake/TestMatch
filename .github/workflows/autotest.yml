@@ -62,10 +62,10 @@ jobs:
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: unit_tests
+      run: unit_tests.exe
 
 
     - name: Run Demonstrative Example
       working-directory: ${{github.workspace}}/bin/Debug
       shell: bash
-      run: demo_test
+      run: demo_test.exe

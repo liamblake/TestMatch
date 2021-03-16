@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 #set(CMAKE_CXX_COMPILER "g++")
 
 project(testmatch_backend)
+enable_testing()
 
 # Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
@@ -82,5 +83,4 @@ target_link_libraries(unit_tests PUBLIC
 set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 
 #add_link_options(unit_tests "-mwindows")
-enable_testing()
 add_test(NAME unit COMMAND unit_tests)

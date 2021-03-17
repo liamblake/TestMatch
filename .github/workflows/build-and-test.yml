@@ -28,7 +28,7 @@ jobs:
 
     - name: List
       run: ls
-      
+
     # run tests
     - name: Run unit tests
-      run: ctest
+      run: cd build && ctest

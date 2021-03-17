@@ -3,29 +3,14 @@
    Please ignore for now.
 */
 
-class BaseInnings {
+class BaseInnings {};
 
-};
+class LOInnings : public BaseInnings {};
 
+class TestInnings : public BaseInnings {};
 
-class LOInnings : public BaseInnings {
+class BaseMatch {};
 
-};
+class LOMatch : public BaseMatch {};
 
-class TestInnings : public BaseInnings {
-
-};
-
-class BaseMatch {
-
-};
-
-class LOMatch : public BaseMatch {
-
-};
-
-class TestMatch : public BaseMatch {
-
-};
-
-
+class TestMatch : public BaseMatch {};

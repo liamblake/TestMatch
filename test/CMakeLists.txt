@@ -7,7 +7,7 @@ target_link_libraries(demo_test PUBLIC
   backend
 )
 
-set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+#set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 #add_test(NAME demo COMMAND demo_test)
 
 # Unit tests

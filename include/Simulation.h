@@ -44,7 +44,7 @@ public:
    * @brief
    * @param c_cards
    */
-  void set_cards(BatterCard* c_cards[11]);
+  void set_cards(BatterCard** c_cards);
 
   /**
    * @brief
@@ -160,8 +160,8 @@ private:
   Over* last_over;
 
   // Scorecards
-  BatterCard* batters[11];
-  BowlerCard* bowlers[11];
+  BatterCard** batters;
+  BowlerCard** bowlers;
 
   // Managers
   BattingManager man_bat;

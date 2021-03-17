@@ -23,6 +23,8 @@ inline void save_data(T* obj, std::string filename) {
     // Open character archive for output
     std::ofstream ofs(filename);
 
+    // Fix this function
+
     // Save data 
     {
         boost::archive::binary_oarchive oa(ofs);

@@ -11,7 +11,7 @@ set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 #add_test(NAME demo COMMAND demo_test)
 
 # Unit tests
-add_executable(unit_tests WIN32 ${sources_unittests})
+add_executable(unit_tests ${sources_unittests})
 
 target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
 
@@ -22,7 +22,7 @@ target_link_libraries(unit_tests PUBLIC
   backend
 )
 
-set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+#set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 
 add_test(NAME unit COMMAND unit_tests)
 enable_testing()

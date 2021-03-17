@@ -469,7 +469,7 @@ PlayerCard** sort_array(PlayerCard** list, int len,
 BatterCard** create_batting_cards(Team team) {
   BatterCard* cards[11];
   for (int i = 0; i < 11; i++) {
-    cards[i] = new BatterCard(team.players[i]);
+    cards[i] = nullptr; // new BatterCard(team.players[i]);
   }
 
   return cards;

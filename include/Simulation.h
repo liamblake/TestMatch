@@ -44,7 +44,7 @@ public:
    * @brief
    * @param c_cards
    */
-  void set_cards(BatterCard* c_cards[11]);
+  void set_cards(BatterCard** c_cards);
 
   /**
    * @brief

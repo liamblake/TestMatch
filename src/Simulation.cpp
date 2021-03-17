@@ -31,7 +31,7 @@ BattingManager::BattingManager() {
   }
 }
 
-void BattingManager::set_cards(BatterCard* c_cards[11]) {
+void BattingManager::set_cards(BatterCard** c_cards) {
   for (int i = 0; i < 11; i++)
     cards[i] = c_cards[i];
 }

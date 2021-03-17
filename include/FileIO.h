@@ -23,8 +23,6 @@ inline void save_data(T* obj, std::string filename) {
     // Open character archive for output
     std::ofstream ofs(filename);
 
-    // Fix this function
-
     // Save data 
     {
         boost::archive::binary_oarchive oa(ofs);
@@ -32,16 +30,30 @@ inline void save_data(T* obj, std::string filename) {
     }
 };
 
+/* IMPORTANT NOTE:
+    For this to work properly, any class which has members stored as pointers
+    which are dynamically allocated at run-time MUST define a copy constructor 
+    and not use the default. Otherwise, we will get BIG memory problems.
+*/
 template <class T>
-inline void load_data(T &new_obj, std::string filename) {
+inline T* load_data(std::string filename) {
+
+        // Create a temporary (static) object for loading
+        T new_obj;
 
         // Create and open an archive for input
         std::ifstream ifs(filename);
         boost::archive::binary_iarchive ia(ifs);
         ia >> new_obj;
 
-};
+        // Create a dynamically allocated object
+        T* dyn_obj = new T;
+        *dyn_obj = new_obj;
 
+        // This is a hacky solution
+        return dyn_obj;
+
+};
 
 
 Player* csv2player(std::string line);

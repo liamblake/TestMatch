@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 #set(CMAKE_CXX_COMPILER "g++")
 
 project(testmatch_backend)
+include(CTest)
 # Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")

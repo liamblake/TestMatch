@@ -36,11 +36,11 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
 
 	// Test serialisation
 	save_data<Player>(&tp_bat, "../test/testfiles/testfile_serial_player.tmpy");
-	Player tp_new;
-	load_data<Player>(tp_new, "../test/testfiles/testfile_serial_player.tmpy");
-	BOOST_CHECK(tp_new == tp_bat);
+	Player* tp_new = load_data<Player>("../test/testfiles/testfile_serial_player.tmpy");
+	BOOST_CHECK(*tp_new == tp_bat);
+	BOOST_TEST(tp_new != &tp_bat);
 
-	//delete tp_new;
+	delete tp_new;
 
 
 }

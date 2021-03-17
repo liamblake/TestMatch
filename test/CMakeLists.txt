@@ -8,7 +8,7 @@ target_link_libraries(demo_test PUBLIC
 )
 
 set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
-add_test(NAME demo COMMAND demo_test)
+#add_test(NAME demo COMMAND demo_test)
 
 # Unit tests
 add_executable(unit_tests WIN32 ${sources_unittests})

@@ -278,7 +278,10 @@ std::string BatterCard::print_dism(void) {
   }
 }
 
-BatterCard::~BatterCard() { delete dism; }
+BatterCard::~BatterCard() {
+  if (out)
+    delete dism;
+}
 
 /*
     BatterCard implementations
@@ -466,19 +469,19 @@ PlayerCard** sort_array(PlayerCard** list, int len,
   return sorted;
 }
 
-BatterCard** create_batting_cards(Team team) {
+BatterCard** create_batting_cards(Team* team) {
   BatterCard** cards = new BatterCard*[11];
   for (int i = 0; i < 11; i++) {
-    cards[i] = nullptr; // new BatterCard(team.players[i]);
+    cards[i] = new BatterCard(team->players[i]);
   }
 
   return cards;
 }
 
-BowlerCard** create_bowling_cards(Team team) {
+BowlerCard** create_bowling_cards(Team* team) {
   BowlerCard** cards = new BowlerCard*[11];
   for (int i = 0; i < 11; i++) {
-    cards[i] = new BowlerCard(team.players[i]);
+    cards[i] = new BowlerCard(team->players[i]);
   }
 
   return cards;

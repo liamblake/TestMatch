@@ -75,30 +75,31 @@ Team nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
 PitchFactors lords_pf = {0.75995148, 0.24004852};
 Venue lords = {"Lords", "London", "ENG", &lords_pf};
 
-// BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
-//   // Create batting cards for each player
-//   BatterCard** cards = create_batting_cards(aus);
+BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
+  // Create batting cards for each player
+  BatterCard** cards = create_batting_cards(&aus);
 
-//   for (int i = 0; i < 11; i++) {
-//     delete cards[i];
-//   }
-// }
+  for (int i = 0; i < 11; i++) {
+    delete cards[i];
+  }
+}
 
-// BOOST_AUTO_TEST_CASE(testclass_innings) {
-//   // Create an innings
-//   Innings inns(&aus, &nz, 0, &lords_pf);
+BOOST_AUTO_TEST_CASE(testclass_innings) {
+  // Create an innings
+  Innings inns(&aus, &nz, 0, &lords_pf);
 
-//   // Check initialisation of innings
-//   BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
-//              inns.striker->get_player_ptr() == &a2);
-//   BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
-//              inns.nonstriker->get_player_ptr() == &a2);
-//   BOOST_TEST(inns.striker != inns.nonstriker);
+  // Check initialisation of innings
+  BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
+             inns.striker->get_player_ptr() == &a2);
+  BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
+             inns.nonstriker->get_player_ptr() == &a2);
+  BOOST_TEST(inns.striker != inns.nonstriker);
 
-//   BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
-//   BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
+  BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
+  BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
 
-//   // Simulate a delivery
-// }
+  // Simulate a delivery
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

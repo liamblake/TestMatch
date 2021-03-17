@@ -3,6 +3,7 @@ name: Build and Test (Ubuntu)
 on:
   pull_request: [master]
   push: [master]
+  workflow_dispatch:
 
 jobs:
   build:

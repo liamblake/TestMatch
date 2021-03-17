@@ -278,7 +278,10 @@ std::string BatterCard::print_dism(void) {
   }
 }
 
-BatterCard::~BatterCard() { delete dism; }
+BatterCard::~BatterCard() {
+  if (out)
+    delete dism;
+}
 
 /*
     BatterCard implementations

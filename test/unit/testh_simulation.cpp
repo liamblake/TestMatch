@@ -84,21 +84,21 @@ BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
   }
 }
 
-BOOST_AUTO_TEST_CASE(testclass_innings) {
-  // Create an innings
-  Innings inns(&aus, &nz, 0, &lords_pf);
+// BOOST_AUTO_TEST_CASE(testclass_innings) {
+//   // Create an innings
+//   Innings inns(&aus, &nz, 0, &lords_pf);
 
-  // Check initialisation of innings
-  BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
-             inns.striker->get_player_ptr() == &a2);
-  BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
-             inns.nonstriker->get_player_ptr() == &a2);
-  BOOST_TEST(inns.striker != inns.nonstriker);
+//   // Check initialisation of innings
+//   BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
+//              inns.striker->get_player_ptr() == &a2);
+//   BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
+//              inns.nonstriker->get_player_ptr() == &a2);
+//   BOOST_TEST(inns.striker != inns.nonstriker);
 
-  BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
-  BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
+//   BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
+//   BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
 
-  // Simulate a delivery
-}
+//   // Simulate a delivery
+// }
 
 BOOST_AUTO_TEST_SUITE_END()

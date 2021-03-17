@@ -26,6 +26,9 @@ jobs:
     - name: Make
       run: cmake --build build/ --target all
 
+    - name: List
+      run: ls
+      
     # run tests
     - name: Run unit tests
       run: ctest

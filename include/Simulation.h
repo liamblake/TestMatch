@@ -160,8 +160,8 @@ private:
   Over* last_over;
 
   // Scorecards
-  BatterCard* batters[11];
-  BowlerCard* bowlers[11];
+  BatterCard** batters;
+  BowlerCard** bowlers;
 
   // Managers
   BattingManager man_bat;

@@ -210,8 +210,8 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   inns_no = NO_INNS;
 
   // Create BatterCards/BowlerCards for each player
-  batters = create_batting_cards(*team_bat);
-  bowlers = create_bowling_cards(*team_bowl);
+  batters = create_batting_cards(team_bat);
+  bowlers = create_bowling_cards(team_bowl);
 
   // Initialise managers
   man_bat.set_cards(batters);

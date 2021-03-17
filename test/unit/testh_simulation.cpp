@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
   for (int i = 0; i < 11; i++) {
     delete cards[i];
   }
-  delete[] cards;
+  delete cards;
 }
 
 BOOST_AUTO_TEST_CASE(testclass_innings) {

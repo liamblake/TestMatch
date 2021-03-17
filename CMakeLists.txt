@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.0)
 #set(CMAKE_CXX_COMPILER "g++")
 
 project(testmatch_backend)
-include(CTest)
 # Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")
@@ -27,6 +26,8 @@ set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulatio
 file(GLOB sources_unittests test/unit/*.cpp)
 
 file(GLOB sources_demo test/*.cpp)
+
+add_subdirectory(test)
 
 ###############################################################################
 ## target definitions #########################################################
@@ -56,6 +57,5 @@ target_link_libraries(backend PUBLIC
 ## testing ####################################################################
 ###############################################################################
 
-add_subdirectory(test)
-add_test(NAME unit COMMAND unit_tests)
+
 

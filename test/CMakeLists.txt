@@ -24,4 +24,7 @@ target_link_libraries(unit_tests PUBLIC
 
 set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 
+enable_testing()
+add_test(NAME unit COMMAND unit_tests)
+
 #add_link_options(unit_tests "-mwindows")

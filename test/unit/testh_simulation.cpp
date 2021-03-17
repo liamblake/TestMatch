@@ -101,4 +101,5 @@ BOOST_AUTO_TEST_CASE(testclass_innings) {
   // Simulate a delivery
 }
 
+
 BOOST_AUTO_TEST_SUITE_END()

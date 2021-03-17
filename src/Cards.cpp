@@ -580,7 +580,6 @@ bool Extras::update_score(std::string outcome) {
 
 // Print methods
 std::string Extras::print() {
-
   std::vector<std::string> strings;
 
   if (byes > 0) {

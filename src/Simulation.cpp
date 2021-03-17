@@ -24,7 +24,6 @@ std::vector<std::string> Innings::DISM_MODES_STATIC = {"b",   "c",  "c&b",
 
 //~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
 BattingManager::BattingManager() {
-
   // Mark each batter as inactive
   for (int i = 0; i < 11; i++) {
     batted[i] = false;
@@ -37,7 +36,6 @@ void BattingManager::set_cards(BatterCard* c_cards[11]) {
 }
 
 BatterCard* BattingManager::next_ordered() {
-
   // Find the first batter in the ordered XI who is yet to bat
   int itt = 0;
   while (itt < 11 && batted[itt])
@@ -57,7 +55,6 @@ BatterCard* BattingManager::nightwatch() { return nullptr; }
 BatterCard* BattingManager::promote_hitter() { return nullptr; }
 
 BatterCard* BattingManager::next_in(Innings* inns_obj) {
-
   // Start of innings
   if (inns_obj->balls == 0) {
     return next_ordered();
@@ -350,7 +347,6 @@ int Innings::MODEL_WICKET_TYPE(int bowltype) {
 
 // Private methods used in simulation process
 void Innings::simulate_delivery() {
-
   // Pass game information to delivery model
 
   // Get outcome probabilities
@@ -388,7 +384,6 @@ void Innings::simulate_delivery() {
 
   // Handle each outcome case
   if (outcome == "W") {
-
     wkts++;
 
     // Randomly choose the type of dismissal
@@ -419,7 +414,6 @@ void Innings::simulate_delivery() {
         std::cout << striker->get_player_ptr()->get_full_name()
                   << +" is the new batter to the crease" << std::endl;
       }
-
     } // All out is checked immediately after with check_state
 
   } else {
@@ -432,7 +426,6 @@ void Innings::simulate_delivery() {
       legal_delivs++;
       // Check for strike rotation
       is_rotation = runs % 2 == 1 && runs != 5;
-
     } else
       is_rotation = runs - 1 % 2 == 1;
 
@@ -459,7 +452,6 @@ bool Innings::check_declaration() {
  *
  **/
 std::string Innings::check_state() {
-
   // Check for close of innings
   // Match object distinguishes different types of win
   if ((inns_no == 4 && lead > 0)) {
@@ -493,7 +485,6 @@ std::string Innings::check_state() {
 }
 
 void Innings::end_over() {
-
   if (!is_quiet) {
     std::cout << DIVIDER << std::endl
               << comm_over(last_over) << std::endl
@@ -518,7 +509,6 @@ void Innings::end_over() {
                        bowl1->get_player_ptr()->get_full_name() + ".\n";
     }
   } else {
-
     // Consult the bowling manager
     BowlerCard* new_bc = man_bowl.end_over(this);
 
@@ -587,7 +577,6 @@ std::string Innings::score() {
 }
 
 std::string Innings::simulate(bool quiet) {
-
   is_quiet = quiet;
 
   if (is_quiet) {
@@ -631,7 +620,6 @@ std::string Innings::simulate(bool quiet) {
 }
 
 std::string Innings::print() {
-
   std::string output = "";
 
   // Header
@@ -751,7 +739,6 @@ Match::Match(Team* home_team, Team* away_team, Venue* c_venue)
 }
 
 void Match::simulate_toss() {
-
   // Winner of toss is chosen randomly - 0.5 probability either way
   toss_win = (((double)rand() / (RAND_MAX)) < 0.5);
 
@@ -779,7 +766,6 @@ void Match::simulate_toss() {
 }
 
 void Match::change_innings() {
-
   Team *new_bat, *new_bowl;
 
   if (inns_i == 1 && DECIDE_FOLLOW_ON(lead, match_balls, 0)) {
@@ -837,7 +823,6 @@ void Match::pregame() {
 }
 
 void Match::start(bool quiet) {
-
   std::string inns_state;
 
   while (inns_i < 4) {

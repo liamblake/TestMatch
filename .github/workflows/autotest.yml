@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     # install dependencies
     - name: boost
       uses: MarkusJx/install-boost@v1.0.1
@@ -38,14 +38,14 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{github.workspace}}/build
-      # Note the current convention is to use the -S and -B options here to specify source 
-      # and build directories, but this is only available with CMake 3.13 and higher.  
+      # Note the current convention is to use the -S and -B options here to specify source
+      # and build directories, but this is only available with CMake 3.13 and higher.
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake $GITHUB_WORKSPACE
       env:
-        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}  
-        Boost_COMPILER: "-vc142" 
-    
+        BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
+        Boost_COMPILER: "-vc142"
+
 
     - name: Build Source
       working-directory: ${{github.workspace}}/build
@@ -56,7 +56,7 @@ jobs:
     - name: Run Unit Tests
       working-directory: ${{github.workspace}}/bin
       shell: bash
-      # Execute tests defined by the CMake configuration.  
+      # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C "Debug"
 

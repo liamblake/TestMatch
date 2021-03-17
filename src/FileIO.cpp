@@ -1,13 +1,12 @@
-#include <string>
 #include <fstream>
+#include <string>
 #include <utility>
 
 #include "FileIO.h"
 #include "Player.h"
 #include "Utility.h"
 
-
-//Player* csv2player(std::string line) {
+// Player* csv2player(std::string line) {
 //         // Split string
 //         std::vector<std::string> token = split_str(line);
 
@@ -36,25 +35,19 @@
 //                 fname = *it;
 //             }
 
-
 //         }
 
 //         name.erase(name.begin());
 //         string last_name = join_str(name, " ");
 
-         // Create Player object
-         //Player* output = new Player ();
-         //return output;
+// Create Player object
+// Player* output = new Player ();
+// return output;
 //         return nullptr;
 
 //}
 
-
-
-
-
-
-//std::pair<Venue**, int>* load_venues(std::string dir) {
+// std::pair<Venue**, int>* load_venues(std::string dir) {
 //    std::pair<Venue**, int>* output = new std::pair<Venue**, int>;
 //    return output;
 //}

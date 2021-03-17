@@ -124,10 +124,9 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const) {
 
 	// Adaption of insertion sort algorithm
 	sorted[0] = list[0];
-	int j;
 	Player* temp;
 	for (int i = 1; i < len; i++) {
-		j = i;
+		int j = i;
 		sorted[i] = list[i];
 
 		while (j > 0 && (sorted[j - 1]->*sort_val)() > (sorted[j]->*sort_val)()) {

@@ -44,7 +44,7 @@ BatterCard* BattingManager::next_ordered() {
   
   // Find the first batter in the ordered XI who is yet to bat
   int itt = 0;
-  while (batted[itt] && itt < 11) itt++;
+  while (itt < 11 && batted[itt]) itt++;
 
   
   if (itt == 11) {
@@ -844,20 +844,8 @@ void Match::change_innings() {
 
 bool Match::DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score) {
 	if (lead > 200) return false;
-
-	// Decision tree model
-	double fo_prob;
-
-	if (lead >= -320) {
-		if (match_balls >= 1215) fo_prob = 0.2105263;
-		else {
-
-		}
-	}
-	else fo_prob = 0.8571428;
-	return true;
-	return ((double)rand() / (RAND_MAX)) < fo_prob;
-
+	else return true;
+	
 }
 
 

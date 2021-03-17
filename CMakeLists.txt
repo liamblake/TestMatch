@@ -57,5 +57,5 @@ target_link_libraries(backend PUBLIC
 ###############################################################################
 
 add_subdirectory(test)
-
+add_test(NAME unit COMMAND unit_tests)
 

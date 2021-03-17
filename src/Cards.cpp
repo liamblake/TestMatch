@@ -467,7 +467,7 @@ PlayerCard** sort_array(PlayerCard** list, int len,
 }
 
 BatterCard** create_batting_cards(Team team) {
-  BatterCard* cards[11];
+  BatterCard** cards = new BatterCard*[11];
   for (int i = 0; i < 11; i++) {
     cards[i] = nullptr; // new BatterCard(team.players[i]);
   }
@@ -476,7 +476,7 @@ BatterCard** create_batting_cards(Team team) {
 }
 
 BowlerCard** create_bowling_cards(Team team) {
-  BowlerCard* cards[11];
+  BowlerCard** cards = new BowlerCard*[11];
   for (int i = 0; i < 11; i++) {
     cards[i] = new BowlerCard(team.players[i]);
   }

@@ -1,0 +1,28 @@
+name: Build and Test (Ubuntu)
+
+on:
+  pull_request: [master]
+  push: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # install Boost libraries
+    - name: Install Boost
+      run: sudo apt-get update && sudo apt-get install -yq libboost-dev
+
+    # build project
+    - name: Create build environment
+      run: mkdir build
+
+    - name: Build
+      run: cmake -Bbuild -H.
+
+    - name: Make
+      run: cmake --build build/ --target all
+
+    # run tests
+    - name: Run unit tests
+      run: ctest

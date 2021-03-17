@@ -416,6 +416,7 @@ void Innings::simulate_delivery() {
       }
     } // All out is checked immediately after with check_state
 
+
   } else {
     int runs = outcome.front() - '0';
     team_score += runs;
@@ -521,6 +522,7 @@ void Innings::end_over() {
   }
 }
 
+
 void Innings::swap_batters() {
   BatterCard* tmp = striker;
   striker = nonstriker;
@@ -578,7 +580,7 @@ std::string Innings::score() {
 
 std::string Innings::simulate(bool quiet) {
   is_quiet = quiet;
-
+ 
   if (is_quiet) {
     std::cout << "Simulating innings..." << std::endl;
   } else {

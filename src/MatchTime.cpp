@@ -8,7 +8,67 @@
 #include "MatchTime.h"
 #include "Utility.h"
 
-using namespace std;
+TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
+
+TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
+    : _sec(sec), _min(min), _hrs(hrs) {
+  // Round appropriately
+}
+
+TimeOfDay::TimeOfDay(float fr) : _sec(0), _hrs((uint)fr) {
+  if (fr < 0) {
+    // Raise exception
+  }
+
+  _min = fr - _hrs;
+}
+
+std::string TimeOfDay::two_digits(int val) {
+  std::string output;
+
+  if (val < 10)
+    output += "0";
+  output += std::to_string(val);
+}
+
+// Explicit casts
+TimeOfDay::operator std::string() {
+  return two_digits(_hrs) + ":" + two_digits(_min) + ":" + two_digits(_sec);
+}
+
+TimeOfDay::operator int() { return _hrs * 3600 + _min * 60 + _sec; }
+
+// Getters
+uint TimeOfDay::sec() { return _sec; }
+uint TimeOfDay::min() { return _min; }
+uint TimeOfDay::hrs() { return _hrs; }
+
+// Overloaded operators
+TimeOfDay& TimeOfDay::operator++() {
+  *this += 1;
+  return *this;
+}
+
+TimeOfDay TimeOfDay::operator++(int) {
+  TimeOfDay old = *this;
+  *this ++;
+  return old;
+}
+
+TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) {}
+
+TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
+  return *this += TimeOfDay(rhs);
+}
+
+bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
+  return ((lhs._hrs == rhs._hrs) && (lhs._min == rhs._min) &&
+          (lhs._sec == rhs._sec));
+}
+bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
+
+TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs);
+TimeOfDay operator+(TimeOfDay lhs, const int& rhs);
 
 /*
     MatchTime implementations

@@ -10,8 +10,9 @@ on:
 
 jobs:
   build:
-    uses: mattnotmitt/doxygen-action@v1
-    with:
-      working-directory: 'submodule/'
-      doxyfile-path: 'docs/Doxygen'
-      enable-latex: true
+    steps:
+    - uses: mattnotmitt/doxygen-action@v1
+      with:
+        working-directory: 'submodule/'
+        doxyfile-path: 'docs/Doxygen'
+        enable-latex: true

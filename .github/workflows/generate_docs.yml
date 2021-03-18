@@ -1,0 +1,27 @@
+name: Generate & Deploy Documentation
+
+on:
+  pull_request:
+    branches: [master]
+  push: 
+    branches:
+      - master 
+      - develop-doxygen
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: mattnotmitt/doxygen-action@v1
+      with:
+        working-directory: 'submodule/'
+        doxyfile-path: 'doc/Doxyfile'
+        enable-latex: false
+
+    - name: Deploy documentation
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./out/html

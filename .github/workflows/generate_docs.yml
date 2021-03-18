@@ -15,5 +15,5 @@ jobs:
     - uses: mattnotmitt/doxygen-action@v1
       with:
         working-directory: 'submodule/'
-        doxyfile-path: 'doc/Doxygen'
+        doxyfile-path: 'doc/Doxyfile'
         enable-latex: false

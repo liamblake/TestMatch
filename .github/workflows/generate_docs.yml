@@ -19,12 +19,9 @@ jobs:
         doxyfile-path: 'doc/Doxyfile'
         enable-latex: false
 
-    - name: ls
-      run: cd out && ls
-
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./docs/html
+        publish_dir: ./out/html

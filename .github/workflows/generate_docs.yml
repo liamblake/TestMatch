@@ -4,8 +4,9 @@ on:
   pull_request:
     branches: [master]
   push: 
-    - master 
-    - develop-doxygen
+    branches:
+      - master 
+      - develop-doxygen
 
 jobs:
   build:

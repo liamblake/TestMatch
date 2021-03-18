@@ -1,0 +1,16 @@
+name: Generate Doxygen Documentation
+
+on:
+  pull_request:
+    branches: [master]
+  push: 
+    - master 
+    - develop-doxygen
+
+jobs:
+  build:
+    uses: mattnotmitt/doxygen-action@v1
+    with:
+      working-directory: 'submodule/'
+      doxyfile-path: 'docs/Doxygen'
+      enable-latex: true

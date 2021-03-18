@@ -20,10 +20,7 @@ jobs:
         enable-latex: false
 
     - name: ls
-      run: ls
-
-    - name: ls2
-      run: cd doc && ls
+      run: cd out && ls
 
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3

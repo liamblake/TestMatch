@@ -19,6 +19,12 @@ jobs:
         doxyfile-path: 'doc/Doxyfile'
         enable-latex: false
 
+    - name: ls
+      run: ls
+
+    - name: ls2
+      run: cd doc && ls
+
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
       with:

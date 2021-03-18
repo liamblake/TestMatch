@@ -22,13 +22,12 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 ## file globbing ##############################################################
 ###############################################################################
 
-set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
-set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
+set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
+set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
+
+# Automatically add all tests
 file(GLOB sources_unittests test/unit/*.cpp)
-
 file(GLOB sources_demo test/*.cpp)
-
-add_subdirectory(test)
 
 ###############################################################################
 ## target definitions #########################################################
@@ -47,9 +46,10 @@ target_include_directories(backend PUBLIC include)
 
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
-find_package(Boost 1.71.0 COMPONENTS unit_test_framework serialization REQUIRED)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 
-include_directories(backend ${Boost_INCLUDE_DIR}})
+target_include_directories(backend PUBLIC ${Boost_INCLUDE_DIR}})
 target_link_libraries(backend PUBLIC
   ${Boost_LIBRARIES}
 )
@@ -57,6 +57,6 @@ target_link_libraries(backend PUBLIC
 ###############################################################################
 ## testing ####################################################################
 ###############################################################################
-
+add_subdirectory(test)
 
 

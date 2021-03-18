@@ -51,7 +51,7 @@ TimeOfDay& TimeOfDay::operator++() {
 
 TimeOfDay TimeOfDay::operator++(int) {
   TimeOfDay old = *this;
-  *this ++;
+  (*this)++;
   return old;
 }
 
@@ -100,8 +100,7 @@ double MatchTime::SPIN_MEANDUR = 30;
 double MatchTime::RUN_DUR = 10;
 
 // Default constructor - start of match, day 1
-MatchTime::MatchTime() {
-  time = TimeOfDay(START_TIME);
+MatchTime::MatchTime() : time(START_TIME) {
   day = 1;
   state = "Match Start";
 }
@@ -172,7 +171,7 @@ void MatchTime::check_state_change() {
 }
 
 // Time controls for use by simulation
-pair<int, string> MatchTime::delivery(bool type, int runs) {
+std::pair<int, std::string> MatchTime::delivery(bool type, int runs) {
 
   // Randomnly generate time elapsed by delivery
   double s;
@@ -187,7 +186,7 @@ pair<int, string> MatchTime::delivery(bool type, int runs) {
   int elapsed = (int)round(s);
 
   check_state_change();
-  pair<int, string> output = {elapsed, state};
+  std::pair<int, string> std::output = {elapsed, state};
   return output;
 }
 

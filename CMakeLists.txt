@@ -46,7 +46,8 @@ target_include_directories(backend PUBLIC include)
 
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
-find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization test_exec_monitor REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 target_include_directories(backend PUBLIC ${Boost_INCLUDE_DIR}})

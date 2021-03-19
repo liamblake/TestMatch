@@ -144,7 +144,7 @@ void MatchTime::check_state_change() {
 
   // Switch through each possible match state
   if (state == "Match Start") {
-    if (time > START_TIME)
+    // if (time > START_TIME)
   } else if (state == "Session 1") {
 
   } else if (state == "Drinks 1") {

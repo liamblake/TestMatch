@@ -37,6 +37,9 @@ class TimeOfDay {
   uint min();
   uint hrs();
 
+  // Explicit setter
+  void set(double dr);
+
   // Overloaded operators
   TimeOfDay& operator++();
   TimeOfDay operator++(int);

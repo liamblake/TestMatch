@@ -113,7 +113,7 @@ class MatchTime {
  public:
   // Default constructor - start of match, day 1
   MatchTime();
-  // MatchTime(Time c_tm, int c_day, std::string c_state);
+  //MatchTime(Time c_tm, int c_day, std::string c_state);
 
   // Time controls for use by simulation
   std::pair<int, std::string> delivery(bool type, int runs);
@@ -127,7 +127,7 @@ class MatchTime {
   // interaction with Match object
 
   // Getters
-  // TimeOfDay get_time();
+  TimeOfDay get_time();
   int get_day();
   std::string get_state();
 

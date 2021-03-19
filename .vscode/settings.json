@@ -1,6 +1,7 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "cmake.configureOnOpen": false,
+    "editor.formatOnSave": true,
     "files.associations": {
         "utility": "cpp",
         "array": "cpp",

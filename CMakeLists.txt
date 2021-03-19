@@ -22,7 +22,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 ## file globbing ##############################################################
 ###############################################################################
 
-set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
+set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp arc/MatchTime.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
 set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
 
 # Automatically add all tests

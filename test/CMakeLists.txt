@@ -25,10 +25,10 @@ target_link_libraries(unit_tests PUBLIC
 )
 
 
-# IF (WIN32)
-#   set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
-#   set_target_properties(unit_tests PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
-# ENDIF()
+IF (WIN32)
+  set_target_properties(unit_tests PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+  set_target_properties(unit_tests PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
+ENDIF()
 
 add_test(NAME unit COMMAND unit_tests)
 enable_testing()

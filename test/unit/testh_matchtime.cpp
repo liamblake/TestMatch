@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
   TimeOfDay t1;
 
   // Casts
-  BOOST_TEST(std::string(t1) == "00:00:00");
+  // BOOST_TEST(std::string(t1) == "00:00:00");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

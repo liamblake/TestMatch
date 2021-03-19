@@ -43,6 +43,8 @@ uint TimeOfDay::sec() { return _sec; }
 uint TimeOfDay::min() { return _min; }
 uint TimeOfDay::hrs() { return _hrs; }
 
+void TimeOfDay::set(double dr) {}
+
 // Overloaded operators
 TimeOfDay& TimeOfDay::operator++() {
   *this += 1;

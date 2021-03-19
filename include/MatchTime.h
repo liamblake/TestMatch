@@ -79,7 +79,7 @@ class MatchTime {
   // static double DEL_STDDUR = 0.5;
   static double RUN_DUR;
 
-  // TimeOfDay time;
+  TimeOfDay time;
   int day;
 
   std::string state;
@@ -113,7 +113,7 @@ class MatchTime {
  public:
   // Default constructor - start of match, day 1
   MatchTime();
-  //MatchTime(Time c_tm, int c_day, std::string c_state);
+  // MatchTime(Time c_tm, int c_day, std::string c_state);
 
   // Time controls for use by simulation
   std::pair<int, std::string> delivery(bool type, int runs);

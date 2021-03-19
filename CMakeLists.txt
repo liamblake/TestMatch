@@ -54,9 +54,9 @@ target_link_libraries(backend PUBLIC
   ${Boost_LIBRARIES}
 )
 
-if (WIN32)
-  set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
-endif()
+# if (WIN32)
+#   set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
+# endif()
 
 ###############################################################################
 ## testing ####################################################################

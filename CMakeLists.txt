@@ -30,16 +30,6 @@ file(GLOB sources_unittests test/unit/*.cpp)
 file(GLOB sources_demo test/*.cpp)
 
 ###############################################################################
-## target definitions #########################################################
-###############################################################################
-
-# add the data to the target, so it becomes visible in some IDE
-add_library(backend ${sources})
-
-# this lets me include files relative to the root src dir with a <> pair
-target_include_directories(backend PUBLIC include)
-
-###############################################################################
 ## dependencies ###############################################################
 ###############################################################################
 
@@ -47,13 +37,24 @@ target_include_directories(backend PUBLIC include)
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization test_exec_monitor REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+
+###############################################################################
+## target definitions #########################################################
+###############################################################################
+
+# add the data to the target, so it becomes visible in some IDE
+add_library(backend ${sources})
+
+target_include_directories(backend PUBLIC include)
 
 target_include_directories(backend PUBLIC ${Boost_INCLUDE_DIR}})
 target_link_libraries(backend PUBLIC
   ${Boost_LIBRARIES}
 )
+
+set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
 
 ###############################################################################
 ## testing ####################################################################

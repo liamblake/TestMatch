@@ -16,7 +16,7 @@ jobs:
       with:
         working-directory: 'submodule/'
         doxyfile-path: 'doc/Doxyfile'
-        enable-latex: true
+        enable-latex: false
 
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3

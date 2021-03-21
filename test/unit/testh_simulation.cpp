@@ -75,7 +75,6 @@ Team nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
 // Venue
 PitchFactors lords_pf = {0.75995148, 0.24004852};
 Venue lords = {"Lords", "London", "ENG", &lords_pf};
-
 BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
   // Create batting cards for each player
   BatterCard** cards = create_batting_cards(&aus);

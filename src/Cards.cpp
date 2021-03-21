@@ -477,7 +477,6 @@ BatterCard** create_batting_cards(Team* team) {
 
   return cards;
 }
-
 BowlerCard** create_bowling_cards(Team* team) {
   BowlerCard** cards = new BowlerCard*[11];
   for (int i = 0; i < 11; i++) {

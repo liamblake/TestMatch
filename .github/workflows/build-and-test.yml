@@ -15,7 +15,6 @@ jobs:
     - name: Install Boost
       run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
 
-    # build project
     - name: Create build environment
       run: mkdir build
 
@@ -25,9 +24,5 @@ jobs:
     - name: Make
       run: cmake --build build/ --target all
 
-    - name: List
-      run: ls
-
-    # run tests
     - name: Run unit tests
       run: cd build && ctest --verbose

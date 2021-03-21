@@ -18,6 +18,7 @@
 #define UTILITY_H
 
 #include <cmath>
+#include <exception>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -296,6 +297,26 @@ inline std::string ordinal(int num) {
 inline bool is_slow_bowler(int bowl_type) {
   std::string btype_str = unencode_bowltype(bowl_type);
   return btype_str.find('f') == std::string::npos;
+}
+
+/**
+ * @brief Performs Box-Cox transform given power parameter
+ *
+ * @param x value to transform
+ * @param lambda power parameter
+ * @return transformed value
+ */
+inline double boxcox(double x, double lambda) {
+  if (x < 0) {
+    // raise exception
+    throw std::invalid_argument("Value to transform must be greater than 0");
+  }
+
+  if (lambda == 0) {
+    return log(x);
+  } else {
+    return (pow(x, lambda) - 1) / lambda;
+  }
 }
 
 #endif // UTILITY_H

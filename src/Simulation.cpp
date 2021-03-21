@@ -414,7 +414,6 @@ void Innings::simulate_delivery() {
       }
     } // All out is checked immediately after with check_state
 
-
   } else {
     int runs = outcome.front() - '0';
     team_score += runs;
@@ -520,7 +519,6 @@ void Innings::end_over() {
   }
 }
 
-
 void Innings::swap_batters() {
   BatterCard* tmp = striker;
   striker = nonstriker;
@@ -578,7 +576,7 @@ std::string Innings::score() {
 
 std::string Innings::simulate(bool quiet) {
   is_quiet = quiet;
- 
+
   if (is_quiet) {
     std::cout << "Simulating innings..." << std::endl;
   } else {
@@ -768,7 +766,7 @@ void Match::simulate_toss() {
 void Match::change_innings() {
   Team *new_bat, *new_bowl;
 
-  if (inns_i == 1 && DECIDE_FOLLOW_ON(lead, match_balls, 0)) {
+  if (inns_i == 1 && DECIDE_FOLLOW_ON(-lead)) {
     // Follow on
     new_bat = inns[inns_i]->get_bat_team();
     new_bowl = inns[inns_i]->get_bowl_team();
@@ -783,11 +781,35 @@ void Match::change_innings() {
   inns[inns_i] = new Innings(new_bat, new_bowl, lead, venue->pitch_factors);
 }
 
-bool Match::DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score) {
-  if (lead > 200)
+/**
+ * @brief Decide whether to enforce the follow-on, based on the lead
+ *
+ * Decision is made randomly, using a probability given by MODEL_FOLLOW_ON.
+ */
+bool Match::DECIDE_FOLLOW_ON(int lead) {
+  if (lead < 200)
     return false;
-  else
-    return true;
+  else {
+    // Use model to randomly decide whether or not to enforce the follow-on
+    double r = MODEL_FOLLOW_ON(lead);
+    return (double)rand() / (RAND_MAX) < r;
+  }
+}
+
+/**
+ * Current model is a logistic regression on the lead. The lead is first
+ * transformed with a Box-Cox transformation, then used to calculate the
+ * probability. The model was fitted on historical data using R.
+ */
+double Match::MODEL_FOLLOW_ON(int lead) {
+  // Logistic regression, fitted in R
+
+  // Preprocessing of lead value
+  double t_lead = boxcox(lead, -0.9561039); // Box-Cox transform
+
+  // Fitted model
+  double logit = -1101.903 + 1058.466 * t_lead;
+  return 1 / (1 + exp(logit));
 }
 
 std::string Match::toss_str() {

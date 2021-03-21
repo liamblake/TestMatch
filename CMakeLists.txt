@@ -22,23 +22,12 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 ## file globbing ##############################################################
 ###############################################################################
 
-set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
-set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h)
+set(sources src/Cards.cpp src/FileIO.cpp src/Player.cpp src/Simulation.cpp src/MatchTime.cpp include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
+set(includes include/Cards.h include/FileIO.h include/Player.h include/Simulation.h include/Utility.h include/MatchTime.h)
+
+# Automatically add all tests
 file(GLOB sources_unittests test/unit/*.cpp)
-
 file(GLOB sources_demo test/*.cpp)
-
-add_subdirectory(test)
-
-###############################################################################
-## target definitions #########################################################
-###############################################################################
-
-# add the data to the target, so it becomes visible in some IDE
-add_library(backend ${sources})
-
-# this lets me include files relative to the root src dir with a <> pair
-target_include_directories(backend PUBLIC include)
 
 ###############################################################################
 ## dependencies ###############################################################
@@ -47,16 +36,31 @@ target_include_directories(backend PUBLIC include)
 
 #set(BOOST_ROOT boost)
 set(Boost_USE_STATIC_LIBS OFF)
-find_package(Boost 1.71.0 COMPONENTS unit_test_framework serialization REQUIRED)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
 
-include_directories(backend ${Boost_INCLUDE_DIR}})
+###############################################################################
+## target definitions #########################################################
+###############################################################################
+
+# add the data to the target, so it becomes visible in some IDE
+add_library(backend ${sources})
+
+target_include_directories(backend PUBLIC include)
+
+target_include_directories(backend PUBLIC ${Boost_INCLUDE_DIR}})
 target_link_libraries(backend PUBLIC
   ${Boost_LIBRARIES}
 )
 
+if (WIN32)
+  set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
+endif()
+
 ###############################################################################
 ## testing ####################################################################
 ###############################################################################
-
+add_subdirectory(test)
 
 

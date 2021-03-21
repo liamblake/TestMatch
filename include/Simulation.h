@@ -27,7 +27,7 @@ struct MatchStats {};
  *
  */
 class BattingManager {
-private:
+ private:
   BatterCard* cards[11];
   bool batted[11];
 
@@ -36,7 +36,7 @@ private:
   BatterCard* nightwatch();
   BatterCard* promote_hitter();
 
-public:
+ public:
   // Constructor
   BattingManager();
 
@@ -58,7 +58,7 @@ public:
  * @brief
  */
 class BowlingManager {
-private:
+ private:
   BowlerCard* cards[11];
 
   int n_over_calls;
@@ -90,7 +90,7 @@ private:
   BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
   BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
 
-public:
+ public:
   BowlingManager();
 
   void set_cards(BowlerCard* c_cards[11]);
@@ -108,13 +108,13 @@ public:
  * @brief
  */
 class FieldingManager {
-private:
+ private:
   static double C_WK_PROB;
 
   Player* players[11];
   int wk_idx;
 
-public:
+ public:
   FieldingManager(int c_wk_idx);
 
   void set_cards(Player* c_plys[11]);
@@ -132,7 +132,7 @@ public:
  * @brief
  */
 class Innings {
-private:
+ private:
   // Each team
   Team* team_bat;
   Team* team_bowl;
@@ -240,7 +240,7 @@ private:
   static std::string DIVIDER;
   static std::string BUFFER;
 
-public:
+ public:
   // Constructor
   Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
           PitchFactors* c_pitch); // MatchTime* c_time);
@@ -274,7 +274,7 @@ public:
  */
 class Match {
 
-private:
+ private:
   Team* team1; // Home team
   Team* team2; // Away team
 
@@ -310,11 +310,23 @@ private:
 
   /**
    * @brief Decide whether to enforce the follow-on, based on the lead.
+   *
+   * Wrapper for Match::MODEL_FOLLOW_ON
+   *
    * @param lead Lead of bowling team at end of previous innings.
    * @return Boolean indicating whether the follow-on is enforced
    */
-  static bool DECIDE_FOLLOW_ON(int lead, int match_balls, int last_score);
-  // TODO: Also consider time left in match when making this decision
+  static bool DECIDE_FOLLOW_ON(int lead);
+
+  /**
+   * @brief Generate a probability for enforcing the follow-on, using the lead
+   *
+   * For details of model, see definition.
+   *
+   * @param lead Lead of bowling team at end of previous innings.
+   * @return Probability of enforcing the follow-on
+   */
+  static double MODEL_FOLLOW_ON(int lead);
 
   // For printing
   /**
@@ -325,7 +337,7 @@ private:
 
   std::string winner_str();
 
-public:
+ public:
   Match(Team* home_team, Team* away_team, Venue* c_venue);
 
   /**

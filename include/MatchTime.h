@@ -11,9 +11,52 @@
 #include <string>
 #include <utility>
 
+// For brevity of code
+typedef unsigned int uint;
+
+class TimeOfDay {
+ private:
+  uint _sec;
+  uint _min;
+  uint _hrs;
+
+  static std::string two_digits(int val);
+  void rounder();
+
+ public:
+  TimeOfDay();
+  TimeOfDay(uint hrs, uint min, uint sec);
+  TimeOfDay(double dr);
+
+  // Explicit casts
+  operator std::string();
+  operator int();
+
+  // Getters
+  uint sec();
+  uint min();
+  uint hrs();
+
+  // Explicit setter
+  void set(double dr);
+
+  // Overloaded operators
+  TimeOfDay& operator++();
+  TimeOfDay operator++(int);
+
+  TimeOfDay& operator+=(const TimeOfDay& rhs);
+  TimeOfDay& operator+=(const int& rhs);
+
+  friend bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
+  friend bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
+
+  friend TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs);
+  friend TimeOfDay operator+(TimeOfDay lhs, const int& rhs);
+};
+
 class MatchTime {
 
-private:
+ private:
   // Parameters
   static float START_TIME;
   static float LUNCH_START;
@@ -39,7 +82,7 @@ private:
   // static double DEL_STDDUR = 0.5;
   static double RUN_DUR;
 
-  // TimeOfDay time;
+  TimeOfDay time;
   int day;
 
   std::string state;
@@ -70,7 +113,7 @@ private:
   bool close_day();
   void check_state_change();
 
-public:
+ public:
   // Default constructor - start of match, day 1
   MatchTime();
   // MatchTime(Time c_tm, int c_day, std::string c_state);
@@ -87,7 +130,7 @@ public:
   // interaction with Match object
 
   // Getters
-  // TimeOfDay get_time();
+  TimeOfDay get_time();
   int get_day();
   std::string get_state();
 

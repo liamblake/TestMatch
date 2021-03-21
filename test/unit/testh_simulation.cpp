@@ -3,14 +3,15 @@
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <cmath>
 #include <exception>
 #include <iostream>
 #include <string>
 #include <utility>
 
 #define private                                                                \
-public // This is a hack and immensely evil, but lets me test private methods
-       // easily
+ public // This is a hack and immensely evil, but lets me test private methods
+        // easily
 #include "Cards.h"
 #include "Player.h"
 #include "Simulation.h"
@@ -101,5 +102,19 @@ BOOST_AUTO_TEST_CASE(testclass_innings) {
   // Simulate a delivery
 }
 
+BOOST_AUTO_TEST_CASE(testfeature_followon) {
+
+  // Cases where follow-on is not an option
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(0));
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(-201));
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(199));
+
+  // Ensure fit matches that expected by R
+  double eps = 0.0001;
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(200) - 0.1386838) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(250) - 0.3812311) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(350) - 0.7442012) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(500) - 0.9046413) < eps);
+}
 
 BOOST_AUTO_TEST_SUITE_END()

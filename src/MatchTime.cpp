@@ -8,7 +8,69 @@
 #include "MatchTime.h"
 #include "Utility.h"
 
-using namespace std;
+TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
+
+TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
+    : _sec(sec), _min(min), _hrs(hrs) {
+  // Round appropriately
+}
+
+TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
+  if (dr < 0) {
+    // Raise exception
+  }
+
+  _min = dr - _hrs;
+}
+
+std::string TimeOfDay::two_digits(int val) {
+  std::string output;
+
+  if (val < 10)
+    output += "0";
+  output += std::to_string(val);
+}
+
+// Explicit casts
+TimeOfDay::operator std::string() {
+  return two_digits(_hrs) + ":" + two_digits(_min) + ":" + two_digits(_sec);
+}
+
+TimeOfDay::operator int() { return _hrs * 3600 + _min * 60 + _sec; }
+
+// Getters
+uint TimeOfDay::sec() { return _sec; }
+uint TimeOfDay::min() { return _min; }
+uint TimeOfDay::hrs() { return _hrs; }
+
+void TimeOfDay::set(double dr) {}
+
+// Overloaded operators
+TimeOfDay& TimeOfDay::operator++() {
+  *this += 1;
+  return *this;
+}
+
+TimeOfDay TimeOfDay::operator++(int) {
+  TimeOfDay old = *this;
+  (*this)++;
+  return old;
+}
+
+TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) {}
+
+TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
+  return *this += TimeOfDay(rhs);
+}
+
+bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
+  return ((lhs._hrs == rhs._hrs) && (lhs._min == rhs._min) &&
+          (lhs._sec == rhs._sec));
+}
+bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
+
+TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs);
+TimeOfDay operator+(TimeOfDay lhs, const int& rhs);
 
 /*
     MatchTime implementations
@@ -40,8 +102,7 @@ double MatchTime::SPIN_MEANDUR = 30;
 double MatchTime::RUN_DUR = 10;
 
 // Default constructor - start of match, day 1
-MatchTime::MatchTime() {
-  time = TimeOfDay(START_TIME);
+MatchTime::MatchTime() : time(START_TIME) {
   day = 1;
   state = "Match Start";
 }
@@ -85,7 +146,7 @@ void MatchTime::check_state_change() {
 
   // Switch through each possible match state
   if (state == "Match Start") {
-    if (time > START_TIME)
+    // if (time > START_TIME)
   } else if (state == "Session 1") {
 
   } else if (state == "Drinks 1") {
@@ -112,7 +173,7 @@ void MatchTime::check_state_change() {
 }
 
 // Time controls for use by simulation
-pair<int, string> MatchTime::delivery(bool type, int runs) {
+std::pair<int, std::string> MatchTime::delivery(bool type, int runs) {
 
   // Randomnly generate time elapsed by delivery
   double s;
@@ -127,137 +188,32 @@ pair<int, string> MatchTime::delivery(bool type, int runs) {
   int elapsed = (int)round(s);
 
   check_state_change();
-  pair<int, string> output = {elapsed, state};
+  std::pair<int, std::string> output = {elapsed, state};
   return output;
 }
 
-pair<int, string> MatchTime::end_over() { return {0, state}; }
+std::pair<int, std::string> MatchTime::end_over() { return {0, state}; }
 
-pair<int, string> MatchTime::drinks() {
+std::pair<int, std::string> MatchTime::drinks() {
   time += DRINKS_DUR;
 
   check_state_change();
   return {DRINKS_DUR, state};
 }
 
-string MatchTime::force_early_break() {
+std::string MatchTime::force_early_break() {
   check_state_change();
   return state;
 }
 
-string MatchTime::extend_session() {
+std::string MatchTime::extend_session() {
   check_state_change();
   return state;
 }
 
 // Getters
-VarOfTime MatchTime::get_time() { return time; }
+TimeOfDay MatchTime::get_time() { return time; }
 
 int MatchTime::get_day() { return day; }
 
-string MatchTime::get_state() { return state; }
-
-// Overloaded operators
-ostream& operator<<(ostream& os, const MatchTime& mt) {
-  os << mt.tm << ", " << mt.state << ", Day " << mt.day;
-  return os;
-}
-
-// /*
-//     Time implementations
-// */
-// // Default constructor - default to 12:00am
-// Time::Time() {
-//     hours = 0;
-//     mins = 0;
-//     secs = 0;
-// }
-
-// Time::Time(int c_hours, int c_mins, int c_secs) {
-//     hours = c_hours % 24;
-//     mins = c_mins % 60;
-//     secs = c_secs % 60;
-// }
-
-// // Construct from float representation
-// Time::Time(float f_rep) {
-//     hours = (int) f_rep;
-//     mins = (int) 100*(f_rep - (int) f_rep);
-//     secs = 0;
-// }
-
-// void Time::set(int c_hours, int c_mins, int c_secs) {
-//     hours = c_hours % 24;
-//     mins = c_mins % 60;
-//     secs = c_secs % 60;
-// }
-
-// void Time::set(float f_rep) {
-//     hours = (int) f_rep;
-//     mins = (int) 100*(f_rep - (int) f_rep);
-//     secs = 0;
-// }
-
-// // Overloaded operators
-// Time& Time::operator=(const Time& other) {
-//     if (this != &other) {
-//         hours = other.hours;
-//         mins = other.mins;
-//         secs = other.secs;
-//     }
-
-//     return *this;
-// }
-
-// Time& Time::operator=(const float& other) {
-//     set(other);
-//     return *this;
-// }
-
-// Time& Time::operator+=(unsigned int a_secs) {
-//     int a_mins = a_secs / 60;
-
-//     secs += a_secs % 60;
-//     mins += a_mins % 60;
-//     hours += a_mins / 60;
-
-//     hours = hours % 24;
-
-//     return *this;
-
-// }
-
-// Time& operator+(const Time &tm1, const Time &tm2) {
-//     Time output(tm1.hours + tm2.hours, tm1.mins + tm2.mins, tm1.secs +
-//     tm2.secs); return output;
-// }
-
-// Time& operator-(const Time &tm1, const Time &tm2) {
-//     Time output(tm1.hours - tm2.hours, tm1.mins - tm2.mins, tm1.secs -
-//     tm2.secs); return output;
-// }
-
-// bool operator==(const Time &lhs, const Time &rhs) {
-//     return ((lhs.hours == rhs.hours) && (lhs.mins == rhs.mins) && (lhs.secs
-//     == rhs.secs));
-// }
-
-// // Formatted print of Time struct in output stream
-// std::ostream& operator<<(ostream& os, const Time& tm) {
-//     bool am = (tm.hours < 12);
-//     if (am || tm.hours == 12) {
-//         os << setw(2) << setfill('0') << tm.hours << ":";
-//     } else {
-//         os << setw(2) << setfill('0') << tm.hours - 12 << ":";
-//     }
-//     os << setw(2) << setfill('0') << tm.mins << ":";
-//     os << setw(2) << setfill('0') << tm.secs << " ";
-
-//     if (am) {
-//         os << "am";
-//     } else {
-//         os << "pm";
-//     }
-
-//     return os;
-// }
+std::string MatchTime::get_state() { return state; }

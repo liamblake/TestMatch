@@ -800,6 +800,11 @@ bool Match::DECIDE_FOLLOW_ON(int lead) {
  * Current model is a logistic regression on the lead. The lead is first
  * transformed with a Box-Cox transformation, then used to calculate the
  * probability. The model was fitted on historical data using R.
+ *
+ * The model is
+ * \f[
+ *  p = \frac{1}{1 + \exp{-1101.903 + 1058.466 \times\text{t_lead}}}.
+ * \f]
  */
 double Match::MODEL_FOLLOW_ON(int lead) {
   // Logistic regression, fitted in R

@@ -1,12 +1,11 @@
 name: Generate & Deploy Documentation
 
 on:
-  pull_request:
-    branches: [master]
   push: 
     branches:
       - master 
       - develop-doxygen
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,7 +16,7 @@ jobs:
       with:
         working-directory: 'submodule/'
         doxyfile-path: 'doc/Doxyfile'
-        enable-latex: false
+        enable-latex: true
 
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3

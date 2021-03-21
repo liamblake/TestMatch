@@ -15,12 +15,12 @@ TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
   // Round appropriately
 }
 
-TimeOfDay::TimeOfDay(float fr) : _sec(0), _hrs((uint)fr) {
-  if (fr < 0) {
+TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
+  if (dr < 0) {
     // Raise exception
   }
 
-  _min = fr - _hrs;
+  _min = dr - _hrs;
 }
 
 std::string TimeOfDay::two_digits(int val) {

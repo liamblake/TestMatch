@@ -26,7 +26,7 @@ class TimeOfDay {
  public:
   TimeOfDay();
   TimeOfDay(uint hrs, uint min, uint sec);
-  TimeOfDay(float fr);
+  TimeOfDay(double dr);
 
   // Explicit casts
   operator std::string();

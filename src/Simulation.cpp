@@ -766,7 +766,7 @@ void Match::simulate_toss() {
 void Match::change_innings() {
   Team *new_bat, *new_bowl;
 
-  if (inns_i == 1 && DECIDE_FOLLOW_ON(lead)) {
+  if (inns_i == 1 && DECIDE_FOLLOW_ON(-lead)) {
     // Follow on
     new_bat = inns[inns_i]->get_bat_team();
     new_bowl = inns[inns_i]->get_bowl_team();
@@ -787,7 +787,7 @@ void Match::change_innings() {
  * Decision is made randomly, using a probability given by MODEL_FOLLOW_ON.
  */
 bool Match::DECIDE_FOLLOW_ON(int lead) {
-  if (lead > 200)
+  if (lead < 200)
     return false;
   else {
     // Use model to randomly decide whether or not to enforce the follow-on

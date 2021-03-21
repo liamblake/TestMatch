@@ -260,8 +260,8 @@ template <typename T>
 PlayerCard** sort_array(PlayerCard** list, int len,
                         T (Player::*sort_val)() const);
 
-BatterCard** create_batting_cards(Team team);
-BowlerCard** create_bowling_cards(Team team);
+BatterCard** create_batting_cards(Team* team);
+BowlerCard** create_bowling_cards(Team* team);
 
 //////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
 

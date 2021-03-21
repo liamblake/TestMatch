@@ -8,39 +8,31 @@
 
 #include "MatchTime.h"
 
-using boost::test_tools::output_test_stream;
-// using namespace boost::unit_test;
+BOOST_AUTO_TEST_SUITE(test_header_matchtimetime)
 
-// Example objects for testing
+BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
+  // Default constructor
+  TimeOfDay t1;
+  BOOST_TEST(t1.sec() == 0);
+  BOOST_TEST(t1.min() == 0);
+  BOOST_TEST(t1.hrs() == 0);
 
-BOOST_AUTO_TEST_SUITE(test_header_time)
+  // hrs, sec, min constructor
+  TimeOfDay t2(1, 2, 3);
+  BOOST_TEST(t2.sec() == 1);
+  BOOST_TEST(t2.min() == 2);
+  BOOST_TEST(t2.hrs() == 3);
 
-// void check_ostream(output_test_stream& output, int length, std::string
-// expected) {
-//     BOOST_TEST(!output.is_empty(false));
-//     BOOST_TEST(output.check_length(length, false));
-//     BOOST_TEST(output.is_equal(expected));
-// }
+  // Float constructor
+}
 
-// BOOST_AUTO_TEST_CASE(testclass_time_constructs) {
-//     // For verifying output stream
-//     output_test_stream os;
+BOOST_AUTO_TEST_CASE(testclass_timeofday_setters) {}
 
-//     // Constructors for Time
-//     Time tc();
-//     os << tc;
-//     check_ostream(os, 10, "12:00:00 am");
+BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
+  TimeOfDay t1;
 
-//     Time tc();
-
-// }
-
-// BOOST_AUTO_TEST_CASE(testclass_time_operators) {
-
-// }
-
-// BOOST_AUTO_TEST_CASE(testclass_time_setters) {
-
-// }
+  // Casts
+  // BOOST_TEST(std::string(t1) == "00:00:00");
+}
 
 BOOST_AUTO_TEST_SUITE_END()

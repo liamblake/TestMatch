@@ -36,13 +36,12 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
   BOOST_TEST(tp_bat.get_bowl_type() == 5);
 
   // Test serialisation
-  // save_data<Player>(&tp_bat,
-  // "../test/testfiles/testfile_serial_player.tmpy"); Player* tp_new =
-  //    load_data<Player>("../test/testfiles/testfile_serial_player.tmpy");
-  // BOOST_CHECK(*tp_new == tp_bat);
-  // BOOST_TEST(tp_new != &tp_bat);
+  save_data<Player>(&tp_bat, "testfile_serial_player.tmpy"); 
+  Player* tp_new = load_data<Player>("testfile_serial_player.tmpy");
+  BOOST_CHECK(*tp_new == tp_bat);
+  BOOST_TEST(tp_new != &tp_bat);
 
-  // delete tp_new;
+  delete tp_new;
 }
 
 BOOST_AUTO_TEST_SUITE_END()

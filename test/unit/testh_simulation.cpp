@@ -3,14 +3,15 @@
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
 
+#include <cmath>
 #include <exception>
 #include <iostream>
 #include <string>
 #include <utility>
 
 #define private                                                                \
-public // This is a hack and immensely evil, but lets me test private methods
-       // easily
+ public // This is a hack and immensely evil, but lets me test private methods
+        // easily
 #include "Cards.h"
 #include "Player.h"
 #include "Simulation.h"
@@ -74,31 +75,45 @@ Team nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
 // Venue
 PitchFactors lords_pf = {0.75995148, 0.24004852};
 Venue lords = {"Lords", "London", "ENG", &lords_pf};
+BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
+  // Create batting cards for each player
+  BatterCard** cards = create_batting_cards(&aus);
 
-// BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
-//   // Create batting cards for each player
-//   BatterCard** cards = create_batting_cards(aus);
+  for (int i = 0; i < 11; i++) {
+    delete cards[i];
+  }
+}
 
-//   for (int i = 0; i < 11; i++) {
-//     delete cards[i];
-//   }
-// }
+BOOST_AUTO_TEST_CASE(testclass_innings) {
+  // Create an innings
+  Innings inns(&aus, &nz, 0, &lords_pf);
 
-// BOOST_AUTO_TEST_CASE(testclass_innings) {
-//   // Create an innings
-//   Innings inns(&aus, &nz, 0, &lords_pf);
+  // Check initialisation of innings
+  BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
+             inns.striker->get_player_ptr() == &a2);
+  BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
+             inns.nonstriker->get_player_ptr() == &a2);
+  BOOST_TEST(inns.striker != inns.nonstriker);
 
-//   // Check initialisation of innings
-//   BOOST_TEST(inns.striker->get_player_ptr() == &a1 |
-//              inns.striker->get_player_ptr() == &a2);
-//   BOOST_TEST(inns.nonstriker->get_player_ptr() == &a1 |
-//              inns.nonstriker->get_player_ptr() == &a2);
-//   BOOST_TEST(inns.striker != inns.nonstriker);
+  BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
+  BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
 
-//   BOOST_TEST(inns.bowl1->get_player_ptr() == &b11);
-//   BOOST_TEST(inns.bowl2->get_player_ptr() == &b9);
+  // Simulate a delivery
+}
 
-//   // Simulate a delivery
-// }
+BOOST_AUTO_TEST_CASE(testfeature_followon) {
+
+  // Cases where follow-on is not an option
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(0));
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(-201));
+  BOOST_CHECK(!Match::DECIDE_FOLLOW_ON(199));
+
+  // Ensure fit matches that expected by R
+  double eps = 0.0001;
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(200) - 0.1386838) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(250) - 0.3812311) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(350) - 0.7442012) < eps);
+  BOOST_TEST(abs(Match::MODEL_FOLLOW_ON(500) - 0.9046413) < eps);
+}
 
 BOOST_AUTO_TEST_SUITE_END()

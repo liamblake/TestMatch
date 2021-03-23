@@ -17,6 +17,17 @@
 
 namespace Model {
 
+namespace Model {
+
+int NUM_DELIV_OUTCOMES = 22;
+std::vector<std::string> DELIV_OUTCOMES = {
+    "0", "1",  "1b",  "1lb", "1nb", "1wd", "2", "2b",  "2lb", "2nb", "2wd",
+    "3", "3b", "3lb", "4",   "4b",  "4lb", "5", "5nb", "5wd", "6",   "W"};
+int NUM_DISM_MODES = 6;
+std::vector<std::string> DISM_MODES_STATIC = {"b",   "c",  "c&b",
+                                              "lbw", "ro", "st"};
+
+
 /* Somewhat terrible fit to the toss elect probabilities in actual data
  * Note that spin_factor = 1 - seam_factor, so we only need to consider
  * the spin factor when calculating the probability. This is based on the

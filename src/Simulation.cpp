@@ -233,7 +233,7 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   // This ain't a good implementation - get your functions sorted man
   temp_outcomes = new std::string[Model::NUM_DELIV_OUTCOMES];
   for (int i = 0; i < Model::NUM_DELIV_OUTCOMES; i++)
-    temp_outcomes[i] = OUTCOMES.at(i);
+    temp_outcomes[i] = Model::DELIV_OUTCOMES.at(i);
 
   // Set-up the first over
   first_over = last_over = new Over(1);

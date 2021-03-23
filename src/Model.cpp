@@ -64,7 +64,7 @@ double MODEL_FOLLOW_ON(int lead) {
 }
 
 // Generates probability distribution for each possible outcome
-double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match) {
+double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
   double* output = new double[NUM_DELIV_OUTCOMES];
 
   // PLACEHOLDER - data proportions, hard-coded model

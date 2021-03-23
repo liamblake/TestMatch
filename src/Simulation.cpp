@@ -247,8 +247,8 @@ void Innings::simulate_delivery() {
   // Pass game information to delivery model
 
   // Get outcome probabilities
-  double* probs = Model::MODEL_DELIVERY(striker->get_sim_stats(),
-                                        bowl1->get_sim_stats(), {});
+  double* probs =
+      Model::MODEL_DELIVERY(striker->get_sim_stats(), bowl1->get_sim_stats());
 
   // Simulate
   std::string outcome =

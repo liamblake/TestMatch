@@ -17,9 +17,6 @@
 #include "Cards.h"
 #include "Player.h"
 
-// Forward declarations
-struct MatchStats;
-
 namespace Model {
 
 int NUM_DELIV_OUTCOMES = 22;
@@ -46,7 +43,7 @@ double MODEL_TOSS_ELECT(double spin_factor);
  * @param match
  * @return double*
  */
-double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
+double* MODEL_DELIVERY(BatStats bat, BowlStats bowl);
 
 /**
  * @brief

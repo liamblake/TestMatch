@@ -231,8 +231,8 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   bowl2 = bowlers[team_bowl->i_bowl2];
 
   // This ain't a good implementation - get your functions sorted man
-  temp_outcomes = new std::string[NUM_OUTCOMES];
-  for (int i = 0; i < NUM_OUTCOMES; i++)
+  temp_outcomes = new std::string[Model::NUM_DELIV_OUTCOMES];
+  for (int i = 0; i < Model::NUM_DELIV_OUTCOMES; i++)
     temp_outcomes[i] = OUTCOMES.at(i);
 
   // Set-up the first over
@@ -242,112 +242,17 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   fow = new FOW[10];
 }
 
-// Generates probability distribution for each possible outcome
-double* Innings::MODEL_DELIVERY(BatStats bat, BowlStats bowl,
-                                MatchStats match) {
-  double* output = new double[NUM_OUTCOMES];
-
-  // PLACEHOLDER - data proportions, hard-coded model
-  if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
-    output[0] = 0;
-    output[1] = 0.700414129;
-    output[2] = 0.878619915;
-    output[3] = 0.879463788;
-    output[4] = 0.881999123;
-    output[5] = 0.884047465;
-    output[6] = 0.884303973;
-    output[7] = 0.919880445;
-    output[8] = 0.920519855;
-    output[9] = 0.921326553;
-    output[10] = 0.92133027;
-    output[11] = 0.921341423;
-    output[12] = 0.92863144;
-    output[13] = 0.928873077;
-    output[14] = 0.929029212;
-    output[15] = 0.976230307;
-    output[16] = 0.977791656;
-    output[17] = 0.978115079;
-    output[18] = 0.978234039;
-    output[19] = 0.978241474;
-    output[20] = 0.978267496;
-    output[21] = 0.985367921;
-  } else {
-    output[0] = 0;
-    output[1] = 0.72505691;
-    output[2] = 0.844465522;
-    output[3] = 0.845466186;
-    output[4] = 0.851517595;
-    output[5] = 0.859254956;
-    output[6] = 0.862496443;
-    output[7] = 0.899248316;
-    output[8] = 0.899452243;
-    output[9] = 0.900194442;
-    output[10] = 0.900244238;
-    output[11] = 0.900298776;
-    output[12] = 0.910843688;
-    output[13] = 0.910879256;
-    output[14] = 0.910912454;
-    output[15] = 0.978537892;
-    output[16] = 0.979818363;
-    output[17] = 0.98124585;
-    output[18] = 0.981426065;
-    output[19] = 0.981497202;
-    output[20] = 0.981855259;
-    output[21] = 0.983420279;
-  }
-
-  return output;
-}
-
-int Innings::MODEL_WICKET_TYPE(int bowltype) {
-  // This desperately needs cleaning up
-
-  // Unencode bowltype
-  std::string btype_str = unencode_bowltype(bowltype);
-
-  std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
-  double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
-
-  double DISM_MODE_SPINNER[6] = {0, 0.157, 0.692, 0.7274, 0.9286, 0.9613};
-  double DISM_MODE_SEAMER[6] = {0, 0.175, 0.815, 0.8291, 0.9731, 1};
-
-  bool is_spinner = (btype_str.find('f') == std::string::npos);
-
-  // Check if "f" is in bowl_type - indicates whether stumpings are possible
-  for (int i = 0; i < NUM_DISM_MODES; i++) {
-    DISM_MODES[i] = DISM_MODES_STATIC[i];
-    if (is_spinner) {
-      // Spinner model
-      // double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326,
-      // 0.0387};
-      DISM_MODE_DIST[i] = DISM_MODE_SPINNER[i];
-    } else {
-      // Seamer model
-      // double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242, 0};
-      DISM_MODE_DIST[i] = DISM_MODE_SEAMER[i];
-    }
-  }
-
-  // Sample from distribution
-  std::string dism_mode =
-      sample_cdf<std::string>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
-
-  delete[] DISM_MODE_DIST;
-  delete[] DISM_MODES;
-  return encode_dism(dism_mode);
-}
-
 // Private methods used in simulation process
 void Innings::simulate_delivery() {
   // Pass game information to delivery model
 
   // Get outcome probabilities
-  double* probs =
-      MODEL_DELIVERY(striker->get_sim_stats(), bowl1->get_sim_stats(), {});
+  double* probs = Model::MODEL_DELIVERY(striker->get_sim_stats(),
+                                        bowl1->get_sim_stats(), {});
 
   // Simulate
   std::string outcome =
-      sample_cdf<std::string>(temp_outcomes, NUM_OUTCOMES, probs);
+      sample_cdf<std::string>(temp_outcomes, Model::NUM_DELIV_OUTCOMES, probs);
   delete[] probs;
 
   std::pair<int, std::string> t_output;
@@ -379,7 +284,8 @@ void Innings::simulate_delivery() {
     wkts++;
 
     // Randomly choose the type of dismissal
-    int dism = MODEL_WICKET_TYPE(bowl1->get_player_ptr()->get_bowl_type());
+    int dism =
+        Model::MODEL_WICKET_TYPE(bowl1->get_player_ptr()->get_bowl_type());
 
     // Pick a fielder
     Player* fielder = man_field.select_catcher(bowl1->get_player_ptr(), dism);

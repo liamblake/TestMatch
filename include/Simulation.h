@@ -184,11 +184,9 @@ class Innings {
   static int NUM_OUTCOMES;
   static std::vector<std::string> OUTCOMES;
   std::string* temp_outcomes;
-  static double* MODEL_DELIVERY(BatStats bat, BowlStats bowl, MatchStats match);
 
   static int NUM_DISM_MODES;
   static std::vector<std::string> DISM_MODES_STATIC;
-  static int MODEL_WICKET_TYPE(int bowltype);
 
   // Private methods used in simulation process
 

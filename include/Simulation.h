@@ -180,13 +180,7 @@ class Innings {
   Extras extras;
   FOW* fow;
 
-  // Simulation models
-  static int NUM_OUTCOMES;
-  static std::vector<std::string> OUTCOMES;
   std::string* temp_outcomes;
-
-  static int NUM_DISM_MODES;
-  static std::vector<std::string> DISM_MODES_STATIC;
 
   // Private methods used in simulation process
 

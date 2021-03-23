@@ -17,8 +17,6 @@
 
 namespace Model {
 
-namespace Model {
-
 int NUM_DELIV_OUTCOMES = 22;
 std::vector<std::string> DELIV_OUTCOMES = {
     "0", "1",  "1b",  "1lb", "1nb", "1wd", "2", "2b",  "2lb", "2nb", "2wd",

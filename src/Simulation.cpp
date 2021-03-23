@@ -8,19 +8,13 @@
 
 #include "Cards.h"
 #include "MatchTime.h"
+#include "Model.h"
 #include "Player.h"
 #include "Simulation.h"
 #include "Utility.h"
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;
-int Innings::NUM_OUTCOMES = 22;
-std::vector<std::string> Innings::OUTCOMES = {
-    "0", "1",  "1b",  "1lb", "1nb", "1wd", "2", "2b",  "2lb", "2nb", "2wd",
-    "3", "3b", "3lb", "4",   "4b",  "4lb", "5", "5nb", "5wd", "6",   "W"};
-int Innings::NUM_DISM_MODES = 6;
-std::vector<std::string> Innings::DISM_MODES_STATIC = {"b",   "c",  "c&b",
-                                                       "lbw", "ro", "st"};
 
 //~~~~~~~~~~~~~~ BattingManager implementations ~~~~~~~~~~~~~~//
 BattingManager::BattingManager() {
@@ -740,24 +734,8 @@ void Match::simulate_toss() {
   // Winner of toss is chosen randomly - 0.5 probability either way
   toss_win = (((double)rand() / (RAND_MAX)) < 0.5);
 
-  /* Somewhat terrible fit to the toss elect probabilities in actual data
-   * Note that spin_factor = 1 - seam_factor, so we only need to consider
-   * the spin factor when calculating the probability. This is based on the
-   * intuition that in extreme spinning conditions, a team will bat first,
-   * whereas in extreme seaming conditions, a team will bowl first.
-   *
-   * Using a probability rather than a hard choice adds in that extra
-   *uncertainty that appears whenever human decision is involved.
-   *
-   * This model, along with the entire pitch condition set-up, will probably
-   * be eventually improved.
-   **/
-
-  // Exponential model
-  double a = 0.05;
-  double b = log(0.9 / a);
-  double bat_prob = a * exp(b * venue->pitch_factors->spin);
-  toss_elect = (((double)rand() / (RAND_MAX)) < bat_prob);
+  toss_elect = (((double)rand() / (RAND_MAX)) <
+                Model::MODEL_TOSS_ELECT(venue->pitch_factors->spin));
 
   // Print toss result
   std::cout << toss_str() << std::endl;
@@ -791,30 +769,9 @@ bool Match::DECIDE_FOLLOW_ON(int lead) {
     return false;
   else {
     // Use model to randomly decide whether or not to enforce the follow-on
-    double r = MODEL_FOLLOW_ON(lead);
+    double r = Model::MODEL_FOLLOW_ON(lead);
     return (double)rand() / (RAND_MAX) < r;
   }
-}
-
-/**
- * Current model is a logistic regression on the lead. The lead is first
- * transformed with a Box-Cox transformation, then used to calculate the
- * probability. The model was fitted on historical data using R.
- *
- * The model is
- * \f[
- *  p = \frac{1}{1 + \exp{-1101.903 + 1058.466 \times\text{t_lead}}}.
- * \f]
- */
-double Match::MODEL_FOLLOW_ON(int lead) {
-  // Logistic regression, fitted in R
-
-  // Preprocessing of lead value
-  double t_lead = boxcox(lead, -0.9561039); // Box-Cox transform
-
-  // Fitted model
-  double logit = -1101.903 + 1058.466 * t_lead;
-  return 1 / (1 + exp(logit));
 }
 
 std::string Match::toss_str() {

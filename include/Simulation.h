@@ -318,16 +318,6 @@ class Match {
    */
   static bool DECIDE_FOLLOW_ON(int lead);
 
-  /**
-   * @brief Generate a probability for enforcing the follow-on, using the lead
-   *
-   * For details of model, see definition.
-   *
-   * @param lead Lead of bowling team at end of previous innings.
-   * @return Probability of enforcing the follow-on
-   */
-  static double MODEL_FOLLOW_ON(int lead);
-
   // For printing
   /**
    * @brief Returns a string detailing which team won the toss and the choice

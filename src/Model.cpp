@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-using namespace Model;
+namespace Model {
 
 /* Somewhat terrible fit to the toss elect probabilities in actual data
  * Note that spin_factor = 1 - seam_factor, so we only need to consider
@@ -155,4 +155,5 @@ int MODEL_WICKET_TYPE(int bowltype) {
   delete[] DISM_MODE_DIST;
   delete[] DISM_MODES;
   return encode_dism(dism_mode);
+}
 }

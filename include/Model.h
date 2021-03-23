@@ -19,13 +19,10 @@
 
 namespace Model {
 
-int NUM_DELIV_OUTCOMES = 22;
-std::vector<std::string> DELIV_OUTCOMES = {
-    "0", "1",  "1b",  "1lb", "1nb", "1wd", "2", "2b",  "2lb", "2nb", "2wd",
-    "3", "3b", "3lb", "4",   "4b",  "4lb", "5", "5nb", "5wd", "6",   "W"};
-int NUM_DISM_MODES = 6;
-std::vector<std::string> DISM_MODES_STATIC = {"b",   "c",  "c&b",
-                                              "lbw", "ro", "st"};
+extern int NUM_DELIV_OUTCOMES;
+extern std::vector<std::string> DELIV_OUTCOMES;
+extern int NUM_DISM_MODES;
+extern std::vector<std::string> DISM_MODES_STATIC;
 
 /**
  * @brief Determine the probability of electing to bat at the toss

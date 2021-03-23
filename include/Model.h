@@ -16,7 +16,6 @@
 
 #include "Cards.h"
 #include "Player.h"
-#include "Simulation.h"
 
 // Forward declarations
 struct MatchStats;

@@ -323,7 +323,7 @@ int BowlerCard::DETERMINE_COMPETENCY(Player* player) {
   double avg_balls_per_match =
       (double)player->get_balls_bowled() / (double)player->get_innings();
 
-  if (avg_balls_per_match > 5) {
+  if (avg_balls_per_match > 30) {
     // Full-time if bowled more than 5 overs per innings on average
     return 0;
   } else if (avg_balls_per_match > 0) {

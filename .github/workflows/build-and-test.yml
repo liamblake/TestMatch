@@ -1,0 +1,35 @@
+name: Build and Test (Ubuntu)
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # install Boost libraries
+      - name: Install Boost
+        run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
+
+      - name: Create build environment
+        run: mkdir build
+
+      - name: Build
+        run: cmake -Bbuild -H.
+
+      - name: Make
+        run: cmake --build build/ --target all
+
+      - name: Run unit tests
+        run: cd build && ctest --verbose
+
+      - name: Generate coverage report
+      - uses: devmasx/coverage-check-action@v1.2.0
+        with:
+          type: lcov
+          result_path: coverage/example.lcov
+          min_coverage: 80
+          token: ${{ github.token }}

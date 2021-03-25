@@ -105,7 +105,7 @@ class BowlingManager {
    */
   template <class pred>
   BowlerCard* search_best(pred predicate) {
-    double min_obj = 0;
+    double min_obj = std::numeric_limits<double>::max();
     double new_obj;
     BowlerCard* best = nullptr;
     BowlerCard* curr;

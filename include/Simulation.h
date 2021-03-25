@@ -105,7 +105,7 @@ class BowlingManager {
    */
   template <class pred>
   BowlerCard* search_best(pred predicate) {
-    double max_obj = 0;
+    double min_obj = 0;
     double new_obj;
     BowlerCard* best = nullptr;
     BowlerCard* curr;
@@ -122,9 +122,9 @@ class BowlingManager {
                                        curr->get_tiredness());
 
         // Compare to current best
-        if (new_obj > max_obj) {
+        if (new_obj < max_obj) {
           best = curr;
-          max_obj = new_obj;
+          min_obj = new_obj;
         }
       }
     }

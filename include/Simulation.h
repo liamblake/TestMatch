@@ -122,7 +122,7 @@ class BowlingManager {
                                        curr->get_tiredness());
 
         // Compare to current best
-        if (new_obj < max_obj) {
+        if (new_obj < min_obj) {
           best = curr;
           min_obj = new_obj;
         }

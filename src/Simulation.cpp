@@ -1,5 +1,6 @@
 #include <cmath>
 #include <exception>
+#include <functional>
 #include <iomanip>
 #include <sstream>
 #include <stdlib.h>
@@ -90,22 +91,36 @@ double BowlingManager::take_off_prob(double fatigue) {
 
 BowlerCard* BowlingManager::new_pacer(BowlerCard* ignore1,
                                       BowlerCard* ignore2) {
-  return nullptr;
+  // Find each (full-time) pace-bowler in XI and measure objective fatigue
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return !is_slow_bowler(bc->get_player_ptr()->get_bowl_type()) &&
+           bc->get_competency() == 0 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::new_spinner(BowlerCard* ignore1,
                                         BowlerCard* ignore2) {
-  return nullptr;
+  // Find each (full-time) spinner in XI and measure objective fatigue
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return is_slow_bowler(bc->get_player_ptr()->get_bowl_type()) &&
+           bc->get_competency() == 0 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::part_timer(BowlerCard* ignore1,
                                        BowlerCard* ignore2) {
-  return nullptr;
+  // Find any part-time bowler
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return bc->get_competency() == 1 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1,
                                          BowlerCard* ignore2) {
-  return nullptr;
+  // Shit's cooked: find anyone who doesn't bowl and send them in
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return bc->get_competency() == 2 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::end_over(Innings* inns_obj) {

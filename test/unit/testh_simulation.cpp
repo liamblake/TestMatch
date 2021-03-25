@@ -85,6 +85,30 @@ BOOST_AUTO_TEST_CASE(testclass_battingmanager) {
   }
 }
 
+BOOST_AUTO_TEST_CASE(testclass_bowlingmanager) {
+  // Create bowler cards for each player
+  BowlerCard** cards = create_bowling_cards(&nz);
+
+  // Test object
+  BowlingManager bm;
+  bm.set_cards(cards);
+
+  // Check that cards have been passed over correctly
+  for (int i = 0; i < 11; i++) {
+    BOOST_TEST(bm.cards[i] == cards[i]);
+  }
+
+  // Bowler getters
+  BOOST_TEST(bm.new_pacer(nullptr, nullptr) == cards[7]);
+  BOOST_TEST(bm.new_pacer(cards[7], cards[8]) == cards[9]);
+  BOOST_TEST(bm.new_spinner(nullptr, nullptr) == cards[6]);
+  BOOST_TEST(bm.part_timer(nullptr, nullptr) == cards[2]);
+
+  for (int i = 0; i < 11; i++) {
+    delete cards[i];
+  }
+}
+
 BOOST_AUTO_TEST_CASE(testclass_innings) {
   // Create an innings
   Innings inns(&aus, &nz, 0, &lords_pf);

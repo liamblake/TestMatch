@@ -55,7 +55,7 @@ target_link_libraries(backend PUBLIC
 )
 
 if (WIN32)
-  set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
+  #set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
 endif()
 
 ###############################################################################

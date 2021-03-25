@@ -158,10 +158,32 @@ inline std::string unencode_bowltype(int encoding) {
   case 3:
     output = "rf";
     break;
-
+  case 4:
+    output = "ob";
+    break;
+  case 5:
+    output = "lb";
+    break;
+  case 6:
+    output = "lm";
+    break;
+  case 7:
+    output = "lmf";
+    break;
+  case 8:
+    output = "lfm";
+    break;
+  case 9:
+    output = "lf";
+    break;
+  case 10:
+    output = "slo";
+    break;
+  case 11:
+    output = "slu";
+    break;
   default:
     output = "-";
-    break;
   }
 
   return output;

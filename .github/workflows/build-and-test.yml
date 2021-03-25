@@ -26,8 +26,8 @@ jobs:
     - name: Run unit tests
       run: cd build && ctest --verbose
 
-    - name: Generate coverage report
     - uses: devmasx/coverage-check-action@v1.2.0
+      name: Generate coverage report
       with:
          type: lcov
          result_path: coverage/example.lcov

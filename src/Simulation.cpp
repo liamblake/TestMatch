@@ -118,6 +118,13 @@ BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1,
   });
 }
 
+BowlerCard* BowlingManager::any_fulltime(BowlerCard* ignore1,
+                                         BowlerCard* ignore2) {
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return bc->get_competency() == 0 && (bc != ignore1) && (bc != ignore2);
+  });
+}
+
 BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
   // Rest all players who didn't bowl the over
   for (int i = 0; i < 11; i++) {
@@ -143,6 +150,8 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
   if (((double)rand() / (RAND_MAX)) <
       take_off_prob(inns_obj->bowl1->get_tiredness())) {
     // Change bowler
+    // For now, just get the best full-time bowler
+    return any_fulltime(inns_obj->bowl1, inns_obj->bowl2);
 
   } else
     return inns_obj->bowl1;

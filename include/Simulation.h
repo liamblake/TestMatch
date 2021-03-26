@@ -87,10 +87,11 @@ class BowlingManager {
    * @param ignore2
    * @return A BowlerCard pointer to the new bowler
    */
-  BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
+  static BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
+  static BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
+  static BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
+  static BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
+  static BowlerCard* any_fulltime(BowlerCard* ignore1, BowlerCard* ignore2);
 
   /**
    * @brief

@@ -423,7 +423,7 @@ class Partnership {
    * @param add_ball
    * @return Milestone*
    */
-  Milestone* add_runs(unsigned int n_runs, bool scorer, bool add_ball = true);
+  Milestone* add_runs(unsigned int n_runs, bool scorer, bool add_ball);
   void end();
 };
 

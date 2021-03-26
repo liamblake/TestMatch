@@ -271,6 +271,12 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   // Set-up the first over
   first_over = last_over = new Over(1);
 
+  // Set up partnership for first wicket
+  bat_parts[0] =
+      new Partnership(bat1->get_player_ptr(), bat2->get_player_ptr());
+  for (int i = 1; i < 10; i++)
+    bat_parts[i] = nullptr;
+
   // Setup FOW array
   fow = new FOW[10];
 }
@@ -345,12 +351,22 @@ void Innings::simulate_delivery() {
         std::cout << striker->get_player_ptr()->get_full_name()
                   << +" is the new batter to the crease" << std::endl;
       }
+
+      // Create new partnership tracker
+      bat_parts[wkts - 1]->end();
+      bat_parts[wkts] = new Partnership(striker->get_player_ptr(),
+                                        nonstriker->get_player_ptr());
+
     } // All out is checked immediately after with check_state
 
   } else {
+    // Update score trackers
     int runs = outcome.front() - '0';
     team_score += runs;
     lead += runs;
+    bat_parts[wkts]->add_runs(
+        runs, bat_parts[wkts]->get_bat2() == striker->get_player_ptr(),
+        is_legal);
 
     bool is_rotation;
     if (is_legal) {
@@ -664,6 +680,11 @@ Innings::~Innings() {
 
   // Delete each over iteratively
   delete_linkedlist<Over>(first_over);
+
+  // Delete each partnership
+  for (int i = 0; i <= wkts; i++) {
+    delete bat_parts[i];
+  }
 }
 
 /*

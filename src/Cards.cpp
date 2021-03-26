@@ -619,31 +619,42 @@ std::string FOW::print() {
   return output;
 }
 
-/* Milestone implementation */
-// Contructor
-Milestone::Milestone(Player* c_player, int c_value)
-    : player(c_player), value(c_value), desc("") {
-  if (is_permitted(c_value)) {
-    value = c_value;
+//~~~~~~~~~~~~~~ Partnership Implementations ~~~~~~~~~~~~~~//
+Partnership::Partnership(Player* c_bat1, Player* c_bat2)
+    : runs(0), bat1(c_bat1), bat2(c_bat2), bat1_runs(0), bat1_balls(0),
+      bat2_runs(0), bat2_balls(0), not_out(true) {}
+
+Player* Partnership::get_bat1() { return bat1; }
+Player* Partnership::get_bat2() { return bat2; }
+
+unsigned int Partnership::get_runs() { return runs; }
+
+unsigned int Partnership::get_balls() { return bat1_balls + bat2_balls; }
+
+bool Partnership::get_not_out() { return not_out; }
+
+Milestone* Partnership::add_runs(unsigned int n_runs, bool scorer,
+                                 bool add_ball = true) {
+  runs += n_runs;
+  int ab, ar;
+  if (add_ball) {
+    ab = 1;
+    ar = n_runs;
+  } else {
+    ab = 0;
+    ar = 0;
   }
+  if (scorer) {
+    bat2_runs += ar;
+    bat2_balls += ab;
+  } else {
+    bat1_runs += ar;
+    bat1_balls += ab;
+  }
+  return nullptr;
 }
 
-// THIS WON'T WORK - NEED A BETTER SOLUTION
-
-bool Milestone::is_permitted(int value) { return true; }
-
-// Getters
-Player* Milestone::get_player() { return player; }
-
-int Milestone::get_value() { return value; }
-
-std::string Milestone::get_desc() { return desc; }
-
-//
-///* BatMilestone implementations */
-// BatMilestone::BatMilestone() {
-//
-//}
+void Partnership::end() { not_out = false; }
 
 EndMatch::EndMatch(Team* c_winner, int c_margin)
     : winner(c_winner), margin(c_margin) {}
@@ -677,3 +688,29 @@ std::string EndDraw::print() { return "Match Drawn"; }
 EndTie::EndTie() {}
 
 std::string EndTie::print() { return "Match Tied"; }
+
+/* Milestone implementation */
+// Contructor
+Milestone::Milestone(Player* c_player, int c_value)
+    : player(c_player), value(c_value), desc("") {
+  if (is_permitted(c_value)) {
+    value = c_value;
+  }
+}
+
+// THIS WON'T WORK - NEED A BETTER SOLUTION
+
+bool Milestone::is_permitted(int value) { return true; }
+
+// Getters
+Player* Milestone::get_player() { return player; }
+
+int Milestone::get_value() { return value; }
+
+std::string Milestone::get_desc() { return desc; }
+
+//
+///* BatMilestone implementations */
+// BatMilestone::BatMilestone() {
+//
+//}

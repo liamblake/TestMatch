@@ -220,6 +220,9 @@ class Innings {
   BowlerCard* bowl1;
   BowlerCard* bowl2;
 
+  // Partnerships
+  Partnership* bat_parts[10];
+
   // Extras and fall-of-wicket
   Extras extras;
   FOW* fow;

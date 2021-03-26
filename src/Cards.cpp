@@ -633,8 +633,7 @@ unsigned int Partnership::get_balls() { return bat1_balls + bat2_balls; }
 
 bool Partnership::get_not_out() { return not_out; }
 
-Milestone* Partnership::add_runs(unsigned int n_runs, bool scorer,
-                                 bool add_ball) {
+void Partnership::add_runs(unsigned int n_runs, bool scorer, bool add_ball) {
   runs += n_runs;
   int ab, ar;
   if (add_ball) {
@@ -651,7 +650,6 @@ Milestone* Partnership::add_runs(unsigned int n_runs, bool scorer,
     bat1_runs += ar;
     bat1_balls += ab;
   }
-  return nullptr;
 }
 
 void Partnership::end() { not_out = false; }

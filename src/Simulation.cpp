@@ -75,11 +75,6 @@ void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
   }
 }
 
-double BowlingManager::bowler_obj(double bowl_avg, double bowl_sr,
-                                  double fatigue) {
-  return 0;
-}
-
 /**
  *
  * Logistic curve model with midpoint at x = 30 and growth rate k = 0.2
@@ -131,10 +126,24 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
       ptr->over_rest();
   }
 
+  // Special case - new ball
+  BowlerCard* new_bowl;
+  if (inns_obj->overs == 80 || inns_obj->overs == 81) {
+    new_bowl = new_pacer(inns_obj->bowl1, inns_obj->bowl2);
+    if (new_bowl != nullptr)
+      return new_bowl;
+    else
+      return inns_obj->bowl1;
+    // Not going to do this check for the third, fourth, etc. new balls - at
+    // this point, the fielding team are waiting for a declaration, begging for
+    // death, or both.
+  }
+
   // Decide whether to take the current bowler off
   if (((double)rand() / (RAND_MAX)) <
       take_off_prob(inns_obj->bowl1->get_tiredness())) {
     // Change bowler
+
   } else
     return inns_obj->bowl1;
 

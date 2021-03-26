@@ -100,7 +100,8 @@ Fatigue::Fatigue(int c_bowl_type) : value(0) {
     var = VAR_PACE_FATIGUE;
 
     // additional fatigue penalty for "f" bowlers
-    if (unencode_bowltype(c_bowl_type) == "f") {
+    if (unencode_bowltype(c_bowl_type) == "lf" ||
+        unencode_bowltype(c_bowl_type) == "rf") {
       mean += EXTRA_PACE_PENALTY;
     }
   }
@@ -113,12 +114,15 @@ double Fatigue::get_value() { return value; }
 void Fatigue::ball_bowled() { value += (*dist)(GEN); }
 
 void Fatigue::wicket() {
-  // ???
+  // Player gets a boost
+  if (value > 0)
+    value -= 3 * dist->mean();
 }
 
 void Fatigue::rest(double time) {
   // Ease fatigue
-  value -= 3 * dist->mean();
+  if (value > 0)
+    value -= 3 * dist->mean();
 }
 
 Fatigue::~Fatigue() { delete dist; }
@@ -351,7 +355,10 @@ double BowlerCard::get_tiredness() { return tiredness.get_value(); }
 
 int BowlerCard::get_competency() { return competency; }
 
-void BowlerCard::over_rest() { active = false; }
+void BowlerCard::over_rest() {
+  active = false;
+  tiredness.rest(0);
+}
 
 string BowlerCard::print_card(void) {
   string output = player->get_full_initials() + " ";
@@ -396,11 +403,13 @@ void BowlerCard::add_ball() {
 void BowlerCard::update_score(string outcome) {
 
   stats.balls++;
+  tiredness.ball_bowled();
 
   if (outcome == "W") {
     stats.wickets++;
     stats.spell_wickets++;
     add_ball();
+    tiredness.wicket();
 
   } else if (outcome.length() == 1) {
     stats.runs += stoi(outcome);

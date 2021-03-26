@@ -77,11 +77,11 @@ void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
 
 /**
  *
- * Logistic curve model with midpoint at x = 30 and growth rate k = 0.2
+ * Logistic curve model with midpoint at x = 180 and growth rate k = 0.2
  *
  */
 double BowlingManager::take_off_prob(double fatigue) {
-  return 1.0 / (1 + exp(-0.2 * (fatigue - 30)));
+  return 1.0 / (1 + exp(-0.2 * (fatigue - 180)));
 }
 
 BowlerCard* BowlingManager::new_pacer(BowlerCard* ignore1,

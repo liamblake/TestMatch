@@ -228,15 +228,15 @@ BOOST_AUTO_TEST_CASE(testclass_partnership) {
   BOOST_TEST(p.get_balls() == 0);
   BOOST_TEST(p.get_not_out());
 
-  p.add_runs(1, false);
+  p.add_runs(1, false, true);
   BOOST_TEST(p.get_runs() == 1);
   BOOST_TEST(p.get_balls() == 1);
 
-  p.add_runs(1, true);
+  p.add_runs(1, true, true);
   BOOST_TEST(p.get_runs() == 2);
   BOOST_TEST(p.get_balls() == 2);
 
-  p.add_runs(0, true);
+  p.add_runs(0, true, true);
   BOOST_TEST(p.get_runs() == 2);
   BOOST_TEST(p.get_balls() == 3);
 

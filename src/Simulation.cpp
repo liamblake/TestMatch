@@ -683,7 +683,8 @@ Innings::~Innings() {
 
   // Delete each partnership
   for (int i = 0; i <= wkts; i++) {
-    delete bat_parts[i];
+    if (bat_parts[i] != nullptr)
+      delete bat_parts[i];
   }
 }
 

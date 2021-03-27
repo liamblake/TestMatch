@@ -455,9 +455,8 @@ void Innings::end_over() {
   overs++;
 
   // Apply rest to all bowlers
-  BowlerCard* curr;
   for (int i = 0; i < 11; i++) {
-    curr = bowlers[i];
+    BowlerCard* curr = bowlers[i];
     if (curr != bowl1)
       curr->over_rest();
   }

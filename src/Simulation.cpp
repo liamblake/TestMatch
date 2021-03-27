@@ -682,7 +682,7 @@ Innings::~Innings() {
   delete_linkedlist<Over>(first_over);
 
   // Delete each partnership
-  for (int i = 0; i <= wkts; i++) {
+  for (int i = 0; i < 10; i++) {
     if (bat_parts[i] != nullptr)
       delete bat_parts[i];
   }

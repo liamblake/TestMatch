@@ -7,11 +7,13 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
+#include <functional>
 #include <string>
 #include <utility>
 #include <vector>
 
 #include "Cards.h"
+#include "Model.h"
 #include "Player.h"
 //#include "MatchTime.h"
 
@@ -89,6 +91,48 @@ class BowlingManager {
   BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
   BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
   BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
+  BowlerCard* any_fulltime(BowlerCard* ignore1, BowlerCard* ignore2);
+
+  /**
+   * @brief
+   *
+   * Note: This is defined here, rather than Simulation.cpp, because the
+   * function is a template.
+   *
+   * @tparam pred
+   * @param predicate Lambda function taking a BowlerCard* and returning a
+   * boolean indicating whether to consider that bowler when searching.
+   * @return BowlerCard* Pointer to the BowlerCard of the chosen bowler.
+   */
+  template <class pred>
+  BowlerCard* search_best(pred predicate) {
+    double min_obj = std::numeric_limits<double>::max();
+    double new_obj;
+    BowlerCard* best = nullptr;
+    BowlerCard* curr;
+    Player* curr_ply;
+    for (int i = 0; i < 11; i++) {
+      curr = cards[i];
+      curr_ply = curr->get_player_ptr();
+
+      // Only consider if pace bowler and full-time
+      if (predicate(curr)) {
+        // Calculate objective function
+        new_obj = Model::OBJ_AVG_FATIG(curr_ply->get_bowl_avg(),
+                                       curr_ply->get_bowl_sr(),
+                                       curr->get_tiredness());
+
+        // Compare to current best
+        if (new_obj < min_obj) {
+          best = curr;
+          min_obj = new_obj;
+        }
+      }
+    }
+
+    // Return null if no such bowler can be found
+    return best;
+  }
 
  public:
   BowlingManager();
@@ -175,6 +219,9 @@ class Innings {
   // Bowler of current over (bowl1) and previous over (bowl2)
   BowlerCard* bowl1;
   BowlerCard* bowl2;
+
+  // Partnerships
+  Partnership* bat_parts[10];
 
   // Extras and fall-of-wicket
   Extras extras;

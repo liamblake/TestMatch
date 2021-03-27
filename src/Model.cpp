@@ -25,7 +25,6 @@ int NUM_DISM_MODES = 6;
 std::vector<std::string> DISM_MODES_STATIC = {"b",   "c",  "c&b",
                                               "lbw", "ro", "st"};
 
-
 /* Somewhat terrible fit to the toss elect probabilities in actual data
  * Note that spin_factor = 1 - seam_factor, so we only need to consider
  * the spin factor when calculating the probability. This is based on the
@@ -42,6 +41,18 @@ double MODEL_TOSS_ELECT(double spin_factor) {
   // Exponential model
   double a = 0.05;
   return a * exp(log(0.9 / a) * spin_factor);
+}
+
+/**
+ * @brief
+ *
+ * THIS WILL BE REPLACED WITH A MODEL WHICH ACTUALLY USES REAL DATA, RATHER THAN
+ * MY OWN BLIND INTUITION
+ *
+ *
+ */
+double OBJ_AVG_FATIG(double bowl_avg, double bowl_sr, double fatigue) {
+  return 3.0 / (1.0 / bowl_avg + 1.0 / bowl_sr + 1.0 / (fatigue + 1));
 }
 
 /**
@@ -165,4 +176,4 @@ int MODEL_WICKET_TYPE(int bowltype) {
   delete[] DISM_MODES;
   return encode_dism(dism_mode);
 }
-}
+} // namespace Model

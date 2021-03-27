@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "Utility.h"
 
@@ -75,6 +76,17 @@ BOOST_AUTO_TEST_CASE(testfunc_balls_to_ov) {
 
   out = balls_to_ov(480);
   BOOST_TEST((out.first == 80) & (out.second == 0));
+}
+
+BOOST_AUTO_TEST_CASE(testfunc_is_slow_bowler) {
+  std::string types[12] = {"rm", "rmf", "rfm", "rf", "ob",  "lb",
+                           "lm", "lmf", "lfm", "lf", "slo", "slu"};
+  bool expected[12] = {true, false, false, false, true, true,
+                       true, false, false, false, true, true};
+
+  for (int i = 0; i < 12; i++) {
+    BOOST_TEST(is_slow_bowler(encode_bowltype(types[i])) == expected[i]);
+  }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

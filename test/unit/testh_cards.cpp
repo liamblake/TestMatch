@@ -219,4 +219,37 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 
 BOOST_AUTO_TEST_CASE(testclass_milestone) {}
 
+BOOST_AUTO_TEST_CASE(testclass_partnership) {
+  Partnership p(&tp_bat, &tp_bowl);
+
+  BOOST_TEST(p.get_bat1() == &tp_bat);
+  BOOST_TEST(p.get_bat2() == &tp_bowl);
+  BOOST_TEST(p.get_runs() == 0);
+  BOOST_TEST(p.get_balls() == 0);
+  BOOST_TEST(p.get_not_out());
+
+  p.add_runs(1, false, true);
+  BOOST_TEST(p.get_runs() == 1);
+  BOOST_TEST(p.get_balls() == 1);
+
+  p.add_runs(1, true, true);
+  BOOST_TEST(p.get_runs() == 2);
+  BOOST_TEST(p.get_balls() == 2);
+
+  p.add_runs(0, true, true);
+  BOOST_TEST(p.get_runs() == 2);
+  BOOST_TEST(p.get_balls() == 3);
+
+  p.add_runs(0, true, false);
+  BOOST_TEST(p.get_runs() == 2);
+  BOOST_TEST(p.get_balls() == 3);
+
+  p.add_runs(1, true, false);
+  BOOST_TEST(p.get_runs() == 3);
+  BOOST_TEST(p.get_balls() == 3);
+
+  p.end();
+  BOOST_TEST(!p.get_not_out());
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -72,7 +72,7 @@ struct BowlStats {
  * @brief Storage of dismissal details
  */
 class Dismissal {
-private:
+ private:
   // Mode of dismissal:
   // 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
   int mode;
@@ -81,7 +81,7 @@ private:
 
   // if bowled or lbw, set fielder = NULL
 
-public:
+ public:
   /**
    * @brief
    * @param c_mode
@@ -122,7 +122,7 @@ public:
  *
  */
 class Fatigue {
-private:
+ private:
   double value;
 
   // Normal distribution object for generating values
@@ -137,7 +137,7 @@ private:
   static double VAR_PACE_FATIGUE;
   static double VAR_SPIN_FATIGUE;
 
-public:
+ public:
   // Constructor
   Fatigue(int c_bowl_type);
 
@@ -158,10 +158,10 @@ public:
  */
 class PlayerCard {
 
-protected:
+ protected:
   Player* player;
 
-public:
+ public:
   // Constructor
   PlayerCard(Player* c_player);
 
@@ -181,7 +181,7 @@ public:
 class BatterCard : public PlayerCard {
   // TODO: implement MATCHTIME
 
-private:
+ private:
   BatStats stats;
   bool active;
   bool out;
@@ -192,7 +192,7 @@ private:
   //
   int playstyle_flag = 0;
 
-public:
+ public:
   BatterCard(Player* c_player);
 
   BatStats get_sim_stats(void);
@@ -218,7 +218,7 @@ public:
  */
 class BowlerCard : public PlayerCard {
 
-private:
+ private:
   BowlStats stats;
   bool active;
 
@@ -238,7 +238,7 @@ private:
   // Determine whether a given player is considered a "parttime bowler"
   static int DETERMINE_COMPETENCY(Player* player);
 
-public:
+ public:
   BowlerCard(Player* c_player);
 
   BowlStats get_sim_stats(void);
@@ -317,7 +317,7 @@ struct Ball {
  * pointer to the next Over object in the innings, which is null by default.
  */
 class Over {
-private:
+ private:
   int over_num;
 
   Ball* first;
@@ -328,7 +328,7 @@ private:
 
   Over* next = nullptr;
 
-public:
+ public:
   // Iterators?
 
   // Constructor
@@ -357,13 +357,13 @@ public:
 };
 
 class Extras {
-private:
+ private:
   unsigned int byes;
   unsigned int legbyes;
   unsigned int noballs;
   unsigned int wides;
 
-public:
+ public:
   Extras();
 
   bool update_score(std::string outcome);
@@ -384,70 +384,16 @@ struct FOW {
   // TODO: implement value checking for 0 <= balls < 6
 };
 
-///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES
-
-class Milestone {
-private:
-  Player* player;
-  int value;
-
-  /* Pure virtual method - checks if passed value is
-     allowed for given milestone type.
-  */
-  virtual bool is_permitted(int value) = 0;
-
-protected:
-  std::string desc;
-
-public:
-  Milestone(Player* c_player, int c_value);
-
-  // Getters
-  Player* get_player();
-  std::string get_desc();
-  int get_value();
-
-  virtual std::string string() = 0;
-};
-
-class BatMilestone : public Milestone {
-private:
-  bool is_permitted(int value);
-
-  int runs;
-  int balls;
-  int fours;
-  int sixes;
-
-public:
-  BatMilestone(Player* batter, int c_milestone, int c_runs, int c_balls,
-               int c_fours, int c_sixes);
-
-  std::string string();
-};
-
-class PartnershipMilestone : public BatMilestone {};
-
-class BowlMilestone : public Milestone {
-private:
-  bool is_permitted(int value);
-
-  int runs;
-  int overs;
-  int balls;
-  int maidens;
-
-public:
-  BowlMilestone(Player* bowler, int c_milestone, int c_runs, int c_overs,
-                int c_balls, int c_maidens);
-
-  std::string string();
-};
-
+/**
+ * @brief
+ *
+ */
 class Partnership {
-private:
+ private:
   Player* bat1;
   Player* bat2;
+
+  unsigned int runs;
 
   unsigned int bat1_runs;
   unsigned int bat1_balls;
@@ -457,7 +403,7 @@ private:
 
   bool not_out;
 
-public:
+ public:
   Partnership(Player* c_bat1, Player* c_bat2);
 
   // Getters
@@ -467,8 +413,17 @@ public:
   unsigned int get_runs();
   unsigned int get_balls();
 
-  // Setters
-  Milestone* add_runs(unsigned int runs, bool add_ball = true);
+  bool get_not_out();
+
+  /**
+   * @brief
+   *
+   * @param n_runs
+   * @param scorer
+   * @param add_ball
+   * @return Milestone*
+   */
+  void add_runs(unsigned int n_runs, bool scorer, bool add_ball);
   void end();
 };
 
@@ -478,11 +433,11 @@ public:
  * @brief
  */
 class EndMatch {
-protected:
+ protected:
   Team* winner;
   int margin;
 
-public:
+ public:
   EndMatch(Team* c_winner, int c_margin);
 
   /**
@@ -498,7 +453,7 @@ public:
  * @brief
  */
 class EndInningsWin : public EndMatch {
-public:
+ public:
   EndInningsWin(Team* c_winner, int c_runs);
 
   std::string print();
@@ -508,7 +463,7 @@ public:
  * @brief
  */
 class EndBowlWin : public EndMatch {
-public:
+ public:
   EndBowlWin(Team* c_winner, int c_runs);
 
   std::string print();
@@ -518,7 +473,7 @@ public:
  * @brief
  */
 class EndChaseWin : public EndMatch {
-public:
+ public:
   EndChaseWin(Team* c_winner, int c_wkts);
 
   std::string print();
@@ -528,7 +483,7 @@ public:
  * @brief
  */
 class EndDraw : public EndMatch {
-public:
+ public:
   EndDraw();
 
   virtual std::string print();
@@ -538,10 +493,70 @@ public:
  * @brief
  */
 class EndTie : public EndDraw {
-public:
+ public:
   EndTie();
 
   std::string print();
+};
+
+///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES
+
+class Milestone {
+ private:
+  Player* player;
+  int value;
+
+  /* Pure virtual method - checks if passed value is
+     allowed for given milestone type.
+  */
+  virtual bool is_permitted(int value) = 0;
+
+ protected:
+  std::string desc;
+
+ public:
+  Milestone(Player* c_player, int c_value);
+
+  // Getters
+  Player* get_player();
+  std::string get_desc();
+  int get_value();
+
+  virtual std::string string() = 0;
+};
+
+class BatMilestone : public Milestone {
+ private:
+  bool is_permitted(int value);
+
+  int runs;
+  int balls;
+  int fours;
+  int sixes;
+
+ public:
+  BatMilestone(Player* batter, int c_milestone, int c_runs, int c_balls,
+               int c_fours, int c_sixes);
+
+  std::string string();
+};
+
+class PartnershipMilestone : public BatMilestone {};
+
+class BowlMilestone : public Milestone {
+ private:
+  bool is_permitted(int value);
+
+  int runs;
+  int overs;
+  int balls;
+  int maidens;
+
+ public:
+  BowlMilestone(Player* bowler, int c_milestone, int c_runs, int c_overs,
+                int c_balls, int c_maidens);
+
+  std::string string();
 };
 
 #endif // CARDS_H

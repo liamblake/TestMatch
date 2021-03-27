@@ -29,6 +29,7 @@ std::string TimeOfDay::two_digits(int val) {
   if (val < 10)
     output += "0";
   output += std::to_string(val);
+  return output;
 }
 
 // Explicit casts
@@ -57,7 +58,7 @@ TimeOfDay TimeOfDay::operator++(int) {
   return old;
 }
 
-TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) {}
+TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) { return *this; }
 
 TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
   return *this += TimeOfDay(rhs);

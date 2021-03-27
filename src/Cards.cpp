@@ -100,7 +100,8 @@ Fatigue::Fatigue(int c_bowl_type) : value(0) {
     var = VAR_PACE_FATIGUE;
 
     // additional fatigue penalty for "f" bowlers
-    if (unencode_bowltype(c_bowl_type) == "f") {
+    if (unencode_bowltype(c_bowl_type) == "lf" ||
+        unencode_bowltype(c_bowl_type) == "rf") {
       mean += EXTRA_PACE_PENALTY;
     }
   }
@@ -113,12 +114,15 @@ double Fatigue::get_value() { return value; }
 void Fatigue::ball_bowled() { value += (*dist)(GEN); }
 
 void Fatigue::wicket() {
-  // ???
+  // Player gets a boost
+  if (value > 0)
+    value -= 3 * dist->mean();
 }
 
 void Fatigue::rest(double time) {
   // Ease fatigue
-  value -= 3 * dist->mean();
+  if (value > 0)
+    value -= 3 * dist->mean();
 }
 
 Fatigue::~Fatigue() { delete dist; }
@@ -323,7 +327,7 @@ int BowlerCard::DETERMINE_COMPETENCY(Player* player) {
   double avg_balls_per_match =
       (double)player->get_balls_bowled() / (double)player->get_innings();
 
-  if (avg_balls_per_match > 5) {
+  if (avg_balls_per_match > 30) {
     // Full-time if bowled more than 5 overs per innings on average
     return 0;
   } else if (avg_balls_per_match > 0) {
@@ -351,7 +355,10 @@ double BowlerCard::get_tiredness() { return tiredness.get_value(); }
 
 int BowlerCard::get_competency() { return competency; }
 
-void BowlerCard::over_rest() { active = false; }
+void BowlerCard::over_rest() {
+  active = false;
+  tiredness.rest(0);
+}
 
 string BowlerCard::print_card(void) {
   string output = player->get_full_initials() + " ";
@@ -396,11 +403,13 @@ void BowlerCard::add_ball() {
 void BowlerCard::update_score(string outcome) {
 
   stats.balls++;
+  tiredness.ball_bowled();
 
   if (outcome == "W") {
     stats.wickets++;
     stats.spell_wickets++;
     add_ball();
+    tiredness.wicket();
 
   } else if (outcome.length() == 1) {
     stats.runs += stoi(outcome);
@@ -610,31 +619,40 @@ std::string FOW::print() {
   return output;
 }
 
-/* Milestone implementation */
-// Contructor
-Milestone::Milestone(Player* c_player, int c_value)
-    : player(c_player), value(c_value), desc("") {
-  if (is_permitted(c_value)) {
-    value = c_value;
+//~~~~~~~~~~~~~~ Partnership Implementations ~~~~~~~~~~~~~~//
+Partnership::Partnership(Player* c_bat1, Player* c_bat2)
+    : runs(0), bat1(c_bat1), bat2(c_bat2), bat1_runs(0), bat1_balls(0),
+      bat2_runs(0), bat2_balls(0), not_out(true) {}
+
+Player* Partnership::get_bat1() { return bat1; }
+Player* Partnership::get_bat2() { return bat2; }
+
+unsigned int Partnership::get_runs() { return runs; }
+
+unsigned int Partnership::get_balls() { return bat1_balls + bat2_balls; }
+
+bool Partnership::get_not_out() { return not_out; }
+
+void Partnership::add_runs(unsigned int n_runs, bool scorer, bool add_ball) {
+  runs += n_runs;
+  int ab, ar;
+  if (add_ball) {
+    ab = 1;
+    ar = n_runs;
+  } else {
+    ab = 0;
+    ar = 0;
+  }
+  if (scorer) {
+    bat2_runs += ar;
+    bat2_balls += ab;
+  } else {
+    bat1_runs += ar;
+    bat1_balls += ab;
   }
 }
 
-// THIS WON'T WORK - NEED A BETTER SOLUTION
-
-bool Milestone::is_permitted(int value) { return true; }
-
-// Getters
-Player* Milestone::get_player() { return player; }
-
-int Milestone::get_value() { return value; }
-
-std::string Milestone::get_desc() { return desc; }
-
-//
-///* BatMilestone implementations */
-// BatMilestone::BatMilestone() {
-//
-//}
+void Partnership::end() { not_out = false; }
 
 EndMatch::EndMatch(Team* c_winner, int c_margin)
     : winner(c_winner), margin(c_margin) {}
@@ -668,3 +686,29 @@ std::string EndDraw::print() { return "Match Drawn"; }
 EndTie::EndTie() {}
 
 std::string EndTie::print() { return "Match Tied"; }
+
+/* Milestone implementation */
+// Contructor
+Milestone::Milestone(Player* c_player, int c_value)
+    : player(c_player), value(c_value), desc("") {
+  if (is_permitted(c_value)) {
+    value = c_value;
+  }
+}
+
+// THIS WON'T WORK - NEED A BETTER SOLUTION
+
+bool Milestone::is_permitted(int value) { return true; }
+
+// Getters
+Player* Milestone::get_player() { return player; }
+
+int Milestone::get_value() { return value; }
+
+std::string Milestone::get_desc() { return desc; }
+
+//
+///* BatMilestone implementations */
+// BatMilestone::BatMilestone() {
+//
+//}

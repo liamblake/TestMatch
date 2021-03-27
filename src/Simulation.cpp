@@ -1,5 +1,6 @@
 #include <cmath>
 #include <exception>
+#include <functional>
 #include <iomanip>
 #include <sstream>
 #include <stdlib.h>
@@ -74,38 +75,54 @@ void BowlingManager::set_cards(BowlerCard* c_cards[11]) {
   }
 }
 
-double BowlingManager::bowler_obj(double bowl_avg, double bowl_sr,
-                                  double fatigue) {
-  return 0;
-}
-
 /**
  *
- * Logistic curve model with midpoint at x = 30 and growth rate k = 0.2
+ * Logistic curve model with midpoint at x = 180 and growth rate k = 0.2
  *
  */
 double BowlingManager::take_off_prob(double fatigue) {
-  return 1.0 / (1 + exp(-0.2 * (fatigue - 30)));
+  return 1.0 / (1 + exp(-0.2 * (fatigue - 180)));
 }
 
 BowlerCard* BowlingManager::new_pacer(BowlerCard* ignore1,
                                       BowlerCard* ignore2) {
-  return nullptr;
+  // Find each (full-time) pace-bowler in XI and measure objective fatigue
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return !is_slow_bowler(bc->get_player_ptr()->get_bowl_type()) &&
+           bc->get_competency() == 0 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::new_spinner(BowlerCard* ignore1,
                                         BowlerCard* ignore2) {
-  return nullptr;
+  // Find each (full-time) spinner in XI and measure objective fatigue
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return (is_slow_bowler(bc->get_player_ptr()->get_bowl_type()) &&
+            (bc->get_competency() == 0) && (bc != ignore1) && (bc != ignore2));
+  });
 }
 
 BowlerCard* BowlingManager::part_timer(BowlerCard* ignore1,
                                        BowlerCard* ignore2) {
-  return nullptr;
+  // Find any part-time bowler
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return (bc->get_competency() == 1) && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::change_it_up(BowlerCard* ignore1,
                                          BowlerCard* ignore2) {
-  return nullptr;
+  // Shit's cooked: find anyone who doesn't bowl and send them in
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return bc->get_competency() == 2 && (bc != ignore1) && (bc != ignore2);
+  });
+}
+
+BowlerCard* BowlingManager::any_fulltime(BowlerCard* ignore1,
+                                         BowlerCard* ignore2) {
+  return search_best([ignore1, ignore2](BowlerCard* bc) {
+    return bc->get_competency() == 0 && (bc != ignore1) && (bc != ignore2);
+  });
 }
 
 BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
@@ -116,10 +133,40 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
       ptr->over_rest();
   }
 
+  // Special case - new ball
+  if (inns_obj->overs == 80 || inns_obj->overs == 81) {
+    BowlerCard* new_bowl = new_pacer(inns_obj->bowl1, inns_obj->bowl2);
+    if (new_bowl != nullptr)
+      return new_bowl;
+    else
+      return inns_obj->bowl1;
+    // Not going to do this check for the third, fourth, etc. new balls - at
+    // this point, the fielding team are waiting for a declaration, begging for
+    // death, or both.
+  }
+
+  // As the current partnership grows, probability of bringing on a part-time
+  // bowler increases
+  // if (inns_obj->bowl1->get_competency() == 0 &&
+  //     inns_obj->bowl2->get_competency() == 0 &&
+  //     (double)rand() / (RAND_MAX) <
+  //         1.0 / (1 +
+  //                exp(-0.01 *
+  //                    (inns_obj->bat_parts[inns_obj->wkts]->get_runs() - 100))
+  //                    -
+  //                1.0 / (1 + exp(1)))) {
+  //   return part_timer(inns_obj->bowl1, inns_obj->bowl2);
+  // }
+
   // Decide whether to take the current bowler off
-  if (((double)rand() / (RAND_MAX)) <
-      take_off_prob(inns_obj->bowl1->get_tiredness())) {
+  double top = take_off_prob(inns_obj->bowl1->get_tiredness());
+  if (inns_obj->bowl1->get_competency() != 0)
+    top *= 3; // Penalty for being a part time bowler
+  if (((double)rand() / (RAND_MAX)) < top) {
     // Change bowler
+    // For now, just get the best full-time bowler
+    return any_fulltime(inns_obj->bowl1, inns_obj->bowl2);
+
   } else
     return inns_obj->bowl1;
 
@@ -238,6 +285,12 @@ Innings::Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
   // Set-up the first over
   first_over = last_over = new Over(1);
 
+  // Set up partnership for first wicket
+  bat_parts[0] =
+      new Partnership(bat1->get_player_ptr(), bat2->get_player_ptr());
+  for (int i = 1; i < 10; i++)
+    bat_parts[i] = nullptr;
+
   // Setup FOW array
   fow = new FOW[10];
 }
@@ -312,12 +365,22 @@ void Innings::simulate_delivery() {
         std::cout << striker->get_player_ptr()->get_full_name()
                   << +" is the new batter to the crease" << std::endl;
       }
+
+      // Create new partnership tracker
+      bat_parts[wkts - 1]->end();
+      bat_parts[wkts] = new Partnership(striker->get_player_ptr(),
+                                        nonstriker->get_player_ptr());
+
     } // All out is checked immediately after with check_state
 
   } else {
+    // Update score trackers
     int runs = outcome.front() - '0';
     team_score += runs;
     lead += runs;
+    bat_parts[wkts]->add_runs(
+        runs, bat_parts[wkts]->get_bat2() == striker->get_player_ptr(),
+        is_legal);
 
     bool is_rotation;
     if (is_legal) {
@@ -390,6 +453,13 @@ void Innings::end_over() {
   }
 
   overs++;
+
+  // Apply rest to all bowlers
+  for (int i = 0; i < 11; i++) {
+    BowlerCard* curr = bowlers[i];
+    if (curr != bowl1)
+      curr->over_rest();
+  }
 
   // Switch ends
   swap_batters();
@@ -623,6 +693,12 @@ Innings::~Innings() {
 
   // Delete each over iteratively
   delete_linkedlist<Over>(first_over);
+
+  // Delete each partnership
+  for (int i = 0; i < 10; i++) {
+    if (bat_parts[i] != nullptr)
+      delete bat_parts[i];
+  }
 }
 
 /*

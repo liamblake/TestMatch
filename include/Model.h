@@ -51,6 +51,17 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl);
 int MODEL_WICKET_TYPE(int bowltype);
 
 /**
+ * @brief Evaluates the "value" in bringing a bowler into the attack, based on
+ * their ability and fatigue
+ *
+ * @param bowl_avg Bowling average of the bowler in question
+ * @param bowl_sr Bowling strike rate of the bowler in question
+ * @param fatigue Current fatigue of the bowler in question
+ * @return double Measure of how much "value" bringing that bowler on brings
+ */
+double OBJ_AVG_FATIG(double bowl_avg, double bowl_sr, double fatigue);
+
+/**
  * @brief Determine the probability of declaring on a given ball.
  *
  * @param lead

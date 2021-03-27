@@ -134,9 +134,8 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
   }
 
   // Special case - new ball
-  BowlerCard* new_bowl;
   if (inns_obj->overs == 80 || inns_obj->overs == 81) {
-    new_bowl = new_pacer(inns_obj->bowl1, inns_obj->bowl2);
+    BowlerCard* new_bowl = new_pacer(inns_obj->bowl1, inns_obj->bowl2);
     if (new_bowl != nullptr)
       return new_bowl;
     else
@@ -159,8 +158,10 @@ BowlerCard* BowlingManager::end_over(Innings* inns_obj) {
   }
 
   // Decide whether to take the current bowler off
-  if (((double)rand() / (RAND_MAX)) <
-      take_off_prob(inns_obj->bowl1->get_tiredness())) {
+  double top = take_off_prob(inns_obj->bowl1->get_tiredness());
+  if (inns_obj->bowl1->get_competency() != 0)
+    top *= 3; // Penalty for being a part time bowler
+  if (((double)rand() / (RAND_MAX)) < top) {
     // Change bowler
     // For now, just get the best full-time bowler
     return any_fulltime(inns_obj->bowl1, inns_obj->bowl2);

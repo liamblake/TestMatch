@@ -1,3 +1,4 @@
+// -*- lsst-c++ -*-
 /**
  * @file Cards.h
  * @author L. Blake

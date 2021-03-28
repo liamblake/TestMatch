@@ -1,4 +1,4 @@
-# TestMatch Backend
+# TestMatch
 
 ## Build Status
 [![Build & Unit Tests](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/build-and-test.yml)  [![Documentation Build](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/generate_docs.yml/badge.svg?branch=master)](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/generate_docs.yml)
@@ -8,3 +8,11 @@
 
 Class and function documentation available [here](https://liamblake.github.io/TestMatch/)
 
+## Introduction
+TestMatch is a cricket simulation library built in C++.
+
+## Usage with TestMatch-App
+Coming soon
+
+## Installation
+Coming Soon

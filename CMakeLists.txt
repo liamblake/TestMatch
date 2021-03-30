@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(testmatch_backend)
 include(CTest)
+include(GenerateExportHeader)
 # Boost variables, dependent upon os
 #set(Boost_DEBUG 1)
 #set(Boost_COMPILER "-vc142")
@@ -45,7 +46,7 @@ include_directories(${Boost_INCLUDE_DIR})
 ###############################################################################
 
 # add the data to the target, so it becomes visible in some IDE
-add_library(backend ${sources})
+add_library(backend SHARED ${sources})
 
 target_include_directories(backend PUBLIC include)
 
@@ -57,6 +58,10 @@ target_link_libraries(backend PUBLIC
 if (WIN32)
   #set_target_properties(backend PROPERTIES LINK_FLAGS /FORCE:MULTIPLE)
 endif()
+
+# Generate macros for exporting functions 
+generate_export_header(backend)
+target_include_directories(backend PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 ###############################################################################
 ## testing ####################################################################

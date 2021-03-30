@@ -5,7 +5,7 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 
-template <type T>
+template <typename T>
 inline void test_serialisation(T* obj, std::string fname) {
   save_data<T>(obj, fname);
   T* obj_new = load_data<T>(fname);

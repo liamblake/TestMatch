@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(testmatch_backend)
 include(CTest)
+include(GenerateExportHeader)
 
 # Build options
 option(BUILD_TESTS "Option to also compile testing executables" ON)
@@ -30,6 +31,11 @@ target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR}})
 target_link_libraries(TestMatch PUBLIC
   ${Boost_LIBRARIES}
 )
+
+
+# Generate macros for exporting functions 
+generate_export_header(TestMatch)
+target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 
 # OPTIONAL: Build tests:

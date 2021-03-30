@@ -39,7 +39,7 @@ int main() {
   Player a5("Travis", "Head", "TM",
             {28, 41.96, 50.41, 126, 68.32, 63.7, 3.61, true, 4});
   Player a6("Cameron", "Green", "C",
-            {7, 40.71, 40.68, 264, 30.30, 50.7, 2.98, false, 2});
+            {7, 40.71, 40.68, 264, 35.30, 60.7, 2.98, false, 2});
   Player a7("Tim", "Paine", "TD",
             {50, 31.66, 44.24, 0, 1000, 1000, 4.00, false, 0});
   Player a8("Pat", "Cummins", "PJ",

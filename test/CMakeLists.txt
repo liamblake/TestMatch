@@ -5,7 +5,7 @@ target_include_directories(demo_test PUBLIC includes)
 target_include_directories(demo_test PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(demo_test PUBLIC
   ${Boost_LIBRARIES}
-  backend
+  TestMatch
 )
 
 #set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
@@ -20,7 +20,7 @@ target_include_directories(unit_tests PUBLIC includes)
 target_include_directories(unit_tests PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(unit_tests PUBLIC
   ${Boost_LIBRARIES}
-  backend
+  TestMatch
 )
 
 

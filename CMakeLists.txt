@@ -34,8 +34,8 @@ target_link_libraries(TestMatch PUBLIC
 
 
 # Generate macros for exporting functions 
-generate_export_header(backend)
-target_include_directories(backend PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
+generate_export_header(TestMatch)
+target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 
 # OPTIONAL: Build tests:

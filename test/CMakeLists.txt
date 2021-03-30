@@ -1,12 +1,12 @@
 # Demonstrative test (for run-time errors)
-add_executable(demo_test ${sources_demo})
+# add_executable(demo_test ${sources_demo})
 
-target_include_directories(demo_test PUBLIC includes)
-target_include_directories(demo_test PUBLIC ${Boost_INCLUDE_DIR})
-target_link_libraries(demo_test PUBLIC
-  ${Boost_LIBRARIES}
-  backend
-)
+# target_include_directories(demo_test PUBLIC includes)
+# target_include_directories(demo_test PUBLIC ${Boost_INCLUDE_DIR})
+# target_link_libraries(demo_test PUBLIC
+#   ${Boost_LIBRARIES}
+#   backend
+# )
 
 #set_target_properties(demo_test PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 #add_test(NAME demo COMMAND demo_test)

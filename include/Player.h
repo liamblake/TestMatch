@@ -22,37 +22,38 @@
  *
  */
 struct Stats {
-  // Batting statistics
-  int innings;    // Number of innings batted over career
-  double bat_avg; // Batting average (average runs per dismissal)
-  double bat_sr;  // Batting strike rate (average runs per 100 balls faced)
+    // Batting statistics
+    int innings;    // Number of innings batted over career
+    double bat_avg; // Batting average (average runs per dismissal)
+    double bat_sr;  // Batting strike rate (average runs per 100 balls faced)
 
-  // Bowling statistics
-  int balls_bowled = 0;   // Number of balls bowled over career
-  double bowl_avg = 1000; // Bowling average (average runs conceded per wicket)
-  double bowl_sr =
-      1000; // Bowling strike rate (average balls bowled per wicket)
-  double bowl_econ =
-      4; // Bowling economy (average runs conceded per 6 balls bowled)
+    // Bowling statistics
+    int balls_bowled = 0; // Number of balls bowled over career
+    double bowl_avg =
+        1000; // Bowling average (average runs conceded per wicket)
+    double bowl_sr =
+        1000; // Bowling strike rate (average balls bowled per wicket)
+    double bowl_econ =
+        4; // Bowling economy (average runs conceded per 6 balls bowled)
 
-  // General descriptors
-  bool bat_hand; // Batting hand (false = right, true = left)
-  int bowl_type =
-      0; // Bowling type, encoded as integer, see Utility.h for encodings
+    // General descriptors
+    bool bat_hand; // Batting hand (false = right, true = left)
+    int bowl_type =
+        0; // Bowling type, encoded as integer, see Utility.h for encodings
 
-  // Serialisation
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version) {
-    ar& innings;
-    ar& bat_avg;
-    ar& bat_sr;
-    ar& balls_bowled;
-    ar& bowl_avg;
-    ar& bowl_sr;
-    ar& bowl_econ;
-    ar& bat_hand;
-    ar& bowl_type;
-  };
+    // Serialisation
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& innings;
+        ar& bat_avg;
+        ar& bat_sr;
+        ar& balls_bowled;
+        ar& bowl_avg;
+        ar& bowl_sr;
+        ar& bowl_econ;
+        ar& bat_hand;
+        ar& bowl_type;
+    };
 };
 
 // Oh how I wish C++ had introspection
@@ -68,59 +69,59 @@ bool operator==(const Stats& lhs, const Stats& rhs);
  * stored in the Stats object.
  */
 class Player {
-private:
-  // Names
-  std::string first_name; // First name of player, e.g. John
-  std::string last_name;  // Surname of player, e.g. Smith
-  std::string initials; // Initials of first and middle names, e.g. for John Doe
-                        // Smith, store JD
+  private:
+    // Names
+    std::string first_name; // First name of player, e.g. John
+    std::string last_name;  // Surname of player, e.g. Smith
+    std::string initials;   // Initials of first and middle names, e.g. for John
+                            // Doe Smith, store JD
 
-  Stats player_stats; // Player career statistics
+    Stats player_stats; // Player career statistics
 
-public:
-  Player(){};
+  public:
+    Player(){};
 
-  // Explicit constructor
-  Player(std::string c_first_name, std::string c_last_name,
-         std::string c_initials, Stats stats);
+    // Explicit constructor
+    Player(std::string c_first_name, std::string c_last_name,
+           std::string c_initials, Stats stats);
 
-  // Default destructor
+    // Default destructor
 
-  // Getters
-  std::string get_initials() const;
-  std::string get_last_name() const;
+    // Getters
+    std::string get_initials() const;
+    std::string get_last_name() const;
 
-  // Return full first, last name
-  std::string get_full_name() const;
-  std::string get_full_initials() const;
+    // Return full first, last name
+    std::string get_full_name() const;
+    std::string get_full_initials() const;
 
-  // Return Stats struct
-  Stats get_stats() const;
+    // Return Stats struct
+    Stats get_stats() const;
 
-  // Specific getters for career statistics, stored in player_stats
-  int get_innings() const;
-  double get_bat_avg() const;
-  double get_bat_sr() const;
-  int get_balls_bowled() const;
-  double get_bowl_avg() const;
-  double get_bowl_sr() const;
-  double get_bowl_econ() const;
-  bool get_bat_hand() const;
-  int get_bowl_type() const;
+    // Specific getters for career statistics, stored in player_stats
+    int get_innings() const;
+    double get_bat_avg() const;
+    double get_bat_sr() const;
+    int get_balls_bowled() const;
+    double get_bowl_avg() const;
+    double get_bowl_sr() const;
+    double get_bowl_econ() const;
+    bool get_bat_hand() const;
+    int get_bowl_type() const;
 
-  // For dealing with cheating part-time bowlers
-  void inflate_bowl_avg();
+    // For dealing with cheating part-time bowlers
+    void inflate_bowl_avg();
 
-  // Serialisation methods
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version) {
-    ar& first_name;
-    ar& last_name;
-    ar& initials;
-    ar& player_stats;
-  };
+    // Serialisation methods
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& first_name;
+        ar& last_name;
+        ar& initials;
+        ar& player_stats;
+    };
 
-  friend bool operator==(const Player& lhs, const Player& rhs);
+    friend bool operator==(const Player& lhs, const Player& rhs);
 };
 
 /**
@@ -152,27 +153,27 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
 // Need to fix data encapsulation - make things private and have getters/setters
 struct Team {
 
-  std::string name;
-  Player* players[11];
+    std::string name;
+    Player* players[11];
 
-  // Indices refer to players array
-  int i_captain;
-  int i_wk;
-  int i_bowl1;
-  int i_bowl2;
+    // Indices refer to players array
+    int i_captain;
+    int i_wk;
+    int i_bowl1;
+    int i_bowl2;
 
-  // Serialisation
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version) {
-    ar << name;
-    ar << players;
-    ar << i_captain;
-    ar << i_wk;
-    ar << i_bowl1;
-    ar << i_bowl2;
-  };
+    // Serialisation
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar << name;
+        ar << players;
+        ar << i_captain;
+        ar << i_wk;
+        ar << i_bowl1;
+        ar << i_bowl2;
+    };
 
-  friend bool operator==(const Team& lhs, const Team& rhs);
+    friend bool operator==(const Team& lhs, const Team& rhs);
 };
 
 #endif // PLAYER_H

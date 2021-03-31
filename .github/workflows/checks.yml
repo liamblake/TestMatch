@@ -35,7 +35,7 @@ jobs:
         name: build
         #TODO: Optimise this to ignore unnessecary files
         path: |
-          build
+          build/**
 
   tests:
     needs: build

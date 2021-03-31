@@ -30,6 +30,7 @@ const double SPIN_MEAN_FATIGUE = 0.04;
  *
  */
 struct BatStats {
+
     // Career averages
     double bat_avg;
     double strike_rate;
@@ -106,6 +107,7 @@ struct BowlStats {
         ar& spell_runs;
         ar& spell_wickets;
     };
+
 };
 
 /**
@@ -165,6 +167,7 @@ class Dismissal {
         ar& bowler;
         ar& fielder;
     };
+
 };
 
 /**
@@ -232,6 +235,7 @@ class PlayerCard {
     void serialize(Archive& ar, const unsigned int version) {
         ar& player;
     };
+
 };
 
 /**
@@ -281,6 +285,7 @@ class BatterCard : public PlayerCard {
         ar& dism;
         ar& mins;
     };
+
 };
 
 /**
@@ -335,6 +340,7 @@ class BowlerCard : public PlayerCard {
         ar& competency;
         ar& is_maiden;
     };
+
 };
 
 template <typename T>
@@ -412,6 +418,7 @@ struct Ball {
         ar& commentary;
         ar& next;
     };
+
 };
 
 /**
@@ -506,14 +513,15 @@ struct FOW {
     std::string print();
 
     // TODO: implement value checking for 0 <= balls < 6
-
+  
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& wkts;
         ar& runs;
         ar& overs;
         ar& balls;
-    }
+    };
+
 };
 
 /**
@@ -570,6 +578,7 @@ class Partnership {
         ar& bat2_balls;
         ar& not_out;
     };
+
 };
 
 //~~~~~~~~~~~~~~ Match End Objects ~~~~~~~~~~~~~~//
@@ -599,6 +608,7 @@ class EndMatch {
         ar& winner;
         ar& margin;
     };
+
 };
 
 /**
@@ -611,10 +621,12 @@ class EndInningsWin : public EndMatch {
 
     std::string print();
 
+
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
+
 };
 
 /**
@@ -631,6 +643,7 @@ class EndBowlWin : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
+
 };
 
 /**
@@ -647,6 +660,7 @@ class EndChaseWin : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
+ 
 };
 
 /**
@@ -662,6 +676,7 @@ class EndDraw : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
+
 };
 
 /**
@@ -677,6 +692,7 @@ class EndTie : public EndDraw {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndDraw>(*this);
     };
+
 };
 
 ///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES

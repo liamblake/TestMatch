@@ -339,6 +339,7 @@ class Innings {
     friend class BattingManager;
     friend class BowlingManager;
     friend class FieldingManager;
+
 };
 
 /**
@@ -441,7 +442,7 @@ class Match {
         ar& match_balls;
 
         ar& ending;
-    }
+    };
 };
 
 #endif // SIMULATION_h

@@ -42,7 +42,7 @@ jobs:
       run: mkdir build
 
     - name: Build
-      run: cmake -Bbuild -H.
+      run: cmake -Bbuild -H. -DBoost_INCLUDE_DIR=~/boost
 
     - name: Make
       run: cmake --build build/ --target all

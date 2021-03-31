@@ -3,6 +3,8 @@ project(testmatch_backend)
 include(CTest)
 include(GenerateExportHeader)
 
+set(BOOST_DEBUG ON)
+
 # Build options
 option(BUILD_TESTS "Option to also compile testing executables" ON)
 

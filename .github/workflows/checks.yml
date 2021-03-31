@@ -47,6 +47,9 @@ jobs:
       with:
         name: build
 
+    - name: ls
+      run: ls
+
     - name: Run unit tests
       run: cd build && ctest --verbose
 

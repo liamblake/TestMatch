@@ -339,7 +339,6 @@ class Innings {
     friend class BattingManager;
     friend class BowlingManager;
     friend class FieldingManager;
-
 };
 
 /**

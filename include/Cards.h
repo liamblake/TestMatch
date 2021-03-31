@@ -206,9 +206,9 @@ class Fatigue {
     ~Fatigue();
 
     // Serialisation
+    template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& value;
-        ar& dist;
     };
 };
 

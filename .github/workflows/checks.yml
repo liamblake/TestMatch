@@ -42,16 +42,19 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v2
+
     - name: Download built files
       uses: actions/download-artifact@v2
       with:
         name: build
+        path: build/
 
     - name: Run unit tests
-      run: ctest --verbose
+      run: cd build && ctest --verbose
 
     - name: Run simulation demo
-      run: cd test && ./demo_test
+      run: cd build/test && ./demo_test
 
   linter:
     runs-on: ubuntu-latest

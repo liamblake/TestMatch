@@ -16,4 +16,3 @@ jobs:
         source: '.'
         extensions: 'h,cpp'
         clangFormatVersion: 11
-        style: llvm

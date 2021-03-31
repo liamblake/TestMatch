@@ -15,34 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # These steps to install Boost are taken from https://raymii.org/s/articles/Github_Actions_cpp_boost_cmake_speedup.html
-    - name: Cache boost
-      uses: actions/cache@v1.0.3
-      id: cache-boost
-      with:
-        path: "~/boost"
-        key: libboost-all-dev
-    - name: Install boost
-      env:
-        CACHE_HIT: ${{steps.cache-boost.outputs.cache-hit}}
-      run: |
-        if [[ "$CACHE_HIT" == 'true' ]]; then
-          sudo cp --force --recursive ~/boost/* /
-        else
-          sudo apt-get update && sudo apt-get install -yq libboost-all-dev
-          mkdir -p ~/boost
-          for dep in libboost-all-dev; do
-              dpkg -L $dep | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/boost/
-          done
-        fi
-
     - uses: actions/checkout@v2
     
+    - name: Install Boost
+      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
+
     - name: Create build environment
       run: mkdir build
 
     - name: Build
-      run: cmake -Bbuild -H. -DBOOST_ROOT=~/boost -DBoost_INCLUDE_DIR=~/boost
+      run: cmake -Bbuild -H.
 
     - name: Make
       run: cmake --build build/ --target all

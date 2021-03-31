@@ -14,7 +14,7 @@ inline void test_serialisation(T* obj, std::string fname) {
     // anyways for testing sake
     BOOST_TEST(obj_new != obj);
 
-    delete obj_new;
+    // delete obj_new;
 }
 
 #endif // TESTHELPERS_H

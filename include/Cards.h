@@ -107,7 +107,6 @@ struct BowlStats {
         ar& spell_runs;
         ar& spell_wickets;
     };
-
 };
 
 /**
@@ -167,7 +166,6 @@ class Dismissal {
         ar& bowler;
         ar& fielder;
     };
-
 };
 
 /**
@@ -206,6 +204,12 @@ class Fatigue {
 
     // Destructor
     ~Fatigue();
+
+    // Serialisation
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& value;
+        ar& dist;
+    };
 };
 
 /**
@@ -235,7 +239,6 @@ class PlayerCard {
     void serialize(Archive& ar, const unsigned int version) {
         ar& player;
     };
-
 };
 
 /**
@@ -284,8 +287,8 @@ class BatterCard : public PlayerCard {
         ar& out;
         ar& dism;
         ar& mins;
+        ar& playstyle_flag;
     };
-
 };
 
 /**
@@ -339,8 +342,8 @@ class BowlerCard : public PlayerCard {
         ar& active;
         ar& competency;
         ar& is_maiden;
+        ar& tiredness;
     };
-
 };
 
 template <typename T>
@@ -418,7 +421,6 @@ struct Ball {
         ar& commentary;
         ar& next;
     };
-
 };
 
 /**
@@ -513,7 +515,7 @@ struct FOW {
     std::string print();
 
     // TODO: implement value checking for 0 <= balls < 6
-  
+
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& wkts;
@@ -521,7 +523,6 @@ struct FOW {
         ar& overs;
         ar& balls;
     };
-
 };
 
 /**
@@ -578,7 +579,6 @@ class Partnership {
         ar& bat2_balls;
         ar& not_out;
     };
-
 };
 
 //~~~~~~~~~~~~~~ Match End Objects ~~~~~~~~~~~~~~//
@@ -608,7 +608,6 @@ class EndMatch {
         ar& winner;
         ar& margin;
     };
-
 };
 
 /**
@@ -621,12 +620,10 @@ class EndInningsWin : public EndMatch {
 
     std::string print();
 
-
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
-
 };
 
 /**
@@ -643,7 +640,6 @@ class EndBowlWin : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
-
 };
 
 /**
@@ -660,7 +656,6 @@ class EndChaseWin : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
- 
 };
 
 /**
@@ -676,7 +671,6 @@ class EndDraw : public EndMatch {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndMatch>(*this);
     };
-
 };
 
 /**
@@ -692,7 +686,6 @@ class EndTie : public EndDraw {
     void serialize(Archive& ar, const unsigned int version) {
         ar& boost::serialization::base_object<EndDraw>(*this);
     };
-
 };
 
 ///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES

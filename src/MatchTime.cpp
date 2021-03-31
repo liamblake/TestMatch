@@ -12,29 +12,29 @@ TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
 
 TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
     : _sec(sec), _min(min), _hrs(hrs) {
-  // Round appropriately
+    // Round appropriately
 }
 
 TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
-  if (dr < 0) {
-    // Raise exception
-  }
+    if (dr < 0) {
+        // Raise exception
+    }
 
-  _min = dr - _hrs;
+    _min = dr - _hrs;
 }
 
 std::string TimeOfDay::two_digits(int val) {
-  std::string output;
+    std::string output;
 
-  if (val < 10)
-    output += "0";
-  output += std::to_string(val);
-  return output;
+    if (val < 10)
+        output += "0";
+    output += std::to_string(val);
+    return output;
 }
 
 // Explicit casts
 TimeOfDay::operator std::string() {
-  return two_digits(_hrs) + ":" + two_digits(_min) + ":" + two_digits(_sec);
+    return two_digits(_hrs) + ":" + two_digits(_min) + ":" + two_digits(_sec);
 }
 
 TimeOfDay::operator int() { return _hrs * 3600 + _min * 60 + _sec; }
@@ -48,25 +48,25 @@ void TimeOfDay::set(double dr) {}
 
 // Overloaded operators
 TimeOfDay& TimeOfDay::operator++() {
-  *this += 1;
-  return *this;
+    *this += 1;
+    return *this;
 }
 
 TimeOfDay TimeOfDay::operator++(int) {
-  TimeOfDay old = *this;
-  (*this)++;
-  return old;
+    TimeOfDay old = *this;
+    (*this)++;
+    return old;
 }
 
 TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) { return *this; }
 
 TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
-  return *this += TimeOfDay(rhs);
+    return *this += TimeOfDay(rhs);
 }
 
 bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
-  return ((lhs._hrs == rhs._hrs) && (lhs._min == rhs._min) &&
-          (lhs._sec == rhs._sec));
+    return ((lhs._hrs == rhs._hrs) && (lhs._min == rhs._min) &&
+            (lhs._sec == rhs._sec));
 }
 bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
 
@@ -104,112 +104,112 @@ double MatchTime::RUN_DUR = 10;
 
 // Default constructor - start of match, day 1
 MatchTime::MatchTime() : time(START_TIME) {
-  day = 1;
-  state = "Match Start";
+    day = 1;
+    state = "Match Start";
 }
 
 // Private utility functions
 bool MatchTime::take_lunch() {
-  if (state != "Session 1") {
-    // Cannot take lunch if not in Session 1
-    return false;
-  }
+    if (state != "Session 1") {
+        // Cannot take lunch if not in Session 1
+        return false;
+    }
 
-  // Push time to end of break
-  time += LUNCH_DUR;
-  state = "Lunch";
+    // Push time to end of break
+    time += LUNCH_DUR;
+    state = "Lunch";
 }
 
 bool MatchTime::take_tea() {
-  if (state != "Session 2") {
-    // Cannot take tea if not in Session 2
-    return false;
-  }
+    if (state != "Session 2") {
+        // Cannot take tea if not in Session 2
+        return false;
+    }
 
-  // Push time to end of break
-  time += TEA_DUR;
-  state = "Tea";
+    // Push time to end of break
+    time += TEA_DUR;
+    state = "Tea";
 }
 
 bool MatchTime::close_day() {
-  if (state != "Session 3") {
-    // Cannot close if not in Session 3
-    return false;
-  }
+    if (state != "Session 3") {
+        // Cannot close if not in Session 3
+        return false;
+    }
 
-  // Push time to end of break
-  day += 1;
-  time.set(START_TIME);
-  state = "Stumps";
+    // Push time to end of break
+    day += 1;
+    time.set(START_TIME);
+    state = "Stumps";
 }
 
 void MatchTime::check_state_change() {
 
-  // Switch through each possible match state
-  if (state == "Match Start") {
-    // if (time > START_TIME)
-  } else if (state == "Session 1") {
+    // Switch through each possible match state
+    if (state == "Match Start") {
+        // if (time > START_TIME)
+    } else if (state == "Session 1") {
 
-  } else if (state == "Drinks 1") {
+    } else if (state == "Drinks 1") {
 
-  } else if (state == "Lunch") {
+    } else if (state == "Lunch") {
 
-  } else if (state == "Session 2") {
+    } else if (state == "Session 2") {
 
-  } else if (state == "Drinks 2") {
+    } else if (state == "Drinks 2") {
 
-  } else if (state == "Tea") {
+    } else if (state == "Tea") {
 
-  } else if (state == "Session 3") {
+    } else if (state == "Session 3") {
 
-  } else if (state == "Drinks 3") {
+    } else if (state == "Drinks 3") {
 
-  } else if (state == "Innings Break") {
+    } else if (state == "Innings Break") {
 
-  } else if (state == "Stumps") {
+    } else if (state == "Stumps") {
 
-  } else {
-    // Raise exception - unknown match state
-  }
+    } else {
+        // Raise exception - unknown match state
+    }
 }
 
 // Time controls for use by simulation
 std::pair<int, std::string> MatchTime::delivery(bool type, int runs) {
 
-  // Randomnly generate time elapsed by delivery
-  double s;
-  if (type) {
-    // Spin bowler
-    s = rtexp(SPIN_MEANDUR, SPIN_MINDUR, SPIN_MAXDUR) + runs * RUN_DUR;
-  } else {
-    // Pace bowler
-    s = rtexp(PACE_MEANDUR, PACE_MINDUR, PACE_MAXDUR) + runs * RUN_DUR;
-  }
+    // Randomnly generate time elapsed by delivery
+    double s;
+    if (type) {
+        // Spin bowler
+        s = rtexp(SPIN_MEANDUR, SPIN_MINDUR, SPIN_MAXDUR) + runs * RUN_DUR;
+    } else {
+        // Pace bowler
+        s = rtexp(PACE_MEANDUR, PACE_MINDUR, PACE_MAXDUR) + runs * RUN_DUR;
+    }
 
-  int elapsed = (int)round(s);
+    int elapsed = (int)round(s);
 
-  check_state_change();
-  std::pair<int, std::string> output = {elapsed, state};
-  return output;
+    check_state_change();
+    std::pair<int, std::string> output = {elapsed, state};
+    return output;
 }
 
 std::pair<int, std::string> MatchTime::end_over() { return {0, state}; }
 
 std::pair<int, std::string> MatchTime::drinks() {
-  time += DRINKS_DUR;
+    time += DRINKS_DUR;
 
-  check_state_change();
-  return {DRINKS_DUR, state};
+    check_state_change();
+    return {DRINKS_DUR, state};
 }
 
 std::string MatchTime::force_early_break() {
-  check_state_change();
-  return state;
+    check_state_change();
+    return state;
 }
 
 std::string MatchTime::extend_session() {
-  check_state_change();
-  return state;
+    check_state_change();
+    return state;
 }
 
 // Getters

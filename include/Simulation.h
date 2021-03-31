@@ -29,316 +29,316 @@ struct MatchStats {};
  *
  */
 class BattingManager {
- private:
-  BatterCard* cards[11];
-  bool batted[11];
+  private:
+    BatterCard* cards[11];
+    bool batted[11];
 
-  // Various options for determining next batter
-  BatterCard* next_ordered();
-  BatterCard* nightwatch();
-  BatterCard* promote_hitter();
+    // Various options for determining next batter
+    BatterCard* next_ordered();
+    BatterCard* nightwatch();
+    BatterCard* promote_hitter();
 
- public:
-  // Constructor
-  BattingManager();
+  public:
+    // Constructor
+    BattingManager();
 
-  /**
-   * @brief
-   * @param c_cards
-   */
-  void set_cards(BatterCard** c_cards);
+    /**
+     * @brief
+     * @param c_cards
+     */
+    void set_cards(BatterCard** c_cards);
 
-  /**
-   * @brief
-   * @param inns_obj Pointer to Innings object, used to get game situation
-   * @return Pointer to BatterCard corresponding to the new batter
-   */
-  BatterCard* next_in(Innings* inns_obj);
+    /**
+     * @brief
+     * @param inns_obj Pointer to Innings object, used to get game situation
+     * @return Pointer to BatterCard corresponding to the new batter
+     */
+    BatterCard* next_in(Innings* inns_obj);
 };
 
 /**
  * @brief
  */
 class BowlingManager {
- private:
-  BowlerCard* cards[11];
+  private:
+    BowlerCard* cards[11];
 
-  int n_over_calls;
+    int n_over_calls;
 
-  /**
-   * @brief
-   * @param bowl_avg
-   * @param bowl_sr
-   * @param fatigue
-   * @return
-   */
-  static double bowler_obj(double bowl_avg, double bowl_sr, double fatigue);
+    /**
+     * @brief
+     * @param bowl_avg
+     * @param bowl_sr
+     * @param fatigue
+     * @return
+     */
+    static double bowler_obj(double bowl_avg, double bowl_sr, double fatigue);
 
-  /**
-   * @brief
-   * @param fatigue
-   * @return
-   */
-  static double take_off_prob(double fatigue);
+    /**
+     * @brief
+     * @param fatigue
+     * @return
+     */
+    static double take_off_prob(double fatigue);
 
-  /**
-   * @brief Various options for getting a new bowler
-   * @param ignore1
-   * @param ignore2
-   * @return A BowlerCard pointer to the new bowler
-   */
-  BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
-  BowlerCard* any_fulltime(BowlerCard* ignore1, BowlerCard* ignore2);
+    /**
+     * @brief Various options for getting a new bowler
+     * @param ignore1
+     * @param ignore2
+     * @return A BowlerCard pointer to the new bowler
+     */
+    BowlerCard* new_pacer(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* new_spinner(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* part_timer(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* change_it_up(BowlerCard* ignore1, BowlerCard* ignore2);
+    BowlerCard* any_fulltime(BowlerCard* ignore1, BowlerCard* ignore2);
 
-  /**
-   * @brief
-   *
-   * Note: This is defined here, rather than Simulation.cpp, because the
-   * function is a template.
-   *
-   * @tparam pred
-   * @param predicate Lambda function taking a BowlerCard* and returning a
-   * boolean indicating whether to consider that bowler when searching.
-   * @return BowlerCard* Pointer to the BowlerCard of the chosen bowler.
-   */
-  template <class pred>
-  BowlerCard* search_best(pred predicate) {
-    double min_obj = std::numeric_limits<double>::max();
-    double new_obj;
-    BowlerCard* best = nullptr;
-    BowlerCard* curr;
-    Player* curr_ply;
-    for (int i = 0; i < 11; i++) {
-      curr = cards[i];
-      curr_ply = curr->get_player_ptr();
+    /**
+     * @brief
+     *
+     * Note: This is defined here, rather than Simulation.cpp, because the
+     * function is a template.
+     *
+     * @tparam pred
+     * @param predicate Lambda function taking a BowlerCard* and returning a
+     * boolean indicating whether to consider that bowler when searching.
+     * @return BowlerCard* Pointer to the BowlerCard of the chosen bowler.
+     */
+    template <class pred>
+    BowlerCard* search_best(pred predicate) {
+        double min_obj = std::numeric_limits<double>::max();
+        double new_obj;
+        BowlerCard* best = nullptr;
+        BowlerCard* curr;
+        Player* curr_ply;
+        for (int i = 0; i < 11; i++) {
+            curr = cards[i];
+            curr_ply = curr->get_player_ptr();
 
-      // Only consider if pace bowler and full-time
-      if (predicate(curr)) {
-        // Calculate objective function
-        new_obj = Model::OBJ_AVG_FATIG(curr_ply->get_bowl_avg(),
-                                       curr_ply->get_bowl_sr(),
-                                       curr->get_tiredness());
+            // Only consider if pace bowler and full-time
+            if (predicate(curr)) {
+                // Calculate objective function
+                new_obj = Model::OBJ_AVG_FATIG(curr_ply->get_bowl_avg(),
+                                               curr_ply->get_bowl_sr(),
+                                               curr->get_tiredness());
 
-        // Compare to current best
-        if (new_obj < min_obj) {
-          best = curr;
-          min_obj = new_obj;
+                // Compare to current best
+                if (new_obj < min_obj) {
+                    best = curr;
+                    min_obj = new_obj;
+                }
+            }
         }
-      }
+
+        // Return null if no such bowler can be found
+        return best;
     }
 
-    // Return null if no such bowler can be found
-    return best;
-  }
+  public:
+    BowlingManager();
 
- public:
-  BowlingManager();
+    void set_cards(BowlerCard* c_cards[11]);
 
-  void set_cards(BowlerCard* c_cards[11]);
-
-  /**
-   * @brief
-   * @param inns_obj Pointer to Innings object, used to get game situation
-   * @return Pointer to BowlerCard corresponding to the bowler bowling the next
-   * over
-   */
-  BowlerCard* end_over(Innings* inns_obj);
+    /**
+     * @brief
+     * @param inns_obj Pointer to Innings object, used to get game situation
+     * @return Pointer to BowlerCard corresponding to the bowler bowling the
+     * next over
+     */
+    BowlerCard* end_over(Innings* inns_obj);
 };
 
 /**
  * @brief
  */
 class FieldingManager {
- private:
-  static double C_WK_PROB;
+  private:
+    static double C_WK_PROB;
 
-  Player* players[11];
-  int wk_idx;
+    Player* players[11];
+    int wk_idx;
 
- public:
-  FieldingManager(int c_wk_idx);
+  public:
+    FieldingManager(int c_wk_idx);
 
-  void set_cards(Player* c_plys[11]);
-  /**
-   * @brief Select a fielder for an appropriate mode of dismissial
-   * @param bowler Pointer to the bowler Player object
-   * @param run_out Logical indicating whether the dismissal is a runout,
-   * default false
-   * @return
-   */
-  Player* select_catcher(Player* bowler, int dism_type);
+    void set_cards(Player* c_plys[11]);
+    /**
+     * @brief Select a fielder for an appropriate mode of dismissial
+     * @param bowler Pointer to the bowler Player object
+     * @param run_out Logical indicating whether the dismissal is a runout,
+     * default false
+     * @return
+     */
+    Player* select_catcher(Player* bowler, int dism_type);
 };
 
 /**
  * @brief
  */
 class Innings {
- private:
-  // Each team
-  Team* team_bat;
-  Team* team_bowl;
+  private:
+    // Each team
+    Team* team_bat;
+    Team* team_bowl;
 
-  // General innings info
-  static int NO_INNS;
-  int inns_no;
-  static double PRINT_DELAY;
-  bool is_quiet;
+    // General innings info
+    static int NO_INNS;
+    int inns_no;
+    static double PRINT_DELAY;
+    bool is_quiet;
 
-  int overs;
-  int balls;
-  int legal_delivs;
-  int team_score;
-  int lead;
-  int wkts;
+    int overs;
+    int balls;
+    int legal_delivs;
+    int team_score;
+    int lead;
+    int wkts;
 
-  bool is_open;
+    bool is_open;
 
-  // MatchTime* time;
-  PitchFactors* pitch;
+    // MatchTime* time;
+    PitchFactors* pitch;
 
-  // Ball-by-ball detail
-  Over* first_over;
-  Over* last_over;
+    // Ball-by-ball detail
+    Over* first_over;
+    Over* last_over;
 
-  // Scorecards
-  BatterCard** batters;
-  BowlerCard** bowlers;
+    // Scorecards
+    BatterCard** batters;
+    BowlerCard** bowlers;
 
-  // Managers
-  BattingManager man_bat;
-  BowlingManager man_bowl;
-  FieldingManager man_field;
+    // Managers
+    BattingManager man_bat;
+    BowlingManager man_bowl;
+    FieldingManager man_field;
 
-  // Current batters
-  BatterCard* striker;
-  BatterCard* nonstriker;
+    // Current batters
+    BatterCard* striker;
+    BatterCard* nonstriker;
 
-  // Bowler of current over (bowl1) and previous over (bowl2)
-  BowlerCard* bowl1;
-  BowlerCard* bowl2;
+    // Bowler of current over (bowl1) and previous over (bowl2)
+    BowlerCard* bowl1;
+    BowlerCard* bowl2;
 
-  // Partnerships
-  Partnership* bat_parts[10];
+    // Partnerships
+    Partnership* bat_parts[10];
 
-  // Extras and fall-of-wicket
-  Extras extras;
-  FOW* fow;
+    // Extras and fall-of-wicket
+    Extras extras;
+    FOW* fow;
 
-  std::string* temp_outcomes;
+    std::string* temp_outcomes;
 
-  // Private methods used in simulation process
+    // Private methods used in simulation process
 
-  // Simulate a delivery and update appropriate statistics
-  void simulate_delivery();
+    // Simulate a delivery and update appropriate statistics
+    void simulate_delivery();
 
-  // Called after each delivery, checks for changes in game state, such as end
-  // of over, end of innings, declaration, scheduled break, etc.
-  std::string check_state();
+    // Called after each delivery, checks for changes in game state, such as end
+    // of over, end of innings, declaration, scheduled break, etc.
+    std::string check_state();
 
-  // Check for declaration
-  bool check_declaration();
+    // Check for declaration
+    bool check_declaration();
 
-  // Handle end of over
-  void end_over();
+    // Handle end of over
+    void end_over();
 
-  /**
-   * @brief Functions for swapping batter and bowler pointers respectively
-   */
-  void swap_batters();
-  void swap_bowlers();
+    /**
+     * @brief Functions for swapping batter and bowler pointers respectively
+     */
+    void swap_batters();
+    void swap_bowlers();
 
-  /**
-   * @brief
-   * @param outcome
-   * @return
-   */
-  std::string comm_ball(int overs, Player* bowler, Player* batter,
-                        std::string outcome);
+    /**
+     * @brief
+     * @param outcome
+     * @return
+     */
+    std::string comm_ball(int overs, Player* bowler, Player* batter,
+                          std::string outcome);
 
-  /**
-   * @brief
-   * @return
-   */
-  std::string comm_over(Over* over);
+    /**
+     * @brief
+     * @return
+     */
+    std::string comm_over(Over* over);
 
-  // Whether to use Australia style of scoring, wickets/runs, or the
-  // international runs/wickets
-  static bool AUSTRALIAN_STYLE;
-  std::string score();
+    // Whether to use Australia style of scoring, wickets/runs, or the
+    // international runs/wickets
+    static bool AUSTRALIAN_STYLE;
+    std::string score();
 
-  std::string print_fow();
+    std::string print_fow();
 
-  /**
-   * @brief Called when innings closed, sets all batters to inactive, etc.
-   */
-  void cleanup();
+    /**
+     * @brief Called when innings closed, sets all batters to inactive, etc.
+     */
+    void cleanup();
 
-  static std::string DIVIDER;
-  static std::string BUFFER;
+    static std::string DIVIDER;
+    static std::string BUFFER;
 
- public:
-  // Constructor
-  Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
-          PitchFactors* c_pitch); // MatchTime* c_time);
+  public:
+    // Constructor
+    Innings(Team* c_team_bat, Team* c_team_bowl, int c_lead,
+            PitchFactors* c_pitch); // MatchTime* c_time);
 
-  // Returns state string explainining why innings has ended
-  std::string simulate(bool quiet = true);
+    // Returns state string explainining why innings has ended
+    std::string simulate(bool quiet = true);
 
-  std::string print(void);
+    std::string print(void);
 
-  // Getters
-  BatterCard** get_batters();
-  BowlerCard** get_bowlers();
+    // Getters
+    BatterCard** get_batters();
+    BowlerCard** get_bowlers();
 
-  bool get_is_open();
-  int get_lead();
-  int get_wkts();
-  Team* get_bat_team();
-  Team* get_bowl_team();
+    bool get_is_open();
+    int get_lead();
+    int get_wkts();
+    Team* get_bat_team();
+    Team* get_bowl_team();
 
-  // Destructor
-  ~Innings();
+    // Destructor
+    ~Innings();
 
-  // Serialisation
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version) {
-    ar& team_bat;
-    ar& team_bowl;
+    // Serialisation
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& team_bat;
+        ar& team_bowl;
 
-    ar& inns_no;
-    ar& is_quiet;
+        ar& inns_no;
+        ar& is_quiet;
 
-    ar& overs;
-    ar& balls;
-    ar& legal_delivs;
-    ar& team_score;
-    ar& lead;
-    ar& wkts;
+        ar& overs;
+        ar& balls;
+        ar& legal_delivs;
+        ar& team_score;
+        ar& lead;
+        ar& wkts;
 
-    ar& is_open;
+        ar& is_open;
 
-    // ar& time;
-    ar& pitch;
+        // ar& time;
+        ar& pitch;
 
-    ar& first_over;
-    ar& last_over;
+        ar& first_over;
+        ar& last_over;
 
-    ar& batters;
-    ar& bowlers;
+        ar& batters;
+        ar& bowlers;
 
-    ar& bat_parts;
+        ar& bat_parts;
 
-    ar& extras;
-    ar& fow;
-  }
+        ar& extras;
+        ar& fow;
+    }
 
-  // Allow manager objects to access private members
-  friend class BattingManager;
-  friend class BowlingManager;
-  friend class FieldingManager;
+    // Allow manager objects to access private members
+    friend class BattingManager;
+    friend class BowlingManager;
+    friend class FieldingManager;
 };
 
 /**
@@ -346,102 +346,102 @@ class Innings {
  */
 class Match {
 
- private:
-  Team* team1; // Home team
-  Team* team2; // Away team
+  private:
+    Team* team1; // Home team
+    Team* team2; // Away team
 
-  Venue* venue;
+    Venue* venue;
 
-  bool ready;
-  bool toss_win;   // false = team1, true = team2
-  bool toss_elect; // false = bowl, true = bat
+    bool ready;
+    bool toss_win;   // false = team1, true = team2
+    bool toss_elect; // false = bowl, true = bat
 
-  // MatchTime time;
-  std::string match_state;
+    // MatchTime time;
+    std::string match_state;
 
-  // Tracking current game state
-  int inns_i;
-  Innings* inns[4];
-  int lead;
-  int match_balls;
+    // Tracking current game state
+    int inns_i;
+    Innings* inns[4];
+    int lead;
+    int match_balls;
 
-  // Storing winner detail
-  EndMatch* ending;
+    // Storing winner detail
+    EndMatch* ending;
 
-  // Private helper functions
+    // Private helper functions
 
-  /**
-   * @brief
-   */
-  void simulate_toss();
+    /**
+     * @brief
+     */
+    void simulate_toss();
 
-  /**
-   * @brief
-   */
-  void change_innings();
+    /**
+     * @brief
+     */
+    void change_innings();
 
-  /**
-   * @brief Decide whether to enforce the follow-on, based on the lead.
-   *
-   * Wrapper for Match::MODEL_FOLLOW_ON
-   *
-   * @param lead Lead of bowling team at end of previous innings.
-   * @return Boolean indicating whether the follow-on is enforced
-   */
-  static bool DECIDE_FOLLOW_ON(int lead);
+    /**
+     * @brief Decide whether to enforce the follow-on, based on the lead.
+     *
+     * Wrapper for Match::MODEL_FOLLOW_ON
+     *
+     * @param lead Lead of bowling team at end of previous innings.
+     * @return Boolean indicating whether the follow-on is enforced
+     */
+    static bool DECIDE_FOLLOW_ON(int lead);
 
-  // For printing
-  /**
-   * @brief Returns a string detailing which team won the toss and the choice
-   * @return Aforementioned string
-   */
-  std::string toss_str();
+    // For printing
+    /**
+     * @brief Returns a string detailing which team won the toss and the choice
+     * @return Aforementioned string
+     */
+    std::string toss_str();
 
-  std::string winner_str();
+    std::string winner_str();
 
- public:
-  Match(Team* home_team, Team* away_team, Venue* c_venue);
+  public:
+    Match(Team* home_team, Team* away_team, Venue* c_venue);
 
-  /**
-   * @brief
-   */
-  void pregame();
+    /**
+     * @brief
+     */
+    void pregame();
 
-  /**
-   * @brief
-   * @param quiet
-   */
-  void start(bool quiet = true);
+    /**
+     * @brief
+     * @param quiet
+     */
+    void start(bool quiet = true);
 
-  /**
-   * @brief
-   * @return
-   */
-  std::string print_all();
+    /**
+     * @brief
+     * @return
+     */
+    std::string print_all();
 
-  ~Match();
+    ~Match();
 
-  // Serialisation
-  template <class Archive>
-  void serialize(Archive& ar, const unsigned int version) {
-    ar& team1;
-    ar& team2;
+    // Serialisation
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& team1;
+        ar& team2;
 
-    ar& venue;
+        ar& venue;
 
-    ar& ready;
-    ar& toss_win;
-    ar& toss_elect;
+        ar& ready;
+        ar& toss_win;
+        ar& toss_elect;
 
-    ar& match_state;
+        ar& match_state;
 
-    ar& inns_i;
-    ar& inns;
-    ar& lead;
-    ar& match_balls;
+        ar& inns_i;
+        ar& inns;
+        ar& lead;
+        ar& match_balls;
 
-    ar& ending;
-  }
+        ar& ending;
+    }
 };
 
 #endif // SIMULATION_h

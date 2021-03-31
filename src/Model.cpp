@@ -38,9 +38,9 @@ std::vector<std::string> DISM_MODES_STATIC = {"b",   "c",  "c&b",
  * be eventually improved.
  **/
 double MODEL_TOSS_ELECT(double spin_factor) {
-  // Exponential model
-  double a = 0.05;
-  return a * exp(log(0.9 / a) * spin_factor);
+    // Exponential model
+    double a = 0.05;
+    return a * exp(log(0.9 / a) * spin_factor);
 }
 
 /**
@@ -52,14 +52,14 @@ double MODEL_TOSS_ELECT(double spin_factor) {
  *
  */
 double OBJ_AVG_FATIG(double bowl_avg, double bowl_sr, double fatigue) {
-  return 3.0 / (1.0 / bowl_avg + 1.0 / bowl_sr + 1.0 / (fatigue + 1));
+    return 3.0 / (1.0 / bowl_avg + 1.0 / bowl_sr + 1.0 / (fatigue + 1));
 }
 
 /**
  *
  */
 double MODEL_DECLARATION(int lead, int match_balls, bool is_wkt, int innings) {
-  return 0;
+    return 0;
 }
 
 /**
@@ -73,107 +73,108 @@ double MODEL_DECLARATION(int lead, int match_balls, bool is_wkt, int innings) {
  * \f]
  */
 double MODEL_FOLLOW_ON(int lead) {
-  // Logistic regression, fitted in R
+    // Logistic regression, fitted in R
 
-  // Preprocessing of lead value
-  double t_lead = boxcox(lead, -0.9561039); // Box-Cox transform
+    // Preprocessing of lead value
+    double t_lead = boxcox(lead, -0.9561039); // Box-Cox transform
 
-  // Fitted model
-  double logit = -1101.903 + 1058.466 * t_lead;
-  return 1 / (1 + exp(logit));
+    // Fitted model
+    double logit = -1101.903 + 1058.466 * t_lead;
+    return 1 / (1 + exp(logit));
 }
 
 // Generates probability distribution for each possible outcome
 double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
-  double* output = new double[NUM_DELIV_OUTCOMES];
+    double* output = new double[NUM_DELIV_OUTCOMES];
 
-  // PLACEHOLDER - data proportions, hard-coded model
-  if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
-    output[0] = 0;
-    output[1] = 0.700414129;
-    output[2] = 0.878619915;
-    output[3] = 0.879463788;
-    output[4] = 0.881999123;
-    output[5] = 0.884047465;
-    output[6] = 0.884303973;
-    output[7] = 0.919880445;
-    output[8] = 0.920519855;
-    output[9] = 0.921326553;
-    output[10] = 0.92133027;
-    output[11] = 0.921341423;
-    output[12] = 0.92863144;
-    output[13] = 0.928873077;
-    output[14] = 0.929029212;
-    output[15] = 0.976230307;
-    output[16] = 0.977791656;
-    output[17] = 0.978115079;
-    output[18] = 0.978234039;
-    output[19] = 0.978241474;
-    output[20] = 0.978267496;
-    output[21] = 0.985367921;
-  } else {
-    output[0] = 0;
-    output[1] = 0.72505691;
-    output[2] = 0.844465522;
-    output[3] = 0.845466186;
-    output[4] = 0.851517595;
-    output[5] = 0.859254956;
-    output[6] = 0.862496443;
-    output[7] = 0.899248316;
-    output[8] = 0.899452243;
-    output[9] = 0.900194442;
-    output[10] = 0.900244238;
-    output[11] = 0.900298776;
-    output[12] = 0.910843688;
-    output[13] = 0.910879256;
-    output[14] = 0.910912454;
-    output[15] = 0.978537892;
-    output[16] = 0.979818363;
-    output[17] = 0.98124585;
-    output[18] = 0.981426065;
-    output[19] = 0.981497202;
-    output[20] = 0.981855259;
-    output[21] = 0.983420279;
-  }
+    // PLACEHOLDER - data proportions, hard-coded model
+    if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
+        output[0] = 0;
+        output[1] = 0.700414129;
+        output[2] = 0.878619915;
+        output[3] = 0.879463788;
+        output[4] = 0.881999123;
+        output[5] = 0.884047465;
+        output[6] = 0.884303973;
+        output[7] = 0.919880445;
+        output[8] = 0.920519855;
+        output[9] = 0.921326553;
+        output[10] = 0.92133027;
+        output[11] = 0.921341423;
+        output[12] = 0.92863144;
+        output[13] = 0.928873077;
+        output[14] = 0.929029212;
+        output[15] = 0.976230307;
+        output[16] = 0.977791656;
+        output[17] = 0.978115079;
+        output[18] = 0.978234039;
+        output[19] = 0.978241474;
+        output[20] = 0.978267496;
+        output[21] = 0.985367921;
+    } else {
+        output[0] = 0;
+        output[1] = 0.72505691;
+        output[2] = 0.844465522;
+        output[3] = 0.845466186;
+        output[4] = 0.851517595;
+        output[5] = 0.859254956;
+        output[6] = 0.862496443;
+        output[7] = 0.899248316;
+        output[8] = 0.899452243;
+        output[9] = 0.900194442;
+        output[10] = 0.900244238;
+        output[11] = 0.900298776;
+        output[12] = 0.910843688;
+        output[13] = 0.910879256;
+        output[14] = 0.910912454;
+        output[15] = 0.978537892;
+        output[16] = 0.979818363;
+        output[17] = 0.98124585;
+        output[18] = 0.981426065;
+        output[19] = 0.981497202;
+        output[20] = 0.981855259;
+        output[21] = 0.983420279;
+    }
 
-  return output;
+    return output;
 }
 
 int MODEL_WICKET_TYPE(int bowltype) {
-  // This desperately needs cleaning up
+    // This desperately needs cleaning up
 
-  // Unencode bowltype
-  std::string btype_str = unencode_bowltype(bowltype);
+    // Unencode bowltype
+    std::string btype_str = unencode_bowltype(bowltype);
 
-  std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
-  double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
+    std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
+    double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
 
-  double DISM_MODE_SPINNER[6] = {0, 0.157, 0.692, 0.7274, 0.9286, 0.9613};
-  double DISM_MODE_SEAMER[6] = {0, 0.175, 0.815, 0.8291, 0.9731, 1};
+    double DISM_MODE_SPINNER[6] = {0, 0.157, 0.692, 0.7274, 0.9286, 0.9613};
+    double DISM_MODE_SEAMER[6] = {0, 0.175, 0.815, 0.8291, 0.9731, 1};
 
-  bool is_spinner = (btype_str.find('f') == std::string::npos);
+    bool is_spinner = (btype_str.find('f') == std::string::npos);
 
-  // Check if "f" is in bowl_type - indicates whether stumpings are possible
-  for (int i = 0; i < NUM_DISM_MODES; i++) {
-    DISM_MODES[i] = DISM_MODES_STATIC[i];
-    if (is_spinner) {
-      // Spinner model
-      // double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326,
-      // 0.0387};
-      DISM_MODE_DIST[i] = DISM_MODE_SPINNER[i];
-    } else {
-      // Seamer model
-      // double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242, 0};
-      DISM_MODE_DIST[i] = DISM_MODE_SEAMER[i];
+    // Check if "f" is in bowl_type - indicates whether stumpings are possible
+    for (int i = 0; i < NUM_DISM_MODES; i++) {
+        DISM_MODES[i] = DISM_MODES_STATIC[i];
+        if (is_spinner) {
+            // Spinner model
+            // double DISM_MODE_DIST [8] = {0.157, 0.534, 0.0359, 0.201, 0.0326,
+            // 0.0387};
+            DISM_MODE_DIST[i] = DISM_MODE_SPINNER[i];
+        } else {
+            // Seamer model
+            // double DISM_MODE_DIST [8] = {0.175, 0.640, 0.0141, 0.144, 0.0242,
+            // 0};
+            DISM_MODE_DIST[i] = DISM_MODE_SEAMER[i];
+        }
     }
-  }
 
-  // Sample from distribution
-  std::string dism_mode =
-      sample_cdf<std::string>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
+    // Sample from distribution
+    std::string dism_mode =
+        sample_cdf<std::string>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
 
-  delete[] DISM_MODE_DIST;
-  delete[] DISM_MODES;
-  return encode_dism(dism_mode);
+    delete[] DISM_MODE_DIST;
+    delete[] DISM_MODES;
+    return encode_dism(dism_mode);
 }
 } // namespace Model

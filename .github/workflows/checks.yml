@@ -29,14 +29,17 @@ jobs:
             brew install boost
           fi
 
-    - name: ls
-      run: ls && brew --prefix
 
     - name: Create build environment
       run: mkdir build
 
     - name: Build
-      run: cmake -Bbuild -H.
+      run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            cmake -Bbuild -H.
+          elif ["$RUNNER_OS" == "Mac"]; then
+            cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
+          fi
 
     - name: Make
       run: cmake --build build/ --target all

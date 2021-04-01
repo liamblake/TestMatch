@@ -33,6 +33,9 @@ jobs:
     - name: Create build environment
       run: mkdir build
 
+    - name: ls
+      run: cd /usr/local/Cellar && ls
+
     - name: Build
       run: |
           if [ "$RUNNER_OS" == "Linux" ]; then

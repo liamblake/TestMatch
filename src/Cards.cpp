@@ -452,7 +452,7 @@ PlayerCard** sort_array(PlayerCard** list, int len,
     Player** ply_srt = sort_array<T>(ply_unsrt, len, sort_val);
 
     // Sort PlayerCard pointers by Player sorting
-    PlayerCard** sorted = new Player*[len];
+    PlayerCard** sorted = new PlayerCard*[len];
     for (int i = 0; i < len; i++) {
         int itt = 0;
         while (itt < len && ply_srt[i] != list[itt]->get_player_ptr())

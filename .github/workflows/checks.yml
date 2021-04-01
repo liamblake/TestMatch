@@ -29,12 +29,8 @@ jobs:
       if: runner.os == 'macOS'
       run: brew install boost
 
-
     - name: Create build environment
       run: mkdir build
-
-    - name: ls
-      run: cd /usr/local/Cellar && ls
 
     - name: Build (Linux)
       if: runner.os == 'Linux'

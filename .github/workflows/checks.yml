@@ -24,7 +24,7 @@ jobs:
       run: |
           if [ "$RUNNER" == "Linux" ]; then
             sudo apt-get update && sudo apt-get install -yq libboost-all-dev
-          elif ["$RUNNER_OS == "Mac]
+          elif ["$RUNNER_OS == "Mac]; then
             brew install boost
 
     - name: Create build environment

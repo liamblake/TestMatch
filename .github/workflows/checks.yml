@@ -30,7 +30,7 @@ jobs:
           fi
 
     - name: ls
-      run: ls
+      run: ls && brew --prefix
 
     - name: Create build environment
       run: mkdir build

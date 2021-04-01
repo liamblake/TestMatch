@@ -11,8 +11,10 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
+  build and test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      os: [ubuntu-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,33 +30,6 @@ jobs:
 
     - name: Make
       run: cmake --build build/ --target all
-
-    - name: Archive built files
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        #TODO: Optimise this to ignore unnessecary files
-        path: |
-          build/**
-
-  tests:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Download built files
-      uses: actions/download-artifact@v2
-      with:
-        name: build
-        path: build/
-
-    - name: ls
-      run: ls
-
-    - name: ls2
-      run: cd build && ls
 
     - name: Run unit tests
       run: cd build && ctest --verbose

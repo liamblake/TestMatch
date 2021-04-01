@@ -25,7 +25,7 @@ jobs:
       run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt-get update && sudo apt-get install -yq libboost-all-dev
-          elif ["$RUNNER_OS" == "Mac"]; then
+          elif ["$RUNNER_OS" == "macOS"]; then
             brew install boost
           fi
 
@@ -40,7 +40,7 @@ jobs:
       run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             cmake -Bbuild -H.
-          elif ["$RUNNER_OS" == "Mac"]; then
+          elif ["$RUNNER_OS" == "macOS"]; then
             cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
           fi
 

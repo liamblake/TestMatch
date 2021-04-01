@@ -26,6 +26,7 @@ jobs:
             sudo apt-get update && sudo apt-get install -yq libboost-all-dev
           elif ["$RUNNER_OS" == "Mac"]; then
             brew install boost
+          fi
 
     - name: Create build environment
       run: mkdir build

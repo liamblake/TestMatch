@@ -21,14 +21,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install Boost
+    - name: Install Boost (Linux)
       if: runner.os == 'Linux'
       run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
 
-    - name: Install Boost
+    - name: Install Boost (macOS)
       if: runner.os == 'macOS'
       run: brew install boost
-
 
 
     - name: Create build environment
@@ -37,13 +36,13 @@ jobs:
     - name: ls
       run: cd /usr/local/Cellar && ls
 
-    - name: Build
-      run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-            cmake -Bbuild -H.
-          elif ["$RUNNER_OS" == 'macOS']; then
-            cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
-          fi
+    - name: Build (Linux)
+      if: runner.os == 'Linux'
+      run: cmake -Bbuild -H.
+    
+    - name: Build (masOS)
+      if: runner.os == 'Linux'
+      run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
 
     - name: Make
       run: cmake --build build/ --target all

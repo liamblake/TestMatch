@@ -41,7 +41,7 @@ jobs:
       run: cmake -Bbuild -H.
     
     - name: Build (masOS)
-      if: runner.os == 'Linux'
+      if: runner.os == 'macOs'
       run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
 
     - name: Make

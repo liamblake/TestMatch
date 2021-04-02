@@ -1,12 +1,11 @@
 name: Generate & Deploy Documentation
 
 on:
-  pull_request:
-    branches: [master]
   push: 
     branches:
       - master 
       - develop-doxygen
+  workflow_dispatch:
 
 jobs:
   build:

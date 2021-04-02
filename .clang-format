@@ -1,7 +1,7 @@
 ---
 Language: Cpp
 BasedOnStyle: LLVM
+IndentWidth: 4
 PointerAlignment: Left
 AlwaysBreakTemplateDeclarations: Yes
-#EmptyLineBeforeAccessModifier: Always
-AccessModifierOffset: -1
+AccessModifierOffset: -2

@@ -3,8 +3,8 @@ project(testmatch_backend)
 include(CTest)
 include(GenerateExportHeader)
 
-# Ensure C++11 is used
-set(CMAKE_CXX_STANDARD 11)
+# Ensure C++20 is used
+set(CMAKE_CXX_STANDARD 20)
 
 # Build options
 option(BUILD_TESTS "Option to also compile testing executables" ON)

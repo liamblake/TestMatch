@@ -85,8 +85,8 @@ double Fatigue::VAR_PACE_FATIGUE = 1;
 double Fatigue::VAR_SPIN_FATIGUE = 0.1;
 
 // Uniform number generators
-std::random_device Fatigue::RD{};
-std::mt19937 Fatigue::GEN{RD()};
+// std::random_device Fatigue::RD{};
+// std::mt19937 Fatigue::GEN{RD()};
 
 Fatigue::Fatigue(int c_bowl_type) : value(0) {
 

@@ -20,6 +20,7 @@ TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
     if (dr < 0) {
         // Raise exception
     }
+    _hrs = (int)dr;
 
     _min = dr - _hrs;
     round();

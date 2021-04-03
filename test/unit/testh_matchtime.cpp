@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
     BOOST_TEST(t2.min() == 2);
     BOOST_TEST(t2.hrs() == 3);
 
-    TimeOfDay t3(59, 59, 23));
+    TimeOfDay t3(59, 59, 23);
     BOOST_TEST(t3.sec() == 23);
     BOOST_TEST(t3.min() == 59);
     BOOST_TEST(t3.hrs() == 59);

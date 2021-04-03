@@ -13,6 +13,7 @@ TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
 TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
     : _sec(sec), _min(min), _hrs(hrs) {
     // Round appropriately
+    round();
 }
 
 TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
@@ -21,6 +22,7 @@ TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
     }
 
     _min = dr - _hrs;
+    round();
 }
 
 std::string TimeOfDay::two_digits(int val) {
@@ -32,12 +34,23 @@ std::string TimeOfDay::two_digits(int val) {
     return output;
 }
 
+void TimeOfDay::round() {
+    _min += _sec / 60; // Make use of integer division here
+    _sec = _sec % 60;
+
+    _hrs += _min / 60;
+    _min = _min % 60;
+
+    _hrs = _hrs % 24;
+}
+
 // Explicit casts
 TimeOfDay::operator std::string() {
     return two_digits(_hrs) + ":" + two_digits(_min) + ":" + two_digits(_sec);
 }
 
 TimeOfDay::operator int() { return _hrs * 3600 + _min * 60 + _sec; }
+TimeOfDay::operator double() { return _hrs + 0.01 * _min; }
 
 // Getters
 uint TimeOfDay::sec() { return _sec; }
@@ -58,19 +71,24 @@ TimeOfDay TimeOfDay::operator++(int) {
     return old;
 }
 
-TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) { return *this; }
+TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) {
+    _sec += rhs._sec;
+    _min += rhs._min;
+    _hrs += rhs._hrs;
+    round();
+    return *this;
+}
 
 TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
-    return *this += TimeOfDay(rhs);
+    return *this += TimeOfDay(0.01 * rhs);
 }
 
 bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
     return ((lhs._hrs == rhs._hrs) && (lhs._min == rhs._min) &&
             (lhs._sec == rhs._sec));
 }
-bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs);
 
-TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs);
+TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs){};
 TimeOfDay operator+(TimeOfDay lhs, const int& rhs);
 
 /*

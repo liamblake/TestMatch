@@ -21,7 +21,7 @@ TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)std::floor(dr)) {
         // Raise exception
     }
 
-    _min = std::ceil(100 * (dr - _hrs));
+    _min = (uint)100 * (dr - _hrs) + 0.5;
     round();
 }
 

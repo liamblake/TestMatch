@@ -24,9 +24,9 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
     BOOST_TEST(t2.hrs() == 3);
 
     TimeOfDay t3(59, 59, 23);
-    BOOST_TEST(t3.sec() == 23);
+    BOOST_TEST(t3.sec() == 59);
     BOOST_TEST(t3.min() == 59);
-    BOOST_TEST(t3.hrs() == 59);
+    BOOST_TEST(t3.hrs() == 23);
 
     // Double constructor
     TimeOfDay t4(7.35);
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
     TimeOfDay t8(29.72);
     BOOST_TEST(t8.sec() == 0);
     BOOST_TEST(t8.min() == 12);
-    BOOST_TEST(t8.hrs() == 6);
+    BOOST_TEST(t8.hrs() == 5);
 }
 
 BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {

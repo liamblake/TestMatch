@@ -22,7 +22,7 @@ TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
     }
     _hrs = (int)dr;
 
-    _min = dr - _hrs;
+    _min = 100 * (dr - _hrs);
     round();
 }
 

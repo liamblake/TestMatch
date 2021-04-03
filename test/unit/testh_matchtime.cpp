@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
     TimeOfDay t8(29.72);
     BOOST_TEST(t8.sec() == 0);
     BOOST_TEST(t8.min() == 12);
-    BOOST_TEST(t8.hrs() == 5);
+    BOOST_TEST(t8.hrs() == 6);
 }
 
 BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {

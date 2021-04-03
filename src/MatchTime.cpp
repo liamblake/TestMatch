@@ -16,11 +16,10 @@ TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
     round();
 }
 
-TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)dr) {
+TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)std::floor(dr)) {
     if (dr < 0) {
         // Raise exception
     }
-    _hrs = (int)dr;
 
     _min = 100 * (dr - _hrs);
     round();

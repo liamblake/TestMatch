@@ -16,13 +16,11 @@ TimeOfDay::TimeOfDay(uint sec, uint min, uint hrs)
     round();
 }
 
-TimeOfDay::TimeOfDay(double dr) : _sec(0), _hrs((uint)std::floor(dr)) {
+TimeOfDay::TimeOfDay(double dr) {
     if (dr < 0) {
         // Raise exception
     }
-
-    _min = (uint)100 * (dr - _hrs) + 0.5;
-    round();
+    set(dr);
 }
 
 std::string TimeOfDay::two_digits(int val) {
@@ -57,7 +55,12 @@ uint TimeOfDay::sec() { return _sec; }
 uint TimeOfDay::min() { return _min; }
 uint TimeOfDay::hrs() { return _hrs; }
 
-// void TimeOfDay::set(double dr) {}
+void TimeOfDay::set(double dr) {
+    _sec = 0;
+    _hrs = ((uint)std::floor(dr));
+    _min = (uint)100 * (dr - _hrs) + 0.5;
+    round();
+}
 
 // Overloaded operators
 TimeOfDay& TimeOfDay::operator++() {

@@ -71,8 +71,8 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
 
     TimeOfDay t3(59, 58, 15);
     BOOST_TEST(std::string(t3) == "15:58:59");
-    BOOST_TEST(int(t3) == 18140);
-    BOOST_TEST(double(t3) == 5.02);
+    BOOST_TEST(int(t3) == 57539);
+    BOOST_TEST(double(t3) == 15.58);
 
     // Iterators
     BOOST_TEST(std::string(t1++) == "00:00:00");

@@ -57,7 +57,7 @@ uint TimeOfDay::sec() { return _sec; }
 uint TimeOfDay::min() { return _min; }
 uint TimeOfDay::hrs() { return _hrs; }
 
-void TimeOfDay::set(double dr) {}
+// void TimeOfDay::set(double dr) {}
 
 // Overloaded operators
 TimeOfDay& TimeOfDay::operator++() {
@@ -88,8 +88,13 @@ bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
             (lhs._sec == rhs._sec));
 }
 
-TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs){};
-TimeOfDay operator+(TimeOfDay lhs, const int& rhs);
+TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs) {
+    return TimeOfDay(lhs._sec + rhs._sec, lhs._min + rhs._min,
+                     lhs._hrs + rhs._hrs);
+};
+TimeOfDay operator+(TimeOfDay lhs, const int& rhs) {
+    return lhs + TimeOfDay(0.01 * rhs);
+};
 
 /*
     MatchTime implementations

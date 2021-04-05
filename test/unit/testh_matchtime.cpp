@@ -57,10 +57,48 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_constructors) {
 }
 
 BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
-    TimeOfDay t1;
 
     // Casts
-    // BOOST_TEST(std::string(t1) == "00:00:00");
+    TimeOfDay t1;
+    BOOST_TEST(std::string(t1) == "00:00:00");
+    BOOST_TEST(int(t1) == 0);
+    BOOST_TEST(double(t1) == 0.0);
+
+    TimeOfDay t2(20, 2, 5);
+    BOOST_TEST(std::string(t2) == "05:02:20");
+    BOOST_TEST(int(t2) == 18140);
+    BOOST_TEST(double(t2) == 5.02);
+
+    TimeOfDay t3(59, 58, 15);
+    BOOST_TEST(std::string(t3) == "15:58:59");
+    BOOST_TEST(int(t3) == 18140);
+    BOOST_TEST(double(t3) == 5.02);
+
+    // Iterators
+    BOOST_TEST(std::string(t1++) == "00:00:00");
+    BOOST_TEST(std::string(t1) == "00:00:01");
+    BOOST_TEST(std::string(++t1) == "00:00:02");
+    BOOST_TEST(std::string(t1) == "00:00:02");
+
+    BOOST_TEST(std::string(++t2) == "15:58:59");
+    BOOST_TEST(std::string(++t2) == "15:59:00");
+
+    // Addition
+    t3 += 5;
+    BOOST_TEST(std::string(t3) == "15:59:05");
+    t3 += 15;
+    BOOST_TEST(std::string(t3) == "15:59:20");
+    t3 += 40;
+    BOOST_TEST(std::string(t3) == "16:00:00");
+
+    BOOST_TEST(std::string(t1 + t2) == "05:02:22");
+    BOOST_TEST(std::string(t1 + 47) == "00:00:49");
+
+    // Equality
+    TimeOfDay t4(2, 0, 0);
+    TimeOfDay t5(20, 2, 5);
+    BOOST_CHECK(t1 == t4);
+    BOOST_CHECK(t5 == t2);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

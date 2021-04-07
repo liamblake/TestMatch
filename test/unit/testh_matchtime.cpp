@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
 
     // Equality
     TimeOfDay t4(2, 0, 0);
-    TimeOfDay t5(24, 2, 5);
+    TimeOfDay t5(22, 2, 5);
     BOOST_CHECK(t1 == t4);
     BOOST_CHECK(t5 == t2);
 }

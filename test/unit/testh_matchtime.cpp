@@ -98,12 +98,12 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
     t3 += 41;
     BOOST_TEST(std::string(t3) == "16:00:00");
 
-    BOOST_TEST(std::string(t1 + t2) == "05:02:22");
+    BOOST_TEST(std::string(t1 + t2) == "05:02:24");
     BOOST_TEST(std::string(t1 + 47) == "00:00:49");
 
     // Equality
     TimeOfDay t4(2, 0, 0);
-    TimeOfDay t5(20, 2, 5);
+    TimeOfDay t5(24, 2, 5);
     BOOST_CHECK(t1 == t4);
     BOOST_CHECK(t5 == t2);
 }

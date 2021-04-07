@@ -92,10 +92,10 @@ BOOST_AUTO_TEST_CASE(testclass_timeofday_operators) {
 
     // Addition
     t3 += 5;
-    BOOST_TEST(std::string(t3) == "15:59:05");
+    BOOST_TEST(std::string(t3) == "15:59:04");
     t3 += 15;
-    BOOST_TEST(std::string(t3) == "15:59:20");
-    t3 += 40;
+    BOOST_TEST(std::string(t3) == "15:59:19");
+    t3 += 41;
     BOOST_TEST(std::string(t3) == "16:00:00");
 
     BOOST_TEST(std::string(t1 + t2) == "05:02:22");

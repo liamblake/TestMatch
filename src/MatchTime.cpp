@@ -83,7 +83,9 @@ TimeOfDay& TimeOfDay::operator+=(const TimeOfDay& rhs) {
 }
 
 TimeOfDay& TimeOfDay::operator+=(const int& rhs) {
-    return (*this += TimeOfDay(0.01 * rhs));
+    _sec += rhs;
+    round();
+    return *this;
 }
 
 bool operator==(const TimeOfDay& lhs, const TimeOfDay& rhs) {
@@ -96,7 +98,7 @@ TimeOfDay operator+(TimeOfDay lhs, const TimeOfDay& rhs) {
                      lhs._hrs + rhs._hrs);
 };
 TimeOfDay operator+(TimeOfDay lhs, const int& rhs) {
-    return lhs + TimeOfDay(0.01 * rhs);
+    return TimeOfDay(lhs._sec + rhs, lhs._min, lhs._hrs);
 };
 
 /*

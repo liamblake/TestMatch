@@ -1,7 +1,7 @@
 # TestMatch
 
 ## Build Status
-[![Build & Unit Tests](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/build-and-test.yml)  [![Documentation Build](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/generate_docs.yml/badge.svg?branch=master)](https://github.com/LiamBlake/TestMatch-Backend/actions/workflows/generate_docs.yml)
+[![Code checks](https://github.com/LiamBlake/TestMatch/actions/workflows/checks.yml/badge.svg)](https://github.com/LiamBlake/TestMatch/actions/workflows/checks.yml) [![Documentation](https://github.com/LiamBlake/TestMatch/actions/workflows/deploy.yml/badge.svg)](https://github.com/LiamBlake/TestMatch/actions/workflows/deploy.yml)
 
 ## Code Quality
  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f6f55f2a99bf40ceb541b5351616e77c)](https://www.codacy.com/gh/LiamBlake/TestMatch/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LiamBlake/TestMatch&amp;utm_campaign=Badge_Grade) [![CodeFactor](https://www.codefactor.io/repository/github/liamblake/testmatch/badge)](https://www.codefactor.io/repository/github/liamblake/testmatch)
@@ -10,9 +10,3 @@ Class and function documentation available [here](https://liamblake.github.io/Te
 
 ## Introduction
 TestMatch is a cricket simulation library built in C++.
-
-## Usage with TestMatch-App
-Coming soon
-
-## Installation
-Coming Soon

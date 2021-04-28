@@ -8,10 +8,10 @@ Library Reference
 .. toctree::
    :maxdepth: 1
 
-   backend\structs
-   backend\trackers
-   backend\matchtime
-   backend\simulation
+   backend/structs
+   backend/trackers
+   backend/matchtime
+   backend/simulation
 
 
 Python Wrapper Reference

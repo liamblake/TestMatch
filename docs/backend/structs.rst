@@ -4,6 +4,6 @@ Structures
 Stats
 -----
 
-.. doxygenstruct:: Stats
+.. doxygenstruct:: Player::Stats
    :project: testmatch
    :members:

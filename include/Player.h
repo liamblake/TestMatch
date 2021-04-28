@@ -12,36 +12,64 @@
 #include <iostream>
 #include <string>
 
-#
-
 /**
- * @brief Storage for all career statistics of an individual player
+ * @brief Storage for all career statistics of an individual player.
  *
- * Self-explanatory, contains basic data types storing each relevant statistic.
- * See each declaration for a more detailed explanation. Set default values here
- *
+ * These statistics are used to create predicitions and simulate
+ * parts of the game.
  */
 struct Stats {
     // Batting statistics
-    int innings;    // Number of innings batted over career
-    double bat_avg; // Batting average (average runs per dismissal)
-    double bat_sr;  // Batting strike rate (average runs per 100 balls faced)
+    /**
+     * @brief The number of innings in which the player has batted over their
+     * career.
+     */
+    int innings;
+    /**
+     * @brief Career batting average of the player (average runs per dismissal).
+     */
+    double bat_avg;
+    /**
+     * @brief Career batting strike rate of the player (average runs per 100
+     * balls faced).
+     */
+    double bat_sr;
 
     // Bowling statistics
-    int balls_bowled = 0; // Number of balls bowled over career
-    double bowl_avg =
-        1000; // Bowling average (average runs conceded per wicket)
-    double bowl_sr =
-        1000; // Bowling strike rate (average balls bowled per wicket)
-    double bowl_econ =
-        4; // Bowling economy (average runs conceded per 6 balls bowled)
+    /**
+     * @brief The number of balls bowled by the player over their career.
+     */
+    int balls_bowled;
+    /**
+     * @brief Career bowling average of the player (average runs conceded
+     * per wicket).
+     */
+    double bowl_avg;
+    /**
+     * @brief Career bowling strike rate of the player (average balls bowled per
+     * wicket).
+     */
+    double bowl_sr;
+    /**
+     * @brief Career bowling economy of the player (average runs conceded per 6
+     * balls bowled).
+     */
+    double bowl_econ;
 
     // General descriptors
-    bool bat_hand; // Batting hand (false = right, true = left)
-    int bowl_type =
-        0; // Bowling type, encoded as integer, see Utility.h for encodings
+    /**
+     * @brief Batting hand of the player, as an enum with possible values right
+     * or left.
+     */
+    bool bat_hand;
+    /**
+     * @brief Bowling type of the player, as an enum.
+     */
+    int bowl_type = 0;
+    // TODO: Refactor this into two variables - one indicating the bowling arm
+    // and the other the type.
 
-    // Serialisation
+    // Serialisation methods
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& innings;

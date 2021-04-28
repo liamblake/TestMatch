@@ -8,6 +8,7 @@ Library Reference
 .. toctree::
    :maxdepth: 1
 
+   backend/enums
    backend/structs
    backend/trackers
    backend/matchtime

@@ -70,11 +70,6 @@ struct Stats {
     // and the other the type.
 
     // Serialisation methods
-    /**
-     * @brief Serialisation method for use with Boost::serialisation.
-     *
-     * There should be no need to use this function externally.
-     */
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& innings;

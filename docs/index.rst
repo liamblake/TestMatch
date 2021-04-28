@@ -1,5 +1,5 @@
 TestMatch 
-==========================================
+=========
 
 A C++ library for simulating test cricket, built using historical data and a machine learning and statistical approach to event prediction.
 

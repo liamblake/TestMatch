@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 project(testmatch_backend)
 include(CTest)
 include(GenerateExportHeader)
+
+# Ensure C++20 is used
+set(CMAKE_CXX_STANDARD 20)
 
 # Build options
 option(BUILD_TESTS "Option to also compile testing executables" ON)

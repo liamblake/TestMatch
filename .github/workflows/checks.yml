@@ -1,0 +1,62 @@
+# Runs all required checks of any code being committed to the main branch 
+name: code checks
+
+on:
+  pull_request: 
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+
+jobs:
+
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install Boost (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
+
+    - name: Install Boost (macOS)
+      if: runner.os == 'macOS'
+      run: brew install boost
+
+    - name: Create build environment
+      run: mkdir build
+
+    - name: Build (Linux)
+      if: runner.os == 'Linux'
+      run: cmake -Bbuild -H.
+    
+    - name: Build (masOS)
+      if: runner.os == 'macOs'
+      run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
+
+    - name: Make
+      run: cmake --build build/ --target all
+
+    - name: Run unit tests
+      run: cd build && ctest --verbose
+
+    - name: Run simulation demo
+      run: cd build/test && ./demo_test
+
+  linter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: DoozyX/clang-format-lint-action@v0.11
+      with:
+        source: 'src include'
+        extensions: 'h,cpp'
+        clangFormatVersion: 11
+        exclude: test/*

@@ -14,14 +14,15 @@ enum Arm { left, right };
  *
  */
 enum BowlType {
-    med,      /*!< Medium paced bowling. */
-    med_fast, /*!< Medium-fast paced bowling. */
-    fast_med, /*!< Fast-medium paced bowling. */
-    fast,     /*!< Fast paced bowling. */
+    med,      /*!< Medium paced bowling. String representation of "m". */
+    med_fast, /*!< Medium-fast paced bowling. String representation of "mf". */
+    fast_med, /*!< Fast-medium paced bowling. String representation of "fm". */
+    fast,     /*!< Fast paced bowling. String representation of "f". */
     offbreak, /*!< Offspin bowling. Note that this can refer to either right-arm
-                fingerspin or left-arm wristspin. */
+                fingerspin or left-arm wristspin. String representation of "ob".
+              */
     legbreak  /*!< Legspin bowling. Note that this can refer to either right-arm
-                wristspin or left-arm finger. */
+                wristspin or left-arm finger. String representation of "lb". */
 };
 
 /**
@@ -29,12 +30,13 @@ enum BowlType {
  *
  */
 enum DismType {
-    bowled,  /*!< Bowled. */
-    lbw,     /*!< Leg before wicket. */
-    caught,  /*!< Caught by fielder. */
-    c_and_b, /*!< Caught and bowled by bowler. */
-    run_out, /*!< Run out. */
-    stumped  /*!< Stumped by wicketkeeper. */
+    bowled,  /*!< Bowled. String representation of "b". */
+    lbw,     /*!< Leg before wicket. String representation of "lbw". */
+    caught,  /*!< Caught by fielder. String representation of "c". */
+    c_and_b, /*!< Caught and bowled by bowler. String representation of "c&b".
+              */
+    run_out, /*!< Run out. String representation of "ro". */
+    stumped  /*!< Stumped by wicketkeeper. String representation of "st". */
 };
 
 // Conversions to and from boolean and string representations

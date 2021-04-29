@@ -18,10 +18,10 @@ enum BowlType {
     med_fast, /*!< Medium-fast paced bowling. */
     fast_med, /*!< Fast-medium paced bowling. */
     fast,     /*!< Fast paced bowling. */
-    offspin,  /*!< Offspin bowling. Note that this can refer to either right-arm
-                 fingerspin or left-arm wristspin. */
-    legspin   /*!< Legspin bowling. Note that this can refer to either right-arm
-                 wristspin or left-arm finger. */
+    offbreak, /*!< Offspin bowling. Note that this can refer to either right-arm
+                fingerspin or left-arm wristspin. */
+    legbreak  /*!< Legspin bowling. Note that this can refer to either right-arm
+                wristspin or left-arm finger. */
 };
 
 /**
@@ -39,7 +39,11 @@ enum DismType {
 
 // Conversions to and from boolean and string representations
 std::string str(Arm arm);
+char chr(Arm arm);
+
 std::string str(BowlType bowltype);
-std::string str(DismType bowltype);
+std::string long_str(Arm arm, BowlType bowltype);
+
+std::string str(DismType dismtype);
 
 #endif // ENUMS_H

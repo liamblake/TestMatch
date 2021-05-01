@@ -3,10 +3,6 @@
    Contains all class implemetations
 */
 
-#include "cards.h"
-#include "helpers.h"
-#include "team.h"
-
 #include <cmath>
 #include <exception>
 #include <iomanip>
@@ -14,7 +10,10 @@
 #include <sstream>
 #include <string>
 
-using namespace std;
+#include "cards.h"
+#include "enums.h"
+#include "helpers.h"
+#include "team.h"
 
 /*
     Dimissial implementations
@@ -22,7 +21,7 @@ using namespace std;
 Dismissal::Dismissal(int c_mode, Player* c_bowler, Player* c_fielder) {
     // Ensure dismissial mode is valid
     if (unencode_dism(c_mode) == "-") {
-        throw invalid_argument(
+        throw std::invalid_argument(
             "c_mode must correspond to a valid dismissial. See encode_dism in "
             "Utility.h for a list of valid encodings.");
     }
@@ -88,7 +87,7 @@ double Fatigue::VAR_SPIN_FATIGUE = 0.1;
 std::random_device Fatigue::RD;
 std::mt19937 Fatigue::GEN{RD()};
 
-Fatigue::Fatigue(int c_bowl_type) : value(0) {
+Fatigue::Fatigue(BowlType c_bowl_type) : value(0) {
 
     // Set up sampling distribution
     double mean, var;
@@ -99,9 +98,8 @@ Fatigue::Fatigue(int c_bowl_type) : value(0) {
         mean = MEAN_PACE_FATIGUE;
         var = VAR_PACE_FATIGUE;
 
-        // additional fatigue penalty for "f" bowlers
-        if (unencode_bowltype(c_bowl_type) == "lf" ||
-            unencode_bowltype(c_bowl_type) == "rf") {
+        // additional fatigue penalty for out-and-out fast bowlers
+        if (str(c_bowl_type) == fast) {
             mean += EXTRA_PACE_PENALTY;
         }
     }
@@ -146,7 +144,7 @@ BatterCard::BatterCard(Player* c_player) : PlayerCard(c_player) {
 
     // Batting hand
     // false: right, true: left
-    stats.bat_hand = c_player->get_bat_hand();
+    stats.bat_arm = c_player->get_bat_hand();
 
     stats.runs = 0;
     stats.balls = 0;

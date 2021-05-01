@@ -14,7 +14,7 @@
 
 #include "cards.h"
 #include "models.h"
-#include "player.h"
+#include "team.h"
 //#include "MatchTime.h"
 
 // Forward declaration allows for referencing Innings object in managers

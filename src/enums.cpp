@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <string>
 
 #include "enums.h"
@@ -8,6 +9,9 @@ std::string str(Arm arm) {
             return "left";
         case right:
             return "right";
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined Arm value."));
     }
 }
 
@@ -17,6 +21,9 @@ char chr(Arm arm) {
             return 'l';
         case right:
             return 'r';
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined Arm value."));
     }
 }
 
@@ -34,6 +41,9 @@ std::string str(BowlType bowltype) {
             return "ob";
         case legbreak:
             return "lb";
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined BowlType value."));
     }
 }
 
@@ -52,15 +62,20 @@ std::string long_str(Arm arm, BowlType bowltype) {
             str_bt = "fast";
         case offbreak:
             if (arm == left)
-                str_bt == "wrist spin";
+                str_bt = "wrist spin";
             else
-                str_bt == "offspin";
+                str_bt = "offspin";
         case legbreak:
             if (arm == left)
-                str_bt == "orthodox";
+                str_bt = "orthodox";
             else
-                str_bt == "wrist spin";
+                str_bt = "wrist spin";
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined BowlType value."));
     }
+
+    return str_arm + " " + str_bt;
 }
 
 std::string str(DismType dismtype) {
@@ -77,5 +92,8 @@ std::string str(DismType dismtype) {
             return "ro";
         case stumped:
             return "st";
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined DismType value."));
     }
 }

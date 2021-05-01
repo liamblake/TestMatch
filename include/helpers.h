@@ -177,9 +177,13 @@ inline std::string ordinal(int num) {
 }
 
 /**
- * @brief
- * @param bowl_type
- * @return
+ * @brief Determine whether a given bowling type is "slow" (i.e. spin or medium
+ * pace)
+ * @param bowl_type The bowling type, encoding as the appropriate enum.
+ * @return A boolean indicating whether the bowling type is slow (true) or not
+ * (false).
+ *
+ * The passed bowling type is checked via a switch statement.
  */
 bool is_slow_bowler(BowlType bowl_type);
 

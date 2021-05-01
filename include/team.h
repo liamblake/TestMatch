@@ -12,6 +12,8 @@
 #include <iostream>
 #include <string>
 
+#include "enums.h"
+
 /**
  * @brief Storage for all career statistics of an individual player.
  *
@@ -58,18 +60,21 @@ struct Stats {
 
     // General descriptors
     /**
-     * @brief Batting hand of the player, as an enum with possible values right
-     * or left.
+     * @brief Batting hand of the player, as an enumeration with possible values
+     * right or left.
      */
-    bool bat_hand;
+    Arm bat_arm;
     /**
-     * @brief Bowling type of the player, as an enum.
+     * @brief Bowling arm of the player, as an enumeration with possible values
+     * right or left.
      */
-    int bowl_type = 0;
-    // TODO: Refactor this into two variables - one indicating the bowling arm
-    // and the other the type.
+    Arm bowl_arm;
+    /**
+     * @brief Bowling type of the player, as an enumeration.
+     */
+    Arm bowl_type;
 
-    // Serialisation methods
+    // Serialisation method
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
         ar& innings;
@@ -79,7 +84,8 @@ struct Stats {
         ar& bowl_avg;
         ar& bowl_sr;
         ar& bowl_econ;
-        ar& bat_hand;
+        ar& bat_arm;
+        ar& bowl_arm;
         ar& bowl_type;
     };
 };
@@ -98,35 +104,61 @@ bool operator==(const Stats& lhs, const Stats& rhs);
  */
 class Player {
   private:
-    // Names
-    std::string first_name; // First name of player, e.g. John
-    std::string last_name;  // Surname of player, e.g. Smith
-    std::string initials;   // Initials of first and middle names, e.g. for John
-                            // Doe Smith, store JD
+    /**
+     * @brief First name of player to display on scorecard, e.g. Ellyse
+     */
+    std::string first_name;
+    /**
+     * @brief Surname of player to display on scorecard, e.g. Perry
+     */
+    std::string last_name;
+    /**
+     * @brief Initials excluding display surname, e.g. for EA to display EA
+     * Perry on the scorecard.
+     */
+    std::string initials;
 
-    Stats player_stats; // Player career statistics
+    /**
+     * @brief Career statistics of the player.
+     */
+    Stats player_stats;
 
   public:
+    // Default constructor
     Player(){};
 
-    // Explicit constructor
+    /**
+     * @brief Construct a new Player object.
+     *
+     * @param c_first_name First name of the player, e.g. Steven.
+     * @param c_last_name Last name of the player, e.g. Smith.
+     * @param c_initials Initials of the player to display on the scorecard,
+     * e.g. SPD.
+     * @param stats Career statistics of the player.
+     */
     Player(std::string c_first_name, std::string c_last_name,
            std::string c_initials, Stats stats);
 
     // Default destructor
 
-    // Getters
+    /** @defgroup player_name_getters Getters for the name of a player.
+     * Methods for returning the player's name in various forms as a string.
+     * @{
+     */
     std::string get_initials() const;
     std::string get_last_name() const;
 
-    // Return full first, last name
     std::string get_full_name() const;
     std::string get_full_initials() const;
 
-    // Return Stats struct
-    Stats get_stats() const;
+    /** @} // end of player_name_getters */
 
-    // Specific getters for career statistics, stored in player_stats
+    /** @defgroup player_stats_getters Getters for the career statistics of a
+     * player Methods for returning the player's career statistics, which are
+     * stored inside the Player class as a Stats object.
+     * @{
+     */
+    Stats get_stats() const;
     int get_innings() const;
     double get_bat_avg() const;
     double get_bat_sr() const;
@@ -134,8 +166,10 @@ class Player {
     double get_bowl_avg() const;
     double get_bowl_sr() const;
     double get_bowl_econ() const;
-    bool get_bat_hand() const;
-    int get_bowl_type() const;
+    Arm get_bat_arm() const;
+    Arm get_bowl_arm() const;
+    BowlType get_bowl_type() const;
+    /** @} // end of player_stats_getters */
 
     // For dealing with cheating part-time bowlers
     void inflate_bowl_avg();
@@ -169,16 +203,17 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
  * @brief Storage for a playing XI of Player objects
  *
  * Stores 11 Player objects in order corresponding to a playing XI, and also
- * includes team name and indices corresponding to specialist roles in the team.
- * The XI is stored as a static array of 11 Player pointers, ordered by the
- * desired batting order (under standard conditions - see the functions
- * get_nightwatch,
- * - in Simulation.h for situations where this batting order is changed). The
- * team name is stored as a string, and the struct also includes 4 integers
- * storing indices pointing to the captain, wicketkeeper and the two opening
- * bowlers in the playing XI array.
+ * includes team name and indices corresponding to specialist roles in the
+ * team. The XI is stored as a static array of 11 Player pointers, ordered
+ * by the desired batting order (under standard conditions - see the
+ * functions get_nightwatch,
+ * - in Simulation.h for situations where this batting order is changed).
+ * The team name is stored as a string, and the struct also includes 4
+ * integers storing indices pointing to the captain, wicketkeeper and the
+ * two opening bowlers in the playing XI array.
  */
-// Need to fix data encapsulation - make things private and have getters/setters
+// Need to fix data encapsulation - make things private and have
+// getters/setters
 struct Team {
 
     std::string name;

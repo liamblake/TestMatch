@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include "enums.h"
+
 // For the sake of formatting, allow integers and strings to be added
 // std::string operator+() {};
 
@@ -179,10 +181,7 @@ inline std::string ordinal(int num) {
  * @param bowl_type
  * @return
  */
-inline bool is_slow_bowler(int bowl_type) {
-    std::string btype_str = unencode_bowltype(bowl_type);
-    return btype_str.find('f') == std::string::npos;
-}
+bool is_slow_bowler(BowlType bowl_type);
 
 /**
  * @brief Performs Box-Cox transform given power parameter

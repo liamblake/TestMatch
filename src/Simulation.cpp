@@ -7,12 +7,12 @@
 #include <string>
 #include <utility>
 
-#include "Cards.h"
-#include "MatchTime.h"
-#include "Model.h"
-#include "Player.h"
-#include "Simulation.h"
-#include "Utility.h"
+#include "cards.h"
+#include "helpers.h"
+#include "models.h"
+#include "simulation.h"
+#include "team.h"
+#include "time.h"
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;

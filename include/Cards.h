@@ -18,7 +18,7 @@
 
 #include <boost/serialization/base_object.hpp>
 
-#include "Player.h"
+#include "team.h"
 
 // Global Parameters
 const double PACE_MEAN_FATIGUE = 0.1;

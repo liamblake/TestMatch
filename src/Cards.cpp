@@ -3,9 +3,9 @@
    Contains all class implemetations
 */
 
-#include "Cards.h"
-#include "Player.h"
-#include "Utility.h"
+#include "cards.h"
+#include "helpers.h"
+#include "team.h"
 
 #include <cmath>
 #include <exception>

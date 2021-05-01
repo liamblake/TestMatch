@@ -14,8 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "Cards.h"
-#include "Player.h"
+#include "cards.h"
+#include "team.h"
 
 namespace Model {
 

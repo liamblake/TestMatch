@@ -13,9 +13,9 @@
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
-#include "Cards.h"
-#include "Player.h"
-#include "Simulation.h"
+#include "cards.h"
+#include "simulation.h"
+#include "team.h"
 
 /**
  *

@@ -12,9 +12,9 @@
 #include <utility>
 #include <vector>
 
-#include "Cards.h"
-#include "Model.h"
-#include "Player.h"
+#include "cards.h"
+#include "models.h"
+#include "player.h"
 //#include "MatchTime.h"
 
 // Forward declaration allows for referencing Innings object in managers

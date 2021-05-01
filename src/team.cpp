@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#include "Player.h"
-#include "Utility.h"
+#include "helpers.h"
+#include "team.h"
 
 using namespace std;
 

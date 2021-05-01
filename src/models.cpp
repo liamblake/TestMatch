@@ -9,11 +9,12 @@
  *
  */
 
-#include "Model.h"
-#include "Utility.h"
 #include <cmath>
 #include <string>
 #include <vector>
+
+#include "helpers.h"
+#include "models.h"
 
 namespace Model {
 

@@ -3,8 +3,8 @@ TestMatch
 
 A C++ library for simulating test cricket, built using historical data and a machine learning and statistical approach to event prediction.
 
-Library Reference
------------------
+Public Interface Reference
+--------------------------
 .. toctree::
    :maxdepth: 1
 
@@ -13,7 +13,10 @@ Library Reference
    backend/trackers
    backend/matchtime
    backend/simulation
+   backend/internal
 
+Full Library Reference
+----------------------
 
 Python Wrapper Reference
 ------------------------

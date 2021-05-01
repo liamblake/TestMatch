@@ -18,6 +18,7 @@
 
 #include <boost/serialization/base_object.hpp>
 
+#include "enums.h"
 #include "team.h"
 
 // Global Parameters
@@ -37,7 +38,7 @@ struct BatStats {
 
     // Batting hand
     // false: right, true: left
-    bool bat_hand;
+    bool bat_arm;
 
     // Current innings
     int runs;
@@ -50,7 +51,7 @@ struct BatStats {
     void serialize(Archive& ar, const unsigned int version) {
         ar& bat_avg;
         ar& strike_rate;
-        ar& bat_hand;
+        ar& bat_arm;
         ar& runs;
         ar& balls;
         ar& fours;
@@ -192,7 +193,7 @@ class Fatigue {
   public:
     // Constructor
     Fatigue(){};
-    Fatigue(int c_bowl_type);
+    Fatigue(BowlType c_bowl_type);
 
     // Getter
     double get_value();

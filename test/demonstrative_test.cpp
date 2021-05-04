@@ -11,14 +11,14 @@
  * ../src/Simulation.cpp demonstrative_test.cpp -I ../include
  */
 
-#include <ctime>
-#include <iostream>
-#include <string>
-
 #include "cards.h"
 #include "helpers.h"
 #include "simulation.h"
 #include "team.h"
+
+#include <ctime>
+#include <iostream>
+#include <string>
 
 using namespace std;
 

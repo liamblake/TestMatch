@@ -28,7 +28,7 @@ find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Add data to target
-add_library(TestMatch ${sources})
+add_library(TestMatch SHARED ${sources})
 #target_sources(TestMatch PUBLIC ${includes})
 target_include_directories(TestMatch PUBLIC include)
 target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR}})

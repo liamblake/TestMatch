@@ -2,7 +2,6 @@
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-
 #include <cmath>
 #include <exception>
 #include <iostream>
@@ -11,9 +10,9 @@
 
 #define private public // Illegal command :(
 
-#include "Simulation.h"
 #include "cards.h"
 #include "models.h"
+#include "simulation.h"
 #include "team.h"
 
 using namespace boost::unit_test;

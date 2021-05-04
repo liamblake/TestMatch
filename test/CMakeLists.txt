@@ -87,6 +87,9 @@ target_link_libraries(unit_tests PRIVATE
 #install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR}/test)
 
 add_boost_test(SOURCE unit/testh_cards.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_player.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_team.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_matchtime.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_simulation.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_helpers.cpp LINK TestMatch)
 #add_test(NAME unit COMMAND unit_tests)
 #enable_testing()

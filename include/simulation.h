@@ -7,15 +7,15 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include <functional>
-#include <string>
-#include <utility>
-#include <vector>
-
 #include "cards.h"
 #include "enums.h"
 #include "models.h"
 #include "team.h"
+
+#include <functional>
+#include <string>
+#include <utility>
+#include <vector>
 //#include "MatchTime.h"
 
 // Forward declaration allows for referencing Innings object in managers

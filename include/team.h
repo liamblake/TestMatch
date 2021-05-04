@@ -9,10 +9,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "enums.h"
+
 #include <iostream>
 #include <string>
-
-#include "enums.h"
 
 /**
  * @brief Storage for all career statistics of an individual player.

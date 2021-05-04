@@ -1,10 +1,11 @@
+#include "fileio.h"
+
+#include "helpers.h"
+#include "team.h"
+
 #include <fstream>
 #include <string>
 #include <utility>
-
-#include "fileio.h"
-#include "helpers.h"
-#include "team.h"
 
 // Player* csv2player(std::string line) {
 //         // Split string

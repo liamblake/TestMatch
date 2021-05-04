@@ -4,14 +4,14 @@
 #include <boost/test/unit_test.hpp>
 //#include <boost/mpl/list.hpp>
 
+#include "enums.h"
+#include "helpers.h"
+
 #include <exception>
 #include <iostream>
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "enums.h"
-#include "helpers.h"
 
 BOOST_AUTO_TEST_SUITE(test_header_utility)
 

@@ -3,13 +3,12 @@
 #ifndef CARDS_H
 #define CARDS_H
 
-#include <random>
-#include <string>
-
-#include <boost/serialization/base_object.hpp>
-
 #include "enums.h"
 #include "team.h"
+
+#include <boost/serialization/base_object.hpp>
+#include <random>
+#include <string>
 
 // Global Parameters
 const double PACE_MEAN_FATIGUE = 0.1;

@@ -1,12 +1,11 @@
 #define BOOST_TEST_DYN_LINK
 
+#include "matchtime.h"
+
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test.hpp>
 #include <iostream>
-
 #include <string>
-
-#include "matchtime.h"
 
 BOOST_AUTO_TEST_SUITE(test_header_matchtimetime)
 

@@ -1,3 +1,11 @@
+#include "simulation.h"
+
+#include "cards.h"
+#include "helpers.h"
+#include "matchtime.h"
+#include "models.h"
+#include "team.h"
+
 #include <cmath>
 #include <exception>
 #include <functional>
@@ -6,13 +14,6 @@
 #include <stdlib.h>
 #include <string>
 #include <utility>
-
-#include "cards.h"
-#include "helpers.h"
-#include "matchtime.h"
-#include "models.h"
-#include "simulation.h"
-#include "team.h"
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;

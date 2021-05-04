@@ -1,7 +1,7 @@
+#include "enums.h"
+
 #include <stdexcept>
 #include <string>
-
-#include "enums.h"
 
 std::string str(Arm arm) {
     switch (arm) {

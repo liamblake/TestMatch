@@ -17,14 +17,14 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include "enums.h"
+
 #include <cmath>
 #include <exception>
 #include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "enums.h"
 
 // For the sake of formatting, allow integers and strings to be added
 // std::string operator+() {};

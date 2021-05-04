@@ -1,12 +1,13 @@
+#include "matchtime.h"
+
+#include "helpers.h"
+
 #include <cmath>
 #include <exception>
 #include <iomanip>
 #include <iostream>
 #include <string>
 #include <utility>
-
-#include "helpers.h"
-#include "matchtime.h"
 
 TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
 

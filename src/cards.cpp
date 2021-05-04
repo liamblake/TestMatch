@@ -3,17 +3,18 @@
    Contains all class implemetations
 */
 
+#include "cards.h"
+
+#include "enums.h"
+#include "helpers.h"
+#include "team.h"
+
 #include <cmath>
 #include <exception>
 #include <iomanip>
 #include <random>
 #include <sstream>
 #include <string>
-
-#include "cards.h"
-#include "enums.h"
-#include "helpers.h"
-#include "team.h"
 
 /*
     Dimissial implementations

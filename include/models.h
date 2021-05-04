@@ -1,12 +1,12 @@
 #ifndef PREDICTION_H
 #define PREDICTION_H
 
-#include <string>
-#include <vector>
-
 #include "cards.h"
 #include "enums.h"
 #include "team.h"
+
+#include <string>
+#include <vector>
 
 namespace Model {
 

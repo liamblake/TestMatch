@@ -2,7 +2,6 @@
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-
 #include <exception>
 #include <iostream>
 #include <string>

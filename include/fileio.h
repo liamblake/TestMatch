@@ -7,15 +7,14 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include <fstream>
-#include <string>
-
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-
 #include "cards.h"
 #include "simulation.h"
 #include "team.h"
+
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <fstream>
+#include <string>
 
 /**
  *

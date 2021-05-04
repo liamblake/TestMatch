@@ -1,5 +1,6 @@
 
 #include "helpers.h"
+
 #include "enums.h"
 
 bool is_slow_bowler(BowlType bowl_type) {

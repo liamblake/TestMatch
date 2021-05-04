@@ -22,8 +22,8 @@ file(GLOB sources_unittests test/unit/*.cpp)
 file(GLOB sources_demo test/*.cpp)
 
 # Boost dependency
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_STATIC_RUNTIME OFF)
+#add_definitions( -DBOOST_ALL_NO_LIB )
+#add_definitions( -DBOOST_ALL_DYN_LINK )
 find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
@@ -36,14 +36,16 @@ target_link_libraries(TestMatch PUBLIC
   ${Boost_LIBRARIES}
 )
 
-
 # Generate macros for exporting functions 
 generate_export_header(TestMatch)
 target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
+
+install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
 	add_subdirectory(test)
+  enable_testing()
 endif()
 

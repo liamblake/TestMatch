@@ -18,31 +18,23 @@
 /*
     Dimissial implementations
 */
-Dismissal::Dismissal(int c_mode, Player* c_bowler, Player* c_fielder) {
-    // Ensure dismissial mode is valid
-    if (unencode_dism(c_mode) == "-") {
-        throw std::invalid_argument(
-            "c_mode must correspond to a valid dismissial. See encode_dism in "
-            "Utility.h for a list of valid encodings.");
-    }
-
+Dismissal::Dismissal(DismType c_mode, Player* c_bowler, Player* c_fielder) {
     mode = c_mode;
     bowler = nullptr;
     fielder = nullptr;
 
-    if (c_mode != encode_dism("ro")) {
+    if (c_mode != run_out) {
         bowler = c_bowler;
     }
 
-    if (c_mode == encode_dism("c") || c_mode == encode_dism("ro") ||
-        c_mode == encode_dism("st")) {
+    if (c_mode == caught || c_mode == run_out || c_mode == stumped) {
         fielder = c_fielder;
     }
 }
 
-string Dismissal::print_dism() {
+std::string Dismissal::print_dism() {
     // TODO: include options for different print formats
-    string output, bowl_name, field_name;
+    std::string output, bowl_name, field_name;
 
     if (bowler != nullptr) {
         bowl_name = bowler->get_last_name();
@@ -52,7 +44,7 @@ string Dismissal::print_dism() {
     }
 
     // Unencode mode of dismissal
-    string str_mode = unencode_dism(mode);
+    std::string str_mode = str(mode);
 
     if (str_mode == "b" || str_mode == "lbw") {
         output = str_mode + " " + bowl_name;
@@ -67,7 +59,7 @@ string Dismissal::print_dism() {
     return output;
 }
 
-int Dismissal::get_mode() { return mode; }
+DismType Dismissal::get_mode() { return mode; }
 
 Player* Dismissal::get_bowler() { return bowler; }
 
@@ -99,7 +91,7 @@ Fatigue::Fatigue(BowlType c_bowl_type) : value(0) {
         var = VAR_PACE_FATIGUE;
 
         // additional fatigue penalty for out-and-out fast bowlers
-        if (str(c_bowl_type) == fast) {
+        if (c_bowl_type == fast) {
             mean += EXTRA_PACE_PENALTY;
         }
     }
@@ -144,7 +136,7 @@ BatterCard::BatterCard(Player* c_player) : PlayerCard(c_player) {
 
     // Batting hand
     // false: right, true: left
-    stats.bat_arm = c_player->get_bat_hand();
+    stats.bat_arm = c_player->get_bat_arm();
 
     stats.runs = 0;
     stats.balls = 0;
@@ -167,7 +159,7 @@ void BatterCard::activate() {
     }
 }
 
-void BatterCard::update_score(string outcome) {
+void BatterCard::update_score(std::string outcome) {
 
     if (outcome == "W") {
         stats.balls++;
@@ -231,14 +223,14 @@ void BatterCard::update_score(string outcome) {
     // Do nothing on wides
 }
 
-void BatterCard::dismiss(int d_mode, Player* d_bowler, Player* d_fielder) {
+void BatterCard::dismiss(DismType d_mode, Player* d_bowler, Player* d_fielder) {
     // Construct Dismissal structure
     dism = new Dismissal(d_mode, d_bowler, d_fielder);
     out = true;
 }
 
-string BatterCard::print_card(void) {
-    string output = player->get_full_initials() + " ";
+std::string BatterCard::print_card(void) {
+    std::string output = player->get_full_initials() + " ";
 
     // Dismissal
     if (out) {
@@ -248,16 +240,16 @@ string BatterCard::print_card(void) {
     }
 
     // Stats
-    output += to_string(stats.runs) + " (" + to_string(stats.balls) + "b " +
-              to_string(stats.fours) + "x4 " + to_string(stats.sixes) +
-              "x6) SR: ";
+    output += std::to_string(stats.runs) + " (" + std::to_string(stats.balls) +
+              "b " + std::to_string(stats.fours) + "x4 " +
+              std::to_string(stats.sixes) + "x6) SR: ";
 
     if (stats.balls == 0) {
         output += "-";
     } else {
         double sr = 100 * stats.runs / (double)stats.balls;
-        stringstream ss;
-        ss << fixed << setprecision(2) << sr;
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(2) << sr;
         output += ss.str();
     }
 
@@ -358,25 +350,26 @@ void BowlerCard::over_rest() {
     tiredness.rest(0);
 }
 
-string BowlerCard::print_card(void) {
-    string output = player->get_full_initials() + " ";
+std::string BowlerCard::print_card(void) {
+    std::string output = player->get_full_initials() + " ";
 
-    output += to_string(stats.overs) + "." + to_string(stats.over_balls) + "-";
-    output += to_string(stats.maidens) + "-";
-    output += to_string(stats.runs) + "-";
-    output += to_string(stats.wickets);
+    output += std::to_string(stats.overs) + "." +
+              std::to_string(stats.over_balls) + "-";
+    output += std::to_string(stats.maidens) + "-";
+    output += std::to_string(stats.runs) + "-";
+    output += std::to_string(stats.wickets);
 
     return output;
 }
 
-string BowlerCard::print_spell(void) {
-    string output = player->get_full_initials() + " ";
+std::string BowlerCard::print_spell(void) {
+    std::string output = player->get_full_initials() + " ";
 
-    output +=
-        to_string(stats.spell_overs) + "." + to_string(stats.over_balls) + "-";
-    output += to_string(stats.spell_maidens) + "-";
-    output += to_string(stats.spell_runs) + "-";
-    output += to_string(stats.spell_wickets);
+    output += std::to_string(stats.spell_overs) + "." +
+              std::to_string(stats.over_balls) + "-";
+    output += std::to_string(stats.spell_maidens) + "-";
+    output += std::to_string(stats.spell_runs) + "-";
+    output += std::to_string(stats.spell_wickets);
 
     return output;
 }
@@ -398,7 +391,7 @@ void BowlerCard::add_ball() {
     }
 }
 
-void BowlerCard::update_score(string outcome) {
+void BowlerCard::update_score(std::string outcome) {
 
     stats.balls++;
     tiredness.ball_bowled();
@@ -589,19 +582,19 @@ std::string Extras::print() {
     std::vector<std::string> strings;
 
     if (byes > 0) {
-        strings.push_back("b " + to_string(byes));
+        strings.push_back("b " + std::to_string(byes));
     }
 
     if (legbyes > 0) {
-        strings.push_back("lb " + to_string(legbyes));
+        strings.push_back("lb " + std::to_string(legbyes));
     }
 
     if (noballs > 0) {
-        strings.push_back("nb " + to_string(noballs));
+        strings.push_back("nb " + std::to_string(noballs));
     }
 
     if (wides > 0) {
-        strings.push_back("w " + to_string(wides));
+        strings.push_back("w " + std::to_string(wides));
     }
 
     return join_str(strings, ", ");
@@ -610,9 +603,10 @@ std::string Extras::print() {
 int Extras::total() { return byes + legbyes + noballs + wides; }
 
 std::string FOW::print() {
-    std::string output = to_string(runs) + "-" + to_string(wkts) + " (" +
-                         batter->get_full_name() + ", " + to_string(overs) +
-                         "." + to_string(balls) + " ov)";
+    std::string output = std::to_string(runs) + "-" + std::to_string(wkts) +
+                         " (" + batter->get_full_name() + ", " +
+                         std::to_string(overs) + "." + std::to_string(balls) +
+                         " ov)";
 
     return output;
 }

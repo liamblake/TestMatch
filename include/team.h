@@ -72,7 +72,7 @@ struct Stats {
     /**
      * @brief Bowling type of the player, as an enumeration.
      */
-    Arm bowl_type;
+    BowlType bowl_type;
 
     // Serialisation method
     template <class Archive>

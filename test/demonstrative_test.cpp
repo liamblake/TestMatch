@@ -26,7 +26,7 @@ int main() {
 
     // Reseed RNG
     srand(time(NULL));
- 
+
     // Australia players
     Player a1("David", "Warner", "DA",
               {155, 48.94, 72.85, 342, 67.25, 85.5, 4.71, true, 5});

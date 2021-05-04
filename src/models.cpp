@@ -89,7 +89,7 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
     double* output = new double[NUM_DELIV_OUTCOMES];
 
     // PLACEHOLDER - data proportions, hard-coded model
-    if (unencode_bowltype(bowl.bowl_type).find('f') == std::string::npos) {
+    if (is_slow_bowler(bowl.bowl_type)) {
         output[0] = 0;
         output[1] = 0.700414129;
         output[2] = 0.878619915;
@@ -140,11 +140,11 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
     return output;
 }
 
-int MODEL_WICKET_TYPE(int bowltype) {
+int MODEL_WICKET_TYPE(BowlType bowltype) {
     // This desperately needs cleaning up
 
     // Unencode bowltype
-    std::string btype_str = unencode_bowltype(bowltype);
+    std::string btype_str = str(bowltype);
 
     std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
     double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
@@ -176,6 +176,6 @@ int MODEL_WICKET_TYPE(int bowltype) {
 
     delete[] DISM_MODE_DIST;
     delete[] DISM_MODES;
-    return encode_dism(dism_mode);
+    return bowled; // TODO: FIX THIS
 }
 } // namespace Model

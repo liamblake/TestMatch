@@ -9,10 +9,10 @@
 
 #include "cards.h"
 #include "helpers.h"
+#include "matchtime.h"
 #include "models.h"
 #include "simulation.h"
 #include "team.h"
-#include "time.h"
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;
@@ -184,11 +184,11 @@ void FieldingManager::set_cards(Player* c_plys[11]) {
         players[i] = c_plys[i];
 }
 
-Player* FieldingManager::select_catcher(Player* bowler, int dism_type) {
+Player* FieldingManager::select_catcher(Player* bowler, DismType dism_type) {
     Player** potential;
     int n;
 
-    std::string dism = unencode_dism(dism_type);
+    std::string dism = str(dism_type);
     // Dismissals not involving a fielder
     if (dism == "b" || dism == "lbw" || dism == "c&b")
         return nullptr;
@@ -345,9 +345,10 @@ void Innings::simulate_delivery() {
 
         // Pick a fielder
         Player* fielder =
-            man_field.select_catcher(bowl1->get_player_ptr(), dism);
+            man_field.select_catcher(bowl1->get_player_ptr(), bowled);
 
-        striker->dismiss(dism, bowl1->get_player_ptr(), fielder);
+        // TODO: Fix this
+        striker->dismiss(bowled, bowl1->get_player_ptr(), fielder);
 
         // Create a object for fall of wicket
         fow[wkts - 1] = {striker->get_player_ptr(), (unsigned int)wkts + 1,

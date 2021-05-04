@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "cards.h"
+#include "enums.h"
 #include "models.h"
 #include "team.h"
 //#include "MatchTime.h"
@@ -169,7 +170,7 @@ class FieldingManager {
      * default false
      * @return
      */
-    Player* select_catcher(Player* bowler, int dism_type);
+    Player* select_catcher(Player* bowler, DismType dism_type);
 };
 
 /**

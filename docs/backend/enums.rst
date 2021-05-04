@@ -13,6 +13,9 @@ Types
 .. doxygenenum:: DismType
    :project: testmatch
 
+.. doxygenenum:: ResultType
+   :project: testmatch
+
 
 Conversion Functions
 --------------------

@@ -14,3 +14,12 @@ Player
 .. doxygenclass:: Player
    :project: testmatch
    :members:
+
+
+
+MatchResult
+-----------
+
+.. doxygenstruct:: MatchResult
+   :project: testmatch
+   :members:

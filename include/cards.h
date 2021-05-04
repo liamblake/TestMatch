@@ -566,7 +566,44 @@ class Partnership {
     };
 };
 
-//~~~~~~~~~~~~~~ Match End Objects ~~~~~~~~~~~~~~//
+/**
+ * @brief Summarise the result of a match, including the winner and margin of
+ * victory if applicable.
+ *
+ */
+struct MatchResult {
+    /**
+     * @brief Result type, as a ResultType enumeration. Possible values are
+     * draw, win_chasing, win_bowling, win_innings and tie.
+     *
+     */
+    ResultType result;
+    /**
+     * @brief Pointer to the Team object corresponding to the winning team. The
+     * default value of nullptr should be set if a winner is not applicable
+     * (e.g. a tie or draw).
+     *
+     */
+    Team* winner = nullptr;
+    /**
+     * @brief The margin of victory, if relevant. When the bowling team has won,
+     * this is the number of runs the batting team were still trailing by upon
+     * being bowled out. If the batting team has won, this is the number of
+     * wickets remaining. The default value of -1 should be set if the margin is
+     * not applicable (e.g. a tie or draw).
+     *
+     */
+    int margin = -1;
+
+    /**
+     * @brief Format the result type, winner and margin of victory in a nice,
+     * printable string. For example, if India have won by 55 runs, the output
+     * would be "India won by 55 runs".
+     *
+     * @return std::string The formatted string.
+     */
+    std::string print();
+};
 
 /**
  * @brief

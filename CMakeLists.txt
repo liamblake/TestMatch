@@ -14,8 +14,8 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 # Sources
-set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp)
-set(includes include/cards.h include/fileio.h include/team.h include/models.h include/simulation.h include/helpers.h include/matchtime.h include/enums.cpp)
+set(sources src/Cards.cpp src/FileIO.cpp src/team.cpp src/models.cpp src/Simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp)
+set(includes include/Cards.h include/FileIO.h include/team.h include/models.h include/Simulation.h include/helpers.h include/matchtime.h include/enums.cpp)
 
 # Automatically add all tests
 file(GLOB sources_unittests test/unit/*.cpp)
@@ -28,7 +28,7 @@ find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Add data to target
-add_library(TestMatch SHARED ${sources})
+add_library(TestMatch ${sources})
 #target_sources(TestMatch PUBLIC ${includes})
 target_include_directories(TestMatch PUBLIC include)
 target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR}})

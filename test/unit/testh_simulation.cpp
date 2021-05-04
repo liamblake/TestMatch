@@ -1,7 +1,4 @@
 #define BOOST_TEST_DYN_LINK
-#define private                                                                \
-  public // This is a hack and immensely evil, but lets me test private methods
-         // easily
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -11,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <utility>
+
+#define private public // Illegal command :(
 
 #include "Simulation.h"
 #include "cards.h"

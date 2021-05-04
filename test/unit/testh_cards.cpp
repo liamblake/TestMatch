@@ -1,5 +1,4 @@
 #define BOOST_TEST_DYN_LINK
-#define private public // Illegal command :(
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -8,6 +7,8 @@
 #include <iostream>
 #include <string>
 #include <utility>
+
+#define private public // Illegal command :(
 
 #include "cards.h"
 #include "enums.h"

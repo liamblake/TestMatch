@@ -10,7 +10,8 @@
 #include <utility>
 #include <vector>
 
-#include "Utility.h"
+#include "enums.h"
+#include "helpers.h"
 
 BOOST_AUTO_TEST_SUITE(test_header_utility)
 
@@ -79,13 +80,11 @@ BOOST_AUTO_TEST_CASE(testfunc_balls_to_ov) {
 }
 
 BOOST_AUTO_TEST_CASE(testfunc_is_slow_bowler) {
-    std::string types[12] = {"rm", "rmf", "rfm", "rf", "ob",  "lb",
-                             "lm", "lmf", "lfm", "lf", "slo", "slu"};
-    bool expected[12] = {true, false, false, false, true, true,
-                         true, false, false, false, true, true};
+    BowlType types[6] = {med, med_fast, fast_med, fast, offbreak, legbreak};
+    bool expected[6] = {true, false, false, false, true, true};
 
-    for (int i = 0; i < 12; i++) {
-        BOOST_TEST(is_slow_bowler(encode_bowltype(types[i])) == expected[i]);
+    for (int i = 0; i < 6; i++) {
+        BOOST_TEST(is_slow_bowler(types[i]) == expected[i]);
     }
 }
 

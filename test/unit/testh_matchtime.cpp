@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "MatchTime.h"
+#include "matchtime.h"
 
 BOOST_AUTO_TEST_SUITE(test_header_matchtimetime)
 

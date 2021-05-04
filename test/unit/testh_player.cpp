@@ -2,12 +2,12 @@
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-//#include <boost/mpl/list.hpp>
 
 #include <string>
 
-#include "FileIO.h"
-#include "Player.h"
+#include "enums.h"
+#include "fileio.h"
+#include "team.h"
 #include "test_helpers.h"
 
 using namespace boost::unit_test;
@@ -16,8 +16,9 @@ BOOST_AUTO_TEST_SUITE(test_header_player)
 
 BOOST_AUTO_TEST_CASE(testclass_player) {
 
-    Player tp_bat("Marnus", "Labuschagne", "M",
-                  {23, 63.43, 56.52, 756, 38.66, 63.0, 3.68, false, 5});
+    Player tp_bat(
+        "Marnus", "Labuschagne", "M",
+        {23, 63.43, 56.52, 756, 38.66, 63.0, 3.68, right, right, legbreak});
 
     BOOST_TEST(tp_bat.get_initials() == "M");
     BOOST_TEST(tp_bat.get_full_initials() == "M Labuschagne");
@@ -33,8 +34,9 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
     BOOST_TEST(tp_bat.get_bowl_sr() == 63.0);
     BOOST_TEST(tp_bat.get_bowl_econ() == 3.68);
 
-    BOOST_TEST(tp_bat.get_bat_hand() == false);
-    BOOST_TEST(tp_bat.get_bowl_type() == 5);
+    BOOST_TEST(tp_bat.get_bat_arm() == right);
+    BOOST_TEST(tp_bat.get_bowl_arm() == right);
+    BOOST_TEST(tp_bat.get_bowl_type() == legbreak);
 
     // Test serialisation
     test_serialisation<Player>(&tp_bat, "testfile_serial_player.tmpy");

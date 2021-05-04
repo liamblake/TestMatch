@@ -32,22 +32,19 @@ jobs:
     - name: Create build environment
       run: mkdir build
 
-    - name: Build (Linux)
+    - name: Create makefiles (Linux)
       if: runner.os == 'Linux'
       run: cmake -Bbuild -H.
     
-    - name: Build (masOS)
+    - name: Create makefiles (masOS)
       if: runner.os == 'macOs'
       run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
 
-    - name: Make
+    - name: Build
       run: cmake --build build/ --target all
 
     - name: Run unit tests
       run: cd build && ctest --verbose
-
-    - name: Run simulation demo
-      run: cd build/test && ./demo_test
 
   linter:
     runs-on: ubuntu-latest

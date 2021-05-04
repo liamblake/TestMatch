@@ -9,7 +9,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "enums.h"
+#include "enums.hpp"
 
 #include <iostream>
 #include <string>
@@ -207,7 +207,7 @@ Player** sort_array(Player** list, int len, T (Player::*sort_val)() const);
  * team. The XI is stored as a static array of 11 Player pointers, ordered
  * by the desired batting order (under standard conditions - see the
  * functions get_nightwatch,
- * - in Simulation.h for situations where this batting order is changed).
+ * - in simulation.hpp for situations where this batting order is changed).
  * The team name is stored as a string, and the struct also includes 4
  * integers storing indices pointing to the captain, wicketkeeper and the
  * two opening bowlers in the playing XI array.

@@ -20,6 +20,6 @@ Player
 MatchResult
 -----------
 
-.. doxygenstruct:: MatchResult
+.. doxygenclass:: MatchResult
    :project: testmatch
    :members:

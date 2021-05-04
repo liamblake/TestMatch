@@ -1,6 +1,6 @@
-#include "team.h"
+#include "team.hpp"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 #include <iostream>
 #include <string>

@@ -3,11 +3,11 @@
    Contains all class implemetations
 */
 
-#include "cards.h"
+#include "cards.hpp"
 
-#include "enums.h"
-#include "helpers.h"
-#include "team.h"
+#include "enums.hpp"
+#include "helpers.hpp"
+#include "team.hpp"
 
 #include <cmath>
 #include <exception>
@@ -647,38 +647,43 @@ void Partnership::add_runs(unsigned int n_runs, bool scorer, bool add_ball) {
 
 void Partnership::end() { not_out = false; }
 
-EndMatch::EndMatch(Team* c_winner, int c_margin)
-    : winner(c_winner), margin(c_margin) {}
+/*=======*/
 
-EndInningsWin::EndInningsWin(Team* c_winner, int c_runs)
-    : EndMatch(c_winner, c_runs) {}
-
-std::string EndInningsWin::print() {
-    return winner->name + " won by an innings and " + std::to_string(margin) +
-           " runs";
+MatchResult::MatchResult(ResultType c_type, Team* c_winner,
+                         unsigned int c_margin)
+    : type(c_type), winner(c_winner), margin(c_margin) {
+    // Ensure that no winner or margin is set for a draw or tie
+    if (type == draw || type == tie) {
+        winner = nullptr;
+        margin = 0;
+    }
 }
 
-EndBowlWin::EndBowlWin(Team* c_winner, int c_runs)
-    : EndMatch(c_winner, c_runs) {}
+ResultType MatchResult::get_type() { return type; }
 
-std::string EndBowlWin::print() {
-    return winner->name + " won by " + std::to_string(margin) + " runs";
+Team* MatchResult::get_winner() { return winner; }
+
+unsigned int MatchResult::get_margin() { return margin; }
+
+std::string MatchResult::print() {
+    switch (type) {
+        case draw:
+            return "Match Drawn";
+        case win_chasing:
+            return winner->name + "won by " + std::to_string(margin) +
+                   " wickets";
+        case win_bowling:
+            return winner->name + "won by " + std::to_string(margin) + " runs";
+        case win_innings:
+            return winner->name + "won by an innings and " +
+                   std::to_string(margin) + " runs";
+        case tie:
+            return "Match tied";
+        default:
+            // Raise exception - unknown value for type
+            throw(std::invalid_argument("Undefined ResultType value."));
+    }
 }
-
-EndChaseWin::EndChaseWin(Team* c_winner, int c_wkts)
-    : EndMatch(c_winner, c_wkts) {}
-
-std::string EndChaseWin::print() {
-    return winner->name + " won by " + std::to_string(margin) + " wickets";
-}
-
-EndDraw::EndDraw() : EndMatch(nullptr, 0) {}
-
-std::string EndDraw::print() { return "Match Drawn"; }
-
-EndTie::EndTie() {}
-
-std::string EndTie::print() { return "Match Tied"; }
 
 /* Milestone implementation */
 // Contructor

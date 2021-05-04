@@ -1,10 +1,10 @@
-#include "simulation.h"
+#include "simulation.hpp"
 
-#include "cards.h"
-#include "helpers.h"
+#include "cards.hpp"
+#include "helpers.hpp"
 #include "matchtime.h"
-#include "models.h"
-#include "team.h"
+#include "models.hpp"
+#include "team.hpp"
 
 #include <cmath>
 #include <exception>

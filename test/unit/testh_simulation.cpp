@@ -11,10 +11,10 @@
 
 #define private public // Illegal command :(
 
-#include "cards.h"
-#include "models.h"
-#include "simulation.h"
-#include "team.h"
+#include "cards.hpp"
+#include "models.hpp"
+#include "simulation.hpp"
+#include "team.hpp"
 
 using namespace boost::unit_test;
 

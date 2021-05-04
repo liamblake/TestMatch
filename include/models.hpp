@@ -1,9 +1,9 @@
 #ifndef PREDICTION_H
 #define PREDICTION_H
 
-#include "cards.h"
-#include "enums.h"
-#include "team.h"
+#include "cards.hpp"
+#include "enums.hpp"
+#include "team.hpp"
 
 #include <string>
 #include <vector>

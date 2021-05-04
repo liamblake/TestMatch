@@ -10,10 +10,10 @@
 
 #define private public // Illegal command :(
 
-#include "cards.h"
-#include "enums.h"
-#include "fileio.h"
-#include "team.h"
+#include "cards.hpp"
+#include "enums.hpp"
+#include "fileio.hpp"
+#include "team.hpp"
 #include "testtools.h"
 
 using namespace boost::unit_test;

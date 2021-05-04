@@ -9,9 +9,9 @@
  *
  */
 
-#include "models.h"
+#include "models.hpp"
 
-#include "helpers.h"
+#include "helpers.hpp"
 
 #include <cmath>
 #include <string>

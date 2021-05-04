@@ -1,5 +1,5 @@
 // -*- lsst-c++ -*-
-/* FileIO.h
+/* fileio.hpp
  *
  *
  */
@@ -7,9 +7,9 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include "cards.h"
-#include "simulation.h"
-#include "team.h"
+#include "cards.hpp"
+#include "simulation.hpp"
+#include "team.hpp"
 
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>

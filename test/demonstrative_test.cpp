@@ -11,10 +11,10 @@
  * ../src/Simulation.cpp demonstrative_test.cpp -I ../include
  */
 
-#include "cards.h"
-#include "helpers.h"
-#include "simulation.h"
-#include "team.h"
+#include "cards.hpp"
+#include "helpers.hpp"
+#include "simulation.hpp"
+#include "team.hpp"
 
 #include <ctime>
 #include <iostream>

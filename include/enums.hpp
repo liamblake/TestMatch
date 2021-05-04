@@ -41,20 +41,21 @@ enum DismType {
 
 /**
  * @brief Represents the possible results of a match. Note that string
- * representations of this enumeration are handled by the MatchResult object.
+ * representations of this enumeration are handled by the MatchResult
+ * object.
  *
  */
 enum ResultType {
     draw,        /*!< Drawn match. */
-    win_chasing, /*!< Win by batting team in fourth innings, i.e. the batting
-                    team have successfully reached the target. */
+    win_chasing, /*!< Win by batting team in fourth innings, i.e. the
+                    batting team have successfully reached the target. */
     win_bowling, /*!< Win by bowling team in the fourth innings, i.e. the
                     batting team have been bowled out before reaching the
                     target. */
-    win_innings, /*!< Win by an innings, i.e. the batting team have been bowled
-                    out in the third innings while still trailing. */
-    tie /*!< Tied match, i.e. the batting team has been bowled out in the fourth
-           innings with the scores level. */
+    win_innings, /*!< Win by an innings, i.e. the batting team have been
+                    bowled out in the third innings while still trailing. */
+    tie /*!< Tied match, i.e. the batting team has been bowled out in the
+           fourth innings with the scores level. */
 };
 
 // Conversions to and from boolean and string representations

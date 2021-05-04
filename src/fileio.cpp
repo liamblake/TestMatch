@@ -1,7 +1,7 @@
-#include "fileio.h"
+#include "fileio.hpp"
 
-#include "helpers.h"
-#include "team.h"
+#include "helpers.hpp"
+#include "team.hpp"
 
 #include <fstream>
 #include <string>

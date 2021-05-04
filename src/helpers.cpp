@@ -1,7 +1,7 @@
 
-#include "helpers.h"
+#include "helpers.hpp"
 
-#include "enums.h"
+#include "enums.hpp"
 
 bool is_slow_bowler(BowlType bowl_type) {
     switch (bowl_type) {

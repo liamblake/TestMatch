@@ -1,4 +1,4 @@
-#include "enums.h"
+#include "enums.hpp"
 
 #include <stdexcept>
 #include <string>

@@ -1,5 +1,5 @@
 // -*- lsst-c++ -*-
-/* Simulation.h
+/* simulation.hpp
  *
  *
  */
@@ -7,10 +7,10 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include "cards.h"
-#include "enums.h"
-#include "models.h"
-#include "team.h"
+#include "cards.hpp"
+#include "enums.hpp"
+#include "models.hpp"
+#include "team.hpp"
 
 #include <functional>
 #include <string>

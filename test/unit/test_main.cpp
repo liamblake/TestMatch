@@ -3,4 +3,4 @@
 
 #include <boost/test/unit_test.hpp>
 
-//#endif
+// Entry point for unit tests.

@@ -5,8 +5,8 @@
 #include <string>
 #include <utility>
 
-#include "MatchTime.h"
-#include "Utility.h"
+#include "helpers.h"
+#include "matchtime.h"
 
 TimeOfDay::TimeOfDay() : _sec(0), _min(0), _hrs(0) {}
 

@@ -2,9 +2,9 @@
 #include <string>
 #include <utility>
 
-#include "FileIO.h"
-#include "Player.h"
-#include "Utility.h"
+#include "fileio.h"
+#include "helpers.h"
+#include "team.h"
 
 // Player* csv2player(std::string line) {
 //         // Split string

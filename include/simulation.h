@@ -12,9 +12,10 @@
 #include <utility>
 #include <vector>
 
-#include "Cards.h"
-#include "Model.h"
-#include "Player.h"
+#include "cards.h"
+#include "enums.h"
+#include "models.h"
+#include "team.h"
 //#include "MatchTime.h"
 
 // Forward declaration allows for referencing Innings object in managers
@@ -169,7 +170,7 @@ class FieldingManager {
      * default false
      * @return
      */
-    Player* select_catcher(Player* bowler, int dism_type);
+    Player* select_catcher(Player* bowler, DismType dism_type);
 };
 
 /**

@@ -1,28 +1,19 @@
-/**
- * @file Model.h
- * @author Liam Blake
- * @brief Interface for prediction models as implemented in the library.
- * @version 0.1
- * @date 2021-03-23
- *
- * @copyright Copyright (c) 2021
- *
- */
 #ifndef PREDICTION_H
 #define PREDICTION_H
 
 #include <string>
 #include <vector>
 
-#include "Cards.h"
-#include "Player.h"
+#include "cards.h"
+#include "enums.h"
+#include "team.h"
 
 namespace Model {
 
 extern int NUM_DELIV_OUTCOMES;
 extern std::vector<std::string> DELIV_OUTCOMES;
 extern int NUM_DISM_MODES;
-extern std::vector<std::string> DISM_MODES_STATIC;
+extern std::vector<DismType> DISM_MODES_STATIC;
 
 /**
  * @brief Determine the probability of electing to bat at the toss
@@ -48,7 +39,7 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl);
  * @param bowltype
  * @return int
  */
-int MODEL_WICKET_TYPE(int bowltype);
+DismType MODEL_WICKET_TYPE(BowlType bowltype);
 
 /**
  * @brief Evaluates the "value" in bringing a bowler into the attack, based on

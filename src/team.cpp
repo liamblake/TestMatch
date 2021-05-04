@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#include "Player.h"
-#include "Utility.h"
+#include "helpers.h"
+#include "team.h"
 
 using namespace std;
 
@@ -12,8 +12,8 @@ bool operator==(const Stats& lhs, const Stats& rhs) {
            (lhs.bat_sr == rhs.bat_sr) &&
            (lhs.balls_bowled == rhs.balls_bowled) &&
            (lhs.bowl_avg == rhs.bowl_avg) && (lhs.bowl_sr == rhs.bowl_sr) &&
-           (lhs.bowl_econ == rhs.bowl_econ) && (lhs.bat_hand == rhs.bat_hand) &&
-           (lhs.bowl_type == rhs.bowl_type);
+           (lhs.bowl_econ == rhs.bowl_econ) && (lhs.bat_arm == rhs.bat_arm) &&
+           (lhs.bowl_arm == rhs.bowl_arm) && (lhs.bowl_type == rhs.bowl_type);
 }
 
 Player::Player(string c_first_name, string c_last_name, string c_initials,
@@ -55,9 +55,11 @@ double Player::get_bowl_sr() const { return player_stats.bowl_sr; }
 
 double Player::get_bowl_econ() const { return player_stats.bowl_econ; }
 
-bool Player::get_bat_hand() const { return player_stats.bat_hand; }
+Arm Player::get_bat_arm() const { return player_stats.bat_arm; }
 
-int Player::get_bowl_type() const { return player_stats.bowl_type; }
+Arm Player::get_bowl_arm() const { return player_stats.bowl_arm; }
+
+BowlType Player::get_bowl_type() const { return player_stats.bowl_type; }
 
 void Player::inflate_bowl_avg() {
     const double INFLATION_FACTOR = 3;

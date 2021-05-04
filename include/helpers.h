@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include "enums.h"
+
 // For the sake of formatting, allow integers and strings to be added
 // std::string operator+() {};
 
@@ -106,143 +108,6 @@ inline std::string join_str(std::vector<std::string> str_comp,
     return output.substr(0, output.size() - join.size());
 }
 
-// Encodes bowling type as corresponding integer
-// 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf, 10:
-// slo, 11: slu
-inline int encode_bowltype(std::string bowltype) {
-    int output = -1;
-
-    if (bowltype == "rm") {
-        output = 0;
-    } else if (bowltype == "rmf") {
-        output = 1;
-    } else if (bowltype == "rfm") {
-        output = 2;
-    } else if (bowltype == "rf") {
-        output = 3;
-    } else if (bowltype == "ob") {
-        output = 4;
-    } else if (bowltype == "lb") {
-        output = 5;
-    } else if (bowltype == "lm") {
-        output = 6;
-    } else if (bowltype == "lmf") {
-        output = 7;
-    } else if (bowltype == "lfm") {
-        output = 8;
-    } else if (bowltype == "lf") {
-        output = 9;
-    } else if (bowltype == "slo") {
-        output = 10;
-    } else if (bowltype == "slu") {
-        output = 11;
-    }
-
-    return output;
-}
-
-// Unencodes bowling type from integer to string
-inline std::string unencode_bowltype(int encoding) {
-    std::string output;
-
-    switch (encoding) {
-    case 0:
-        output = "rm";
-        break;
-    case 1:
-        output = "rmf";
-        break;
-    case 2:
-        output = "rfm";
-        break;
-    case 3:
-        output = "rf";
-        break;
-    case 4:
-        output = "ob";
-        break;
-    case 5:
-        output = "lb";
-        break;
-    case 6:
-        output = "lm";
-        break;
-    case 7:
-        output = "lmf";
-        break;
-    case 8:
-        output = "lfm";
-        break;
-    case 9:
-        output = "lf";
-        break;
-    case 10:
-        output = "slo";
-        break;
-    case 11:
-        output = "slu";
-        break;
-    default:
-        output = "-";
-    }
-
-    return output;
-}
-
-// Encodes mode of dismissal as corresponding integer
-// 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
-inline int encode_dism(std::string mode) {
-    int output = -1;
-
-    if (mode == "b") {
-        output = 0;
-    } else if (mode == "lbw") {
-        output = 1;
-    } else if (mode == "c") {
-        output = 2;
-    } else if (mode == "c&b") {
-        output = 3;
-    } else if (mode == "ro") {
-        output = 4;
-    } else if (mode == "st") {
-        output = 5;
-    }
-
-    return output;
-}
-
-// Unencodes mode of dismissal from integer to string
-// 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
-inline std::string unencode_dism(int encoding) {
-    std::string output;
-
-    switch (encoding) {
-    case 0:
-        output = "b";
-        break;
-    case 1:
-        output = "lbw";
-        break;
-    case 2:
-        output = "c";
-        break;
-    case 3:
-        output = "c&b";
-        break;
-    case 4:
-        output = "ro";
-        break;
-    case 5:
-        output = "st";
-        break;
-    default:
-        output = "-";
-        break;
-    }
-
-    return output;
-}
-
 template <typename T>
 T sample_cdf(T* values, int length, double* dist) {
 
@@ -312,14 +177,15 @@ inline std::string ordinal(int num) {
 }
 
 /**
- * @brief
- * @param bowl_type
- * @return
+ * @brief Determine whether a given bowling type is "slow" (i.e. spin or medium
+ * pace)
+ * @param bowl_type The bowling type, encoding as the appropriate enum.
+ * @return A boolean indicating whether the bowling type is slow (true) or not
+ * (false).
+ *
+ * The passed bowling type is checked via a switch statement.
  */
-inline bool is_slow_bowler(int bowl_type) {
-    std::string btype_str = unencode_bowltype(bowl_type);
-    return btype_str.find('f') == std::string::npos;
-}
+bool is_slow_bowler(BowlType bowl_type);
 
 /**
  * @brief Performs Box-Cox transform given power parameter

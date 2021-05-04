@@ -1,14 +1,4 @@
 // -*- lsst-c++ -*-
-/**
- * @file Cards.h
- * @author L. Blake
- * @brief
- * @version 0.1
- * @date 2021-03-28
- *
- * @copyright Copyright (c) 2021
- *
- */
 
 #ifndef CARDS_H
 #define CARDS_H
@@ -18,7 +8,8 @@
 
 #include <boost/serialization/base_object.hpp>
 
-#include "Player.h"
+#include "enums.h"
+#include "team.h"
 
 // Global Parameters
 const double PACE_MEAN_FATIGUE = 0.1;
@@ -36,8 +27,7 @@ struct BatStats {
     double strike_rate;
 
     // Batting hand
-    // false: right, true: left
-    bool bat_hand;
+    Arm bat_arm;
 
     // Current innings
     int runs;
@@ -50,7 +40,7 @@ struct BatStats {
     void serialize(Archive& ar, const unsigned int version) {
         ar& bat_avg;
         ar& strike_rate;
-        ar& bat_hand;
+        ar& bat_arm;
         ar& runs;
         ar& balls;
         ar& fours;
@@ -69,9 +59,8 @@ struct BowlStats {
     double strike_rate;
 
     // Bowling type
-    // 0: rm, 1: rmf, 2:rfm, 3:rf, 4: ob, 5: lb, 6: lm, 7: lmf, 8: lfm, 9: lf,
-    // 10: slo, 11: slu
-    int bowl_type;
+    Arm bowl_arm;
+    BowlType bowl_type;
 
     // Current innings
     int balls;
@@ -114,9 +103,7 @@ struct BowlStats {
  */
 class Dismissal {
   private:
-    // Mode of dismissal:
-    // 0: bowled, 1: lbw, 2: caught, 3: run out, 4: stumped
-    int mode;
+    DismType mode;
     Player* bowler;
     Player* fielder;
 
@@ -131,7 +118,7 @@ class Dismissal {
      * @param c_bowler
      * @param c_fielder
      */
-    Dismissal(int c_mode, Player* c_bowler = nullptr,
+    Dismissal(DismType c_mode, Player* c_bowler = nullptr,
               Player* c_fielder = nullptr);
 
     /**
@@ -144,7 +131,7 @@ class Dismissal {
      * @brief
      * @return
      */
-    int get_mode();
+    DismType get_mode();
 
     /**
      * @brief
@@ -161,7 +148,6 @@ class Dismissal {
     // Serialisation methods
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        ar& mode;
         ar& mode;
         ar& bowler;
         ar& fielder;
@@ -192,7 +178,7 @@ class Fatigue {
   public:
     // Constructor
     Fatigue(){};
-    Fatigue(int c_bowl_type);
+    Fatigue(BowlType c_bowl_type);
 
     // Getter
     double get_value();
@@ -267,7 +253,7 @@ class BatterCard : public PlayerCard {
 
     void activate(void);
     void update_score(std::string outcome); //, float mins);
-    void dismiss(int d_mode, Player* d_bowler = nullptr,
+    void dismiss(DismType d_mode, Player* d_bowler = nullptr,
                  Player* d_fielder = nullptr);
     std::string print_card(void);
     std::string print_short(void);

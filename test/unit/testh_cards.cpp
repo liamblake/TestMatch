@@ -2,17 +2,18 @@
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-//#include <boost/mpl/list.hpp>
 
 #include <exception>
 #include <iostream>
 #include <string>
 #include <utility>
 
-#define private public // argh
-#include "Cards.h"
-#include "FileIO.h"
-#include "Player.h"
+#define private public // Illegal command :(
+
+#include "cards.h"
+#include "enums.h"
+#include "fileio.h"
+#include "team.h"
 #include "test_helpers.h"
 
 using namespace boost::unit_test;
@@ -21,14 +22,19 @@ BOOST_AUTO_TEST_SUITE(test_header_cards)
 
 // Player examples for testing
 Player tp_bat("Marnus", "Labuschagne", "M",
-              {23, 63.43, 56.52, 756, 38.66, 63.0, 3.68, false, 5});
+              {23, 63.43, 56.52, 756, 38.66, 63.0, 3.68, right, right,
+               legbreak});
 Player tp_bowl("Trent", "Boult", "TA",
-               {82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, false, 8});
+               {82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, left, left,
+                fast_med});
 Player tp_field("BJ", "Watling", "BJ",
-                {110, 38.5, 42.35, -1, -1, -1, -1, false, -1});
+                {110, 38.5, 42.35, -1, -1, -1, -1, right, right, med});
 
 // Test cases for Dismissal class
 BOOST_AUTO_TEST_CASE(testclass_dismissal) {
+
+    // Dismissal types
+    DismType dism_types[6] = {bowled, lbw, caught, c_and_b, run_out, stumped};
 
     // Expected dismissal strings
     std::string disms[6] = {"b Boult",           "lbw Boult",
@@ -45,7 +51,7 @@ BOOST_AUTO_TEST_CASE(testclass_dismissal) {
     // bowler and fielder pointers can be passed
     // even if dismissal doesn't involve them
     for (int i = 0; i < 6; i++) {
-        Dismissal x(i, &tp_bowl, &tp_field);
+        Dismissal x(dism_types[i], &tp_bowl, &tp_field);
 
         // Test getters
         BOOST_TEST(x.get_mode() == i);
@@ -58,10 +64,6 @@ BOOST_AUTO_TEST_CASE(testclass_dismissal) {
         // Test serialisation
         test_serialisation<Dismissal>(&x, "testfile_serial_dismissal");
     }
-
-    // Invalid dismissial mode - should throw invalid_argument
-    BOOST_CHECK_THROW(Dismissal(-1), std::invalid_argument);
-    BOOST_CHECK_THROW(Dismissal(1583), std::invalid_argument);
 }
 
 BOOST_AUTO_TEST_CASE(testclass_battercard) {
@@ -99,7 +101,7 @@ BOOST_AUTO_TEST_CASE(testclass_battercard) {
 
     // Dismissial
     bc.update_score("W");
-    bc.dismiss(0, &tp_bowl);
+    bc.dismiss(bowled, &tp_bowl);
     BOOST_TEST(bc.print_card() ==
                "M Labuschagne b Boult 32 (18b 3x4 2x6) SR: 177.78");
 

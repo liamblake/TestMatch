@@ -1,3 +1,4 @@
+#define BOOST_TEST_MODULE testCards
 #define BOOST_TEST_DYN_LINK
 
 #include <boost/test/parameterized_test.hpp>
@@ -13,7 +14,7 @@
 #include "enums.h"
 #include "fileio.h"
 #include "team.h"
-#include "test_helpers.h"
+#include "testtools.h"
 
 using namespace boost::unit_test;
 

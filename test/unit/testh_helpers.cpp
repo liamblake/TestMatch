@@ -1,3 +1,4 @@
+#define BOOST_TEST_MODULE testHelpers
 #define BOOST_TEST_DYN_LINK
 
 #include <boost/test/parameterized_test.hpp>

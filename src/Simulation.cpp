@@ -340,15 +340,15 @@ void Innings::simulate_delivery() {
         wkts++;
 
         // Randomly choose the type of dismissal
-        int dism =
+        DismType dism =
             Model::MODEL_WICKET_TYPE(bowl1->get_player_ptr()->get_bowl_type());
 
         // Pick a fielder
         Player* fielder =
-            man_field.select_catcher(bowl1->get_player_ptr(), bowled);
+            man_field.select_catcher(bowl1->get_player_ptr(), dism);
 
         // TODO: Fix this
-        striker->dismiss(bowled, bowl1->get_player_ptr(), fielder);
+        striker->dismiss(dism, bowl1->get_player_ptr(), fielder);
 
         // Create a object for fall of wicket
         fow[wkts - 1] = {striker->get_player_ptr(), (unsigned int)wkts + 1,

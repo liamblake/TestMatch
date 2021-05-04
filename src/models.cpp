@@ -23,8 +23,8 @@ std::vector<std::string> DELIV_OUTCOMES = {
     "0", "1",  "1b",  "1lb", "1nb", "1wd", "2", "2b",  "2lb", "2nb", "2wd",
     "3", "3b", "3lb", "4",   "4b",  "4lb", "5", "5nb", "5wd", "6",   "W"};
 int NUM_DISM_MODES = 6;
-std::vector<std::string> DISM_MODES_STATIC = {"b",   "c",  "c&b",
-                                              "lbw", "ro", "st"};
+std::vector<DismType> DISM_MODES_STATIC = {bowled, caught,  c_and_b,
+                                           lbw,    run_out, stumped};
 
 /* Somewhat terrible fit to the toss elect probabilities in actual data
  * Note that spin_factor = 1 - seam_factor, so we only need to consider
@@ -140,19 +140,19 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
     return output;
 }
 
-int MODEL_WICKET_TYPE(BowlType bowltype) {
+DismType MODEL_WICKET_TYPE(BowlType bowltype) {
     // This desperately needs cleaning up
 
     // Unencode bowltype
     std::string btype_str = str(bowltype);
 
-    std::string* DISM_MODES = new std::string[NUM_DISM_MODES];
+    DismType* DISM_MODES = new DismType[NUM_DISM_MODES];
     double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
 
     double DISM_MODE_SPINNER[6] = {0, 0.157, 0.692, 0.7274, 0.9286, 0.9613};
     double DISM_MODE_SEAMER[6] = {0, 0.175, 0.815, 0.8291, 0.9731, 1};
 
-    bool is_spinner = (btype_str.find('f') == std::string::npos);
+    bool is_spinner = is_slow_bowler(bowltype);
 
     // Check if "f" is in bowl_type - indicates whether stumpings are possible
     for (int i = 0; i < NUM_DISM_MODES; i++) {
@@ -171,11 +171,11 @@ int MODEL_WICKET_TYPE(BowlType bowltype) {
     }
 
     // Sample from distribution
-    std::string dism_mode =
-        sample_cdf<std::string>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
+    DismType dism_mode =
+        sample_cdf<DismType>(DISM_MODES, NUM_DISM_MODES, DISM_MODE_DIST);
 
     delete[] DISM_MODE_DIST;
     delete[] DISM_MODES;
-    return bowled; // TODO: FIX THIS
+    return dism_mode;
 }
 } // namespace Model

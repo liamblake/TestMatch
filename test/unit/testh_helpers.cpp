@@ -5,8 +5,8 @@
 #include <boost/test/unit_test.hpp>
 //#include <boost/mpl/list.hpp>
 
-#include "enums.hpp"
-#include "helpers.hpp"
+#include "testmatch/enums.hpp"
+#include "testmatch/helpers.hpp"
 
 #include <exception>
 #include <iostream>

@@ -1,7 +1,7 @@
 #define BOOST_TEST_MODULE testTime
 #define BOOST_TEST_DYN_LINK
 
-#include "matchtime.h"
+#include "testmatch/matchtime.hpp"
 
 #include <boost/test/output_test_stream.hpp>
 #include <boost/test/unit_test.hpp>

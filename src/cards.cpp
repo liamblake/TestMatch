@@ -3,11 +3,11 @@
    Contains all class implemetations
 */
 
-#include "cards.hpp"
+#include "testmatch/cards.hpp"
 
-#include "enums.hpp"
-#include "helpers.hpp"
-#include "team.hpp"
+#include "testmatch/enums.hpp"
+#include "testmatch/helpers.hpp"
+#include "testmatch/team.hpp"
 
 #include <cmath>
 #include <exception>

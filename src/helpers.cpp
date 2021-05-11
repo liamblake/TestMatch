@@ -1,7 +1,7 @@
 
-#include "helpers.hpp"
+#include "testmatch/helpers.hpp"
 
-#include "enums.hpp"
+#include "testmatch/enums.hpp"
 
 bool is_slow_bowler(BowlType bowl_type) {
     switch (bowl_type) {

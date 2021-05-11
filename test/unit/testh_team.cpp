@@ -1,9 +1,9 @@
 #define BOOST_TEST_MODULE testTeam
 #define BOOST_TEST_DYN_LINK
 
-#include "enums.hpp"
-#include "fileio.hpp"
-#include "team.hpp"
+#include "testmatch/enums.hpp"
+#include "testmatch/fileio.hpp"
+#include "testmatch/team.hpp"
 #include "testtools.h"
 
 #include <boost/test/parameterized_test.hpp>

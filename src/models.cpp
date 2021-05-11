@@ -9,9 +9,9 @@
  *
  */
 
-#include "models.hpp"
+#include "testmatch/models.hpp"
 
-#include "helpers.hpp"
+#include "testmatch/helpers.hpp"
 
 #include <cmath>
 #include <string>

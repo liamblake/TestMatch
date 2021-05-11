@@ -2,7 +2,7 @@
 
 #include "cards.hpp"
 #include "helpers.hpp"
-#include "matchtime.h"
+#include "matchtime.hpp"
 #include "models.hpp"
 #include "team.hpp"
 
@@ -816,33 +816,35 @@ void Match::start(bool quiet) {
         // Determine if game has been won
         if (inns_i == 2 && inns_state == "allout" && lead < 0) {
             // Win by innings
-            ending = new EndInningsWin(inns[inns_i]->get_bowl_team(), -lead);
+            result = new MatchResult(win_innings, inns[inns_i]->get_bowl_team(),
+                                     -lead);
             break;
 
         } else if (inns_i == 3) {
             // 4th innings scenarios
             if (inns_state == "allout") {
-                // Tie
+
                 if (lead == 0) {
-                    ending = new EndTie();
+                    // Tie
+                    result = new MatchResult(tie);
                 } else {
                     // Bowled out
-                    ending =
-                        new EndBowlWin(inns[inns_i]->get_bowl_team(), -lead);
+                    result = new MatchResult(
+                        win_bowling, inns[inns_i]->get_bowl_team(), -lead);
                 }
 
             } else if (inns_state == "win") {
                 // Win chasing
-                ending = new EndChaseWin(inns[inns_i]->get_bat_team(),
-                                         10 - inns[inns_i]->get_wkts());
+                result =
+                    new MatchResult(win_chasing, inns[inns_i]->get_bat_team(),
+                                    10 - inns[inns_i]->get_wkts());
 
             } else if (inns_state == "draw") {
                 // Draw
-                ending = new EndDraw();
+                result = new MatchResult(draw);
             } else {
                 // Raise an exception, Innings::simulate() has returned
                 // something unknown
-                std::cout << "help " << inns_state << std::endl;
             }
             break;
         } else {
@@ -859,7 +861,7 @@ std::string Match::print_all() {
             output += inns[i]->print();
     }
 
-    output += "\n" + ending->print() + ".\n";
+    output += "\n" + result->print() + ".\n";
 
     return output;
 }
@@ -870,5 +872,5 @@ Match::~Match() {
         delete inns[i];
     }
 
-    delete ending;
+    delete result;
 }

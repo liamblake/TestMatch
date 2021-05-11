@@ -9,6 +9,7 @@
 
 #include "cards.hpp"
 #include "enums.hpp"
+#include "matchtime.hpp"
 #include "models.hpp"
 #include "team.hpp"
 
@@ -367,7 +368,7 @@ class Match {
     int match_balls;
 
     // Storing winner detail
-    EndMatch* ending;
+    MatchResult* result;
 
     // Private helper functions
 

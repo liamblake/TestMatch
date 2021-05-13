@@ -338,41 +338,6 @@ PlayerCard** sort_array(PlayerCard** list, int len,
 BatterCard** create_batting_cards(Team* team);
 BowlerCard** create_bowling_cards(Team* team);
 
-//////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
-
-/**
- * @brief
- */
-struct PitchFactors {
-    double seam;
-    double spin;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& seam;
-        ar& spin;
-    };
-};
-
-/**
- * @brief Describes a venue and pitch conditions.
- */
-struct Venue {
-    std::string name;
-    std::string city;
-    std::string country;
-
-    PitchFactors* pitch_factors;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& name;
-        ar& city;
-        ar& country;
-        ar& pitch_factors;
-    };
-};
-
 /**
  * @brief Storage for all information describing a single delivery
  *

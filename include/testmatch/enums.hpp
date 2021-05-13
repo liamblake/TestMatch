@@ -58,6 +58,11 @@ enum ResultType {
            fourth innings with the scores level. */
 };
 
+enum TossChoice {
+    bat,   /*!< Elected to bat. String representation of "bat". */
+    field, /*!< Elected to bowl/field. String representation of "bowl" */
+};
+
 // Conversions to and from boolean and string representations
 std::string str(Arm arm);
 char chr(Arm arm);

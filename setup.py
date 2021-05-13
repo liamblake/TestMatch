@@ -5,7 +5,7 @@ setup(
     url="https://github.com/LiamBlake/TestMatch",
     author="Liam Blake",
     author_email="",
-    packages=["testmatch"],
+    packages=["wrappers/python/testmatch"],
     install_require=[],
     extras_require={"dev": ["black", "flake8", "pytest", "pytest-cov", "isort"]},
     version="0.1",

@@ -6,6 +6,7 @@ to convert to the Python classes to the internal C++ interfaces defined in _test
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import List, Type
 
 from _testmatch import Arm, BowlType, _Player, _Stats, _Team
 
@@ -14,6 +15,8 @@ from ..core import CppType
 
 @dataclass
 class Stats(CppType):
+    """ """
+
     # Batting statistics
     innings: int
     bat_avg: float
@@ -28,28 +31,38 @@ class Stats(CppType):
     bowl_arm: Arm
     bowl_type: BowlType
 
-    def to_cpp(self) -> _Stats:
-        pass
-
-    @classmethod
-    def from_cpp(cls, obj: _Stats) -> Stats:
-        pass
+    @staticmethod
+    def _cpp_rep() -> Type:
+        return _Stats
 
 
 @dataclass(frozen=True)
 class Player(CppType):
-    def to_cpp(self) -> _Player:
-        pass
+    """ """
 
-    def from_cpp(cls, obj: _Player) -> Player:
-        pass
+    first_name: str
+    last_name: str
+    initials: str
+
+    player_stats: Stats
+
+    @staticmethod
+    def _cpp_rep() -> Type:
+        return _Player
 
 
-@dataclass
+@dataclass(frozen=True)
 class Team(CppType):
-    def to_cpp(self) -> _Team:
-        pass
+    """ """
 
-    @classmethod
-    def from_cpp(cls, obj: _Team) -> Team:
-        pass
+    name: str
+    players: List[Player]
+
+    i_captain: int
+    i_wk: int
+    i_bowl1: int
+    i_bowl2: int
+
+    @staticmethod
+    def _cpp_rep() -> Type:
+        return _Team

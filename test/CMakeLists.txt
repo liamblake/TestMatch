@@ -91,5 +91,7 @@ add_boost_test(SOURCE unit/testh_team.cpp LINK TestMatch)
 add_boost_test(SOURCE unit/testh_matchtime.cpp LINK TestMatch)
 add_boost_test(SOURCE unit/testh_simulation.cpp LINK TestMatch)
 add_boost_test(SOURCE unit/testh_helpers.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_pregame.cpp LINK TestMatch)
+
 #add_test(NAME unit COMMAND unit_tests)
 #enable_testing()

@@ -58,9 +58,13 @@ enum ResultType {
            fourth innings with the scores level. */
 };
 
+/**
+ * @brief Represents the possible choices by a captain after winning the toss.
+ *
+ */
 enum TossChoice {
     bat,   /*!< Elected to bat. String representation of "bat". */
-    field, /*!< Elected to bowl/field. String representation of "bowl" */
+    field, /*!< Elected to bowl/field. String representation of "field" */
 };
 
 // Conversions to and from boolean and string representations
@@ -71,5 +75,7 @@ std::string str(BowlType bowltype);
 std::string long_str(Arm arm, BowlType bowltype);
 
 std::string str(DismType dismtype);
+
+std::string str(TossChoice tosschoice);
 
 #endif // ENUMS_H

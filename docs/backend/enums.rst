@@ -16,6 +16,8 @@ Types
 .. doxygenenum:: ResultType
    :project: testmatch
 
+.. doxygenenum:: TossChoice
+   :project: testmatch
 
 Conversion Functions
 --------------------

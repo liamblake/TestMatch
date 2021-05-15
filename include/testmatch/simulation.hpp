@@ -11,6 +11,7 @@
 #include "enums.hpp"
 #include "matchtime.hpp"
 #include "models.hpp"
+#include "pregame.hpp"
 #include "team.hpp"
 
 #include <functional>
@@ -355,8 +356,7 @@ class Match {
     Venue* venue;
 
     bool ready;
-    bool toss_win;   // false = team1, true = team2
-    bool toss_elect; // false = bowl, true = bat
+    TossResult toss;
 
     // MatchTime time;
     std::string match_state;
@@ -402,7 +402,7 @@ class Match {
     std::string winner_str();
 
   public:
-    Match(Team* home_team, Team* away_team, Venue* c_venue);
+    Match(Pregame detail);
 
     /**
      * @brief
@@ -432,8 +432,7 @@ class Match {
         ar& venue;
 
         ar& ready;
-        ar& toss_win;
-        ar& toss_elect;
+        ar& toss;
 
         ar& match_state;
 
@@ -442,7 +441,7 @@ class Match {
         ar& lead;
         ar& match_balls;
 
-        ar& ending;
+        ar& result;
     };
 };
 

@@ -599,7 +599,7 @@ class MatchResult {
     // Serialisation method
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        ar& result;
+        ar& type;
         ar& winner;
         ar& margin;
     }

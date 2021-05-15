@@ -97,3 +97,15 @@ std::string str(DismType dismtype) {
             throw(std::invalid_argument("Undefined DismType value."));
     }
 }
+
+std::string str(TossChoice tosschoice) {
+    switch (tosschoice) {
+        case bat:
+            return "bat";
+        case field:
+            return "field";
+        default:
+            // Throw exception
+            throw(std::invalid_argument("Undefined DismType value."));
+    }
+}

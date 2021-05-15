@@ -1,7 +1,7 @@
 #ifndef PREGAME_H
 #define PREGAME_H
 
-#include "enum.hpp"
+#include "enums.hpp"
 #include "team.hpp"
 
 #include <string>
@@ -59,6 +59,13 @@ struct TossResult {
      * @return std::string
      */
     operator std::string();
+
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& winner;
+        ar& loser;
+        ar& choice;
+    };
 };
 
 #endif // PREGAME_H

@@ -4,12 +4,13 @@
 #include "testmatch/team.hpp"
 
 #include <stdexcept>
+#include <string>
 
-Team* Team::get_bat_team() {
+Team* TossResult::get_bat_team() {
     switch (choice) {
         case bat:
             return winner;
-        case bowl:
+        case field:
             return loser;
         default:
             // Throw exception
@@ -17,14 +18,21 @@ Team* Team::get_bat_team() {
     }
 }
 
-Team* Team::get_bowl_team() {
+Team* TossResult::get_bowl_team() {
     switch (choice) {
         case bat:
             return loser;
-        case bowl:
+        case field:
             return winner;
         default:
             // Throw exception
             throw(std::invalid_argument("Undefined TossChoice value."));
     }
+}
+
+TossResult::operator std::string() {
+    std::string output = winner->name;
+    output += " won the toss and elected to ";
+    output += str(choice);
+    return output;
 }

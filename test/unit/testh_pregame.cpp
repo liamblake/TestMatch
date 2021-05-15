@@ -63,7 +63,7 @@ Team nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
 
 // Fixtures
 struct F {
-    F() : ts1(&nz, &aus, bat), ts2(&nz, &aus, bowl){};
+    F() : ts1({&nz, &aus, bat}), ts2({&nz, &aus, bowl}){};
 
     TossResult ts1, ts2;
 }

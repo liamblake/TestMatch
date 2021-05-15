@@ -63,21 +63,24 @@ Team nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
 
 // Fixtures
 struct F {
-    F() : ts1(&nz, &aus, bat), ts2(&nz, &aus, field){};
-    ~F() : {};
+    F() {
+        ts1 = {&nz, &aus, bat};
+        ts2 = {&nz, &aus, field};
+    };
+    ~F(){};
 
     TossResult ts1, ts2;
 };
 
-BOOST_AUTO_TEST_CASE(test_getters, F) {
-    BOOST_TEST(ts1.get_bat_team == &nz);
-    BOOST_TEST(ts1.get_nowl_team == &aus);
+BOOST_FIXTURE_TEST_CASE(test_getters, F) {
+    BOOST_TEST(ts1.get_bat_team() == &nz);
+    BOOST_TEST(ts1.get_bowl_team() == &aus);
 
-    BOOST_TEST(ts2.get_bat_team == &aus);
-    BOOST_TEST(ts2.get_nowl_team == &nz);
+    BOOST_TEST(ts2.get_bat_team() == &aus);
+    BOOST_TEST(ts2.get_bowl_team() == &nz);
 }
 
-BOOST_AUTO_TEST_CASE(test_string, F) {
+BOOST_FIXTURE_TEST_CASE(test_string, F) {
     BOOST_TEST(std::string(ts1) ==
                "New Zealand won the toss and elected to bat");
     BOOST_TEST(std::string(ts2) ==

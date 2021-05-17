@@ -1,6 +1,8 @@
 #define BOOST_TEST_MODULE testPregame
 #define BOOST_TEST_DYN_LINK
 
+#include "fixtures.hpp"
+
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
 #include <testmatch/enums.hpp>
@@ -11,31 +13,6 @@ using namespace boost::unit_test;
 BOOST_AUTO_TEST_SUITE(test_tossresult)
 
 // Test teams (pun intended)
-Player a1("David", "Warner", "DA",
-          {155, 48.94, 72.85, 342, 67.25, 85.5, 4.71, left, left, legbreak});
-Player a2("Will", "Pucovski", "WJ",
-          {1, 42.54, 60.21, 0, 1000, 1000, 4.00, right, right, med});
-Player a3("Marnus", "Labuschagne", "M",
-          {23, 63.43, 56.52, 756, 38.66, 63.0, 3.68, right, right, legbreak});
-Player a4("Steve", "Smith", "SPD",
-          {131, 62.84, 55.3, 1381, 56.47, 81.2, 4.17, right, right, legbreak});
-Player a5("Travis", "Head", "TM",
-          {28, 41.96, 50.41, 126, 68.32, 63.7, 3.61, left, right, offbreak});
-Player a6("Cameron", "Green", "C",
-          {7, 40.71, 40.68, 264, 30.30, 50.7, 2.98, right, right, fast_med});
-Player a7("Tim", "Paine", "TD",
-          {50, 31.66, 44.24, 0, 1000, 1000, 4.00, right, right, med});
-Player a8("Pat", "Cummins", "PJ",
-          {44, 17.02, 38.51, 6761, 21.82, 47.2, 2.76, right, right, fast_med});
-Player a9("Jhye", "Richardson", "JA",
-          {1, 12.95, 58.81, 306, 23.74, 52.3, 2.41, right, right, fast_med});
-Player a10("Josh", "Hazlewood", "JR",
-           {68, 12.02, 45.22, 11887, 25.65, 56.0, 2.74, left, right, fast_med});
-Player a11("Nathan", "Lyon", "NM",
-           {123, 12.27, 46.99, 24568, 31.58, 62.9, 3, right, right, offbreak});
-Team aus = {"Australia", &a1, &a2,  &a3,  &a4, &a5, &a6, &a7,
-            &a8,         &a9, &a10, &a11, 6,   6,   9,   8};
-
 Player b1("Tom", "Latham", "TWM",
           {92, 42.34, 46.66, 0, 1000, 1000, 4.00, left, left, med});
 Player b2("Tom", "Blundell", "TA",
@@ -72,7 +49,7 @@ struct F {
     TossResult ts1, ts2;
 };
 
-BOOST_FIXTURE_TEST_CASE(test_getters, F) {
+BOOST_FIXTURE_TEST_CASE(test_getters) {
     BOOST_TEST(ts1.get_bat_team() == &nz);
     BOOST_TEST(ts1.get_bowl_team() == &aus);
 

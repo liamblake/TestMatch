@@ -4,7 +4,7 @@
 #include "testmatch/enums.hpp"
 #include "testmatch/fileio.hpp"
 #include "testmatch/team.hpp"
-#include "testtools.h"
+#include "testtools.hpp"
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>

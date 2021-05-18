@@ -22,14 +22,11 @@ file(GLOB sources_unittests test/unit/*.cpp)
 file(GLOB sources_demo test/*.cpp)
 
 # Boost dependency
-#add_definitions( -DBOOST_ALL_NO_LIB )
-#add_definitions( -DBOOST_ALL_DYN_LINK )
 find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Add data to target
 add_library(TestMatch ${sources})
-#target_sources(TestMatch PUBLIC ${includes})
 target_include_directories(TestMatch PUBLIC include include/testmatch)
 target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(TestMatch PUBLIC

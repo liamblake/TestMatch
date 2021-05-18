@@ -14,7 +14,7 @@
 #include "testmatch/enums.hpp"
 #include "testmatch/fileio.hpp"
 #include "testmatch/team.hpp"
-#include "testtools.h"
+#include "testtools.hpp"
 
 using namespace boost::unit_test;
 

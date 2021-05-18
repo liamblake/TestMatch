@@ -1,14 +1,4 @@
-# Demonstrative test (for run-time errors)
-#add_executable(demo_test ${sources_demo})
-
-#target_include_directories(demo_test PUBLIC include)
-#target_include_directories(demo_test PUBLIC ${Boost_INCLUDE_DIR})
-#target_link_libraries(demo_test PUBLIC
-#  ${Boost_LIBRARIES}
-#  TestMatch
-#)
-
-#
+# From https://github.com/TNG/boost-python-examples
 # Create an executable test from a source file. The associate executable has the same
 # name as the source file.
 #
@@ -72,26 +62,9 @@ function(add_boost_test)
 endfunction()
 
 # Unit tests
-#add_executable(unit_tests ${sources_unittests})
-
-#target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
-
-#target_include_directories(unit_tests PUBLIC include)
-#target_include_directories(unit_tests PUBLIC ${Boost_INCLUDE_DIR})
-#target_link_libraries(unit_tests PUBLIC TestMatch)
-#target_link_libraries(unit_tests PRIVATE
-  #${Boost_LIBRARIES}
-#)
-
-
-#install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR}/test)
-
 add_boost_test(SOURCE unit/testh_cards.cpp LINK TestMatch ../include/testmatch unit)
 add_boost_test(SOURCE unit/testh_team.cpp LINK TestMatch ../include/testmatch unit)
 add_boost_test(SOURCE unit/testh_matchtime.cpp LINK TestMatch ../include/testmatch unit)
 add_boost_test(SOURCE unit/testh_simulation.cpp LINK TestMatch ../include/testmatch unit)
 add_boost_test(SOURCE unit/testh_helpers.cpp LINK TestMatch ../include/testmatch unit)
 add_boost_test(SOURCE unit/testh_pregame.cpp LINK TestMatch ../include/testmatch unit)
-
-#add_test(NAME unit COMMAND unit_tests)
-#enable_testing()

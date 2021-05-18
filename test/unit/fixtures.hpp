@@ -1,5 +1,6 @@
 /* Test fixtures used across multiple modules and suites.*/
 
+#include "testmatch\pregame.hpp"
 #include "testmatch\team.hpp"
 
 struct F_TeamAus {
@@ -40,4 +41,51 @@ struct F_TeamAus {
     Player a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11;
 };
 
-struct F_TeamNZ {};
+struct F_TeamNZ {
+
+    F_TeamNZ()
+        : b1("Tom", "Latham", "TWM",
+             {92, 42.34, 46.66, 0, 1000, 1000, 4.00, left, left, med}),
+          b2("Tom", "Blundell", "TA",
+             {11, 47.22, 49.47, 18, 1000, 1000, 4.33, right, right, offbreak}),
+          b3("Kane", "Williamson", "KS",
+             {140, 50.99, 51.63, 2103, 40.62, 72.5, 3.36, right, right,
+              offbreak}),
+          b4("Ross", "Taylor", "LRPL",
+             {178, 46.1, 60, 96, 24, 48, 3, right, right, offbreak}),
+          b5("Henry", "Nicholls", "HM",
+             {50, 39.7, 49.39, 0, 1000, 1000, 4.00, left, right, offbreak}),
+          b6("BJ", "Watling", "BJ",
+             {110, 38.5, 42.35, 0, 1000, 1000, 4.00, right, right, med}),
+          b7("Mitchell", "Santner", "MJ",
+             {29, 25.55, 42.36, 3746, 44.71, 96, 2.79, left, left, legbreak}),
+          b8("Kyle", "Jamieson", "KA",
+             {6, 21.47, 55, 1202, 21.14, 42.2, 3, right, right, fast_med}),
+          b9("Tim", "Southee", "TG",
+             {106, 17.37, 85.84, 16393, 29, 57.7, 3.01, right, right,
+              med_fast}),
+          b10("Neil", "Wagner", "N",
+              {63, 12.5, 44.88, 10743, 26.6, 52.1, 3.06, left, left, med_fast}),
+          b11("Trent", "Boult", "TA",
+              {82, 15.2, 56.86, 14874, 27.65, 55.7, 2.97, right, left,
+               fast_med}) {
+        nz = {"New Zealand", &b1, &b2,  &b3,  &b4, &b5, &b6, &b7,
+              &b8,           &b9, &b10, &b11, 2,   5,   10,  8};
+    }
+
+    Team nz;
+    Player b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11;
+};
+
+struct F_Pregame : F_TeamAus, F_TeamNZ {
+
+    F_Pregame() {
+        pf = {0.75995148, 0.24004852};
+        venue = {"Lords", "London", "ENG", &pf};
+        pregame = {&venue, &aus, &nz};
+    }
+
+    PitchFactors pf;
+    Venue venue;
+    Pregame pregame;
+};

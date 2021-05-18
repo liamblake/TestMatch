@@ -71,6 +71,13 @@ struct Pregame {
      *
      */
     Team* away_team;
+
+    template <class Archive>
+    void serialize(Archive& ar, const unsigned int version) {
+        ar& venue;
+        ar& home_team;
+        ar& away_team;
+    };
 };
 
 struct TossResult {

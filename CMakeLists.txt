@@ -31,7 +31,7 @@ include_directories(${Boost_INCLUDE_DIR})
 add_library(TestMatch ${sources})
 #target_sources(TestMatch PUBLIC ${includes})
 target_include_directories(TestMatch PUBLIC include include/testmatch)
-target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR}})
+target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(TestMatch PUBLIC
   ${Boost_LIBRARIES}
 )
@@ -45,6 +45,8 @@ install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
+  # Link fixtures
+  target_include_directories(TestMatch PUBLIC test/unit)
 	add_subdirectory(test)
   enable_testing()
 endif()

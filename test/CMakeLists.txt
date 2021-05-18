@@ -86,12 +86,12 @@ endfunction()
 
 #install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR}/test)
 
-add_boost_test(SOURCE unit/testh_cards.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_team.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_matchtime.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_simulation.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_helpers.cpp LINK TestMatch)
-add_boost_test(SOURCE unit/testh_pregame.cpp LINK TestMatch)
+add_boost_test(SOURCE unit/testh_cards.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
+add_boost_test(SOURCE unit/testh_team.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
+add_boost_test(SOURCE unit/testh_matchtime.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
+add_boost_test(SOURCE unit/testh_simulation.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
+add_boost_test(SOURCE unit/testh_helpers.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
+add_boost_test(SOURCE unit/testh_pregame.cpp LINK TestMatch INCLUDE ../include/testmatch unit)
 
 #add_test(NAME unit COMMAND unit_tests)
 #enable_testing()

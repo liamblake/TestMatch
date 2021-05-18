@@ -15,7 +15,7 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 
 # Sources
 set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp src/pregame.cpp)
-set(includes include/cards.hpp include/fileio.hpp include/team.hpp include/models.hpp include/simulation.hpp include/helpers.hpp include/matchtime.h include/enums.cpp)
+set(includes include/cards.hpp include/fileio.hpp include/team.hpp include/models.hpp include/simulation.hpp include/helpers.hpp include/matchtime.hpp include/enums.hpp, include/pregame.hpp)
 
 # Automatically add all tests
 file(GLOB sources_unittests test/unit/*.cpp)

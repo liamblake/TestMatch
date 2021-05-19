@@ -6,6 +6,8 @@
 #include "testmatch\pregame.hpp"
 #include "testmatch\team.hpp"
 
+#include <boost/test/unit_test.hpp>
+
 struct F_TeamAus {
 
     F_TeamAus()
@@ -92,5 +94,9 @@ struct F_Pregame : F_TeamAus, F_TeamNZ {
     Venue venue;
     Pregame pregame;
 };
+
+// Regiser fixtures
+BOOST_TEST_GLOBAL_FIXTURE(F_TeamAus);
+BOOST_TEST_GLOBAL_FIXTURE(F_TeamNZ);
 
 #endif

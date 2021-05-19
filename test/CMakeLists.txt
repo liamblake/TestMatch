@@ -11,4 +11,3 @@ target_link_libraries(unit_tests PUBLIC
 )
 
 add_test(NAME unit COMMAND unit_tests)
-enable_testing()

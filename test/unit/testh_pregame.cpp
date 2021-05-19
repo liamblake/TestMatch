@@ -1,6 +1,3 @@
-#define BOOST_TEST_MODULE testPregame
-#define BOOST_TEST_DYN_LINK
-
 #include "fixtures.hpp"
 
 #include <boost/test/parameterized_test.hpp>

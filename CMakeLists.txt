@@ -16,10 +16,6 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 # Sources
 set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp src/pregame.cpp)
 
-# Automatically add all tests
-file(GLOB sources_unittests test/unit/*.cpp)
-file(GLOB sources_demo test/*.cpp)
-
 # Boost dependency
 find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
@@ -33,16 +29,14 @@ target_link_libraries(TestMatch PUBLIC
 )
 
 # Generate macros for exporting functions 
-generate_export_header(TestMatch)
-target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
+#generate_export_header(TestMatch)
+#target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
-install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
+#install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
-  # Link fixtures
-  target_include_directories(TestMatch PUBLIC test/unit)
 	add_subdirectory(test)
   enable_testing()
 endif()

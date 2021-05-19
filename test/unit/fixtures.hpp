@@ -1,5 +1,8 @@
 /* Test fixtures used across multiple modules and suites.*/
 
+#ifndef TEST_FIXTURES
+#define TEST_FIXTURES
+
 #include "testmatch\pregame.hpp"
 #include "testmatch\team.hpp"
 
@@ -89,3 +92,5 @@ struct F_Pregame : F_TeamAus, F_TeamNZ {
     Venue venue;
     Pregame pregame;
 };
+
+#endif

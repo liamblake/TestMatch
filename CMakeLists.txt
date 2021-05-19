@@ -24,7 +24,7 @@ include_directories(
 )
 
 # Add data to target
-add_library(TestMatch SHARED ${sources})
+add_library(TestMatch ${sources})
 target_include_directories(TestMatch PUBLIC ${CMAKE_SOURCE_DIR}/include/testmatch)
 target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(TestMatch PUBLIC

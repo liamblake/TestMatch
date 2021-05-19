@@ -18,11 +18,14 @@ set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulat
 
 # Boost dependency
 find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
-include_directories(${Boost_INCLUDE_DIR} include)
+include_directories(
+  ${Boost_INCLUDE_DIR} 
+  ${CMAKE_SOURCE_DIR}/include
+)
 
 # Add data to target
 add_library(TestMatch ${sources})
-target_include_directories(TestMatch PUBLIC include include/testmatch)
+target_include_directories(TestMatch PUBLIC ${CMAKE_SOURCE_DIR}/include/testmatch)
 target_include_directories(TestMatch PUBLIC ${Boost_INCLUDE_DIR})
 target_link_libraries(TestMatch PUBLIC
   ${Boost_LIBRARIES}

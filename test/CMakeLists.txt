@@ -1,3 +1,14 @@
+# Compile example simulation
+#add_executable(demo demonstrative_test.cpp)
+
+#target_link_libraries(demo PUBLIC
+#  ${Boost_LIBRARIES}
+#  TestMatch
+#)
+
+# Register as test
+#add_test(NAME demo COMMAND demo)
+
 # Unit tests
 # Automatically add all tests
 file(GLOB sources_unittests unit/*.cpp)

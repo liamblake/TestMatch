@@ -144,9 +144,6 @@ double* MODEL_DELIVERY(BatStats bat, BowlStats bowl) {
 DismType MODEL_WICKET_TYPE(BowlType bowltype) {
     // This desperately needs cleaning up
 
-    // Unencode bowltype
-    std::string btype_str = str(bowltype);
-
     DismType* DISM_MODES = new DismType[NUM_DISM_MODES];
     double* DISM_MODE_DIST = new double[NUM_DISM_MODES];
 

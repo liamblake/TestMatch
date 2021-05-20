@@ -54,22 +54,28 @@ std::string long_str(Arm arm, BowlType bowltype) {
     switch (bowltype) {
         case med:
             str_bt = "medium";
+            break;
         case med_fast:
             str_bt = "medium-fast";
+            break;
         case fast_med:
             str_bt = "fast-medium";
+            break;
         case fast:
             str_bt = "fast";
+            break;
         case offbreak:
             if (arm == left)
                 str_bt = "wrist spin";
             else
                 str_bt = "offspin";
+            break;
         case legbreak:
             if (arm == left)
                 str_bt = "orthodox";
             else
                 str_bt = "wrist spin";
+            break;
         default:
             // Throw exception
             throw(std::invalid_argument("Undefined BowlType value."));

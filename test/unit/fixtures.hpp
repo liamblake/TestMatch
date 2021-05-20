@@ -5,8 +5,8 @@
 #ifndef TEST_FIXTURES
 #define TEST_FIXTURES
 
-#include "testmatch\pregame.hpp"
-#include "testmatch\team.hpp"
+#include "testmatch/pregame.hpp"
+#include "testmatch/team.hpp"
 
 #include <boost/test/unit_test.hpp>
 

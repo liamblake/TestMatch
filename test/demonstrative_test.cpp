@@ -14,10 +14,10 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <testmatch\cards.hpp>
-#include <testmatch\helpers.hpp>
-#include <testmatch\simulation.hpp>
-#include <testmatch\team.hpp>
+#include <testmatch/cards.hpp>
+#include <testmatch/helpers.hpp>
+#include <testmatch/simulation.hpp>
+#include <testmatch/team.hpp>
 
 int main() {
 

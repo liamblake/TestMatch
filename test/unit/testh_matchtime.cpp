@@ -1,3 +1,5 @@
+#define BOOST_TEST_DYN_LINK
+
 #include "testmatch/matchtime.hpp"
 
 #include <boost/test/output_test_stream.hpp>

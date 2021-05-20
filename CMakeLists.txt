@@ -31,6 +31,10 @@ target_link_libraries(TestMatch PUBLIC
   ${Boost_LIBRARIES}
 )
 
+# 
+install(TARGETS TestMatch DESTINATION bin)
+
+
 # Generate macros for exporting functions 
 #generate_export_header(TestMatch)
 #target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})

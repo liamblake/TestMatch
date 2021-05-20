@@ -1,5 +1,7 @@
 /* Test fixtures used across multiple modules and suites.*/
 
+#define BOOST_TEST_DYN_LINK
+
 #ifndef TEST_FIXTURES
 #define TEST_FIXTURES
 

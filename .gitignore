@@ -1,6 +1,7 @@
-# Ignore any build and lib directorys
+# Ignore any build directorys
 build/
 lib/
+bin/
 
 .vscode/
 

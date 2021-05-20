@@ -1,3 +1,5 @@
+#define BOOST_TEST_DYN_LINK
+
 #include "testmatch/enums.hpp"
 #include "testmatch/fileio.hpp"
 #include "testmatch/team.hpp"

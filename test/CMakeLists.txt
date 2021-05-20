@@ -34,17 +34,3 @@ target_link_libraries(unit_tests PUBLIC
 )
 
 add_test(NAME unit COMMAND unit_tests)
-
-# Install UTF libraries
-get_filename_component(UTF_BASE_NAME ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_RELEASE} NAME_WE)
-get_filename_component(UTF_PATH ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_RELEASE} PATH)
-install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
-  DESTINATION .
-  #CONFIGURATIONS Release RelWithDebInfo
-)
-
-get_filename_component(UTF_BASE_NAME_DEBUG ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY_DEBUG} NAME_WE)
-install(FILES ${UTF_PATH}/${UTF_BASE_NAME_DEBUG}.dll
-  DESTINATION .
-  #CONFIGURATIONS Debug
-)

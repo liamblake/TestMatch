@@ -2,7 +2,6 @@
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-
 #include <exception>
 #include <iostream>
 #include <string>
@@ -10,11 +9,11 @@
 
 #define private public // Illegal command :(
 
-#include "cards.h"
-#include "enums.h"
-#include "fileio.h"
-#include "team.h"
-#include "test_helpers.h"
+#include "testmatch/cards.hpp"
+#include "testmatch/enums.hpp"
+#include "testmatch/fileio.hpp"
+#include "testmatch/team.hpp"
+#include "testtools.hpp"
 
 using namespace boost::unit_test;
 

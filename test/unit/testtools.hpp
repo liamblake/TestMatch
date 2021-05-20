@@ -1,3 +1,4 @@
+#define BOOST_TEST_DYN_LINK
 
 #ifndef TESTHELPERS_H
 #define TESTHELPERS_H

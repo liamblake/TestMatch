@@ -1,25 +1,35 @@
-# Demonstrative test (for run-time errors)
-#add_executable(demo_test ${sources_demo})
-
-#target_include_directories(demo_test PUBLIC include)
-#target_include_directories(demo_test PUBLIC ${Boost_INCLUDE_DIR})
-#target_link_libraries(demo_test PUBLIC
-#  ${Boost_LIBRARIES}
-#  TestMatch
-#)
-
-
-# Unit tests
-add_executable(unit_tests ${sources_unittests})
-
-target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
-
-target_include_directories(unit_tests PUBLIC include)
-target_include_directories(unit_tests PUBLIC ${Boost_INCLUDE_DIR})
-target_link_libraries(unit_tests PUBLIC
-  ${Boost_LIBRARIES}
+# Compile example simulation
+add_executable(demo demonstrative_test.cpp)
+target_include_directories(demo PUBLIC ${CMAKE_SOURCE_DIR}/include )
+target_link_libraries(demo PUBLIC
   TestMatch
 )
 
+# Register as test
+#add_test(NAME demo COMMAND demo)
+
+# Unit tests
+# Automatically add all tests
+file(GLOB sources_unittests unit/*.cpp)
+file(GLOB headers_unittests unit/*.hpp)
+
+add_executable(unit_tests ${sources_unittests})
+#set_target_properties(unit_tests PROPERTIES 
+#  IMPORTED_LOCATION ${Boost_LIBRARYDIR}/liblept168.dll
+#)
+
+target_compile_definitions(unit_tests PUBLIC UNIT_TESTS)
+
+target_include_directories(unit_tests PUBLIC
+    ${CMAKE_SOURCE_DIR}/include 
+    ${Boost_INCLUDE_DIR}
+    headers_unittests
+)
+
+target_link_libraries(unit_tests PUBLIC
+  ${Boost_LIBRARIES}
+  TestMatch
+  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+)
+
 add_test(NAME unit COMMAND unit_tests)
-enable_testing()

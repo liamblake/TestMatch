@@ -1,9 +1,10 @@
+#include "testmatch/team.hpp"
+
+#include "testmatch/helpers.hpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include "helpers.h"
-#include "team.h"
 
 using namespace std;
 

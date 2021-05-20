@@ -1,14 +1,13 @@
 #define BOOST_TEST_DYN_LINK
 
+#include "testmatch/enums.hpp"
+#include "testmatch/fileio.hpp"
+#include "testmatch/team.hpp"
+#include "testtools.hpp"
+
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
-
 #include <string>
-
-#include "enums.h"
-#include "fileio.h"
-#include "team.h"
-#include "test_helpers.h"
 
 using namespace boost::unit_test;
 

@@ -39,6 +39,34 @@ enum DismType {
     stumped  /*!< Stumped by wicketkeeper. String representation of "st". */
 };
 
+/**
+ * @brief Represents the possible results of a match. Note that string
+ * representations of this enumeration are handled by the MatchResult
+ * object.
+ *
+ */
+enum ResultType {
+    draw,        /*!< Drawn match. */
+    win_chasing, /*!< Win by batting team in fourth innings, i.e. the
+                    batting team have successfully reached the target. */
+    win_bowling, /*!< Win by bowling team in the fourth innings, i.e. the
+                    batting team have been bowled out before reaching the
+                    target. */
+    win_innings, /*!< Win by an innings, i.e. the batting team have been
+                    bowled out in the third innings while still trailing. */
+    tie /*!< Tied match, i.e. the batting team has been bowled out in the
+           fourth innings with the scores level. */
+};
+
+/**
+ * @brief Represents the possible choices by a captain after winning the toss.
+ *
+ */
+enum TossChoice {
+    bat,   /*!< Elected to bat. String representation of "bat". */
+    field, /*!< Elected to bowl/field. String representation of "field" */
+};
+
 // Conversions to and from boolean and string representations
 std::string str(Arm arm);
 char chr(Arm arm);
@@ -47,5 +75,7 @@ std::string str(BowlType bowltype);
 std::string long_str(Arm arm, BowlType bowltype);
 
 std::string str(DismType dismtype);
+
+std::string str(TossChoice tosschoice);
 
 #endif // ENUMS_H

@@ -13,6 +13,11 @@ Types
 .. doxygenenum:: DismType
    :project: testmatch
 
+.. doxygenenum:: ResultType
+   :project: testmatch
+
+.. doxygenenum:: TossChoice
+   :project: testmatch
 
 Conversion Functions
 --------------------

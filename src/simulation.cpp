@@ -1,3 +1,13 @@
+#include "testmatch/simulation.hpp"
+
+#include "testmatch/cards.hpp"
+#include "testmatch/enums.hpp"
+#include "testmatch/helpers.hpp"
+#include "testmatch/matchtime.hpp"
+#include "testmatch/models.hpp"
+#include "testmatch/pregame.hpp"
+#include "testmatch/team.hpp"
+
 #include <cmath>
 #include <exception>
 #include <functional>
@@ -6,13 +16,6 @@
 #include <stdlib.h>
 #include <string>
 #include <utility>
-
-#include "cards.h"
-#include "helpers.h"
-#include "matchtime.h"
-#include "models.h"
-#include "simulation.h"
-#include "team.h"
 
 //~~~~~~~~~~~~~~ Parameters ~~~~~~~~~~~~~~//
 double FieldingManager::C_WK_PROB = 0.5;
@@ -711,20 +714,36 @@ Innings::~Innings() {
 /*
   Match implementations
 */
-Match::Match(Team* home_team, Team* away_team, Venue* c_venue)
-    : team1(home_team), team2(away_team), venue(c_venue), ready(false),
-      inns_i(0) {
+Match::Match(Pregame detail)
+    : team1(detail.home_team), team2(detail.away_team), venue(detail.venue),
+      ready(false), inns_i(0) {
 
     // Time object - default constructor to day 1, start time
     // time = MatchTime();
 }
 
 void Match::simulate_toss() {
-    // Winner of toss is chosen randomly - 0.5 probability either way
-    toss_win = (((double)rand() / (RAND_MAX)) < 0.5);
+    Team* winner;
+    Team* loser;
+    TossChoice choice;
 
-    toss_elect = (((double)rand() / (RAND_MAX)) <
-                  Model::MODEL_TOSS_ELECT(venue->pitch_factors->spin));
+    // Winner of toss is chosen randomly - 0.5 probability either way
+    if ((double)rand() / (RAND_MAX) < 0.5) {
+        winner = team1;
+        loser = team2;
+    } else {
+        winner = team1;
+        loser = team2;
+    }
+
+    if ((double)rand() / (RAND_MAX) <
+        Model::MODEL_TOSS_ELECT(venue->pitch_factors->spin)) {
+        choice = field;
+    } else {
+        choice = bat;
+    }
+
+    toss = {winner, loser, choice};
 
     // Print toss result
     std::cout << toss_str() << std::endl;
@@ -763,34 +782,20 @@ bool Match::DECIDE_FOLLOW_ON(int lead) {
     }
 }
 
-std::string Match::toss_str() {
-    std::string output;
-
-    Team* ptr;
-    if (toss_win)
-        ptr = team2;
-    else
-        ptr = team1;
-
-    output += ptr->name + " has won the toss and elected to ";
-
-    if (toss_elect)
-        output += "bat.";
-    else
-        output += "bowl.";
-
-    return output;
-}
+std::string Match::toss_str() { return std::string(toss); }
 
 void Match::pregame() {
     // Toss
     simulate_toss();
 
     // Set up Innings object
-    if ((toss_win && toss_elect) || (!toss_win && !toss_elect))
-        inns[0] = new Innings(team2, team1, 0, venue->pitch_factors);
+    if (toss.choice == bat)
+        inns[0] = new Innings(toss.winner, toss.loser, 0, venue->pitch_factors);
+    else if (toss.choice == field)
+        inns[0] = new Innings(toss.loser, toss.winner, 0, venue->pitch_factors);
     else
-        inns[0] = new Innings(team1, team2, 0, venue->pitch_factors);
+        // Throw exception
+        throw(std::invalid_argument("Undefined TossChoice value."));
 
     ready = true;
 }
@@ -815,33 +820,35 @@ void Match::start(bool quiet) {
         // Determine if game has been won
         if (inns_i == 2 && inns_state == "allout" && lead < 0) {
             // Win by innings
-            ending = new EndInningsWin(inns[inns_i]->get_bowl_team(), -lead);
+            result = new MatchResult(win_innings, inns[inns_i]->get_bowl_team(),
+                                     -lead);
             break;
 
         } else if (inns_i == 3) {
             // 4th innings scenarios
             if (inns_state == "allout") {
-                // Tie
+
                 if (lead == 0) {
-                    ending = new EndTie();
+                    // Tie
+                    result = new MatchResult(tie);
                 } else {
                     // Bowled out
-                    ending =
-                        new EndBowlWin(inns[inns_i]->get_bowl_team(), -lead);
+                    result = new MatchResult(
+                        win_bowling, inns[inns_i]->get_bowl_team(), -lead);
                 }
 
             } else if (inns_state == "win") {
                 // Win chasing
-                ending = new EndChaseWin(inns[inns_i]->get_bat_team(),
-                                         10 - inns[inns_i]->get_wkts());
+                result =
+                    new MatchResult(win_chasing, inns[inns_i]->get_bat_team(),
+                                    10 - inns[inns_i]->get_wkts());
 
             } else if (inns_state == "draw") {
                 // Draw
-                ending = new EndDraw();
+                result = new MatchResult(draw);
             } else {
                 // Raise an exception, Innings::simulate() has returned
                 // something unknown
-                std::cout << "help " << inns_state << std::endl;
             }
             break;
         } else {
@@ -858,7 +865,7 @@ std::string Match::print_all() {
             output += inns[i]->print();
     }
 
-    output += "\n" + ending->print() + ".\n";
+    output += "\n" + result->print() + ".\n";
 
     return output;
 }
@@ -869,5 +876,5 @@ Match::~Match() {
         delete inns[i];
     }
 
-    delete ending;
+    delete result;
 }

@@ -3,13 +3,12 @@
 #ifndef CARDS_H
 #define CARDS_H
 
-#include <random>
-#include <string>
+#include "enums.hpp"
+#include "team.hpp"
 
 #include <boost/serialization/base_object.hpp>
-
-#include "enums.h"
-#include "team.h"
+#include <random>
+#include <string>
 
 // Global Parameters
 const double PACE_MEAN_FATIGUE = 0.1;
@@ -339,41 +338,6 @@ PlayerCard** sort_array(PlayerCard** list, int len,
 BatterCard** create_batting_cards(Team* team);
 BowlerCard** create_bowling_cards(Team* team);
 
-//////////////////////////// PRE-GAME MATCH DETAILS ////////////////////////////
-
-/**
- * @brief
- */
-struct PitchFactors {
-    double seam;
-    double spin;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& seam;
-        ar& spin;
-    };
-};
-
-/**
- * @brief Describes a venue and pitch conditions.
- */
-struct Venue {
-    std::string name;
-    std::string city;
-    std::string country;
-
-    PitchFactors* pitch_factors;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& name;
-        ar& city;
-        ar& country;
-        ar& pitch_factors;
-    };
-};
-
 /**
  * @brief Storage for all information describing a single delivery
  *
@@ -567,111 +531,78 @@ class Partnership {
     };
 };
 
-//~~~~~~~~~~~~~~ Match End Objects ~~~~~~~~~~~~~~//
-
 /**
- * @brief
+ * @brief Summarise the result of a match, including the winner and margin of
+ * victory if applicable.
+ *
+ * There are five possible match results: a draw, .
+ * This class is immutable, as there would be no reason to modify the values
+ * after construction.
  */
-class EndMatch {
-  protected:
-    Team* winner;
-    int margin;
-
-  public:
-    EndMatch(){};
-    EndMatch(Team* c_winner, int c_margin);
+class MatchResult {
+  private:
+    // Private constructor ensures values must be set upon construction
+    MatchResult();
 
     /**
-     * @brief
-     * @return
+     * @brief Result type, as a ResultType enumeration. Possible values are
+     * draw, win_chasing, win_bowling, win_innings and tie.
+     *
      */
-    virtual std::string print() = 0;
+    ResultType type;
+    /**
+     * @brief Pointer to the Team object corresponding to the winning team. The
+     * default value of nullptr should be set if a winner is not applicable
+     * (e.g. a tie or draw). Value is access via the get_type() method.
+     *
+     */
+    Team* winner;
+    /**
+     * @brief The margin of victory, if relevant. When the bowling team has won,
+     * this is the number of runs the batting team were still trailing by upon
+     * being bowled out. If the batting team has won, this is the number of
+     * wickets remaining. The default value of 0 should be set if the margin is
+     * not applicable (e.g. a tie or draw). Value is access via the get_margin()
+     * method.
+     *
+     */
+    unsigned int margin;
 
-    // Default destructor
+  public:
+    /**
+     * @brief Construct a new Match Result object.
+     *
+     * @param c_type The type of victory, as a ResultType enumeration.
+     * @param c_winner Pointer to the winning team. This argument will be
+     * ignored if a winning team is not applicable.
+     * @param c_margin Winning margin. This argument will be ignored if a
+     * winning team is not applicable.
+     */
+    MatchResult(ResultType c_type, Team* c_winner = nullptr,
+                unsigned int c_margin = 0);
 
+    // Getters
+    ResultType get_type();
+    Team* get_winner();
+    unsigned int get_margin();
+
+    /**
+     * @brief Format the result type, winner and margin of victory in a nice,
+     * printable string. For example, if India have won by 55 runs, the output
+     * would be "India won by 55 runs".
+     *
+     * @return std::string The formatted string.
+     */
+    std::string print();
+
+  public:
+    // Serialisation method
     template <class Archive>
     void serialize(Archive& ar, const unsigned int version) {
+        ar& type;
         ar& winner;
         ar& margin;
-    };
-};
-
-/**
- * @brief
- */
-class EndInningsWin : public EndMatch {
-  public:
-    EndInningsWin() : EndMatch(){};
-    EndInningsWin(Team* c_winner, int c_runs);
-
-    std::string print();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<EndMatch>(*this);
-    };
-};
-
-/**
- * @brief
- */
-class EndBowlWin : public EndMatch {
-  public:
-    EndBowlWin() : EndMatch(){};
-    EndBowlWin(Team* c_winner, int c_runs);
-
-    std::string print();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<EndMatch>(*this);
-    };
-};
-
-/**
- * @brief
- */
-class EndChaseWin : public EndMatch {
-  public:
-    EndChaseWin() : EndMatch(){};
-    EndChaseWin(Team* c_winner, int c_wkts);
-
-    std::string print();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<EndMatch>(*this);
-    };
-};
-
-/**
- * @brief
- */
-class EndDraw : public EndMatch {
-  public:
-    EndDraw();
-
-    virtual std::string print();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<EndMatch>(*this);
-    };
-};
-
-/**
- * @brief
- */
-class EndTie : public EndDraw {
-  public:
-    EndTie();
-
-    std::string print();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<EndDraw>(*this);
-    };
+    }
 };
 
 ///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES

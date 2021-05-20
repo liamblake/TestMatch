@@ -6,3 +6,4 @@ PointerAlignment: Left
 AlwaysBreakTemplateDeclarations: Yes
 AccessModifierOffset: -2
 IndentCaseLabels: true
+IncludeBlocks: Regroup

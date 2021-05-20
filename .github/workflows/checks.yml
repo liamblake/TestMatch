@@ -29,6 +29,9 @@ jobs:
       if: runner.os == 'macOS'
       run: brew install boost
 
+    - name: list
+      run: cd include/testmatch && ls
+
     - name: Create build environment
       run: mkdir build
 

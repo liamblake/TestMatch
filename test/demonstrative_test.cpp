@@ -11,16 +11,13 @@
  * ../src/Simulation.cpp demonstrative_test.cpp -I ../include
  */
 
-#include "cards.hpp"
-#include "helpers.hpp"
-#include "simulation.hpp"
-#include "team.hpp"
-
 #include <ctime>
 #include <iostream>
 #include <string>
-
-using namespace std;
+#include <testmatch\cards.hpp>
+#include <testmatch\helpers.hpp>
+#include <testmatch\simulation.hpp>
+#include <testmatch\team.hpp>
 
 int main() {
 
@@ -94,16 +91,17 @@ int main() {
     // Venue
     PitchFactors lords_pf = {0.75995148, 0.24004852};
     Venue lords = {"Lords", "London", "ENG", &lords_pf};
+    Pregame pregame = {&lords, &aus, &nz};
 
     // Create a Match object
-    Match m(&nz, &aus, &lords);
-    m.pregame();
+    Match m(pregame);
 
     // Simulation
+    m.pregame();
     m.start(false);
 
     std::cout.precision(3);
-    cout << m.print_all() << endl;
+    std::cout << m.print_all() << std::endl;
 
     return 0;
 }

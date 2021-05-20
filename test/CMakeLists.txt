@@ -1,10 +1,9 @@
 # Compile example simulation
-#add_executable(demo demonstrative_test.cpp)
-
-#target_link_libraries(demo PUBLIC
-#  ${Boost_LIBRARIES}
-#  TestMatch
-#)
+add_executable(demo demonstrative_test.cpp)
+target_include_directories(demo PUBLIC ${CMAKE_SOURCE_DIR}/include )
+target_link_libraries(demo PUBLIC
+  TestMatch
+)
 
 # Register as test
 #add_test(NAME demo COMMAND demo)

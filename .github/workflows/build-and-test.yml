@@ -23,6 +23,7 @@ jobs:
       - name: Make
         run: cmake --build build/ --target all
 
+<<<<<<< HEAD
       - name: Run unit tests
         run: cd build && ctest --verbose
 
@@ -33,3 +34,15 @@ jobs:
           result_path: coverage/example.lcov
           min_coverage: 80
           token: ${{ github.token }}
+=======
+    - name: Run unit tests
+      run: cd build && ctest --verbose
+
+    - uses: devmasx/coverage-check-action@v1.2.0
+      name: Generate coverage report
+      with:
+         type: lcov
+         result_path: coverage/example.lcov
+         min_coverage: 80
+         token: ${{ github.token }}
+>>>>>>> 664a1caa6a1a91b67d7e69786d1dc470471e1676

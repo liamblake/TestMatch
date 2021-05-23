@@ -41,6 +41,17 @@ install(TARGETS TestMatch DESTINATION bin)
 
 #install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
+# Code coverage configuration
+add_library(coverage_config INTERFACE)
+target_compile_options(coverage_config INTERFACE
+  -O0        # no optimization
+  -g         # generate debug info
+  --coverage # sets all required flags
+)
+target_link_options(coverage_config INTERFACE --coverage)
+target_link_libraries(TestMatch PUBLIC coverage_config)
+
+
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)

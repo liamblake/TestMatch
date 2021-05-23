@@ -45,15 +45,15 @@ jobs:
       - name: Build
         run: cmake --build build/ --target all
 
+      - name: Generate coverage report
+        if: runner.os == 'Linux'
+        run: lcov --directory src --capture --output-file coverage.info
+
       - name: Run unit tests
         run: cd build && ctest --verbose
 
       - name: list
         run: ls && cd src && ls && cd ../build && ls
-
-      - name: Generate coverage report
-        if: runner.os == 'Linux'
-        run: lcov --directory src --capture --output-file coverage.info
 
       - name: Upload coverage report
         if: runner.os == 'Linux'

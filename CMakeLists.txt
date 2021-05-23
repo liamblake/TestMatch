@@ -42,6 +42,7 @@ install(TARGETS TestMatch DESTINATION bin)
 #install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
 # Code coverage configuration
+add_library(coverage_config INTERFACE)
 target_compile_options(coverage_config INTERFACE
   -O0        # no optimization
   -g         # generate debug info

@@ -49,7 +49,7 @@ jobs:
         run: cd build && ctest --verbose
 
       - name: list
-        run: cd src && ls && cd ../build && ls
+        run: ls && cd src && ls && cd ../build && ls
 
       - name: Generate coverage report
         if: runner.os == 'Linux'

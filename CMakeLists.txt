@@ -41,11 +41,19 @@ install(TARGETS TestMatch DESTINATION bin)
 
 #install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
 
+# Code coverage configuration
+target_compile_options(coverage_config INTERFACE
+  -O0        # no optimization
+  -g         # generate debug info
+  --coverage # sets all required flags
+)
+target_link_options(coverage_config INTERFACE --coverage)
+target_link_libraries(TestMatch PUBLIC coverage_config)
+
+
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
-  SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage --coverage")
-  set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE 1)
 	add_subdirectory(test)
   enable_testing()
 endif()

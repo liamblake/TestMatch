@@ -1,16 +1,14 @@
-# Runs all required checks of any code being committed to the main branch 
+# Runs all required checks of any code being committed to the main branch
 name: code checks
 
 on:
-  pull_request: 
+  pull_request:
     branches: [master]
   push:
     branches: [master]
   workflow_dispatch:
 
-
 jobs:
-
   build-and-test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -19,44 +17,56 @@ jobs:
         os: [ubuntu-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Install Boost (Linux)
-      if: runner.os == 'Linux'
-      run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
+      - uses: actions/checkout@v2
 
-    - name: Install Boost (macOS)
-      if: runner.os == 'macOS'
-      run: brew install boost
+      - name: Install Boost (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
 
-    - name: list
-      run: cd include/testmatch && ls
+      - name: Install Boost (macOS)
+        if: runner.os == 'macOS'
+        run: brew install boost
 
-    - name: Create build environment
-      run: mkdir build
+      - name: Install code coverage tools
+        if: runner.os == 'Linux'
+        run: sudo pip install codecov && sudo apt-get install -y lcov
 
-    - name: Create makefiles (Linux)
-      if: runner.os == 'Linux'
-      run: cmake -Bbuild -H.
-    
-    - name: Create makefiles (masOS)
-      if: runner.os == 'macOs'
-      run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
+      - name: list
+        run: cd include/testmatch && ls
 
-    - name: Build
-      run: cmake --build build/ --target all
+      - name: Create build environment
+        run: mkdir build
 
-    - name: Run unit tests
-      run: cd build && ctest --verbose
+      - name: Create makefiles (Linux)
+        if: runner.os == 'Linux'
+        run: cmake -Bbuild -H.
+
+      - name: Create makefiles (masOS)
+        if: runner.os == 'macOs'
+        run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
+
+      - name: Build
+        run: cmake --build build/ --target all
+
+      - name: Run unit tests
+        run: cd build && ctest --verbose
+
+      - name: Generate coverage report
+        if: runner.os == 'Linux'
+        run: lcov --directory src --capture --output-file coverage.info
+
+      - name: Upload coverage report
+        if: runner.os == 'Linux'
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
 
   linter:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: DoozyX/clang-format-lint-action@v0.11
-      with:
-        source: 'src include'
-        extensions: 'h,cpp'
-        clangFormatVersion: 11
-        exclude: test/*
+      - uses: actions/checkout@v2
+      - uses: DoozyX/clang-format-lint-action@v0.11
+        with:
+          source: "src include"
+          extensions: "h,cpp"
+          clangFormatVersion: 11
+          exclude: test/*

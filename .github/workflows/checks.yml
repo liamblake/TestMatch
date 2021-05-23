@@ -43,7 +43,7 @@ jobs:
         run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost
 
       - name: Build
-        run: cmake --build build/ --target all
+        run: cmake --build build/ --target all --config
 
       - name: Generate coverage report
         if: runner.os == 'Linux'

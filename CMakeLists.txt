@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 20)
 option(BUILD_TESTS "Option to also compile testing executables" ON)
 
 # Compiler flags
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -fprofile-arcs -ftest-coverage")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 # Sources

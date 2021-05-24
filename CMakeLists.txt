@@ -7,7 +7,6 @@ include(GenerateExportHeader)
 set(CMAKE_CXX_STANDARD 20)
 
 # Build options
-option(BUILD_PYTHON "Option to also compile Python wrappers" ON)
 option(BUILD_TESTS "Option to also compile testing executables" ON)
 
 # Compiler flags
@@ -15,7 +14,17 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 # Sources
-set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp src/pregame.cpp)
+set(sources 
+  src/cpp/cards.cpp 
+  src/cpp/fileio.cpp 
+  src/cpp/team.cpp 
+  src/cpp/models.cpp 
+  src/cpp/simulation.cpp 
+  src/cpp/helpers.cpp 
+  src/cpp/enums.cpp 
+  src/cpp/matchtime.cpp 
+  src/cpp/pregame.cpp
+)
 
 # Boost dependency
 find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization python REQUIRED)
@@ -37,14 +46,12 @@ install(TARGETS TestMatch DESTINATION bin)
 
 
 # OPTIONAL: Build Python wrapper
-if (BUILD_PYTHON)
-  add_subdirectory(python)
-endif()
+add_subdirectory(src/bindings)
 
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
-	add_subdirectory(test)
+	add_subdirectory(test/cpp)
   enable_testing()
 endif()
 

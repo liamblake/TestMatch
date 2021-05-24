@@ -45,8 +45,8 @@ target_link_libraries(TestMatch PUBLIC
 install(TARGETS TestMatch DESTINATION bin)
 
 
-# OPTIONAL: Build Python wrapper
-add_subdirectory(src/cpp/bindings)
+# Build Python wrapper
+#add_subdirectory(src/cpp/bindings)
 
 
 # OPTIONAL: Build tests:

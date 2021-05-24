@@ -28,7 +28,7 @@ endif()
 
 INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
-PYTHON_ADD_MODULE(_testmatch src/wrappers.cpp)
+PYTHON_ADD_MODULE(_testmatch wrappers.cpp)
 
 target_link_libraries(_testmatch
         TestMatch

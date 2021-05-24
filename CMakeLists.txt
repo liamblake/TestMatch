@@ -46,7 +46,7 @@ install(TARGETS TestMatch DESTINATION bin)
 
 
 # OPTIONAL: Build Python wrapper
-add_subdirectory(src/bindings)
+add_subdirectory(src/cpp/bindings)
 
 
 # OPTIONAL: Build tests:

@@ -5,5 +5,7 @@
 using namespace boost::python;
 
 BOOST_PYTHON_MODULE(_testmatch) {
+    // Enumerations
+
     class_<Stats>("_Stats").def_readwrite("innings", &Stats::innings);
 }

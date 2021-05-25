@@ -27,7 +27,7 @@ jobs:
 
     - name: Install Boost (macOS)
       if: runner.os == 'macOS'
-      run: brew install boost boost-python
+      run: brew install boost --with-python
 
     - name: list
       run: cd include/testmatch && ls

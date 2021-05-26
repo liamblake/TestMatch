@@ -98,7 +98,6 @@ BOOST_AUTO_TEST_CASE(testclass_battercard) {
     bc.dismiss(bowled, &tp_bowl);
     BOOST_TEST(bc.print_card() ==
                "M Labuschagne b Boult 32 (18b 3x4 2x6) SR: 177.78");
-
 }
 
 BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
@@ -126,6 +125,11 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
         bc.update_score(outcomes[i].first);
         BOOST_TEST(bc.print_card() == outcomes[i].second);
     }
+
+    // Stress test
+    for (int i = 0; i < 600; i++)
+        bc.update_score("0");
+    BOOST_TEST(bc.print_card() == "TA Boult 102.5-100-33-1");
 }
 
 BOOST_AUTO_TEST_CASE(testclass_over) {

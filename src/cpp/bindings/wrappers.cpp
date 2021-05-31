@@ -22,17 +22,17 @@ BOOST_PYTHON_MODULE(_testmatch) {
 
     // These objects are exposed to the public Python library, since the
     // elements should not be modified manually.
-    class_<BatterCard>("BatterCard");
-    class_<BowlerCard>("BowlerCard");
+    // class_<BatterCard>("BatterCard");
+    // class_<BowlerCard>("BowlerCard");
 
     // These objects are used within the simulation and not exposed in the
     // public Python library.
-    class_<BattingManager>("_BattingManager");
-    class_<BowlingManager>("_BowlingManager");
-    class_<FieldingManager>("_FieldingManager");
-    class_<MatchTime>("_MatchTime");
+    // class_<BattingManager>("_BattingManager");
+    // class_<BowlingManager>("_BowlingManager");
+    // class_<FieldingManager>("_FieldingManager");
+    // class_<MatchTime>("_MatchTime");
 
     // The simulation objects will be extended in Python
-    class_<Innings>("Innings");
-    class_<Match>("Match");
+    // class_<Innings>("Innings");
+    // class_<Match>("Match");
 }

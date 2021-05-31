@@ -3,7 +3,7 @@
 #include <testmatch/cards.hpp>
 #include <testmatch/matchtime.hpp>
 #include <testmatch/pregame.hpp>
-#include <testmatch/simulaion.hpp>
+#include <testmatch/simulation.hpp>
 #include <testmatch/team.hpp>
 
 using namespace boost::python;

@@ -7,7 +7,7 @@ setup(
     author_email="",
     packages=["src/testmatch"],
     install_requires=["rich"],
-    extra_requires={"dev": ["black", "flake8", "pytest", "pytest-cov"]},
+    extras_require={"dev": ["black", "flake8", "pytest", "pytest-cov"]},
     version="0.1",
     license="GNU",
     description="Cricket simulation built on historical data.",

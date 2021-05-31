@@ -35,3 +35,8 @@ target_link_libraries(_testmatch
         ${Boost_LIBRARIES}
         ${PYTHON_LIBRARIES}
 )
+
+target_include_directories(_testmatch PUBLIC
+    ${CMAKE_SOURCE_DIR}/include 
+    ${Boost_INCLUDE_DIR}
+)

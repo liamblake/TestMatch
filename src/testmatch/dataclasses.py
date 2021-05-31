@@ -1,8 +1,11 @@
-""" Defines all dataclasses which are provided to the simulation. 
+""" Defines all dataclasses which are provided to the simulation.
 
 These mirror many of the structs defined in the core C++ library."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
+from json import JSONEncoder
 from typing import List
 
 
@@ -37,6 +40,10 @@ class Player:
 
     def get_full_initials(self) -> str:
         pass
+
+    class _encoder(JSONEncoder):
+        def default(self, o):
+            pass
 
 
 @dataclass

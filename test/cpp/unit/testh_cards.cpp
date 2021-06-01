@@ -11,9 +11,7 @@
 
 #include "testmatch/cards.hpp"
 #include "testmatch/enums.hpp"
-#include "testmatch/fileio.hpp"
 #include "testmatch/team.hpp"
-#include "testtools.hpp"
 
 using namespace boost::unit_test;
 
@@ -59,9 +57,6 @@ BOOST_AUTO_TEST_CASE(testclass_dismissal) {
 
         // Test print_dism() functionality
         BOOST_TEST(x.print_dism() == disms[i]);
-
-        // Test serialisation
-        test_serialisation<Dismissal>(&x, "testfile_serial_dismissal");
     }
 }
 
@@ -103,9 +98,6 @@ BOOST_AUTO_TEST_CASE(testclass_battercard) {
     bc.dismiss(bowled, &tp_bowl);
     BOOST_TEST(bc.print_card() ==
                "M Labuschagne b Boult 32 (18b 3x4 2x6) SR: 177.78");
-
-    // Test serialisation
-    test_serialisation<BatterCard>(&bc, "testfile_serial_battercard");
 }
 
 BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
@@ -133,9 +125,6 @@ BOOST_AUTO_TEST_CASE(testclass_bowlercard) {
         bc.update_score(outcomes[i].first);
         BOOST_TEST(bc.print_card() == outcomes[i].second);
     }
-
-    // Test serialisation
-    test_serialisation<BowlerCard>(&bc, "testfile_serial_bowlercard");
 }
 
 BOOST_AUTO_TEST_CASE(testclass_over) {
@@ -168,9 +157,6 @@ BOOST_AUTO_TEST_CASE(testclass_over) {
     BOOST_TEST(o.get_num_balls() == 2);
     BOOST_TEST(o.get_num_legal_delivs() == 1);
     BOOST_TEST(b1->next == b2);
-
-    // Test serialisation
-    test_serialisation<Over>(&o, "testfile_serial_over");
 }
 
 BOOST_AUTO_TEST_CASE(teststruct_fow) {
@@ -186,9 +172,6 @@ BOOST_AUTO_TEST_CASE(teststruct_fow) {
     f.overs = 0;
     f.balls = 0;
     BOOST_TEST(f.print() == "0-0 (Marnus Labuschagne, 0.0 ov)");
-
-    // Test serialisation
-    test_serialisation<FOW>(&f, "testfile_serial_fow");
 }
 
 BOOST_AUTO_TEST_CASE(teststruct_extras) {
@@ -233,9 +216,6 @@ BOOST_AUTO_TEST_CASE(teststruct_extras) {
 
     e.update_score("0lb");
     BOOST_TEST(e.print() == "b 1, lb 2, nb 3, w 5");
-
-    // Test serialisation
-    test_serialisation<Extras>(&e, "testfile_serial_extras");
 }
 
 BOOST_AUTO_TEST_CASE(testclass_milestone) {}
@@ -271,9 +251,6 @@ BOOST_AUTO_TEST_CASE(testclass_partnership) {
 
     p.end();
     BOOST_TEST(!p.get_not_out());
-
-    // Test serialisation
-    test_serialisation<Partnership>(&p, "testfile_serial_partnership");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

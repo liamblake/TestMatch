@@ -55,6 +55,9 @@ jobs:
       - name: Install package and dependencies
         run: python -m pip install -e .[dev]
 
+      - name: Add package to PATH
+        run: echo "./" >> $GITHUB_PATH
+
       - name: Run Python tests
         run: pytest test/python
 

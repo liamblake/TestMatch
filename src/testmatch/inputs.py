@@ -30,6 +30,7 @@ class Stats(InputStruct):
     bowl_type: int
 
     @property
+    @staticmethod
     def cpp_rep():
         return _Stats
 
@@ -56,6 +57,7 @@ class Player(InputStruct):
             pass
 
     @property
+    @staticmethod
     def cpp_rep():
         return _Player
 
@@ -81,6 +83,7 @@ class Team(InputStruct):
             output += "\n"
 
     @property
+    @staticmethod
     def cpp_rep():
         return _Team
 
@@ -91,6 +94,7 @@ class PitchFactors(InputStruct):
     spin: float
 
     @property
+    @staticmethod
     def cpp_rep():
         return _PitchFactors
 
@@ -103,5 +107,6 @@ class Venue(InputStruct):
     pitch: PitchFactors
 
     @property
+    @staticmethod
     def cpp_rep():
         return _Venue

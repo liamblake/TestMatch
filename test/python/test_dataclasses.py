@@ -4,7 +4,18 @@ from testmatch import Player, Stats
 
 @fixture
 def stats():
-    yield Stats()
+    yield Stats(
+        innings=65,
+        bat_avg=16.46,
+        bat_sr=37.44,
+        balls_bowled=7734,
+        bowl_avg=21.59,
+        bowl_sr=47.10,
+        bowl_econ=2.74,
+        bat_arm="right",
+        bowl_arm="right",
+        bowl_type="fm",
+    )
 
 
 @fixture

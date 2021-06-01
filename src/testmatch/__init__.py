@@ -1,1 +1,1 @@
-from .dataclasses import PitchFactors, Player, Stats, Team, Venue
+from .inputs import PitchFactors, Player, Stats, Team, Venue

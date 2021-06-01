@@ -8,9 +8,13 @@ from dataclasses import dataclass
 from json import JSONEncoder
 from typing import List
 
+from _testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
+
+from ._base import InputStruct
+
 
 @dataclass
-class Stats:
+class Stats(InputStruct):
 
     innings: int
     bat_avg: float
@@ -25,9 +29,13 @@ class Stats:
     bowl_arm: int
     bowl_type: int
 
+    @property
+    def cpp_rep():
+        return _Stats
+
 
 @dataclass(frozen=True)
-class Player:
+class Player(InputStruct):
 
     first_name: str
     last_name: str
@@ -47,9 +55,13 @@ class Player:
         def default(self, o):
             pass
 
+    @property
+    def cpp_rep():
+        return _Player
+
 
 @dataclass
-class Team:
+class Team(InputStruct):
     name: str
     players: List[Player]
 
@@ -58,16 +70,38 @@ class Team:
     idx_bowl1: int
     idx_bowl2: int
 
+    def __str__(self) -> str:
+        output = f"{self.name}\n"
+        for i, p in enumerate(self.players):
+            output += f"{i}. {p.full_name}"
+            if i == self.idx_captain:
+                output += " (c)"
+            if i == self.idx_wk:
+                output += " (wk)"
+            output += "\n"
+
+    @property
+    def cpp_rep():
+        return _Team
+
 
 @dataclass
-class PitchFactors:
+class PitchFactors(InputStruct):
     seam: float
     spin: float
 
+    @property
+    def cpp_rep():
+        return _PitchFactors
+
 
 @dataclass(frozen=True)
-class Venue:
+class Venue(InputStruct):
     name: str
     city: str
     country: str
     pitch: PitchFactors
+
+    @property
+    def cpp_rep():
+        return _Venue

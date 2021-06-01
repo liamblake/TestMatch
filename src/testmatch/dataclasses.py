@@ -35,11 +35,13 @@ class Player:
 
     stats: Stats
 
-    def get_full_name(self) -> str:
-        pass
+    @property
+    def full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
-    def get_full_initials(self) -> str:
-        pass
+    @property
+    def full_initials(self) -> str:
+        return f"{self.initials} {self.last_name}"
 
     class _encoder(JSONEncoder):
         def default(self, o):

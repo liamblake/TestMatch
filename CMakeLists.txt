@@ -14,10 +14,20 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
 # Sources
-set(sources src/cards.cpp src/fileio.cpp src/team.cpp src/models.cpp src/simulation.cpp src/helpers.cpp src/enums.cpp src/matchtime.cpp src/pregame.cpp)
+set(sources 
+  src/cpp/cards.cpp 
+  src/cpp/fileio.cpp 
+  src/cpp/team.cpp 
+  src/cpp/models.cpp 
+  src/cpp/simulation.cpp 
+  src/cpp/helpers.cpp 
+  src/cpp/enums.cpp 
+  src/cpp/matchtime.cpp 
+  src/cpp/pregame.cpp
+)
 
 # Boost dependency
-find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization REQUIRED)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization python REQUIRED)
 include_directories(
   ${Boost_INCLUDE_DIR} 
   ${CMAKE_SOURCE_DIR}/include
@@ -35,16 +45,13 @@ target_link_libraries(TestMatch PUBLIC
 install(TARGETS TestMatch DESTINATION bin)
 
 
-# Generate macros for exporting functions 
-#generate_export_header(TestMatch)
-#target_include_directories(TestMatch PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
-
-#install(PROGRAMS ${Boost_LIBRARIES} DESTINATION ${PROJECT_BINARY_DIR})
+# Build Python wrapper
+add_subdirectory(src/cpp/bindings)
 
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)
-	add_subdirectory(test)
+	add_subdirectory(test/cpp)
   enable_testing()
 endif()
 

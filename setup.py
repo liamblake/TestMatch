@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="TestMatch",
+    name="testmatch",
     url="https://github.com/LiamBlake/TestMatch",
     author="Liam Blake",
     author_email="",

@@ -7,7 +7,8 @@ include(GenerateExportHeader)
 set(CMAKE_CXX_STANDARD 20)
 
 # Build options
-option(BUILD_TESTS "Option to also compile testing executables" ON)
+option(BUILD_PYTHON "Option to also compile Python bindings (requires Boost.Python)" OFF)
+option(BUILD_TESTS "Option to also compile testing executables (requires Boost.UnitTestFramework" OFF)
 
 # Compiler flags
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
@@ -46,8 +47,9 @@ install(TARGETS TestMatch DESTINATION bin)
 
 
 # Build Python wrapper
-add_subdirectory(src/cpp/bindings)
-
+if (BUILD_PYTHON)
+  add_subdirectory(src/cpp/bindings)
+endif()
 
 # OPTIONAL: Build tests:
 if (BUILD_TESTS)

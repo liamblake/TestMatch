@@ -17,7 +17,6 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 # Sources
 set(sources 
   src/cpp/cards.cpp 
-  src/cpp/fileio.cpp 
   src/cpp/team.cpp 
   src/cpp/models.cpp 
   src/cpp/simulation.cpp 
@@ -28,7 +27,7 @@ set(sources
 )
 
 # Boost dependency
-find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization python REQUIRED)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework REQUIRED)
 include_directories(
   ${Boost_INCLUDE_DIR} 
   ${CMAKE_SOURCE_DIR}/include
@@ -45,13 +44,12 @@ target_link_libraries(TestMatch PUBLIC
 # 
 install(TARGETS TestMatch DESTINATION bin)
 
-
-# Build Python wrapper
+# OPTIONAL: Build Python wrapper
 if (BUILD_PYTHON)
   add_subdirectory(src/cpp/bindings)
 endif()
 
-# OPTIONAL: Build tests:
+# OPTIONAL: Build tests
 if (BUILD_TESTS)
 	add_subdirectory(test/cpp)
   enable_testing()

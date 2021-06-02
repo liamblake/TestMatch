@@ -1,9 +1,7 @@
 #define BOOST_TEST_DYN_LINK
 
 #include "testmatch/enums.hpp"
-#include "testmatch/fileio.hpp"
 #include "testmatch/team.hpp"
-#include "testtools.hpp"
 
 #include <boost/test/parameterized_test.hpp>
 #include <boost/test/unit_test.hpp>
@@ -36,9 +34,6 @@ BOOST_AUTO_TEST_CASE(testclass_player) {
     BOOST_TEST(tp_bat.get_bat_arm() == right);
     BOOST_TEST(tp_bat.get_bowl_arm() == right);
     BOOST_TEST(tp_bat.get_bowl_type() == legbreak);
-
-    // Test serialisation
-    test_serialisation<Player>(&tp_bat, "testfile_serial_player.tmpy");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

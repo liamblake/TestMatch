@@ -73,21 +73,6 @@ struct Stats {
      * @brief Bowling type of the player, as an enumeration.
      */
     BowlType bowl_type;
-
-    // Serialisation method
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& innings;
-        ar& bat_avg;
-        ar& bat_sr;
-        ar& balls_bowled;
-        ar& bowl_avg;
-        ar& bowl_sr;
-        ar& bowl_econ;
-        ar& bat_arm;
-        ar& bowl_arm;
-        ar& bowl_type;
-    };
 };
 
 // Oh how I wish C++ had introspection
@@ -174,15 +159,6 @@ class Player {
     // For dealing with cheating part-time bowlers
     void inflate_bowl_avg();
 
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& first_name;
-        ar& last_name;
-        ar& initials;
-        ar& player_stats;
-    };
-
     friend bool operator==(const Player& lhs, const Player& rhs);
 };
 
@@ -224,17 +200,6 @@ struct Team {
     int i_wk;
     int i_bowl1;
     int i_bowl2;
-
-    // Serialisation
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar << name;
-        ar << players;
-        ar << i_captain;
-        ar << i_wk;
-        ar << i_bowl1;
-        ar << i_bowl2;
-    };
 
     friend bool operator==(const Team& lhs, const Team& rhs);
 };

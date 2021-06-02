@@ -7,7 +7,8 @@ include(GenerateExportHeader)
 set(CMAKE_CXX_STANDARD 20)
 
 # Build options
-option(BUILD_TESTS "Option to also compile testing executables" ON)
+option(BUILD_PYTHON "Option to also compile Python bindings (requires Boost.Python)" OFF)
+option(BUILD_TESTS "Option to also compile testing executables (requires Boost.UnitTestFramework" OFF)
 
 # Compiler flags
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
@@ -16,7 +17,6 @@ SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 # Sources
 set(sources 
   src/cpp/cards.cpp 
-  src/cpp/fileio.cpp 
   src/cpp/team.cpp 
   src/cpp/models.cpp 
   src/cpp/simulation.cpp 
@@ -27,7 +27,7 @@ set(sources
 )
 
 # Boost dependency
-find_package(Boost 1.70.0 COMPONENTS unit_test_framework serialization python REQUIRED)
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework REQUIRED)
 include_directories(
   ${Boost_INCLUDE_DIR} 
   ${CMAKE_SOURCE_DIR}/include
@@ -45,11 +45,12 @@ target_link_libraries(TestMatch PUBLIC
 install(TARGETS TestMatch DESTINATION bin)
 
 
-# Build Python wrapper
-add_subdirectory(src/cpp/bindings)
+# OPTIONAL: Build Python wrapper
+if (BUILD_PYTHON)
+  add_subdirectory(src/cpp/bindings)
+endif()
 
-
-# OPTIONAL: Build tests:
+# OPTIONAL: Build tests
 if (BUILD_TESTS)
 	add_subdirectory(test/cpp)
   enable_testing()

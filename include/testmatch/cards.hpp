@@ -33,18 +33,6 @@ struct BatStats {
     int balls;
     int fours;
     int sixes;
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& bat_avg;
-        ar& strike_rate;
-        ar& bat_arm;
-        ar& runs;
-        ar& balls;
-        ar& fours;
-        ar& sixes;
-    };
 };
 
 /**
@@ -75,26 +63,6 @@ struct BowlStats {
     int spell_maidens;
     int spell_runs;
     int spell_wickets;
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& bowl_avg;
-        ar& strike_rate;
-        ar& bowl_type;
-        ar& balls;
-        ar& overs;
-        ar& over_balls;
-        ar& maidens;
-        ar& runs;
-        ar& wickets;
-        ar& legal_balls;
-        ar& spell_balls;
-        ar& spell_overs;
-        ar& spell_maidens;
-        ar& spell_runs;
-        ar& spell_wickets;
-    };
 };
 
 /**
@@ -143,14 +111,6 @@ class Dismissal {
      * @return
      */
     Player* get_fielder();
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& mode;
-        ar& bowler;
-        ar& fielder;
-    };
 };
 
 /**
@@ -189,12 +149,6 @@ class Fatigue {
 
     // Destructor
     ~Fatigue();
-
-    // Serialisation
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& value;
-    };
 };
 
 /**
@@ -218,12 +172,6 @@ class PlayerCard {
     virtual std::string print_card(void) = 0;
 
     // Default destructor
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& player;
-    };
 };
 
 /**
@@ -262,18 +210,6 @@ class BatterCard : public PlayerCard {
     // BatterCard(const BatterCard& bc);
 
     ~BatterCard();
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<PlayerCard>(*this);
-        ar& stats;
-        ar& active;
-        ar& out;
-        ar& dism;
-        ar& mins;
-        ar& playstyle_flag;
-    };
 };
 
 /**
@@ -318,17 +254,6 @@ class BowlerCard : public PlayerCard {
 
     std::string print_card(void);
     std::string print_spell(void);
-
-    // Serialisation methods
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& boost::serialization::base_object<PlayerCard>(*this);
-        ar& stats;
-        ar& active;
-        ar& competency;
-        ar& is_maiden;
-        ar& tiredness;
-    };
 };
 
 template <typename T>
@@ -361,16 +286,6 @@ struct Ball {
     Ball* next = nullptr;
 
     Ball* get_next() { return next; };
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& bowler;
-        ar& batter;
-        ar& outcome;
-        ar& legal;
-        ar& commentary;
-        ar& next;
-    };
 };
 
 /**
@@ -419,16 +334,6 @@ class Over {
     void add_ball(Ball* ball);
 
     ~Over();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& over_num;
-        ar& first;
-        ar& last;
-        ar& num_balls;
-        ar& num_legal_delivs;
-        ar& next;
-    };
 };
 
 class Extras {
@@ -444,14 +349,6 @@ class Extras {
     bool update_score(std::string outcome);
     std::string print();
     int total();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& byes;
-        ar& legbyes;
-        ar& noballs;
-        ar& wides;
-    }
 };
 
 struct FOW {
@@ -465,14 +362,6 @@ struct FOW {
     std::string print();
 
     // TODO: implement value checking for 0 <= balls < 6
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& wkts;
-        ar& runs;
-        ar& overs;
-        ar& balls;
-    };
 };
 
 /**
@@ -517,18 +406,6 @@ class Partnership {
      */
     void add_runs(unsigned int n_runs, bool scorer, bool add_ball);
     void end();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& bat1;
-        ar& bat2;
-        ar& runs;
-        ar& bat1_runs;
-        ar& bat1_balls;
-        ar& bat2_runs;
-        ar& bat2_balls;
-        ar& not_out;
-    };
 };
 
 /**
@@ -594,15 +471,6 @@ class MatchResult {
      * @return std::string The formatted string.
      */
     std::string print();
-
-  public:
-    // Serialisation method
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& type;
-        ar& winner;
-        ar& margin;
-    }
 };
 
 ///// CURRENTLY UNDEFINED - FOR TRACKING MILESTONES

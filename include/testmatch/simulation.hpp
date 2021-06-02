@@ -305,39 +305,6 @@ class Innings {
     // Destructor
     ~Innings();
 
-    // Serialisation
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& team_bat;
-        ar& team_bowl;
-
-        ar& inns_no;
-        ar& is_quiet;
-
-        ar& overs;
-        ar& balls;
-        ar& legal_delivs;
-        ar& team_score;
-        ar& lead;
-        ar& wkts;
-
-        ar& is_open;
-
-        // ar& time;
-        ar& pitch;
-
-        ar& first_over;
-        ar& last_over;
-
-        ar& batters;
-        ar& bowlers;
-
-        ar& bat_parts;
-
-        ar& extras;
-        ar& fow;
-    }
-
     // Allow manager objects to access private members
     friend class BattingManager;
     friend class BowlingManager;
@@ -422,27 +389,6 @@ class Match {
     std::string print_all();
 
     ~Match();
-
-    // Serialisation
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& team1;
-        ar& team2;
-
-        ar& venue;
-
-        ar& ready;
-        ar& toss;
-
-        ar& match_state;
-
-        ar& inns_i;
-        ar& inns;
-        ar& lead;
-        ar& match_balls;
-
-        ar& result;
-    };
 };
 
 #endif // SIMULATION_h

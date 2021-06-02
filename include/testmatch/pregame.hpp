@@ -12,12 +12,6 @@
 struct PitchFactors {
     double seam;
     double spin;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& seam;
-        ar& spin;
-    };
 };
 
 /**
@@ -45,14 +39,6 @@ struct Venue {
      *
      */
     PitchFactors* pitch_factors;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& name;
-        ar& city;
-        ar& country;
-        ar& pitch_factors;
-    };
 };
 
 struct Pregame {
@@ -71,13 +57,6 @@ struct Pregame {
      *
      */
     Team* away_team;
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& venue;
-        ar& home_team;
-        ar& away_team;
-    };
 };
 
 struct TossResult {
@@ -104,13 +83,6 @@ struct TossResult {
      * @return std::string
      */
     operator std::string();
-
-    template <class Archive>
-    void serialize(Archive& ar, const unsigned int version) {
-        ar& winner;
-        ar& loser;
-        ar& choice;
-    };
 };
 
 #endif // PREGAME_H

@@ -44,12 +44,6 @@ jobs:
       - name: Build
         run: cmake --build build/ --target all
 
-      - name: ls build
-        run: cd build && ls
-
-      - name: ls python
-        run: cd build/src/cpp/bindings && ls
-
       - name: Run unit tests
         run: cd build && ctest --verbose
 

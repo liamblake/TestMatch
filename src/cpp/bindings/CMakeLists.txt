@@ -13,13 +13,11 @@ endif()
 FIND_PACKAGE(pybind11 CONFIG REQUIRED)
 pybind11_add_module(_testmatch MODULE wrappers.cpp)
 
-target_link_libraries(_testmatch
+target_link_libraries(_testmatch PRIVATE
         TestMatch
-        ${Boost_LIBRARIES}
         ${PYTHON_LIBRARIES}
 )
 
 target_include_directories(_testmatch PUBLIC
     ${CMAKE_SOURCE_DIR}/include 
-    ${Boost_INCLUDE_DIR}
 )

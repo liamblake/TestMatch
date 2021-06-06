@@ -46,6 +46,7 @@ install(TARGETS TestMatch DESTINATION bin)
 
 # OPTIONAL: Build Python wrapper
 if (BUILD_PYTHON)
+  add_subdirectory(extern/pybind11)
   add_subdirectory(src/cpp/bindings)
 endif()
 

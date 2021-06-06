@@ -35,11 +35,11 @@ jobs:
 
       - name: Create makefiles (Linux)
         if: runner.os == 'Linux'
-        run: cmake -Bbuild -H. -DBUILD_TESTS=ON -DBUILD_PYTHON=ON
+        run: cmake -Bbuild -H. -DBUILD_TESTS=ON
 
       - name: Create makefiles (masOS)
         if: runner.os == 'macOs'
-        run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost -DBUILD_TESTS=ON -DBUILD_PYTHON=ON
+        run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost -DBUILD_TESTS=ON
 
       - name: Build
         run: cmake --build build/ --target all

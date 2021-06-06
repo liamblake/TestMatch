@@ -21,3 +21,5 @@ target_link_libraries(_testmatch PRIVATE
 target_include_directories(_testmatch PUBLIC
     ${CMAKE_SOURCE_DIR}/include 
 )
+
+install(TARGETS _testmatch DESTINATION .)

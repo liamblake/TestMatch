@@ -4,7 +4,8 @@ include(CTest)
 include(GenerateExportHeader)
 
 # Ensure C++20 is used
-set(CMAKE_CXX_STANDARD 20)
+set(CXX_STANDARD_REQUIRED 20)
+
 
 # Build options
 option(BUILD_PYTHON "Option to also compile Python bindings (requires Boost.Python)" OFF)
@@ -44,9 +45,8 @@ target_link_libraries(TestMatch PUBLIC
 # 
 install(TARGETS TestMatch DESTINATION bin)
 
-# OPTIONAL: Build Python wrapper
+# OPTIONAL: Build Python wrapper. Requires pybind11
 if (BUILD_PYTHON)
-  #add_subdirectory(extern/pybind11)
   add_subdirectory(src/cpp/bindings)
 endif()
 

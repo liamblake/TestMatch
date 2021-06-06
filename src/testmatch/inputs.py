@@ -13,7 +13,7 @@ from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
 
 
 @dataclass
-class Stats(InputStruct):
+class Stats:
 
     innings: int
     bat_avg: float
@@ -35,7 +35,7 @@ class Stats(InputStruct):
 
 
 @dataclass(frozen=True)
-class Player(InputStruct):
+class Player:
 
     first_name: str
     last_name: str
@@ -62,7 +62,7 @@ class Player(InputStruct):
 
 
 @dataclass
-class Team(InputStruct):
+class Team:
     name: str
     players: List[Player]
 
@@ -88,7 +88,7 @@ class Team(InputStruct):
 
 
 @dataclass
-class PitchFactors(InputStruct):
+class PitchFactors:
     seam: float
     spin: float
 
@@ -99,7 +99,7 @@ class PitchFactors(InputStruct):
 
 
 @dataclass(frozen=True)
-class Venue(InputStruct):
+class Venue:
     name: str
     city: str
     country: str

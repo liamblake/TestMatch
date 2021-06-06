@@ -27,10 +27,7 @@ jobs:
 
       - name: Install Boost (macOS)
         if: runner.os == 'macOS'
-        run: brew install boost && brew install boost-python
-
-      - name: list
-        run: cd include/testmatch && ls
+        run: brew install boost
 
       - name: Create build environment
         run: mkdir build
@@ -57,11 +54,8 @@ jobs:
       - name: Install package and dependencies
         run: python -m pip install -e .[dev]
 
-      - name: Add package to PATH
-        run: echo "./" >> $GITHUB_PATH
-
       - name: Run Python tests
-        run: pytest test/python
+        run: pytest
 
   linter:
     runs-on: ubuntu-latest

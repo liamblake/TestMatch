@@ -9,7 +9,7 @@ from json import JSONEncoder
 from typing import List
 
 from ._base import InputStruct
-from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
+from _testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
 
 
 @dataclass

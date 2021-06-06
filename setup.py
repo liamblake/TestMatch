@@ -1,4 +1,5 @@
-from setuptools import find_packages, setup
+from setuptools import find_packages
+from skbuild import setup
 
 setup(
     name="testmatch",
@@ -7,12 +8,11 @@ setup(
     author_email="",
     packages=find_packages("src"),
     package_dir={"": "src"},
-    package_data={
-        "": ["build/src/cpp/bindings/_testmatch.so"]
-    },  # TODO: Remove this hard-coding, instead compile library on install.
-    # See https://docs.python.org/2/distutils/setupscript.html#describing-extension-modules
     install_requires=["rich"],
-    extras_require={"dev": ["black", "flake8", "pytest", "pytest-cov"]},
+    extras_require={"dev": ["black", "flake8", "pytest", "pytest-cov", "isort"]},
+    cmake_args=["-DBUILD_PYTHON=ON"],
+    cmake_install_dir="src/testmatch",
+    include_package_data=True,
     version="0.1",
     license="GNU",
     description="Cricket simulation built on historical data.",

@@ -1,38 +1,77 @@
 
-#include <boost/python.hpp>
+//#include <boost/python.hpp>
 #include <testmatch/cards.hpp>
 #include <testmatch/matchtime.hpp>
 #include <testmatch/pregame.hpp>
 #include <testmatch/simulation.hpp>
 #include <testmatch/team.hpp>
 
-using namespace boost::python;
+#include <pybind11/pybind11.h>
 
-BOOST_PYTHON_MODULE(_testmatch) {
-    // Enumerations
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
 
-    // These are mirrored by Python dataclasses for more intuitive input, and
-    // coerced into these C++ types prior to simulation.
-    class_<Stats>("_Stats");
-    class_<Player>("_Player");
-    class_<Team>("_Team");
-    class_<PitchFactors>("_PitchFactors");
-    class_<Venue>("_Venue");
-    class_<Pregame>("_Pregame");
-
-    // These objects are exposed to the public Python library, since the
-    // elements should not be modified manually.
-    // class_<BatterCard>("BatterCard");
-    // class_<BowlerCard>("BowlerCard");
-
-    // These objects are used within the simulation and not exposed in the
-    // public Python library.
-    // class_<BattingManager>("_BattingManager");
-    // class_<BowlingManager>("_BowlingManager");
-    // class_<FieldingManager>("_FieldingManager");
-    // class_<MatchTime>("_MatchTime");
-
-    // The simulation objects will be extended in Python
-    // class_<Innings>("Innings");
-    // class_<Match>("Match");
+int add(int i, int j) {
+    return i + j;
 }
+
+namespace py = pybind11;
+
+PYBIND11_MODULE(_core, m) {
+    m.doc() = R"pbdoc(
+        Pybind11 example plugin
+        -----------------------
+        .. currentmodule:: scikit_build_example
+        .. autosummary::
+           :toctree: _generate
+           add
+           subtract
+    )pbdoc";
+
+    m.def("add", &add, R"pbdoc(
+        Add two numbers
+        Some other explanation about the add function.
+    )pbdoc");
+
+    m.def("subtract", [](int i, int j) { return i - j; }, R"pbdoc(
+        Subtract two numbers
+        Some other explanation about the subtract function.
+    )pbdoc");
+
+#ifdef VERSION_INFO
+    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+#else
+    m.attr("__version__") = "dev";
+#endif
+}
+
+// using namespace boost::python;
+
+// BOOST_PYTHON_MODULE(_testmatch) {
+//     // Enumerations
+
+//     // These are mirrored by Python dataclasses for more intuitive input, and
+//     // coerced into these C++ types prior to simulation.
+//     class_<Stats>("_Stats");
+//     class_<Player>("_Player");
+//     class_<Team>("_Team");
+//     class_<PitchFactors>("_PitchFactors");
+//     class_<Venue>("_Venue");
+//     class_<Pregame>("_Pregame");
+
+//     // These objects are exposed to the public Python library, since the
+//     // elements should not be modified manually.
+//     // class_<BatterCard>("BatterCard");
+//     // class_<BowlerCard>("BowlerCard");
+
+//     // These objects are used within the simulation and not exposed in the
+//     // public Python library.
+//     // class_<BattingManager>("_BattingManager");
+//     // class_<BowlingManager>("_BowlingManager");
+//     // class_<FieldingManager>("_FieldingManager");
+//     // class_<MatchTime>("_MatchTime");
+
+//     // The simulation objects will be extended in Python
+//     // class_<Innings>("Innings");
+//     // class_<Match>("Match");
+// }

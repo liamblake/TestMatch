@@ -4,6 +4,7 @@ include(CTest)
 include(GenerateExportHeader)
 
 # Ensure C++20 is used
+set(CMAKE_CXX_STANDARD 20)
 set(CXX_STANDARD_REQUIRED 20)
 
 

@@ -73,4 +73,4 @@ jobs:
           source: "src include"
           extensions: "h,cpp"
           clangFormatVersion: 11
-          exclude: test/*
+          exclude: test/* extern/*

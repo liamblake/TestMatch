@@ -98,6 +98,7 @@ BOOST_AUTO_TEST_CASE(testclass_battercard) {
     bc.dismiss(bowled, &tp_bowl);
     BOOST_TEST(bc.print_card() ==
                "M Labuschagne b Boult 32 (18b 3x4 2x6) SR: 177.78");
+
 }
 
 BOOST_AUTO_TEST_CASE(testclass_bowlercard) {

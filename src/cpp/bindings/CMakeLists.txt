@@ -1,42 +1,25 @@
-FIND_PACKAGE(PythonInterp)
-
-if (PYTHONINTERP_FOUND)
-  if (UNIX AND NOT APPLE)
-    if (PYTHON_VERSION_MAJOR EQUAL 3)
-        FIND_PACKAGE(Boost 1.70.0 COMPONENTS python${PYTHON_VERSION_SUFFIX})
-        FIND_PACKAGE(PythonInterp 3)
-        FIND_PACKAGE(PythonLibs 3 REQUIRED)
-    else()
-        FIND_PACKAGE(Boost 1.70.0 COMPONENTS python)
-        FIND_PACKAGE(PythonInterp)
-        FIND_PACKAGE(PythonLibs REQUIRED)
-    endif()
-  else()	
-    if (PYTHON_VERSION_MAJOR EQUAL 3)
-        FIND_PACKAGE(Boost 1.70.0 COMPONENTS python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-        FIND_PACKAGE(PythonInterp 3)
-        FIND_PACKAGE(PythonLibs 3 REQUIRED)
-    else()
-        FIND_PACKAGE(Boost 1.70.0 COMPONENTS python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-        FIND_PACKAGE(PythonInterp)
-        FIND_PACKAGE(PythonLibs REQUIRED)
-    endif()
-  endif()
-else()
-    message("Python not found")
+if(SKBUILD)
+  # Scikit-Build does not add your site-packages to the search path automatically,
+  # so we need to add it _or_ the pybind11 specific directory here.
+  execute_process(
+    COMMAND
+      "${PYTHON_EXECUTABLE}" -c
+      "import pybind11; print(pybind11.get_cmake_dir())"
+    OUTPUT_VARIABLE _tmp_dir
+    OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
+  list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
 endif()
 
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
+FIND_PACKAGE(pybind11 CONFIG REQUIRED)
+pybind11_add_module(_testmatch MODULE wrappers.cpp)
 
-PYTHON_ADD_MODULE(_testmatch wrappers.cpp)
-
-target_link_libraries(_testmatch
+target_link_libraries(_testmatch PRIVATE
         TestMatch
-        ${Boost_LIBRARIES}
         ${PYTHON_LIBRARIES}
 )
 
 target_include_directories(_testmatch PUBLIC
     ${CMAKE_SOURCE_DIR}/include 
-    ${Boost_INCLUDE_DIR}
 )
+
+install(TARGETS _testmatch DESTINATION .)

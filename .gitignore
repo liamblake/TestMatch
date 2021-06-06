@@ -147,3 +147,5 @@ cython_debug/
 # Generated doxygen files
 html/
 xml/
+
+_skbuild/

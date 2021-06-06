@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
 
       - name: Install Boost (Linux)
         if: runner.os == 'Linux'
@@ -25,21 +27,18 @@ jobs:
 
       - name: Install Boost (macOS)
         if: runner.os == 'macOS'
-        run: brew install boost && brew install boost-python
-
-      - name: list
-        run: cd include/testmatch && ls
+        run: brew install boost
 
       - name: Create build environment
         run: mkdir build
 
       - name: Create makefiles (Linux)
         if: runner.os == 'Linux'
-        run: cmake -Bbuild -H. -DBUILD_TESTS=ON -DBUILD_PYTHON=ON
+        run: cmake -Bbuild -H. -DBUILD_TESTS=ON
 
       - name: Create makefiles (masOS)
         if: runner.os == 'macOs'
-        run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost -DBUILD_TESTS=ON -DBUILD_PYTHON=ON
+        run: cmake -Bbuild -H. -DBOOST_ROOT=/usr/local/Cellar/boost -DBUILD_TESTS=ON
 
       - name: Build
         run: cmake --build build/ --target all
@@ -55,11 +54,8 @@ jobs:
       - name: Install package and dependencies
         run: python -m pip install -e .[dev]
 
-      - name: Add package to PATH
-        run: echo "./" >> $GITHUB_PATH
-
       - name: Run Python tests
-        run: pytest test/python
+        run: pytest
 
   linter:
     runs-on: ubuntu-latest
@@ -71,4 +67,4 @@ jobs:
           source: "src include"
           extensions: "h,cpp"
           clangFormatVersion: 11
-          exclude: test/*
+          exclude: test/* extern/*

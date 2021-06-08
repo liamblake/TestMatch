@@ -5,6 +5,13 @@ target_link_libraries(demo PUBLIC
   TestMatch
 )
 
+# Boost dependency
+find_package(Boost 1.70.0 COMPONENTS unit_test_framework REQUIRED)
+include_directories(
+  ${Boost_INCLUDE_DIR} 
+  ${CMAKE_SOURCE_DIR}/include
+)
+
 # Register as test
 #add_test(NAME demo COMMAND demo)
 

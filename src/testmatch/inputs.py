@@ -9,7 +9,7 @@ from json import JSONEncoder
 from typing import List
 
 from ._base import InputStruct
-from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
+from ._testmatch import Arm, BowlType, _PitchFactors, _Player, _Stats, _Team, _Venue
 
 
 @dataclass
@@ -24,9 +24,9 @@ class Stats:
     bowl_sr: float
     bowl_econ: float
 
-    bat_arm: int
-    bowl_arm: int
-    bowl_type: int
+    bat_arm: Arm
+    bowl_arm: Arm
+    bowl_type: BowlType
 
     @property
     @staticmethod

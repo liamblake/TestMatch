@@ -28,7 +28,7 @@ set(sources
   src/cpp/pregame.cpp
 )
 
-
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Add data to target
 add_library(TestMatch SHARED ${sources})

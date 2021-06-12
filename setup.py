@@ -19,7 +19,7 @@ setup(
             "mypy==0.901",
         ]
     },
-    cmake_args=["-DBUILD_PYTHON=ON"],
+    cmake_args=["-DBUILD_PYTHON=ON", "-GUnix Makefiles"],
     cmake_install_dir="src/testmatch",
     include_package_data=True,
     version="0.1",

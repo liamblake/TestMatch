@@ -22,8 +22,8 @@ const double SPIN_MEAN_FATIGUE = 0.04;
 struct BatStats {
 
     // Career averages
-    double bat_avg;
-    double strike_rate;
+    double career_bat_avg;
+    double career_strike_rate;
 
     // Batting hand
     Arm bat_arm;
@@ -197,6 +197,8 @@ class BatterCard : public PlayerCard {
     BatStats get_sim_stats(void);
 
     bool is_active(void);
+    bool is_out(void);
+    Dismissal* get_dism(void);
 
     void activate(void);
     void update_score(std::string outcome); //, float mins);

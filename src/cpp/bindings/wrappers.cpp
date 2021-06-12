@@ -57,8 +57,28 @@ PYBIND11_MODULE(_testmatch, m) {
     class_<Pregame>(m, "_Pregame");
 
     // These objects are exposed to the public Python library, since the
-    // elements should not be modified manually.
-    // class_<BatterCard>("BatterCard");
+    // elements should not be modified manually. They are extended for easier
+    // interaction with the Python interface.
+    class_<BatStats>(m, "_BatStats");
+
+    class_<Dismissal>(m, "Dismissal")
+        .def(init<DismType, Player*, Player*>())
+        .def_property_readonly("mode", &Dismissal::get_mode)
+        .def_property_readonly("bowler", &Dismissal::get_bowler,
+                               return_value_policy::copy)
+        .def_property_readonly("fielder", &Dismissal::get_fielder,
+                               return_value_policy::copy)
+        .def("__str__", &Dismissal::print_dism);
+
+    class_<BatterCard, PlayerCard>(m, "_BatterCard")
+        .def(init<Player*>())
+        .def_property_readonly("_stats", &BatterCard::get_sim_stats)
+        .def_property_readonly("active", &BatterCard::is_active)
+        .def_property_readonly("out", &BatterCard::is_out)
+        .def_property_readonly("dism", &BatterCard::get_dism,
+                               return_value_policy::copy)
+        .def("__str__", &BatterCard::print_card);
+
     // class_<BowlerCard>("BowlerCard");
 
     // These objects are used within the simulation and not exposed in the

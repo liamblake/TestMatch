@@ -8,12 +8,12 @@ from dataclasses import dataclass
 from json import JSONEncoder
 from typing import List
 
-from ._base import InputStruct
+from ._base import Cppable
 from ._testmatch import Arm, BowlType, _PitchFactors, _Player, _Stats, _Team, _Venue
 
 
 @dataclass
-class Stats:
+class Stats(Cppable):
 
     innings: int
     bat_avg: float
@@ -35,7 +35,7 @@ class Stats:
 
 
 @dataclass(frozen=True)
-class Player:
+class Player(Cppable):
 
     first_name: str
     last_name: str
@@ -62,7 +62,7 @@ class Player:
 
 
 @dataclass
-class Team:
+class Team(Cppable):
     name: str
     players: List[Player]
 
@@ -88,7 +88,7 @@ class Team:
 
 
 @dataclass
-class PitchFactors:
+class PitchFactors(Cppable):
     seam: float
     spin: float
 
@@ -99,7 +99,7 @@ class PitchFactors:
 
 
 @dataclass(frozen=True)
-class Venue:
+class Venue(Cppable):
     name: str
     city: str
     country: str

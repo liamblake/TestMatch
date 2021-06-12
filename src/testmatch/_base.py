@@ -4,20 +4,16 @@ from abc import ABC, abstractclassmethod, abstractmethod, abstractstaticmethod
 from typing import Type
 
 
-class InputStruct(ABC):
-    """Abstract base for a dataclass which corresponds to a C++ struct and is provided as input to
-    the simulation.
+class Cppable(ABC):
+    """Abstract base for objects which can be converted to a bound C++ type."""
 
-    These classes . They must define methods for serialising and deserialising via JSON.
-    """
-
-    # There is currently no need to convert C++ structs back to the Python equivalents.
-    # @classmethod
-    # def from_cpp(cls, cpp_obj) -> InputStruct:
-    #     pass
-
-    def to_cpp(self):
+    @property
+    def cpp(self):
         # Convert each member to keyword arguments
+        pass
+
+    @classmethod
+    def from_cpp(cls, cpp_obj) -> Cppable:
         pass
 
     @property
@@ -25,8 +21,14 @@ class InputStruct(ABC):
     def cpp_rep() -> Type:
         pass
 
+
+class JSONable(ABC):
+    """Abstract base for objects which can be serialised and deserialised from
+    JSON.
+    """
+
     @abstractclassmethod
-    def from_jsons(cls, jsons: str) -> InputStruct:
+    def from_jsons(cls, jsons: str) -> JSONable:
         pass
 
     @abstractmethod

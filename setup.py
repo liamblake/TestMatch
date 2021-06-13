@@ -19,9 +19,13 @@ setup(
             "mypy==0.901",
         ]
     },
-    cmake_args=["-DBUILD_PYTHON=ON", "-GUnix Makefiles"],
+    cmake_args=[
+        "-DBUILD_AS_PYTHON=ON",
+        "-GUnix Makefiles",
+    ],
     cmake_install_dir="src/testmatch",
     include_package_data=True,
+    package_data={"": ["libTestMatch.so"]},
     version="0.1",
     license="GNU",
     description="Cricket simulation built on historical data.",

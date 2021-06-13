@@ -1,7 +1,7 @@
 from typing import NamedTuple, Type
 
 from ._base import Cppable
-from ._testmatch import Arm, _BatStats, _BatterCard
+from ._testmatch import _BatStats, _BatterCard
 from .inputs import Player
 
 

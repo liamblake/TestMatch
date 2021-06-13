@@ -1,13 +1,14 @@
 
+#include <cards.hpp>
+#include <enums.hpp>
+#include <matchtime.hpp>
+#include <pregame.hpp>
 #include <pybind11/pybind11.h>
-#include <testmatch/cards.hpp>
-#include <testmatch/enums.hpp>
-#include <testmatch/matchtime.hpp>
-#include <testmatch/pregame.hpp>
-#include <testmatch/simulation.hpp>
-#include <testmatch/team.hpp>
+#include <simulation.hpp>
+#include <team.hpp>
 
 using namespace pybind11;
+namespace py = pybind11;
 
 PYBIND11_MODULE(_testmatch, m) {
     // Enumerations
@@ -22,7 +23,6 @@ PYBIND11_MODULE(_testmatch, m) {
         .value("fast_med", fast)
         .value("offbreak", offbreak)
         .value("legbreak", legbreak)
-        .export_values()
         .export_values();
 
     enum_<DismType>(m, "DismType")
@@ -70,7 +70,7 @@ PYBIND11_MODULE(_testmatch, m) {
                                return_value_policy::copy)
         .def("__str__", &Dismissal::print_dism);
 
-    class_<BatterCard, PlayerCard>(m, "_BatterCard")
+    class_<BatterCard>(m, "_BatterCard")
         .def(init<Player*>())
         .def_property_readonly("_stats", &BatterCard::get_sim_stats)
         .def_property_readonly("active", &BatterCard::is_active)

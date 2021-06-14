@@ -6,7 +6,6 @@
 #include "enums.hpp"
 #include "team.hpp"
 
-#include <boost/serialization/base_object.hpp>
 #include <random>
 #include <string>
 

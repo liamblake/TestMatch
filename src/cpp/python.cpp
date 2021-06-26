@@ -1,11 +1,12 @@
 
-#include <cards.hpp>
-#include <enums.hpp>
-#include <matchtime.hpp>
-#include <pregame.hpp>
+#include "cards.hpp"
+#include "enums.hpp"
+#include "matchtime.hpp"
+#include "pregame.hpp"
+#include "simulation.hpp"
+#include "team.hpp"
+
 #include <pybind11/pybind11.h>
-#include <simulation.hpp>
-#include <team.hpp>
 
 using namespace pybind11;
 namespace py = pybind11;
@@ -56,17 +57,17 @@ PYBIND11_MODULE(_testmatch, m) {
     class_<Venue>(m, "_Venue");
     class_<Pregame>(m, "_Pregame");
 
+    class_<BatStats>(m, "_BatStats");
+
     // These objects are exposed to the public Python library, since the
     // elements should not be modified manually. They are extended for easier
     // interaction with the Python interface.
-    class_<BatStats>(m, "_BatStats");
-
-    class_<Dismissal>(m, "Dismissal")
+    class_<Dismissal>(m, "_Dismissal")
         .def(init<DismType, Player*, Player*>())
         .def_property_readonly("mode", &Dismissal::get_mode)
-        .def_property_readonly("bowler", &Dismissal::get_bowler,
+        .def_property_readonly("_bowler", &Dismissal::get_bowler,
                                return_value_policy::copy)
-        .def_property_readonly("fielder", &Dismissal::get_fielder,
+        .def_property_readonly("_fielder", &Dismissal::get_fielder,
                                return_value_policy::copy)
         .def("__str__", &Dismissal::print_dism);
 
@@ -75,7 +76,7 @@ PYBIND11_MODULE(_testmatch, m) {
         .def_property_readonly("_stats", &BatterCard::get_sim_stats)
         .def_property_readonly("active", &BatterCard::is_active)
         .def_property_readonly("out", &BatterCard::is_out)
-        .def_property_readonly("dism", &BatterCard::get_dism,
+        .def_property_readonly("_dism", &BatterCard::get_dism,
                                return_value_policy::copy)
         .def("__str__", &BatterCard::print_card);
 

@@ -8,7 +8,7 @@ setup(
     author_email="",
     packages=find_packages("src"),
     package_dir={"": "src"},
-    install_requires=["rich"],
+    install_requires=["dataclasses-json"],
     extras_require={
         "dev": [
             "black==21.5b2",

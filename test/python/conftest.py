@@ -21,7 +21,7 @@ def stats1():
 
 @fixture
 def player1(stats1):
-    yield Player(first_name="Pat", last_name="Cummins", initials="PJ", stats=stats)
+    yield Player(first_name="Pat", last_name="Cummins", initials="PJ", stats=stats1)
 
 
 @fixture

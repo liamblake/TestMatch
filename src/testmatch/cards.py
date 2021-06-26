@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import NamedTuple, Optional, Type
+from typing import Optional, Type
 
 from ._base import Cppable
 from ._testmatch import Arm, DismType, _BatStats, _BatterCard, _Dismissal
@@ -28,7 +28,7 @@ class Dismissal(_Dismissal):
         return cls(mode=parent.mode, bowler=parent._bowler, fielder=parent._fielder)
 
 
-class BatStats(Cppable, NamedTuple):
+class BatStats(Cppable):
     career_bat_avg: float
     career_strike_rate: float
     bat_arm: Arm

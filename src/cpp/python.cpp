@@ -13,20 +13,21 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_testmatch, m) {
     // Enumerations
-    enum_<Arm>(m, "Arm")
+    enum_<Arm>(m, "_Arm")
         .value("left", left)
         .value("right", right)
         .export_values();
 
-    enum_<BowlType>(m, "BowlType")
+    enum_<BowlType>(m, "_BowlType")
         .value("med", med)
         .value("med_fast", med_fast)
-        .value("fast_med", fast)
+        .value("fast_med", fast_med)
+        .value("fast", fast)
         .value("offbreak", offbreak)
         .value("legbreak", legbreak)
         .export_values();
 
-    enum_<DismType>(m, "DismType")
+    enum_<DismType>(m, "_DismType")
         .value("bowled", bowled)
         .value("lbw", lbw)
         .value("caught", caught)
@@ -35,7 +36,7 @@ PYBIND11_MODULE(_testmatch, m) {
         .value("stumped", stumped)
         .export_values();
 
-    enum_<ResultType>(m, "ResultType")
+    enum_<ResultType>(m, "_ResultType")
         .value("draw", draw)
         .value("win_chasing", win_chasing)
         .value("win_bowling", win_bowling)
@@ -43,7 +44,7 @@ PYBIND11_MODULE(_testmatch, m) {
         .value("tie", tie)
         .export_values();
 
-    enum_<TossChoice>(m, "TossChoice")
+    enum_<TossChoice>(m, "_TossChoice")
         .value("bat", bat)
         .value("field", field)
         .export_values();

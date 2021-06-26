@@ -5,28 +5,31 @@ These mirror many of the structs defined in the core C++ library."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-from json import JSONEncoder
-from typing import List
+from typing import List, Optional
+
+from dataclasses_json import dataclass_json
 
 from ._base import Cppable
-from ._testmatch import Arm, BowlType, _PitchFactors, _Player, _Stats, _Team, _Venue
+from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
+from .enums import Arm, BowlType
 
 
+@dataclass_json
 @dataclass
 class Stats(Cppable):
 
     innings: int
-    bat_avg: float
-    bat_sr: float
+    bat_avg: Optional[float]
+    bat_sr: Optional[float]
 
     balls_bowled: int
-    bowl_avg: float
-    bowl_sr: float
+    bowl_avg: Optional[float]
+    bowl_sr: Optional[float]
     bowl_econ: float
 
-    bat_arm: Arm
-    bowl_arm: Arm
-    bowl_type: BowlType
+    bat_arm: Arm = Arm.right
+    bowl_arm: Arm = Arm.right
+    bowl_type: BowlType = BowlType.med
 
     @property
     @staticmethod
@@ -34,6 +37,7 @@ class Stats(Cppable):
         return _Stats
 
 
+@dataclass_json
 @dataclass(frozen=True)
 class Player(Cppable):
 
@@ -51,16 +55,13 @@ class Player(Cppable):
     def full_initials(self) -> str:
         return f"{self.initials} {self.last_name}"
 
-    class _encoder(JSONEncoder):
-        def default(self, o):
-            pass
-
     @property
     @staticmethod
     def cpp_rep():
         return _Player
 
 
+@dataclass_json
 @dataclass
 class Team(Cppable):
     name: str

@@ -28,7 +28,7 @@ class JSONable(ABC):
     def dump(cls, obj: Union[JSONable, List[JSONable]], file: str):
         jsoned = obj.to_dict()
         with open(file, "w") as fp:
-            json.dump(jsoned, fp=fp)
+            json.dump(jsoned, fp=fp, indent=4)
 
     @classmethod
     def load(cls, file: str) -> JSONable:

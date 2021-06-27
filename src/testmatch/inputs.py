@@ -42,7 +42,7 @@ class Stats(Cppable, JSONable):
 
 @dataclass_json
 @dataclass(frozen=True)
-class Player(Cppable):
+class Player(Cppable, JSONable):
 
     first_name: str
     last_name: str
@@ -65,7 +65,7 @@ class Player(Cppable):
 
 
 @input
-class Team(Cppable):
+class Team(Cppable, JSONable):
     name: str
     players: List[Player]
 
@@ -91,7 +91,7 @@ class Team(Cppable):
 
 
 @input
-class PitchFactors(Cppable):
+class PitchFactors(Cppable, JSONable):
     seam: float
     spin: float
 
@@ -103,7 +103,7 @@ class PitchFactors(Cppable):
 
 @dataclass_json
 @dataclass(frozen=True)
-class Venue(Cppable):
+class Venue(Cppable, JSONable):
     name: str
     city: str
     country: str

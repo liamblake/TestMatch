@@ -15,7 +15,7 @@ def stats1():
         bowl_econ=2.74,
         bat_arm="right",
         bowl_arm="right",
-        bowl_type="fm",
+        bowl_type="fast_med",
     )
 
 

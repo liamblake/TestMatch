@@ -9,14 +9,17 @@ from typing import List, Optional
 
 from dataclasses_json import dataclass_json
 
-from ._base import Cppable
+from ._base import Cppable, JSONable
 from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
 from .enums import Arm, BowlType
 
 
-@dataclass_json
-@dataclass
-class Stats(Cppable):
+def input(cls, **kwargs):
+    return dataclass_json(dataclass(cls, **kwargs))
+
+
+@input
+class Stats(Cppable, JSONable):
 
     innings: int
     bat_avg: Optional[float]
@@ -61,8 +64,7 @@ class Player(Cppable):
         return _Player
 
 
-@dataclass_json
-@dataclass
+@input
 class Team(Cppable):
     name: str
     players: List[Player]
@@ -88,7 +90,7 @@ class Team(Cppable):
         return _Team
 
 
-@dataclass
+@input
 class PitchFactors(Cppable):
     seam: float
     spin: float
@@ -99,6 +101,7 @@ class PitchFactors(Cppable):
         return _PitchFactors
 
 
+@dataclass_json
 @dataclass(frozen=True)
 class Venue(Cppable):
     name: str

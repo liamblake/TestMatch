@@ -21,7 +21,7 @@ setup(
     },
     cmake_args=[
         "-DBUILD_AS_PYTHON=ON",
-        "-GUnix Makefiles",
+        "-GVisual Studio 16 2019",
     ],
     cmake_install_dir="src/testmatch",
     include_package_data=True,

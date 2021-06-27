@@ -1,12 +1,12 @@
 from enum import Enum
 
 
-class Arm(Enum):
+class Arm(str, Enum):
     left = "left"
     right = "right"
 
 
-class BowlType(Enum):
+class BowlType(str, Enum):
     med = "med"
     med_fast = "med_fast"
     fast_med = "fast_med"

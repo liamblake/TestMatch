@@ -149,3 +149,5 @@ html/
 xml/
 
 _skbuild/
+
+testfiles/

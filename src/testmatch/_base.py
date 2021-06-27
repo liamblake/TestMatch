@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import json
 from abc import ABC, abstractstaticmethod
-from typing import Type
+from typing import List, Type, Union
 
 
 class Cppable(ABC):
@@ -20,3 +21,17 @@ class Cppable(ABC):
     @abstractstaticmethod
     def cpp_rep() -> Type:
         pass
+
+
+class JSONable(ABC):
+    @classmethod
+    def dump(cls, obj: Union[JSONable, List[JSONable]], file: str):
+        jsoned = obj.to_dict()
+        with open(file, "w") as fp:
+            json.dump(jsoned, fp=fp)
+
+    @classmethod
+    def load(cls, file: str) -> JSONable:
+        with open(file) as fp:
+            jsoned = json.load(fp)
+        return cls.from_dict(jsoned)

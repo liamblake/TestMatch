@@ -5,21 +5,24 @@ These mirror many of the structs defined in the core C++ library."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from dataclasses_json import dataclass_json
 
-from ._base import Cppable, JSONable
+from ._base import cppable, jsonable
 from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
 from .enums import Arm, BowlType
 
 
-def input(cls, **kwargs):
-    return dataclass_json(dataclass(cls, **kwargs))
+def inputdata(cpp_rep: Type, frozen: bool = False):
+    def wrapper(cls):
+        return jsonable(dataclass_json(dataclass(cppable(cls), frozen=frozen)))
+
+    return wrapper
 
 
-@input
-class Stats(Cppable, JSONable):
+@inputdata(cpp_rep=_Stats)
+class Stats:
 
     innings: int
     bat_avg: Optional[float]
@@ -40,9 +43,8 @@ class Stats(Cppable, JSONable):
         return _Stats
 
 
-@dataclass_json
-@dataclass(frozen=True)
-class Player(Cppable, JSONable):
+@inputdata(cpp_rep=_Player, frozen=True)
+class Player:
 
     first_name: str
     last_name: str
@@ -58,14 +60,9 @@ class Player(Cppable, JSONable):
     def full_initials(self) -> str:
         return f"{self.initials} {self.last_name}"
 
-    @property
-    @staticmethod
-    def cpp_rep():
-        return _Player
 
-
-@input
-class Team(Cppable, JSONable):
+@inputdata(cpp_rep=_Team)
+class Team:
     name: str
     players: List[Player]
 
@@ -83,33 +80,18 @@ class Team(Cppable, JSONable):
             if i == self.idx_wk:
                 output += " (wk)"
             output += "\n"
-
-    @property
-    @staticmethod
-    def cpp_rep():
-        return _Team
+        return output
 
 
-@input
-class PitchFactors(Cppable, JSONable):
+@inputdata(cpp_rep=_PitchFactors)
+class PitchFactors:
     seam: float
     spin: float
 
-    @property
-    @staticmethod
-    def cpp_rep():
-        return _PitchFactors
 
-
-@dataclass_json
-@dataclass(frozen=True)
-class Venue(Cppable, JSONable):
+@inputdata(cpp_rep=_Venue, frozen=True)
+class Venue:
     name: str
     city: str
     country: str
     pitch: PitchFactors
-
-    @property
-    @staticmethod
-    def cpp_rep():
-        return _Venue

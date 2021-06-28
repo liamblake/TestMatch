@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Optional, Type
+from typing import Optional
 
-from ._base import Cppable
+from ._base import cppable
 from ._testmatch import _BatStats, _BatterCard, _Dismissal
 from .enums import Arm, DismType
 from .inputs import Player
@@ -29,7 +29,8 @@ class Dismissal(_Dismissal):
         return cls(mode=parent.mode, bowler=parent._bowler, fielder=parent._fielder)
 
 
-class BatStats(Cppable):
+@cppable(cpp_rep=_BatStats)
+class BatStats:
     career_bat_avg: float
     career_strike_rate: float
     bat_arm: Arm
@@ -37,25 +38,6 @@ class BatStats(Cppable):
     balls: int
     fours: int
     sixes: int
-
-    def __new__(
-        cls,
-        career_bat_avg: float,
-        career_strike_rate: float,
-        bat_arm: Arm,
-        runs: int,
-        balls: int,
-        fours: int,
-        sixes: int,
-    ):
-        super().__new__(
-            cls, career_bat_avg, career_strike_rate, bat_arm, runs, balls, fours, sixes
-        )
-
-    @property
-    @staticmethod
-    def cpp_rep() -> Type:
-        return _BatStats
 
     @property
     def strike_rate(self) -> float:

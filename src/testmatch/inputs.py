@@ -5,34 +5,28 @@ These mirror many of the structs defined in the core C++ library."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
+from json import JSONEncoder
+from typing import List
 
-from dataclasses_json import dataclass_json
-
-from ._base import Cppable, JSONable
+from ._base import InputStruct
 from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
-from .enums import Arm, BowlType
 
 
-def input(cls, **kwargs):
-    return dataclass_json(dataclass(cls, **kwargs))
-
-
-@input
-class Stats(Cppable, JSONable):
+@dataclass
+class Stats:
 
     innings: int
-    bat_avg: Optional[float]
-    bat_sr: Optional[float]
+    bat_avg: float
+    bat_sr: float
 
     balls_bowled: int
-    bowl_avg: Optional[float]
-    bowl_sr: Optional[float]
+    bowl_avg: float
+    bowl_sr: float
     bowl_econ: float
 
-    bat_arm: Arm = Arm.right
-    bowl_arm: Arm = Arm.right
-    bowl_type: BowlType = BowlType.med
+    bat_arm: int
+    bowl_arm: int
+    bowl_type: int
 
     @property
     @staticmethod
@@ -40,9 +34,8 @@ class Stats(Cppable, JSONable):
         return _Stats
 
 
-@dataclass_json
 @dataclass(frozen=True)
-class Player(Cppable, JSONable):
+class Player:
 
     first_name: str
     last_name: str
@@ -58,14 +51,18 @@ class Player(Cppable, JSONable):
     def full_initials(self) -> str:
         return f"{self.initials} {self.last_name}"
 
+    class _encoder(JSONEncoder):
+        def default(self, o):
+            pass
+
     @property
     @staticmethod
     def cpp_rep():
         return _Player
 
 
-@input
-class Team(Cppable, JSONable):
+@dataclass
+class Team:
     name: str
     players: List[Player]
 
@@ -90,8 +87,8 @@ class Team(Cppable, JSONable):
         return _Team
 
 
-@input
-class PitchFactors(Cppable, JSONable):
+@dataclass
+class PitchFactors:
     seam: float
     spin: float
 
@@ -101,9 +98,8 @@ class PitchFactors(Cppable, JSONable):
         return _PitchFactors
 
 
-@dataclass_json
 @dataclass(frozen=True)
-class Venue(Cppable, JSONable):
+class Venue:
     name: str
     city: str
     country: str

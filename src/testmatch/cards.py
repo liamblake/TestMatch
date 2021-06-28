@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Optional, Type
 
 from ._base import Cppable
-from ._testmatch import Arm, DismType, _BatStats, _BatterCard, _Dismissal
+from ._testmatch import _BatStats, _BatterCard, _Dismissal
+from .enums import Arm, DismType
 from .inputs import Player
 
 

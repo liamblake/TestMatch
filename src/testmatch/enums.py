@@ -13,3 +13,12 @@ class BowlType(str, Enum):
     fast = "fast"
     offbreak = "offbreak"
     legbreak = "legbreak"
+
+
+class DismType(str, Enum):
+    bowled = "bowled"
+    lbw = "lbw"
+    caught = "caught"
+    c_and_b = "c_and_b"
+    run_out = "run_out"
+    stumped = "stumped"

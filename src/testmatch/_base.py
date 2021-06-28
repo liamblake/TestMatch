@@ -23,7 +23,7 @@ def cppable(cpp_rep: Type):
     return wrapper
 
 
-def jsonable():
+def jsonable(cls):
     def wrapper(cls):
         @classmethod
         def dump(cls, obj, file: str):

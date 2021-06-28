@@ -5,28 +5,34 @@ These mirror many of the structs defined in the core C++ library."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-from json import JSONEncoder
-from typing import List
+from typing import List, Optional
 
-from ._base import InputStruct
+from dataclasses_json import dataclass_json
+
+from ._base import Cppable, JSONable
 from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
+from .enums import Arm, BowlType
 
 
-@dataclass
-class Stats:
+def input(cls, **kwargs):
+    return dataclass_json(dataclass(cls, **kwargs))
+
+
+@input
+class Stats(Cppable, JSONable):
 
     innings: int
-    bat_avg: float
-    bat_sr: float
+    bat_avg: Optional[float]
+    bat_sr: Optional[float]
 
     balls_bowled: int
-    bowl_avg: float
-    bowl_sr: float
+    bowl_avg: Optional[float]
+    bowl_sr: Optional[float]
     bowl_econ: float
 
-    bat_arm: int
-    bowl_arm: int
-    bowl_type: int
+    bat_arm: Arm = Arm.right
+    bowl_arm: Arm = Arm.right
+    bowl_type: BowlType = BowlType.med
 
     @property
     @staticmethod
@@ -34,8 +40,9 @@ class Stats:
         return _Stats
 
 
+@dataclass_json
 @dataclass(frozen=True)
-class Player:
+class Player(Cppable, JSONable):
 
     first_name: str
     last_name: str
@@ -51,18 +58,14 @@ class Player:
     def full_initials(self) -> str:
         return f"{self.initials} {self.last_name}"
 
-    class _encoder(JSONEncoder):
-        def default(self, o):
-            pass
-
     @property
     @staticmethod
     def cpp_rep():
         return _Player
 
 
-@dataclass
-class Team:
+@input
+class Team(Cppable, JSONable):
     name: str
     players: List[Player]
 
@@ -87,8 +90,8 @@ class Team:
         return _Team
 
 
-@dataclass
-class PitchFactors:
+@input
+class PitchFactors(Cppable, JSONable):
     seam: float
     spin: float
 
@@ -98,8 +101,9 @@ class PitchFactors:
         return _PitchFactors
 
 
+@dataclass_json
 @dataclass(frozen=True)
-class Venue:
+class Venue(Cppable, JSONable):
     name: str
     city: str
     country: str

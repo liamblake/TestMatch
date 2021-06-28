@@ -16,7 +16,7 @@ from .enums import Arm, BowlType
 
 def inputdata(cpp_rep: Type, frozen: bool = False):
     def wrapper(cls):
-        return jsonable(dataclass_json(dataclass(cppable(cls), frozen=frozen)))
+        return jsonable(cppable(dataclass_json(dataclass(cls, frozen=frozen))))
 
     return wrapper
 

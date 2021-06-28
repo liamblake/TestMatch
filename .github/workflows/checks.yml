@@ -54,6 +54,9 @@ jobs:
       - name: Install package and dependencies
         run: python -m pip install -e .[dev]
 
+      - name: Create test file directory
+        run: mkdir -p testfiles
+
       - name: Run Python tests
         run: pytest
 

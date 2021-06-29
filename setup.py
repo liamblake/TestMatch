@@ -16,7 +16,7 @@ setup(
             "pytest==6.2.4",
             "pytest-cov==2.12.1",
             "isort==5.9.1",
-            "mypy==0.901",
+            "mypy==0.910",
         ]
     },
     cmake_args=[

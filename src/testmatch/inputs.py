@@ -4,26 +4,49 @@ These mirror many of the structs defined in the core C++ library."""
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
-from typing import List, Optional, Type
+from typing import List, Optional
 
 from dataclasses_json import dataclass_json
 
-from ._base import cppable, jsonable
+from ._base import cppable
 from ._testmatch import _PitchFactors, _Player, _Stats, _Team, _Venue
 from .enums import Arm, BowlType
 
 
-def inputdata(cpp_rep: Type, frozen: bool = False):
+def jsoninput(cls=None, **kwargs):
     def wrapper(cls):
-        return jsonable(
-            cppable(dataclass_json(dataclass(cls, frozen=frozen)), cpp_rep=cpp_rep)
-        )
+        @classmethod
+        def dump(cls, obj, file: str):
+            jsoned = obj.to_dict()
+            with open(file, "w") as fp:
+                json.dump(jsoned, fp=fp, indent=4)
 
-    return wrapper
+        @classmethod
+        def load(cls, file: str):
+            with open(file) as fp:
+                jsoned = json.load(fp)
+            return cls.from_dict(jsoned)
+
+        # Apply dataclass decorators
+        cls = dataclass(cls, **kwargs)
+        cls = dataclass_json(cls)
+
+        # Set dump and load attributes
+        setattr(cls, "dump", dump)
+        setattr(cls, "load", load)
+
+        return cls
+
+    if cls is None:
+        return wrapper
+    else:
+        return wrapper(cls)
 
 
-@inputdata(cpp_rep=_Stats)
+@cppable(cpp_rep=_Stats)
+@jsoninput
 class Stats:
 
     innings: int
@@ -45,7 +68,8 @@ class Stats:
         return _Stats
 
 
-@inputdata(cpp_rep=_Player, frozen=True)
+@cppable(cpp_rep=_Player)
+@jsoninput(frozen=True)
 class Player:
 
     first_name: str
@@ -63,7 +87,8 @@ class Player:
         return f"{self.initials} {self.last_name}"
 
 
-@inputdata(cpp_rep=_Team)
+@cppable(cpp_rep=_Team)
+@jsoninput
 class Team:
     name: str
     players: List[Player]
@@ -85,13 +110,15 @@ class Team:
         return output
 
 
-@inputdata(cpp_rep=_PitchFactors)
+@cppable(cpp_rep=_PitchFactors)
+@jsoninput
 class PitchFactors:
     seam: float
     spin: float
 
 
-@inputdata(cpp_rep=_Venue, frozen=True)
+@cppable(cpp_rep=_Venue)
+@jsoninput(frozen=True)
 class Venue:
     name: str
     city: str

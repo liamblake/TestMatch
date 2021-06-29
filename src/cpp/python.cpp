@@ -51,14 +51,21 @@ PYBIND11_MODULE(_testmatch, m) {
 
     // These are mirrored by Python dataclasses for more intuitive input,
     // and coerced into these C++ types prior to simulation.
-    class_<Stats>(m, "_Stats");
-    class_<Player>(m, "_Player");
-    class_<Team>(m, "_Team");
-    class_<PitchFactors>(m, "_PitchFactors");
-    class_<Venue>(m, "_Venue");
-    class_<Pregame>(m, "_Pregame");
+    class_<Stats>(m, "_Stats")
+        .def(py::init<int, double, double, int, double, double, double, Arm,
+                      Arm, BowlType>());
+    class_<Player>(m, "_Player")
+        .def(py::init<std::string, std::string, std::string, Stats>());
+    // TODO: pybind is having issues with the dynamic array of Players in Team
+    class_<Team>(
+        m,
+        "_Team"); //.def(py::init<name, Player*, int, int, int, int>());
+    class_<PitchFactors>(m, "_PitchFactors").def(py::init<double, double>());
+    class_<Venue>(m, "_Venue")
+        .def(py::init<std::string, std::string, std::string, PitchFactors*>());
+    class_<Pregame>(m, "_Pregame").def(py::init<Venue*, Team*, Team*>());
 
-    class_<BatStats>(m, "_BatStats");
+    class_<BatStats>(m, "_BatStats").def(py::init<>());
 
     // These objects are exposed to the public Python library, since the
     // elements should not be modified manually. They are extended for easier

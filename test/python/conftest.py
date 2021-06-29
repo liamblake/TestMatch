@@ -1,5 +1,6 @@
 from pytest import fixture
 from testmatch import PitchFactors, Player, Stats, Team, Venue
+from testmatch.enums import Arm, BowlType
 
 
 # Fixtures
@@ -13,9 +14,9 @@ def stats1():
         bowl_avg=21.59,
         bowl_sr=47.10,
         bowl_econ=2.74,
-        bat_arm="right",
-        bowl_arm="right",
-        bowl_type="fast_med",
+        bat_arm=Arm.right,
+        bowl_arm=Arm.right,
+        bowl_type=BowlType.fast_med,
     )
 
 
@@ -41,9 +42,9 @@ def team(player1):
                     bowl_avg=112,
                     bowl_sr=191.5,
                     bowl_econ=3.5,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="offbreak",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.offbreak,
                 ),
             ),
             Player(
@@ -58,9 +59,9 @@ def team(player1):
                     bowl_avg=95.5,
                     bowl_sr=142.0,
                     bowl_econ=4.03,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="med",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.med,
                 ),
             ),
             Player(
@@ -75,9 +76,9 @@ def team(player1):
                     bowl_avg=41.66,
                     bowl_sr=68.5,
                     bowl_econ=3.64,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="legbreak",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.legbreak,
                 ),
             ),
             Player(
@@ -92,9 +93,9 @@ def team(player1):
                     bowl_avg=40.23,
                     bowl_sr=71.70,
                     bowl_econ=3.36,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="offbreak",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.offbreak,
                 ),
             ),
             Player(
@@ -109,9 +110,9 @@ def team(player1):
                     bowl_avg=56.47,
                     bowl_sr=81.20,
                     bowl_econ=4.17,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="legbreak",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.legbreak,
                 ),
             ),
             Player(
@@ -126,9 +127,9 @@ def team(player1):
                     bowl_avg=31.38,
                     bowl_sr=56.90,
                     bowl_econ=3.3,
-                    bat_arm="left",
-                    bowl_arm="right",
-                    bowl_type="fast_med",
+                    bat_arm=Arm.left,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.fast_med,
                 ),
             ),
             Player(
@@ -143,7 +144,7 @@ def team(player1):
                     bowl_avg=None,
                     bowl_sr=None,
                     bowl_econ=None,
-                    bat_arm="left",
+                    bat_arm=Arm.left,
                 ),
             ),
             Player(
@@ -158,9 +159,9 @@ def team(player1):
                     bowl_avg=24.56,
                     bowl_sr=52.40,
                     bowl_econ=2.80,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="offbreak",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.offbreak,
                 ),
             ),
             Player(
@@ -175,9 +176,9 @@ def team(player1):
                     bowl_avg=14.17,
                     bowl_sr=37.40,
                     bowl_econ=2.26,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="fast_med",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.fast_med,
                 ),
             ),
             player1,
@@ -193,9 +194,9 @@ def team(player1):
                     bowl_avg=28.22,
                     bowl_sr=56.90,
                     bowl_econ=2.97,
-                    bat_arm="right",
-                    bowl_arm="right",
-                    bowl_type="med_fast",
+                    bat_arm=Arm.right,
+                    bowl_arm=Arm.right,
+                    bowl_type=BowlType.med_fast,
                 ),
             ),
         ],

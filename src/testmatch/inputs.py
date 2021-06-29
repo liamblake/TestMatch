@@ -62,11 +62,6 @@ class Stats:
     bowl_arm: Arm = Arm.right
     bowl_type: BowlType = BowlType.med
 
-    @property
-    @staticmethod
-    def cpp_rep():
-        return _Stats
-
 
 @cppable(cpp_rep=_Player)
 @jsoninput(frozen=True)

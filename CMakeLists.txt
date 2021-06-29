@@ -11,6 +11,7 @@ set(CXX_STANDARD_REQUIRED 20)
 # Build options
 option(BUILD_AS_PYTHON "Option to compile library as a Python extension module" OFF)
 option(BUILD_TESTS "Option to also compile testing executables (requires Boost.UnitTestFramework" OFF)
+option(BUILD_DEMOS "Option to compile demos found in examples/demos" OFF)
 
 # Compiler flags
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
@@ -70,8 +71,11 @@ else()
     add_subdirectory(test/cpp)
     enable_testing()
   endif()
+
+  
+  # OPTIONAL: Build demos in examples/cpp
+  if (BUILD_DEMOS)
+    add_subdirectory(examples/cpp)
+  endif()
+
 endif()
-
-
-
-

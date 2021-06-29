@@ -64,6 +64,11 @@ struct BowlStats {
     int spell_wickets;
 };
 
+// Match details required in delivery model
+struct MatchStats {
+    int innings;
+};
+
 /**
  * @brief Storage of dismissal details
  */

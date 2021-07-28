@@ -407,8 +407,8 @@ void Innings::simulate_delivery() {
 // Check for declaration
 bool Innings::check_declaration() {
     // TODO: implement declaration checking
-    return false;
-    // AIS: never declare, may lead to some slightly absurd innings
+    double prob = prediction::declaration(lead, 0, false, inns_no);
+    return ((double)rand() / (RAND_MAX)) < prob;
 }
 
 /* Possible return values:

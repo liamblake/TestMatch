@@ -68,7 +68,7 @@ double wkt(BatStats bat, BowlStats bowl, MatchStats match) {
     if (bat_avg == 0)
         bat_avg = 5;
 
-    return 0.5 * (bat_sr / (100 * bat_avg) + 1 / bowl.strike_rate);
+    return 0.5 * (bat_sr / (100 * bat_avg) + bowl.strike_rate);
 }
 
 std::map<std::string, double> extras(BatStats bat, BowlStats bowl,
@@ -232,7 +232,16 @@ double OBJ_AVG_FATIG(double bowl_avg, double bowl_sr, double fatigue) {
  *
  */
 double declaration(int lead, int match_balls, bool is_wkt, int innings) {
-    return 0;
+    int threshold;
+    if (innings == 1)
+        threshold = 600;
+    else
+        threshold = 400;
+
+    if (lead >= threshold)
+        return 1;
+    else
+        return 0;
 }
 
 /**
@@ -282,6 +291,8 @@ std::map<std::string, double> delivery(BatStats bat, BowlStats bowl,
 
     // Scale each probability w.r.t wicket probability
     normalise_to_ref<std::string, double>(probs, "W");
+    std::cout << probs["W"] << std::endl;
+    std::cout << probs["0"] << std::endl;
     return probs;
 }
 

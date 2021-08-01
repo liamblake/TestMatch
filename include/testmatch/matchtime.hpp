@@ -57,8 +57,17 @@ class TimeOfDay {
      */
     operator std::string();
 
+    friend bool operator==(const TimeOfDay lhs, const TimeOfDay& rhs);
+    friend bool operator==(const TimeOfDay lhs, const float& rhs);
+
     friend int operator-(const TimeOfDay lhs, const TimeOfDay& rhs);
     friend int operator-(const TimeOfDay lhs, const float& rhs);
+
+    friend bool operator>(const TimeOfDay lhs, const TimeOfDay& rhs);
+    friend bool operator>(const TimeOfDay lhs, const float& rhs);
+
+    friend bool operator>=(const TimeOfDay lhs, const TimeOfDay& rhs);
+    friend bool operator>=(const TimeOfDay lhs, const float& rhs);
 };
 
 class MatchTime {

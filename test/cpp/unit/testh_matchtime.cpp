@@ -9,7 +9,7 @@
 BOOST_AUTO_TEST_SUITE(test_class_timeofday)
 
 struct F {
-    F() : t1(1, 2, 3), t2(10.3){};
+    F() : t1(1, 2, 3), t2((float)10.30){};
 
     TimeOfDay t1;
     TimeOfDay t2;
@@ -44,6 +44,21 @@ BOOST_FIXTURE_TEST_CASE(string, F) {
     BOOST_TEST(std::string(t3) == "12:00 pm");
 }
 
+BOOST_FIXTURE_TEST_CASE(set, F) {
+    // GIVEN: A TimeOfDay object and a new time to set.
+    // WHEN: Setting the object to the new time.
+    // THEN: The time is updated correctly.
+    t1.set(5, 4, 3);
+    BOOST_TEST(t1.get_hour() == 5);
+    BOOST_TEST(t1.get_min() == 4);
+    BOOST_TEST(t1.get_sec() == 3);
+
+    t1.set(15.45);
+    BOOST_TEST(t1.get_hour() == 15);
+    BOOST_TEST(t1.get_min() == 45);
+    BOOST_TEST(t1.get_sec() == 0);
+}
+
 BOOST_FIXTURE_TEST_CASE(operator_peq, F) {
     // GIVEN: A TimeOfDay object.
     // WHEN: Using the += operator.
@@ -72,21 +87,6 @@ BOOST_FIXTURE_TEST_CASE(operator_peq, F) {
     BOOST_TEST(t1.get_hour() == 3);
     BOOST_TEST(t1.get_min() == 5);
     BOOST_TEST(t1.get_sec() == 6);
-}
-
-BOOST_FIXTURE_TEST_CASE(set, F) {
-    // GIVEN: A TimeOfDay object and a new time to set.
-    // WHEN: Setting the object to the new time.
-    // THEN: The time is updated correctly.
-    t1.set(5, 4, 3);
-    BOOST_TEST(t1.get_hour() == 5);
-    BOOST_TEST(t1.get_min() == 4);
-    BOOST_TEST(t1.get_sec() == 3);
-
-    t1.set(15.45);
-    BOOST_TEST(t1.get_hour() == 15);
-    BOOST_TEST(t1.get_min() == 45);
-    BOOST_TEST(t1.get_sec() == 0);
 }
 
 BOOST_FIXTURE_TEST_CASE(operator_m, F) {

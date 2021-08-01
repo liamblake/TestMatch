@@ -27,7 +27,7 @@ std::string TimeOfDay::two_digits(int val) {
 TimeOfDay::TimeOfDay(uint c_hour, uint c_min, u_int c_sec)
     : hour(c_hour), min(c_min), sec(c_sec) {}
 
-TimeOfDay::TimeOfDay(float& val) { set(val); }
+TimeOfDay::TimeOfDay(float val) { set(val); }
 
 void TimeOfDay::set(uint n_hour, uint n_min, u_int n_sec) {
     hour = n_hour;
@@ -38,7 +38,7 @@ void TimeOfDay::set(uint n_hour, uint n_min, u_int n_sec) {
 void TimeOfDay::set(float val) {
     sec = 0;
     hour = val;
-    min = (val - int(val)) * 100;
+    min = std::round(val * 100) - int(val) * 100;
 
     // TODO: Check for invalid values
 }
@@ -83,7 +83,7 @@ TimeOfDay::operator std::string() {
 
 bool operator==(const TimeOfDay lhs, const TimeOfDay& rhs) {
     return (lhs.hour == rhs.hour) && (lhs.min == rhs.min) &&
-           (lhs.sec == lhs.sec);
+           (lhs.sec == rhs.sec);
 }
 
 bool operator==(const TimeOfDay lhs, const float& rhs) {
@@ -93,7 +93,7 @@ bool operator==(const TimeOfDay lhs, const float& rhs) {
 
 int operator-(const TimeOfDay lhs, const TimeOfDay& rhs) {
     return 3600 * (lhs.hour - rhs.hour) + 60 * (lhs.min - rhs.min) +
-           (lhs.sec - lhs.sec);
+           (lhs.sec - rhs.sec);
 }
 
 int operator-(const TimeOfDay lhs, const float& rhs) {
@@ -106,10 +106,14 @@ int operator-(const float lhs, const TimeOfDay& rhs) { return -(rhs - lhs); }
 bool operator>(const TimeOfDay lhs, const TimeOfDay& rhs) {
     if (lhs.hour > rhs.hour) {
         return true;
+    } else if (lhs.hour < rhs.hour) {
+        return false;
     }
 
     if (lhs.min > rhs.min) {
         return true;
+    } else if (lhs.min < rhs.min) {
+        return false;
     }
 
     return lhs.sec > rhs.sec;

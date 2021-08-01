@@ -26,8 +26,8 @@ class TimeOfDay {
     static std::string two_digits(int val);
 
   public:
-    TimeOfDay(uint c_hour = 0, uint c_min = 0, u_int c_sec = 0);
-    TimeOfDay(float& val);
+    TimeOfDay(uint c_hour, uint c_min, u_int c_sec);
+    TimeOfDay(float val);
 
     void set(uint n_hour, uint n_min, u_int n_sec);
     void set(float val);

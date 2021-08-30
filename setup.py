@@ -13,7 +13,7 @@ setup(
         "dev": [
             "black==21.7b0",
             "flake8==3.9.2",
-            "pytest==6.2.4",
+            "pytest==6.2.5",
             "pytest-cov==2.12.1",
             "isort==5.9.3",
             "mypy==0.910",

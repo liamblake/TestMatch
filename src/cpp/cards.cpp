@@ -694,11 +694,7 @@ std::string MatchResult::print() {
 /* Milestone implementation */
 // Contructor
 Milestone::Milestone(Player* c_player, int c_value)
-    : player(c_player), value(c_value), desc("") {
-    if (is_permitted(c_value)) {
-        value = c_value;
-    }
-}
+    : player(c_player), value(c_value), desc("") {}
 
 // THIS WON'T WORK - NEED A BETTER SOLUTION
 

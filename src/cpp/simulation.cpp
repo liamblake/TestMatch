@@ -313,8 +313,12 @@ void Innings::simulate_delivery() {
     // Create a Ball object
     balls++;
     Ball* new_ball = new Ball;
-    *new_ball = {bowl1->get_player_ptr(), striker->get_player_ptr(), outcome,
-                 true, ""};
+    *new_ball = {bowl1->get_player_ptr(),
+                 striker->get_player_ptr(),
+                 outcome,
+                 true,
+                 "",
+                 probs};
 
     // Update cards
     striker->update_score(outcome);

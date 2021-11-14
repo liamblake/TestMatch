@@ -6,6 +6,7 @@
 #include "enums.hpp"
 #include "team.hpp"
 
+#include <map>
 #include <random>
 #include <string>
 
@@ -290,6 +291,10 @@ struct Ball {
     std::string outcome;
     bool legal;
     std::string commentary;
+
+    // Store the probabilities of each outcome for this delivery, for analysis
+    // and debugging.
+    std::map<std::string, double> probs;
 
     // For linked list implementation
     Ball* next = nullptr;
